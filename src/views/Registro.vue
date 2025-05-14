@@ -3254,12 +3254,14 @@ import { useRoute } from "vue-router";
 import store from "@/store";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { getMe } from '@/store/auth'; 
 import { mostraralertas2, enviarsolig, enviarsoliedit, confimar } from '@/store/funciones';
 export default {
     data() {
         return {
             idus: 0,
             editingIndex: null,
+            logueado:null,
             editingIndex2: null,
             sigueestudiandouniversidad: false,
             mensajenuevo: false,
@@ -3634,6 +3636,7 @@ export default {
         //this.loadStylesBasedOnRole();
         const ruta = useRoute();
         this.idus = ruta.params.id;
+        console.log(this.idus);
         this.url1 += '/' + this.idus;
         this.url2 += '/' + this.idus;
         this.url3 += '/' + this.idus;
@@ -3645,7 +3648,7 @@ export default {
         this.url9 += '/' + this.idus;
         this.url10 += '/' + this.idus;
         this.url11 += '/' + this.idus;
-        Promise.all([
+        Promise.all([     
             this.getDatosPersonales(),
             this.getDeclaracionPersonal(),
             this.getFormacionAcademica(),
@@ -3811,22 +3814,8 @@ export default {
         },*/
         cerrarsesion() {
             console.clear();
-            var rol = '';
-            var email = '';
-            var id = '';
-            var name = '';
-            // Limpiar el estado de Vuex
-            store.commit('setRol', null);
-            store.commit('setemail', null);
-            store.commit('setid', null);
-            store.commit('setname', null);
-            
-            // Limpiar localStorage
-            localStorage.removeItem('role');
-            localStorage.removeItem('email');
-            localStorage.removeItem('idusu');
-            localStorage.removeItem('name');
-            this.$router.replace('/');
+            localStorage.clear();
+            window.location.replace('/');
         },
         perfil() {
             this.editus= false;
@@ -5938,8 +5927,12 @@ export default {
                 return response;
         },
          //Guardar Declaracion Personal
-        guardaDeclaracionPersonal(event) {
+         async guardaDeclaracionPersonal(event) {
             event.preventDefault();
+            const usuario = await getMe();
+            console.log(usuario);
+            this.idus = usuario.name;
+            console.log(this.idus);
             if(this.texto.trim()!==''){
                 
                 var parametros = {

@@ -21,23 +21,29 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
       store.commit("setemail", response.data.email || "");
       store.commit("setid", response.data.id || "");
       store.commit("setname", response.data.name || "");
+      console.log(response.data);
+      // ✅ Guardar el token en el store  
+     
       if (response.data.Rol === "Estudiante") {
         return {
           token: response.data.token,
           role: response.data.Rol,
           CIInfPer: response.data.CIInfPer,
+          ApellInfPer: response.data.ApellInfPer,
         };
       }else if(response.data.Rol === "Docente"){
         return {
           token: response.data.token,
           role: response.data.Rol,
           CIInfPer: response.data.CIInfPer,
+          ApellInfPer: response.data.ApellInfPer,
         };
-      }else{
+      }else if(response.data.Rol === "Administrador"){
         return {
           token: response.data.token,
           role: response.data.Rol,
           CIInfPer: response.data.id,
+          name: response.data.name,
         };
       }
      

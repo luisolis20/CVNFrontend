@@ -31,7 +31,7 @@ export default {
           // Redirección según el rol
           const role = response.role;
           
-         
+         console.log(response);
           if (role === 'Administrador') {
             mostraralertas('Bienvenido ADMIN ' + (usuario.name || ''), 'success');
             this.$router.push('/adminus/' + usuario.id);

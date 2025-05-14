@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
+import store from "@/store";
 
 const logged = ref(false);
 const user = ref('');
@@ -30,9 +31,11 @@ export const getMe = async () => {
     localStorage.setItem('user', JSON.stringify(response.data));
     logged.value = true;
     user.value = response.data;
+    console.log(response.data);
     return response.data;
   } catch (error) {
     localStorage.clear();
+    window.location.href = '/';
     console.error('Error al obtener perfil data:', error);
     throw error;
   }
