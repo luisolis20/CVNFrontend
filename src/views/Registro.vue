@@ -1327,11 +1327,11 @@
                                             <div class="col-6 col-xl-10 col-lg-12 d-grid mt-6">
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.modoedit2"
                                                     @click="guardaInvestigacion">
-                                                    Guardar y Continuar
+                                                    Siguiente Apartado
                                                 </button>
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.isEditing2"
                                                     @click="editarInvestigacion">
-                                                    Actualizar Y Continuar
+                                                    Siguiente Apartado
                                                 </button>
                                             </div>
                                         </form>
@@ -3636,7 +3636,7 @@ export default {
         //this.loadStylesBasedOnRole();
         const ruta = useRoute();
         this.idus = ruta.params.id;
-        console.log(this.idus);
+        //console.log(this.idus);
         this.url1 += '/' + this.idus;
         this.url2 += '/' + this.idus;
         this.url3 += '/' + this.idus;
@@ -4003,6 +4003,10 @@ export default {
        
         // Métodos para añadir/editar títulos
         async agregarEditarTituloBachiller() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevoTituloBachiller.titulo_bachiller_obtenido !=='' &&  this.nuevoTituloBachiller.fecha_graduacion_bachiller !=='' && this.nuevoTituloBachiller.fecha_graduacion !=='' && this.nuevoTituloBachiller.especialidad_bachiller !==''){
                 if (this.tituloBachillerEditIndex !== null) {
                     const parametros = {
@@ -4082,6 +4086,10 @@ export default {
             this.estudionuevoTituloUniversitario.fechaestudioactual = new Date().toISOString().split('T')[0];
         },
         async agregarEditarTituloUniversitario2() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.estudionuevoTituloUniversitario.facultades_universidad!=='' && this.estudionuevoTituloUniversitario.titulo_carrera_universidad!=='' && this.estudionuevoTituloUniversitario.fechaestudioactual !=='' && this.estudionuevoTituloUniversitario.carrera_universidad !==''){
                 
                     
@@ -4121,6 +4129,10 @@ export default {
            
         },
         async agregarEditarTituloUniversitario() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevoTituloUniversitario.titulo_universitario_obtenido!=='' && this.nuevoTituloUniversitario.institucion_universitaria!=='' && this.nuevoTituloUniversitario.fecha_graduacion !=='' && this.nuevoTituloUniversitario.especialidad !==''){
                 if (this.tituloUniversitarioEditIndex !== null) {
                     const parametros = {
@@ -4184,6 +4196,10 @@ export default {
            
         },
         async agregarEditarTituloPosgrado() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevoTituloPosgrado.titulo_posgrado_obtenido!=='' && this.nuevoTituloPosgrado.institucion_posgrado!=='' && this.nuevoTituloPosgrado.fecha_graduacion_posgrado !=='' && this.nuevoTituloPosgrado.especialidad_posgrado !==''){
                 if (this.tituloPosgradoEditIndex !== null) {
                     const parametros = {
@@ -4452,6 +4468,10 @@ export default {
 
         // Métodos para añadir/editar experiencias
         async agregarEditarEmpresa() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevocargosEmpresas.empresa_institucion.trim()!=='' && this.nuevocargosEmpresas.fecha_inicio_empresa.trim()!=='' && this.nuevocargosEmpresas.fecha_fin_empresa.trim() !=='' && this.nuevocargosEmpresas.cargo_desempenado_empresa.trim() !=='' && this.nuevocargosEmpresas.descripcion_funciones_empresa.trim() !=='' && this.nuevocargosEmpresas.logros_resultados_empresa.trim() !==''){
                 
                 if (this.cargosEmpresasEditIndex !== null) {
@@ -4518,6 +4538,10 @@ export default {
             
         },
         async agregarEditarPracticas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevocargosPasantias.empresa_institucion_practicas.trim()!=='' && this.nuevocargosPasantias.fecha_inicio_practicas.trim()!=='' && this.nuevocargosPasantias.fecha_fin_practicas.trim() !=='' && this.nuevocargosPasantias.area_trabajo_practicas.trim() !=='' && this.nuevocargosPasantias.descripcion_funciones_practicas.trim() !==''){
 
                 if (this.cargosPasantiasEditIndex !== null) {
@@ -4676,6 +4700,10 @@ export default {
         },
         // Métodos para añadir/editar investigaciones
         async agregarEditarPublicaciones() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevaspublicaciones.publicacion_tipo.trim()!=='' && this.nuevaspublicaciones.publicacion_titulo.trim()!=='' && this.nuevaspublicaciones.link_publicación.trim() !=='' && this.nuevaspublicaciones.congreso_evento.trim() !=='' ){
 
                 if (this.publicacionesEditIndex !== null) {
@@ -4780,6 +4808,10 @@ export default {
         //Idioma
         // Métodos para añadir/editar idiomas
         async agregarEditarIdiomas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevosidiomas.comprension_auditiva.trim()!=='' && this.nuevosidiomas.comprension_lectura.trim()!=='' && this.nuevosidiomas.interaccion_oral.trim() !=='' && this.nuevosidiomas.expresion_oral.trim() !=='' && this.nuevosidiomas.expresion_escrita.trim() !=='' && this.nuevosidiomas.certificado.trim() !==''){
 
                 if (this.idiomasEditIndex !== null) {
@@ -4993,6 +5025,10 @@ export default {
         },
         // Métodos para añadir/editar habilidades Comunicativas
         async agregarEditarHabilidadesComunicativas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim()!=='' && this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim()!==''){
 
                 if (this.habilidades_comunicativas_EditIndex !== null) {
@@ -5087,6 +5123,10 @@ export default {
 
         // Métodos para añadir/editar habilidades Creativas
         async agregarEditarHabilidadesCreativas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevashabilidades_creativas.habilidades_creativas.trim()!=='' && this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim()!==''){
 
                 if (this.habilidades_creativas_EditIndex !== null) {
@@ -5179,6 +5219,10 @@ export default {
 
         // Métodos para añadir/editar habilidades Liderazgo
         async agregarEditarHabilidadesLiderazgo() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim()!=='' && this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim()!==''){
 
                 if (this.habilidades_liderazgo_EditIndex !== null) {
@@ -5271,6 +5315,10 @@ export default {
 
         // Métodos para añadir/editar habilidades Infor_cv
         async agregarEditarHabilidadesInfor_cv() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim()!=='' && this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim()!==''){
 
                 if (this.habilidades_informaticas_cv_EditIndex !== null) {
@@ -5363,6 +5411,10 @@ export default {
 
         // Métodos para añadir/editar habilidades Oficios
         async agregarEditarHabilidadesOficios() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevasoficios_subactividades.oficios_subactividades.trim()!=='' && this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim()!==''){
 
                 if (this.oficios_subactividades_EditIndex !== null) {
@@ -5454,6 +5506,10 @@ export default {
         
         // Métodos para añadir/editar habilidades Otros_Oficios
         async agregarEditarHabilidadesOtros_Oficios() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevasotro_habilidades.otro_habilidades.trim()!==''){
 
                 if (this.otro_habilidades_EditIndex !== null) {
@@ -5542,6 +5598,10 @@ export default {
         //Cursos Capacitaciones
         // Métodos para añadir/editar Cursos Capacitaciones
         async agregarEditarCursosCapacitaciones() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevoscurso_capacitacion.intitucion_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_evento.trim()!=='' && this.nuevoscurso_capacitacion.area_estudios.trim()!=='' && this.nuevoscurso_capacitacion.nombre_evento.trim()!=='' && this.nuevoscurso_capacitacion.facilitador_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_certificado.trim()!=='' && this.nuevoscurso_capacitacion.fecha_inicio_curso.trim()!=='' && this.nuevoscurso_capacitacion.fecha_fin_curso.trim()!=='' && this.nuevoscurso_capacitacion.dias_curso!=='' && this.nuevoscurso_capacitacion.horas_curso.trim()!==''){
 
                 if (this.curso_capacitacionEditIndex !== null) {
@@ -5661,6 +5721,10 @@ export default {
         //Otros Datos Relevantes
         // Métodos para añadir/editar Otros Datos Relevantes
         async agregarEditarOtrosDatosRelevantes() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevosotros_datos_personales.tipo_logros.trim()!=='' && this.nuevosotros_datos_personales.descripcion_logros.trim()!=='' && this.nuevosotros_datos_personales.descripcion_fracasos.trim()!==''){
 
                 if (this.otros_datos_personalesEditIndex !== null) {
@@ -5753,6 +5817,10 @@ export default {
         //Informacion de Contacto
         // Métodos para añadir/editar Informacion de Contacto
         async agregarEditarInformacionContacto() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.nuevosinformacion_contacto.referencia_nombres.trim()!=='' && this.nuevosinformacion_contacto.referencia_apellidos.trim()!=='' && this.nuevosinformacion_contacto.referencia_correo_electronico.trim()!=='' && this.nuevosinformacion_contacto.referencia_telefono.trim()!==''){
 
                 if (this.informacion_contactoEditIndex !== null) {
@@ -5930,9 +5998,9 @@ export default {
          async guardaDeclaracionPersonal(event) {
             event.preventDefault();
             const usuario = await getMe();
-            console.log(usuario);
-            this.idus = usuario.name;
-            console.log(this.idus);
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             if(this.texto.trim()!==''){
                 
                 var parametros = {
@@ -5971,6 +6039,7 @@ export default {
                     this.regresar2 = false;
                     this.mostrardelaracionpersonal = true;
                 } else {
+                    console.log("No hay datos");
                     this.isEditing7 = false;
                     this.modoedit7 = true;
                     this.regresar2 = false;
@@ -5980,7 +6049,7 @@ export default {
                 return response;
         },
         //Guardar Fomacion Academica
-        guardarFormacionAcademica(event) {
+        async guardarFormacionAcademica(event) {
             event.preventDefault();
            
             //mostraralertas2('Formación Académica Guardada','success');
@@ -6099,7 +6168,7 @@ export default {
             }
         },
         //Guardar Experiencia
-        guardaExperiencia(event) {
+        async guardaExperiencia(event) {
             event.preventDefault();
 
             //mostraralertas2('Experiencia Profesional Guardada','success');
@@ -6176,7 +6245,7 @@ export default {
             }
         },
         //Guardar Investigacion
-        guardaInvestigacion(event) {
+        async guardaInvestigacion(event) {
             event.preventDefault();
 
             //mostraralertas2('Investigaciones y Publicaciones Guardada','success');
@@ -6229,7 +6298,7 @@ export default {
                 return response;
         },
         //Guardar Idiomas
-        guardaIdiomas(event) {
+        async guardaIdiomas(event) {
             event.preventDefault();
             //mostraralertas2('Idiomas Guardados','success');
             
@@ -6281,7 +6350,7 @@ export default {
                 return response;
         },
         //Guardar Habilidades
-        guardaHabilidades(event) {
+        async guardaHabilidades(event) {
             event.preventDefault();
             //mostraralertas2('Habilidades Guardadas','success');
            
@@ -6381,7 +6450,7 @@ export default {
                 return response;
         },
         //Guardar Cursos Capacitacines
-        guardaCursosCapacitaciones(event) {
+        async guardaCursosCapacitaciones(event) {
             event.preventDefault();
            // mostraralertas2('Cursos y/o Capacitaciones Guardadas','success');
            
@@ -6435,7 +6504,7 @@ export default {
                 return response;
         },
         //Guardar Relevantes
-        guardaRelevantes(event) {
+        async guardaRelevantes(event) {
             event.preventDefault();
 
             //mostraralertas2('Logros Guardados','success');
@@ -6486,7 +6555,7 @@ export default {
                 return response;
         },
         //Guardar Contacto
-        guardaContacto(event) {
+        async guardaContacto(event) {
             event.preventDefault();
 
             //mostraralertas2('Referencias Personales Guardadas','success');
@@ -7179,8 +7248,17 @@ export default {
                 return response;
 
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no poseee información personal.");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la información personal:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
 
 
             }
@@ -7190,8 +7268,8 @@ export default {
             try {
                 const response = await axios.get(this.url2);
                 //console.log(this.estudioactualmentefacultadcarreras);
-                console.log(response);
-                console.log(this.url11);
+                //console.log(response);
+                //console.log(this.url11);
                     
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
@@ -7284,8 +7362,17 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la formación académica y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la formación académica:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Experiencias Profesionales
@@ -7350,8 +7437,17 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la experiencia profesional y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la experiencia profesional:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Investigacion y Publicaciones
@@ -7388,8 +7484,17 @@ export default {
                 return response;
 
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado investigaciones/Publicaciones y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener investigaciones/Publicaciones:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Idiomas
@@ -7426,8 +7531,17 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Idiomas y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Idiomas:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Habilidades Informaticas
@@ -7516,8 +7630,17 @@ export default {
                 return response;
 
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Habilidades y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Habilidades:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Cursos Capacitaciones
@@ -7560,8 +7683,17 @@ export default {
                 return response;
 
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Cursos y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Cursos:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Otros Datos Relevantes
@@ -7596,8 +7728,17 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Datos Relevantes y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Datos Relevantes :", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Informacion de Contacto
@@ -7634,8 +7775,17 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Información de Contacto y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Información de Contacto:", error.message);
+                }
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         //Declaracion Personal
@@ -7653,6 +7803,7 @@ export default {
                     this.us = false;
                     this.scrollToTop();
                 } else {
+                    console.log("No hay datos");
                     this.isEditing7 = false;
                     this.modoedit7 = true;
                     this.registro = false;
@@ -7660,8 +7811,19 @@ export default {
                 }
                 return response;
             } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la declaración personal y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la declaración personal:", error.message);
+                }
+
+                //console.log("El estudiante no ha llenado la declaración personal y es su primera vez.");
                 this.registro = false;
                 this.us = true;
+                return null;
             }
         },
         eliminar(id, nombre) {

@@ -221,27 +221,8 @@ export default {
     //Método para cerrar Sesión
     cerrarsesion() {
       console.clear();
-      var rol = '';
-      var email = '';
-      var id = '';
-      var name = '';
-
-      /*store.commit('setRol', this.rol);
-      store.commit('setemail', this.email);
-      store.commit('setid', this.id);
-      store.commit('setname', this.name);*/
-        // Limpiar el estado de Vuex
-      store.commit('setRol', null);
-      store.commit('setemail', null);
-      store.commit('setid', null);
-      store.commit('setname', null);
-      
-      // Limpiar localStorage
-      localStorage.removeItem('role');
-      localStorage.removeItem('email');
-      localStorage.removeItem('idusu');
-      localStorage.removeItem('name');
-      this.$router.replace('/');
+            localStorage.clear();
+            window.location.replace('/');
     },
     //Método para Ocultar el menu del Archivo Administrador.vue
     ocultar() {

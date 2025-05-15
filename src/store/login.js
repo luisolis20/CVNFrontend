@@ -26,12 +26,12 @@ export default {
         } else {
           // ✅ Aquí llamas a getMe() justo después de guardar el token
           const usuario = await getMe(); // Esto obtiene los datos del usuario autenticado desde /auth/me
-          console.log("Usuario autenticado:", usuario);
+          //console.log("Usuario autenticado:", usuario);
 
           // Redirección según el rol
           const role = response.role;
           
-         console.log(response);
+         //console.log(response);
           if (role === 'Administrador') {
             mostraralertas('Bienvenido ADMIN ' + (usuario.name || ''), 'success');
             this.$router.push('/adminus/' + usuario.id);

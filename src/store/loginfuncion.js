@@ -9,19 +9,19 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
     });
 
     if (response.data && response.data.token) {
-      // ✅ Guardar token y tipo
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("token_type", response.data.token_type || "Bearer");
+      // ✅ Guardar token y tipo en Vuex (y localStorage automáticamente)
+      store.commit("setToken", response.data.token);
+      store.commit("setTokenType", response.data.token_type || "Bearer");
 
-      // ✅ Guardar info del usuario si deseas
-      localStorage.setItem("user", JSON.stringify(response.data.user || {}));
-
-      // ✅ Opcional: usar Vuex si lo necesitas
+      // ✅ Guardar datos del usuario en Vuex
       store.commit("setRol", response.data.Rol || "");
       store.commit("setemail", response.data.email || "");
       store.commit("setid", response.data.id || "");
       store.commit("setname", response.data.name || "");
-      console.log(response.data);
+
+      // ✅ (Opcional) Guardar toda la info del usuario si la necesitas
+      localStorage.setItem("user", JSON.stringify(response.data.user || {}));
+      //console.log(response.data);
       // ✅ Guardar el token en el store  
      
       if (response.data.Rol === "Estudiante") {

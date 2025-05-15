@@ -31,7 +31,7 @@ export const getMe = async () => {
     localStorage.setItem('user', JSON.stringify(response.data));
     logged.value = true;
     user.value = response.data;
-    console.log(response.data);
+    //console.log(response.data);
     return response.data;
   } catch (error) {
     localStorage.clear();
