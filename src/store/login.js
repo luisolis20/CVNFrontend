@@ -7,7 +7,7 @@ export default {
     return {
       emaillo: "",
       clave: "",
-      url2: "http://cvubackendv2.test/api/cvn/login",
+      url2: "http://192.168.38.177/cvubackendv2/api/cvn/login",
     };
   },
   methods: {
@@ -23,31 +23,29 @@ export default {
 
         if (response.error) {
           mostraralertas(response.mensaje, 'warning');
-        } else {
+        } else if(response) {
           // ✅ Aquí llamas a getMe() justo después de guardar el token
           const usuario = await getMe(); // Esto obtiene los datos del usuario autenticado desde /auth/me
           //console.log("Usuario autenticado:", usuario);
 
           // Redirección según el rol
-          const role = response.role;
-          
+          const role = response.Rol;
+          const tok = response.token;
+          console.log(response.id);
          //console.log(response);
           if (role === 'Administrador') {
-            mostraralertas('Bienvenido ADMIN ' + (usuario.name || ''), 'success');
-            this.$router.push('/adminus/' + usuario.id);
+            mostraralertas('Bienvenido ADMIN ' + (response.name || ''), 'success');
+            this.$router.push('/adminus/' + response.id);
           } else if (role === 'Estudiante') {
             mostraralertas('Bienvenido ESTUDIANTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/user/' + response.CIInfPer);
           } else if (role === 'Docente') {
             mostraralertas('Bienvenido DOCENTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/userdocente/' + response.CIInfPer);
-          } else {
-            mostraralertas('Rol no reconocido', 'warning');
           }
         }
       } catch (error) {
-        console.error("Login error:", error);
-        mostraralertas("Error en el login", "error");
+        mostraralertas(error.response.data.mensaje, 'warning');
       }
     },
   },

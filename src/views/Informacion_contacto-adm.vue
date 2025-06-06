@@ -77,7 +77,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/informacion_contacto',
+            url255: 'http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto',
             informacion_contactos: [],
             filteredreferencias: [],
             searchQuery: '',

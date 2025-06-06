@@ -4,7 +4,7 @@ import store from "@/store";
 
 const logged = ref(false);
 const user = ref('');
-const meURL = 'http://cvubackendv2.test/api/cvn/me'; // ajusta la URL según tu backend
+const meURL = 'http://192.168.38.177/cvubackendv2/api/cvn/me'; // ajusta la URL según tu backend
 
 const apiClient = axios.create({
   baseURL: meURL,

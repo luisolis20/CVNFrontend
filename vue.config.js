@@ -20,7 +20,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.1.110/cvn',
+        target: 'http://192.168.38.177/cvubackendv2',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       },

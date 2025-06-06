@@ -3091,7 +3091,7 @@ export default {
       registro: false,
       us: true,
       //Datos Personales
-      url1: "http://cvubackendv2.test/api/cvn/v1/informacionpersonald",
+      url1: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacionpersonald",
       iddatos_personales: 0,
       datos_personales: null,
       mostrardatospersonales: true,
@@ -3111,8 +3111,8 @@ export default {
       edad: "",
 
       //Formacion Academica
-      url2: "http://cvubackendv2.test/api/cvn/v1/formacion_academica",
-      url11: "http://cvubackendv2.test/api/cvn/v1/fichasocioeconomica",
+      url2: "http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica",
+      url11: "http://192.168.38.177/cvubackendv2/api/cvn/v1/fichasocioeconomica",
       idformacion_academica: 0,
       idfichasocioeconomica: 0,
       formacion_academica: null,
@@ -3161,7 +3161,7 @@ export default {
       regresar2: false,
 
       //Experiencias Profesionales
-      url3: "http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale",
+      url3: "http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale",
       idexperiencias_profesionales: 0,
       experiencias_profesionales: null,
       mostrarexperienciasprofesionales: true,
@@ -3208,7 +3208,7 @@ export default {
 
 
       //Investigacion y publicaciones
-      url4: "http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione",
+      url4: "http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione",
       idinvestigacion_publicaciones: 0,
       investigacion_publicaciones: null,
       mostrarinvestigacionpublicaciones: true,
@@ -3227,7 +3227,7 @@ export default {
 
       regresar4: false,
       //Idioma
-      url5: "http://cvubackendv2.test/api/cvn/v1/idioma",
+      url5: "http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma",
       idlenguaje: 0,
       lenguaje: null,
       mostraridiomas: true,
@@ -3249,7 +3249,7 @@ export default {
       regresar5: false,
       archivoCertificado: null,
       //SW
-      url6: "http://cvubackendv2.test/api/cvn/v1/habilidades_informatica",
+      url6: "http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica",
       idhabilidades_informaticas: 0,
       habilidades_informaticas: null,
       mostrarsw: true,
@@ -3315,7 +3315,7 @@ export default {
 
       //Cursos Capacitaciones
       mostrarcapacitaciones: true,
-      url10: "http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion",
+      url10: "http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion",
       idcursoscapacitaciones: 0,
       curso_capacitacion: null,
       curso_capacitacionarray: [],
@@ -3337,7 +3337,7 @@ export default {
 
 
       //Datos Relevantes
-      url7: "http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante",
+      url7: "http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante",
       idotros_datos_personales: 0,
       otros_datos_personales: null,
       mostrardatosrelevantes: true,
@@ -3353,7 +3353,7 @@ export default {
 
       regresar7: false,
       //Informacion de Contacto
-      url8: "http://cvubackendv2.test/api/cvn/v1/informacion_contacto",
+      url8: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto",
       idinformacion_contacto: 0,
       informacion_contacto: null,
       mostrarinformacioncontacto: true,
@@ -3370,7 +3370,7 @@ export default {
 
       regresar8: false,
       //Declaracion Personal
-      url9: "http://cvubackendv2.test/api/cvn/v1/declaracion_personal",
+      url9: "http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal",
       iddeclaracion_personal: 0,
       declaracion_personal: null,
       mostrardelaracionpersonal: true,
@@ -4321,7 +4321,7 @@ export default {
 
           }
 
-          enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
+          enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
           this.activeTab = "formacion";
           this.mostrardelaracionpersonal = false;
           this.regresar2 = true;

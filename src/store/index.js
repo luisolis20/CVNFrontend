@@ -10,6 +10,7 @@ export default createStore({
     token_type: localStorage.getItem('token_type') || null,
   },
   getters: {
+    getIdusu: state => state.idusu,
     isAuthenticated: state => !!state.token,
     getFullToken: state => `${state.token_type} ${state.token}`,
   },

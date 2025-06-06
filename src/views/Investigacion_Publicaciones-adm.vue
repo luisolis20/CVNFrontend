@@ -79,7 +79,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione',
+            url255: 'http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione',
             investigacion_publicaciones: [],
             filteredpublicacion: [],
             searchQuery: '',

@@ -3286,7 +3286,7 @@ export default {
             registro: false,
             us: true,
             //Datos Personales
-            url1: "http://cvubackendv2.test/api/cvn/v1/informacionpersonal",
+            url1: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacionpersonal",
             iddatos_personales:0,
             datos_personales: null,
             mostrardatospersonales: true,
@@ -3306,8 +3306,8 @@ export default {
             edad: "",
 
             //Formacion Academica
-            url2: "http://cvubackendv2.test/api/cvn/v1/formacion_academica",
-            url11: "http://cvubackendv2.test/api/cvn/v1/fichasocioeconomica",
+            url2: "http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica",
+            url11: "http://192.168.38.177/cvubackendv2/api/cvn/v1/fichasocioeconomica",
             idformacion_academica:0,
             idfichasocioeconomica:0,
             formacion_academica: null,
@@ -3356,7 +3356,7 @@ export default {
             regresar2: false,
             
             //Experiencias Profesionales
-            url3: "http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale",
+            url3: "http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale",
             idexperiencias_profesionales: 0,
             experiencias_profesionales: null,
             mostrarexperienciasprofesionales: true,
@@ -3403,7 +3403,7 @@ export default {
 
 
             //Investigacion y publicaciones
-            url4: "http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione",
+            url4: "http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione",
             idinvestigacion_publicaciones: 0,
             investigacion_publicaciones: null,
             mostrarinvestigacionpublicaciones: true,
@@ -3422,7 +3422,7 @@ export default {
             
             regresar4: false,
             //Idioma
-            url5: "http://cvubackendv2.test/api/cvn/v1/idioma",
+            url5: "http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma",
             idlenguaje: 0,
             lenguaje: null,
             mostraridiomas: true,
@@ -3444,7 +3444,7 @@ export default {
             regresar5: false,
             archivoCertificado: null,
             //SW
-            url6: "http://cvubackendv2.test/api/cvn/v1/habilidades_informatica",
+            url6: "http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica",
             idhabilidades_informaticas: 0,
             habilidades_informaticas: null,
             mostrarsw: true,
@@ -3510,7 +3510,7 @@ export default {
 
             //Cursos Capacitaciones
             mostrarcapacitaciones:true,
-            url10: "http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion",
+            url10: "http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion",
             idcursoscapacitaciones: 0,
             curso_capacitacion: null,
             curso_capacitacionarray: [],
@@ -3532,7 +3532,7 @@ export default {
 
 
             //Datos Relevantes
-            url7: "http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante",
+            url7: "http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante",
             idotros_datos_personales: 0,
             otros_datos_personales: null,
             mostrardatosrelevantes: true,
@@ -3548,7 +3548,7 @@ export default {
             
             regresar7: false,
             //Informacion de Contacto
-            url8: "http://cvubackendv2.test/api/cvn/v1/informacion_contacto",
+            url8: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto",
             idinformacion_contacto: 0,
             informacion_contacto: null,
             mostrarinformacioncontacto: true,
@@ -3565,7 +3565,7 @@ export default {
 
             regresar8: false,
             //Declaracion Personal
-            url9: "http://cvubackendv2.test/api/cvn/v1/declaracion_personal",
+            url9: "http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal",
             iddeclaracion_personal: 0,
             declaracion_personal: null,
             mostrardelaracionpersonal: true,
@@ -3633,34 +3633,7 @@ export default {
     },
     mounted() {
         
-        //this.loadStylesBasedOnRole();
-        const ruta = useRoute();
-        this.idus = ruta.params.id;
-        //console.log(this.idus);
-        this.url1 += '/' + this.idus;
-        this.url2 += '/' + this.idus;
-        this.url3 += '/' + this.idus;
-        this.url4 += '/' + this.idus;
-        this.url5 += '/' + this.idus;
-        this.url6 += '/' + this.idus;
-        this.url7 += '/' + this.idus;
-        this.url8 += '/' + this.idus;
-        this.url9 += '/' + this.idus;
-        this.url10 += '/' + this.idus;
-        this.url11 += '/' + this.idus;
-        Promise.all([     
-            this.getDatosPersonales(),
-            this.getDeclaracionPersonal(),
-            this.getFormacionAcademica(),
-            this.getExperienciasProfesionales(),
-            this.getInvestigacionPublicaciones(),
-            this.getIdiomas(),
-            this.getHabilidadesInformaticas(),
-            this.getCursosCapacitaciones(),
-            this.getDatosRelevantes(),
-            this.getInformacionContacto()
-            
-        ])
+        this.Logueados();
        
     },
     computed: {
@@ -3816,6 +3789,37 @@ export default {
             console.clear();
             localStorage.clear();
             window.location.replace('/');
+        },
+        async Logueados() {
+           //this.loadStylesBasedOnRole();
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            this.url1 += '/' + this.idus;
+            this.url2 += '/' + this.idus;
+            this.url3 += '/' + this.idus;
+            this.url4 += '/' + this.idus;
+            this.url5 += '/' + this.idus;
+            this.url6 += '/' + this.idus;
+            this.url7 += '/' + this.idus;
+            this.url8 += '/' + this.idus;
+            this.url9 += '/' + this.idus;
+            this.url10 += '/' + this.idus;
+            this.url11 += '/' + this.idus;
+            Promise.all([     
+                this.getDatosPersonales(),
+                this.getDeclaracionPersonal(),
+                this.getFormacionAcademica(),
+                this.getExperienciasProfesionales(),
+                this.getInvestigacionPublicaciones(),
+                this.getIdiomas(),
+                this.getHabilidadesInformaticas(),
+                this.getCursosCapacitaciones(),
+                this.getDatosRelevantes(),
+                this.getInformacionContacto()
+                
+            ])
         },
         perfil() {
             this.editus= false;
@@ -4018,7 +4022,7 @@ export default {
                         especialidad_bachiller: this.nuevoTituloBachiller.especialidad_bachiller.trim(),
                     };
 
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica/' + this.tituloBachillerEditIndex, 'Título de Bachiller Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/' + this.tituloBachillerEditIndex, 'Título de Bachiller Actualizado con éxito');
 
                     if (response && response.data) {
                         const index = this.titulosBachiller.findIndex(titulo => titulo.idformacion_academica === this.tituloBachillerEditIndex);
@@ -4047,7 +4051,7 @@ export default {
                         
                         console.log(parametros);
                         
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica', 'Título de Bachiller Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título de Bachiller Agregado con éxito');
                     
                         this.titulosBachiller.push({ idformacion_academica: response.data.data.id, 
                             titulo_bachiller_obtenido: this.nuevoTituloBachiller.titulo_bachiller_obtenido.trim(),
@@ -4106,7 +4110,7 @@ export default {
                         
                         console.log(parametros);
                         
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica', 'Estado de estudio universitario actual almacenado');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Estado de estudio universitario actual almacenado');
                     
                         this.estudioactualtitulosUniversitarios.push({ idformacion_academica: response.data.data.id,
                             facultades_universidad: this.estudionuevoTituloUniversitario.facultades_universidad.trim(),
@@ -4144,7 +4148,7 @@ export default {
                         especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
                     };
 
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
 
                     if (response && response.data) {
                         const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === this.tituloUniversitarioEditIndex);
@@ -4173,7 +4177,7 @@ export default {
                         
                         console.log(parametros);
                         
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica', 'Título Universitario Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título Universitario Agregado con éxito');
                     
                         this.titulosUniversitarios.push({ idformacion_academica: response.data.data.id,
                                 titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
@@ -4211,7 +4215,7 @@ export default {
                         especialidad_posgrado: this.nuevoTituloPosgrado.especialidad_posgrado.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica/' + this.tituloPosgradoEditIndex, 'Título de Posgrado Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/' + this.tituloPosgradoEditIndex, 'Título de Posgrado Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === this.tituloPosgradoEditIndex);
@@ -4240,7 +4244,7 @@ export default {
                         
                         console.log(parametros);
                         
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/formacion_academica', 'Título de Posgrado Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título de Posgrado Agregado con éxito');
                        
                         this.titulosPosgrado.push({ idformacion_academica: response.data.data.id, 
                                 titulo_posgrado_obtenido: this.nuevoTituloPosgrado.titulo_posgrado_obtenido.trim(),
@@ -4298,7 +4302,7 @@ export default {
         // Métodos para eliminar títulos
         async eliminarTituloBachiller(idformacion_academica) {
             const index = this.titulosBachiller.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Bachiller','¿Realmente desea eliminar el Título de Bachiller?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Bachiller','¿Realmente desea eliminar el Título de Bachiller?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4318,7 +4322,7 @@ export default {
         },
         async eliminarTituloUniversitario32(idformacion_academica) {
             const index = this.estudioactualtitulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el estado actual de estudio universitario?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el estado actual de estudio universitario?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4334,7 +4338,7 @@ export default {
         },
         async eliminarTituloUniversitario(idformacion_academica) {
             const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el Título Universitario?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el Título Universitario?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4350,7 +4354,7 @@ export default {
         
         async eliminarTituloPosgrado(idformacion_academica) {
             const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Posgrado','¿Realmente desea eliminar el Título de Posgrado?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Posgrado','¿Realmente desea eliminar el Título de Posgrado?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4486,7 +4490,7 @@ export default {
                         logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale/' + this.cargosEmpresasEditIndex, 'Experiencia en Empresas Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale/' + this.cargosEmpresasEditIndex, 'Experiencia en Empresas Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.cargosEmpresas.findIndex(titulo => titulo.idexperiencias_profesionales === this.cargosEmpresasEditIndex);
@@ -4516,7 +4520,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale', 'Experiencia en Empresas Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale', 'Experiencia en Empresas Agregado con éxito');
                        
                         this.cargosEmpresas.push({ idexperiencias_profesionales: response.data.data.id, 
                             empresa_institucion: this.nuevocargosEmpresas.empresa_institucion.trim(),
@@ -4555,7 +4559,7 @@ export default {
                         descripcion_funciones_practicas: this.nuevocargosPasantias.descripcion_funciones_practicas.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale/' + this.cargosPasantiasEditIndex, 'Experiencias en Pasantías Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale/' + this.cargosPasantiasEditIndex, 'Experiencias en Pasantías Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === this.cargosPasantiasEditIndex);
@@ -4585,7 +4589,7 @@ export default {
                         
                         console.log(parametros);
                         
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale', 'Experiencias en Pasantías Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale', 'Experiencias en Pasantías Agregado con éxito');
                        
                         this.cargosPasantias.push({ idexperiencias_profesionales: response.data.data.id,  
                                 empresa_institucion_practicas: this.nuevocargosPasantias.empresa_institucion_practicas.trim(),
@@ -4630,7 +4634,7 @@ export default {
         // Métodos para eliminar cargos
         async eliminarSeleccionEmpresa(idexperiencias_profesionales) {
             const index = this.cargosEmpresas.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Empresa','¿Realmente desea eliminar la Experiencia Empresa?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Empresa','¿Realmente desea eliminar la Experiencia Empresa?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4645,7 +4649,7 @@ export default {
         },
         async eliminarSeleccionPracticas(idexperiencias_profesionales) {
             const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Pasantías','¿Realmente desea eliminar la Experiencia Pasantías?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Pasantías','¿Realmente desea eliminar la Experiencia Pasantías?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4716,7 +4720,7 @@ export default {
                         congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione/' + this.publicacionesEditIndex, 'Publicaciones Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione/' + this.publicacionesEditIndex, 'Publicaciones Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.publicacionesarray.findIndex(titulo => titulo.idinvestigacion_publicaciones === this.publicacionesEditIndex);
@@ -4744,7 +4748,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione', 'Publicaciones Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione', 'Publicaciones Agregada con éxito');
                        
                         this.publicacionesarray.push({ idinvestigacion_publicaciones: response.data.data.id, 
                                 publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
@@ -4778,7 +4782,7 @@ export default {
         // Métodos para eliminar cargos
         async eliminarSeleccionPublicaciones(idinvestigacion_publicaciones) {
             const index = this.publicacionesarray.findIndex(titulo => titulo.idinvestigacion_publicaciones === idinvestigacion_publicaciones);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione/',idinvestigacion_publicaciones,'Eliminar Publicación','¿Realmente desea eliminar la Publicación?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione/',idinvestigacion_publicaciones,'Eliminar Publicación','¿Realmente desea eliminar la Publicación?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -4826,7 +4830,7 @@ export default {
                         certificado: this.nuevosidiomas.certificado.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/idioma/' + this.idiomasEditIndex, 'Idioma Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma/' + this.idiomasEditIndex, 'Idioma Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.idiomasarray.findIndex(titulo => titulo.idlenguaje === this.idiomasEditIndex);
@@ -4856,7 +4860,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/idioma', 'Idioma Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma', 'Idioma Agregado con éxito');
                        
                         this.idiomasarray.push({ idlenguaje: response.data.data.id, 
                                 idioma: this.nuevosidiomas.idioma.trim(),
@@ -4891,7 +4895,7 @@ export default {
         // Métodos para eliminar idiomas
         async eliminarSeleccionIdiomas(idlenguaje) {
             const index = this.idiomasarray.findIndex(titulo => titulo.idlenguaje === idlenguaje);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/idioma/',idlenguaje,'Eliminar Idioma','¿Realmente desea eliminar el Idioma?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma/',idlenguaje,'Eliminar Idioma','¿Realmente desea eliminar el Idioma?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5038,7 +5042,7 @@ export default {
                         descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.habilidades_comunicativas_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.habilidades_comunicativas_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.habilidades_comunicativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_comunicativas_EditIndex);
@@ -5063,7 +5067,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.habilidades_comunicativas_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             habilidades_comunicativas: this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim(),
@@ -5097,7 +5101,7 @@ export default {
         // Métodos para eliminar habilidades Comunicativas
         async eliminarSeleccionHabilidadesComunicativas(idhabilidades_informaticas) {
             const index = this.habilidades_comunicativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5136,7 +5140,7 @@ export default {
                         descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.habilidades_creativas_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.habilidades_creativas_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.habilidades_creativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_creativas_EditIndex);
@@ -5161,7 +5165,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.habilidades_creativas_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             habilidades_creativas: this.nuevashabilidades_creativas.habilidades_creativas.trim(),
@@ -5193,7 +5197,7 @@ export default {
         // Métodos para eliminar habilidades Creativas
         async eliminarSeleccionHabilidadesCreativas(idhabilidades_informaticas) {
             const index = this.habilidades_creativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5232,7 +5236,7 @@ export default {
                         descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.habilidades_liderazgo_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.habilidades_liderazgo_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.habilidades_liderazgo_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_liderazgo_EditIndex);
@@ -5257,7 +5261,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.habilidades_liderazgo_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             habilidades_liderazgo: this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim(),
@@ -5289,7 +5293,7 @@ export default {
         // Métodos para eliminar habilidades Liderazgo
         async eliminarSeleccionHabilidadesLiderazgo(idhabilidades_informaticas) {
             const index = this.habilidades_liderazgo_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5328,7 +5332,7 @@ export default {
                         descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.habilidades_informaticas_cv_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.habilidades_informaticas_cv_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.habilidades_informaticas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_informaticas_cv_EditIndex);
@@ -5353,7 +5357,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.habilidades_informaticas_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim(),
@@ -5385,7 +5389,7 @@ export default {
         // Métodos para eliminar habilidades Infor_cv
         async eliminarSeleccionHabilidadesInfor_cv(idhabilidades_informaticas) {
             const index = this.habilidades_informaticas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5424,7 +5428,7 @@ export default {
                         descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.oficios_subactividades_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.oficios_subactividades_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.oficios_subactividades_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.oficios_subactividades_EditIndex);
@@ -5449,7 +5453,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.oficios_subactividades_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             oficios_subactividades: this.nuevasoficios_subactividades.oficios_subactividades.trim(),
@@ -5481,7 +5485,7 @@ export default {
         // Métodos para eliminar habilidades Oficios
         async eliminarSeleccionHabilidadesOficios(idhabilidades_informaticas) {
             const index = this.oficios_subactividades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5518,7 +5522,7 @@ export default {
                         otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/' + this.otro_habilidades_EditIndex, 'Habilidad Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/' + this.otro_habilidades_EditIndex, 'Habilidad Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.otro_habilidades_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.otro_habilidades_EditIndex);
@@ -5542,7 +5546,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.otro_habilidades_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim()});
@@ -5573,7 +5577,7 @@ export default {
         // Métodos para eliminar habilidades Otros_Oficios
         async eliminarSeleccionHabilidadesOtros_Oficios(idhabilidades_informaticas) {
             const index = this.otro_habilidades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5619,7 +5623,7 @@ export default {
                         horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion/' + this.curso_capacitacionEditIndex, 'Curso y/o Capactitación Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion/' + this.curso_capacitacionEditIndex, 'Curso y/o Capactitación Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.curso_capacitacionarray.findIndex(titulo => titulo.idcursoscapacitaciones === this.curso_capacitacionEditIndex);
@@ -5652,7 +5656,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion', 'Curso y/o Capactitación Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion', 'Curso y/o Capactitación Agregado con éxito');
                        
                         this.curso_capacitacionarray.push({ idcursoscapacitaciones: response.data.data.id, 
                                 intitucion_curso: this.nuevoscurso_capacitacion.intitucion_curso.trim(),
@@ -5690,7 +5694,7 @@ export default {
         // Métodos para eliminar Cursos Capcitaciones
         async eliminarSeleccionCursosCapacitaciones(idcursoscapacitaciones) {
             const index = this.curso_capacitacionarray.findIndex(titulo => titulo.idcursoscapacitaciones === idcursoscapacitaciones);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion/',idcursoscapacitaciones,'Eliminar Curso y/o Capacitacion','¿Realmente desea eliminar el Curso y/o Capacitacion?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion/',idcursoscapacitaciones,'Eliminar Curso y/o Capacitacion','¿Realmente desea eliminar el Curso y/o Capacitacion?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5735,7 +5739,7 @@ export default {
                         descripcion_fracasos: this.nuevosotros_datos_personales.descripcion_fracasos.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante/' + this.otros_datos_personalesEditIndex, 'Logro Actualizado con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante/' + this.otros_datos_personalesEditIndex, 'Logro Actualizado con éxito');
     
                     if (response && response.data) {
                         const index = this.otros_datos_personalesarray.findIndex(titulo => titulo.idotros_datos_personales === this.otros_datos_personalesEditIndex);
@@ -5761,7 +5765,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante', 'Logro Agregado con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante', 'Logro Agregado con éxito');
                        
                         this.otros_datos_personalesarray.push({ idotros_datos_personales: response.data.data.id, 
                                 tipo_logros: this.nuevosotros_datos_personales.tipo_logros.trim(),
@@ -5792,7 +5796,7 @@ export default {
         // Métodos para eliminar Otros Datos Relevantes
         async eliminarSeleccionOtrosDatosRelevantes(idotros_datos_personales) {
             const index = this.otros_datos_personalesarray.findIndex(titulo => titulo.idotros_datos_personales === idotros_datos_personales);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante/',idotros_datos_personales,'Eliminar Logro','¿Realmente desea eliminar el Logro?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante/',idotros_datos_personales,'Eliminar Logro','¿Realmente desea eliminar el Logro?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5832,7 +5836,7 @@ export default {
                         referencia_telefono: this.nuevosinformacion_contacto.referencia_telefono.trim(),
                     };
     
-                    const response = await enviarsolig('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/informacion_contacto/' + this.informacion_contactoEditIndex, 'Referencia Personal Actualizada con éxito');
+                    const response = await enviarsolig('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto/' + this.informacion_contactoEditIndex, 'Referencia Personal Actualizada con éxito');
     
                     if (response && response.data) {
                         const index = this.informacion_contactoarray.findIndex(titulo => titulo.idinformacion_contacto === this.informacion_contactoEditIndex);
@@ -5859,7 +5863,7 @@ export default {
                         
                         console.log(parametros);
                        
-                        const response = await enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/informacion_contacto', 'Referencia Personal Agregada con éxito');
+                        const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto', 'Referencia Personal Agregada con éxito');
                        
                         this.informacion_contactoarray.push({ idinformacion_contacto: response.data.data.id, 
                                 referencia_nombres: this.nuevosinformacion_contacto.referencia_nombres.trim(),
@@ -5891,7 +5895,7 @@ export default {
         // Métodos para eliminar Informacion de Contacto
         async eliminarSeleccionInformacionContacto(idinformacion_contacto) {
             const index = this.informacion_contactoarray.findIndex(titulo => titulo.idinformacion_contacto === idinformacion_contacto);
-            const response = await confimar('http://cvubackendv2.test/api/cvn/v1/informacion_contacto/',idinformacion_contacto,'Eliminar Referencias Personales','¿Realmente desea eliminar la Referencia Personal?');
+            const response = await confimar('http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto/',idinformacion_contacto,'Eliminar Referencias Personales','¿Realmente desea eliminar la Referencia Personal?');
 
             if (response && response.status === 200) {
                 if (index !== -1) {
@@ -5940,7 +5944,7 @@ export default {
 
             }*/
 
-            //enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/informacionpersonal', 'Datos Personales Guardados');
+            //enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/informacionpersonal', 'Datos Personales Guardados');
 
             this.activeTab = "personal";
             this.mostrardatospersonales = false;
@@ -6010,7 +6014,7 @@ export default {
     
                 }
     
-                enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
+                enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
                 this.activeTab = "formacion";
                 this.mostrardelaracionpersonal = false;
                 this.regresar2 = true;
@@ -7983,7 +7987,7 @@ export default {
 
             }
 
-            var resp = await enviarsoliedit('PUT', parametros, 'http://cvubackendv2.test/api/cvn/v1/declaracion_personal/'+this.iddeclaracion_personal, 'Resumen Actualizado');
+            var resp = await enviarsoliedit('PUT', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal/'+this.iddeclaracion_personal, 'Resumen Actualizado');
            
               this.activeTab = "formacion";
             this.mostrardelaracionpersonal = false;

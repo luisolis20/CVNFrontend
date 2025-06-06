@@ -61,7 +61,7 @@
     data(){
             return{
                 idus:0,
-                url255:'http://cvubackendv2.test/api/cvn/v1/users',
+                url255:'http://192.168.38.177/cvubackendv2/api/cvn/v1/users',
                 usuarios:null,
                 cargando:false
             }
@@ -84,7 +84,7 @@
                 );
             },
             eliminar(id,nombre){
-                confimar2('http://cvubackendv2.test/api/cvn/v1/eliminar/',id,'Deshabilitar Usuario','¿Realmente desea deshabilitar a '+nombre+'?');
+                confimar2('http://192.168.38.177/cvubackendv2/api/cvn/v1/eliminar/',id,'Deshabilitar Usuario','¿Realmente desea deshabilitar a '+nombre+'?');
                 this.getUsuarios();
                 this.cargando = false;
                 this.$router.push('/adminus/'+this.idus);
