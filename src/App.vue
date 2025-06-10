@@ -222,7 +222,7 @@ export default {
     cerrarsesion() {
       console.clear();
             localStorage.clear();
-            window.location.replace('/');
+            window.location.replace('/home');
     },
     //Método para Ocultar el menu del Archivo Administrador.vue
     ocultar() {

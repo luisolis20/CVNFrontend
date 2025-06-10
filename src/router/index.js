@@ -18,7 +18,7 @@ import Userdocente from '../views/RegistroDocente.vue'
  
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView
   },

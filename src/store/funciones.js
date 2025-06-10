@@ -113,7 +113,7 @@ export async function enviarsoliedit(metodo,parametros,url,mensaje){
   
       
       if (response.data) {
-        console.log(mensaje + ': ' + response.data.mensaje);
+        //console.log(mensaje + ': ' + response.data.mensaje);
         mostraralertas(mensaje,'success');
         
         

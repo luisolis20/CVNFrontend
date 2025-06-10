@@ -159,7 +159,10 @@
                                         v-if="this.mostrardatospersonales">
                                         <form class="row g-4 mt-5">
                                             <h3>Datos personales</h3>
-                                            <p class="text-danger text-justify">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD. Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
+                                            <p class="text-danger text-justify">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
+                                            debe dar clic en Siguiente apartado. 
+                                            Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
+                                            <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
                                             <!-- Apellido Paterno -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Apellido paterno</label>
@@ -347,13 +350,20 @@
                                         v-if="this.mostrardelaracionpersonal">
                                         <form class="row g-4 mt-5">
                                             <h3>Resumen libre del currículum</h3>
+                                            <p class="text-dark text-justify" v-if="this.modoedit7">En este apartado debes describir en 250 palabras tus intereses, 
+                                            objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. 
+                                            Incluye también tus metas a medio/largo plazo. Luego de que termines debes dar clic en el botón Guardar y Continuar</p>
+                                            <p class="text-danger text-justify" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
+                                            objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Puedes modificar lo que anteriormente
+                                            llenaste. Luego de que termines debes dar clic en el botón Actualizar y Continuar.</p>
                                             <!-- Descripción -->
                                             <div class="col-12">
                                                 <label class="text-dark" for="">Descripción</label>
                                                 <div class="input-group-icon">
                                                     <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="texto" v-model="this.texto" type="text"  @input="limitepalabras"
-                                                        placeholder="Describe en 250 palabras tus intereses, objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Incluye también tus metas a medio/largo plazo." /><span
+                                                        placeholder="Describe en 250 palabras tus intereses, objetivos, aspectos personales, peculiaridades, 
+                                                        pasatiempos u otras características importantes. Incluye también tus metas a medio/largo plazo." required/><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="far fa-envelope-open"> </i></span>
                                                 </div>
@@ -383,9 +393,12 @@
                                         role="tabpanel" aria-labelledby="nav-formacion-tab"
                                         v-if="this.mostrarformacionacademica">
                                         <form class="row g-4 mt-5">
-                                            <h3>Formación Académica</h3>
+                                            <h3>Formación Académica </h3>
+                                            <p class="text-dark text-justify">En este apartado debes añadir tu formación académica, como: estudios de bachiller, universitarios o de posgrado.
+                                            Los datos de estudios de bachiller aparecen automáticamente. Cada que llenes los datos correspondientes te aparecerá un botón para añadir tu formación académica.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Estudios de bachiller culminados -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12" v-if="this.sidatos">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" v-if="this.sidatos" id="regresarestudiosbachiller">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios de bachiller?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.estudios_bachiller_culminados"
@@ -404,7 +417,7 @@
                                             </div>
                                             <!-- Estudios BACHILLER -->
                                             <div class="col-12" v-if="this.bachiler">
-                                                <h5>Estudios de bachiller</h5>
+                                                <h5>Estudios de bachiller (<a href="#formacionacademicagaurdbachiller"> ver mis titulos de bachiller registrados )</a></h5>
                                                 
                                                 <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.tituloBachillerEditIndex }}</h5>
                                                 <p class="text-danger text-justify" v-if="this.modoedition">Para poder editar estos campos debe editarlos directamente en el SIAD</p>
@@ -467,7 +480,7 @@
                                                 </button>
                                             </div>
                                              <!-- Estudios universitarios culminados -->
-                                             <div class="col-sm-12 col-md-6 col-xl-12">
+                                             <div class="col-sm-12 col-md-6 col-xl-12"  id="registrouniversitario">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios universitarios?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.estudios_universitarios_culminados"
@@ -490,7 +503,8 @@
                                                 <label class="text-danger" for="">Usted ya ha especificado que estudia actualmente. Para volverlo a especificar diríjase a la tabla "Estado Actual de Estudio Universitario" que se encuentra más abajo y elimine lo que añadió con anterioridad.</label>
                                             </div>
                                             <div class="col-12 py-3" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Si no ha terminado sus estudios universitarios significa que sigue estudiando, seleccione su facultad y escriba el nombre de su carrera.</label>
+                                                <label class="text-dark" for="">Si no ha terminado sus estudios universitarios significa que sigue estudiando, seleccione su facultad y el nombre de su carrera.
+                                                Luego de clic en Agregar Título.</label>
                                             </div>
                                             <!-- Facultad -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandouniversidad">
@@ -507,12 +521,13 @@
                                                         <option value="FACPED">FACPED</option>
                                                         <option value="FACSOS">FACSOS</option>
                                                         <option value="FACAP">FACAP</option>
+                                                        <option value="SEDE">SEDE</option>
                                                     </select><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-print"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- Carrera Universitario -->
+                                            <!-- Titulo Universitario -->
                                             <div class="col-6" v-if="this.sigueestudiandouniversidad">
                                                 <label class="text-dark" for="">Título que Obtendrá</label>
                                                 <div class="input-group-icon">
@@ -525,19 +540,122 @@
                                                             class="fas fa-user-graduate"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- Carrera Universitario -->
-                                            <div class="col-6" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Carrera</label>
+                                            <!-- Carrera FACI -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_faci">
+                                                <label class="text-dark" for="">Carreras de FACI</label>
                                                 <div class="input-group-icon">
-                                                    
-                                                    <input class="form-control1 input-box form-voyage-control1"
-                                                        id="carrera_universidad"
-                                                        v-model="this.estudionuevoTituloUniversitario.carrera_universidad" type="text"
-                                                        placeholder="Ingrese el nombre de la carrera en la que está" /><span
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Tecnologías de la Información">Tecnologías de la Información</option>
+                                                        <option value="Química">Química</option>
+                                                        <option value="Electricidad">Electricidad</option>
+                                                        <option value="Mecánica">Mecánica</option>
+                                                    </select><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-user-graduate"> </i></span>
+                                                            class="fas fa-print"> </i></span>
                                                 </div>
                                             </div>
+                                            <!-- Carrera FACAE -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facae">
+                                                <label class="text-dark" for="">Carreras de FACAE</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Administración de Empresas">Administración de Empresas</option>
+                                                        <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                                                        <option value="Comercio">Comercio</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACPED -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facped">
+                                                <label class="text-dark" for="">Carreras de FACPED</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Educación Inicial">Educación Inicial</option>
+                                                        <option value="Educación Básica">Educación Básica</option>
+                                                        <option value="Pedagogía de la Actividad Física y del Deporte">Pedagogía de la Actividad Física y del Deporte</option>
+                                                        <option value="Pedagogía de la Lengua y Literatura">Pedagogía de la Lengua y Literatura</option>
+                                                        <option value="Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas">Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas</option>
+                                                        <option value="Pedagogía de las Ciencias Experimentales de la Química y Biología">Pedagogía de las Ciencias Experimentales de la Química y Biología</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACSOS -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facsos">
+                                                <label class="text-dark" for="">Carreras de FACSOS</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Turismo">Turismo</option>
+                                                        <option value="Sociología">Sociología</option>
+                                                        <option value="Trabajo Social">Trabajo Social</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACAP -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facap">
+                                                <label class="text-dark" for="">Carreras de FACAP</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Zootecnia">Zootecnia</option>
+                                                        <option value="Agronomía">Agronomía</option>
+                                                        <option value="Forestal">Forestal</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera SEDE -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_sede">
+                                                <label class="text-dark" for="">Carreras de SEDE</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Adm. de Empresas">Adm. de Empresas</option>
+                                                        <option value="Cont. y Auditoría">Cont. y Auditoría</option>
+                                                        <option value="TICS">TICS</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            
                                             <!-- fecha de Graduacion -->
                                             <div class="col-6" v-if="this.sigueestudiandouniversidad">
                                                 <label class="text-dark" for="">Fecha</label>
@@ -557,8 +675,12 @@
                                             </div>
                                             <!-- Estudios Universitarios -->
                                             <div class="col-12" v-if="this.univer">
-                                                <h5>Estudios Universitarios</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
+                                                <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
+                                                <p class="text-danger text-justify" v-if="!this.modoeditionformacionuniversidad">Aquí debes registrar tu título universitario obtenido, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Título Univeristario.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Título Univeristario.</p>
+                                                <h5 v-if="this.modoeditionformacionuniversidad">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
                                             </div>
                                             <!-- Titulo Universitario -->
                                             <div class="col-6" v-if="this.univer">
@@ -616,7 +738,7 @@
                                                 </button>
                                             </div>
                                             <!-- Estudios de posgrado culminados -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="registrouniversitarioposgrado">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios de posgrado?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.estudios_posgrado_culminados"
@@ -635,8 +757,12 @@
                                             </div>
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
-                                                <h5>Estudios Posgrados</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
+                                                <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
+                                                 <p class="text-danger text-justify" v-if="!this.modoeditionformacionposgrado">Aquí debes registrar tu título de posgrado obtenido, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Título de Posgrado.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Título de Posgrado.</p>
+                                                <h5 v-if="this.modoeditionformacionposgrado">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
                                             </div>
                                             <!-- Titulos Posgrado -->
                                             <div class="col-6" v-if="this.posgrado">
@@ -693,7 +819,7 @@
                                                 </button>
                                             </div>
                                             <!-- Titulos Bachiller Registrados Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="formacionacademicagaurdbachiller">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos de bachiller registrados</h5>
                                                 </div>
@@ -771,7 +897,7 @@
                                                 </div>
                                             </div>
                                             <!-- Titulos Universitarios Registrados Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="formacionacademicagaurd">
                                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos universitarios registrados</h5>
                                                 </div>
@@ -809,7 +935,7 @@
                                                 </div>
                                             </div>
                                             <!-- Titulos de Posgrado Registrados Tabla -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="formacionacademiposgrado">
                                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos de posgrado registrados</h5>
                                                 </div>
@@ -873,8 +999,11 @@
                                         v-if="this.mostrarexperienciasprofesionales">
                                         <form class="row g-4 mt-5">
                                             <h3>Experiencias Profesionales</h3>
+                                            <p class="text-dark text-justify">En este apartado debes registrar tus experiencias en empresas y tus experiencias en prácticas pre-profesionales. Cada que 
+                                            llenes los datos correspondientes te aparecerá un botón para añadir tus experiencias profesionales.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- ¿Ha trabajado en alguna empresa/institución? -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciaempresa">
                                                 <label class="text-dark" for="">¿Ha trabajado en alguna empresa/institución?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.cargos_desempenados" v-on:change="Cargos"
@@ -893,8 +1022,13 @@
                                             
                                             <!-- Empresas Institución -->
                                             <div class="col-12" v-if="this.cargos">
-                                                <h5>Empresas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.cargosEmpresasEditIndex }}</h5>
+                                                <h5>Empresas (<a href="#experienciasprofesionalesempresa"> ver mis experiencias en empresas registradas )</a></h5>
+                                                <p class="text-danger text-justify"v-if="!this.modoeditionexperienciasempresa">Aquí debes registrar tus experiencias profesionales realizadas en alguna empresa o institución, 
+                                                luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Empresa.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionexperienciasempresa">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Empresa.</p>  
+                                                <h5 v-if="this.modoeditionexperienciasempresa">Modo edición activado: id: {{ this.cargosEmpresasEditIndex }}</h5>
                                             </div>
                                             <!-- Empresa/Institución -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.cargos">
@@ -993,7 +1127,7 @@
                                                 </button>
                                             </div>
                                             <!-- ¿Ha realizado prácticas profesionales en alguna empresa/intitución? -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciapracticas">
                                                 <label class="text-dark" for="">¿Ha realizado prácticas profesionales en alguna empresa/intitución?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.practicas_profesionales"
@@ -1012,8 +1146,12 @@
                                             </div>
                                             <!-- Prácticas Preprofesionales -->
                                             <div class="col-12" v-if="this.practica">
-                                                <h5>Prácticas Preprofesionales</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.cargosPasantiasEditIndex }}</h5>
+                                                <h5>Prácticas Preprofesionales (<a href="#experienciasprofesionalespracticas"> ver mis experiencias de prácticas pre-profeionales registradas )</a></h5>
+                                                <p class="text-danger text-justify"v-if="!this.modoeditionexperienciaspracticas">Aquí debes registrar tus prácticas pre-profeionales realizadas en alguna empresa o institución, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Prácticas.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionexperienciaspracticas">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Prácticas.</p>  
+                                                <h5 v-if="this.modoeditionexperienciaspracticas">Modo Edición Activado: id: {{ this.cargosPasantiasEditIndex }}</h5>
                                             </div>
                                             <!-- Empresa/Institución -->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.practica">
@@ -1080,7 +1218,7 @@
                                                 </button>
                                             </div>
                                             <!-- Experiencias En Empresas Registrados Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="experienciasprofesionalesempresa">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Experiencias en empresas/instituciones registradas</h5>
                                                 </div>
@@ -1123,7 +1261,7 @@
                                                 </div>
                                             </div>
                                             <!-- Prácticas Profesionales Registradas Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="experienciasprofesionalespracticas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Prácticas realizadas en empresas/instituciones registradas</h5>
                                                 </div>
@@ -1190,7 +1328,11 @@
                                         v-if="this.mostrarinvestigacionpublicaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Publicaciones</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
+                                            <p class="text-danger text-justify"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Publicaciones.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Publicaciones.</p> 
+                                            <h5 v-if="this.modoeditionpublicaciones">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
                                             <!-- ¿Ha realizado algúna publicación? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Ha realizado alguna publicación?</label>
@@ -1275,9 +1417,10 @@
                                             </div>
                                             <!-- Acciones -->
                                             <div class="col-4" v-if="this.investiga">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones" v-if="isValidURL">
                                                     {{ publicacionesEditIndex !== null ? 'Editar Publicaciones' : 'Agregar Publicaciones' }}
                                                 </button>
+                                                <h6 class="text-danger" v-else>Añada el link donde se encuentra guardada para que le aparezca el botón Agregar Publicaciones</h6>
                                             </div>
                                             <!-- Publicaciones Registradas Tabla-->
                                             <div class="text-center rounded p-4">
@@ -1342,7 +1485,11 @@
                                         v-if="this.mostraridiomas">
                                         <form class="row g-4 mt-5">
                                             <h3>Idiomas</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
+                                            <p class="text-danger text-justify"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Idioma.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Idioma.</p>
+                                            <h5 v-if="this.modoeditionidiomas">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
                                             <!-- Idiomas -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Idiomas</label>
@@ -1521,9 +1668,10 @@
                                             </div>
                                             <!-- Subir certificado -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="nuevosidiomas.certificado === 'Si'">
+                                                <p class="text-danger">Esta función aún no está disponible</p>
                                                 <div class="input-group-icon">
-                                                    <label for="archivoCertificado">Subir certificado (PDF):</label>
-                                                    <input type="file" id="archivoCertificado"  class="form-control1 input-box" @change="handleFileUpload" accept=".pdf">
+                                                    <label class="text-dark" for="archivoCertificado">Subir certificado (PDF):</label>
+                                                    <input type="file" id="archivoCertificado"  class="form-control1 input-box" @change="handleFileUpload" accept=".pdf" disabled>
                                                 </div>
                                             </div>
                                             <!-- Acciones -->
@@ -1604,9 +1752,12 @@
                                         v-if="this.mostrarsw">
                                         <form class="row g-4 mt-5">
                                             <h3>Habilidades </h3>
-                                            
+                                            <p class="text-dark text-justify">En este apartado debes registrar tus habilidades, ya sean: comunicativas, creativas
+                                            de liderazgo, infromáticas, algún oficio/subactividades u otro tipo de hablidad que poseas. Cada que 
+                                            llenes los datos correspondientes te aparecerá un botón para añadir tus habilidades.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Habilidades comunicativas-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadescomunicativas">
                                                 <label class="text-dark" for="">¿Posee habilidades comunicativas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_comunicacion"
@@ -1626,8 +1777,12 @@
                                             
                                             <!-- Habilidades Comunicativas-->
                                             <div class="col-12" v-if="this.comunicativas">
-                                                <h5>Habilidades Comunicativas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_comunicativas_EditIndex }}</h5>
+                                                <h5>Habilidades Comunicativas (<a href="#tablahabilidadescomunicativas"> ver mis habilidades comunicativas registradas )</a></h5>
+                                                <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadescomuni">Aquí debes seleccionar tu habilidad comunicativa que poseas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadescomuni">Esta es tu habilidad comunicativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadescomuni">Modo edición activado: id: {{ this.habilidades_comunicativas_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Comunicativas-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.comunicativas">
@@ -1674,7 +1829,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Creativas-->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarhabilidadescreativas">
                                                 <label class="text-dark" for="">¿Posee habilidades creativas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_creacion"
@@ -1693,8 +1848,12 @@
                                             </div>
                                             <!-- Selección Habilidades Creativa-->
                                             <div class="col-12" v-if="this.creativas">
-                                                <h5>Habilidades creativas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_creativas_EditIndex }}</h5>
+                                                <h5>Habilidades creativas (<a href="#tablahabilidadescreativas"> ver mis habilidades creativas registradas )</a></h5>
+                                                <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadescreative">Aquí debes seleccionar tu habilidad creativa que poseas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadescreative">Esta es tu habilidad creativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadescreative">Modo edición activado: id: {{ this.habilidades_creativas_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Creativa-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.creativas">
@@ -1722,7 +1881,7 @@
                                             </div> 
                                             <!--Descripción Habilidades Creativas-->       
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.creativas">
-                                                    <label class="text-dark" for="">Descripción de la habilidad comunicativa</label>
+                                                    <label class="text-dark" for="">Descripción de la habilidad creativa</label>
                                                     <div class="input-group-icon">
                                                         
                                                         <textarea class="form-control1 input-box form-voyage-control1" rows="4"
@@ -1739,7 +1898,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Liderazgo-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesliderazgo">
                                                 <label class="text-dark" for="">¿Posee habilidades de liderazgo?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_liderazgo"
@@ -1758,8 +1917,12 @@
                                             </div>
                                             <!-- Selección Habilidades Liderazgo-->
                                             <div class="col-12" v-if="this.liderazgo">
-                                                <h5>Habilidades de liderazgo</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_liderazgo_EditIndex }}</h5>
+                                                <h5>Habilidades de liderazgo (<a href="#tablahabilidadesliderazgo"> ver mis habilidades de liderazgo registradas )</a></h5>
+                                                 <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadeslidel">Aquí debes seleccionar tu habilidad de liderazgo que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadeslidel">Esta es tu habilidad de liderazgo llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadeslidel">Modo edición activado: id: {{ this.habilidades_liderazgo_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Liderazgo-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.liderazgo">
@@ -1807,7 +1970,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Informaticas Cv-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesinformaticas">
                                                 <label class="text-dark" for="">¿Posee habilidades informáticas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_informaticos_cv"
@@ -1826,8 +1989,12 @@
                                             </div>
                                             <!-- Selección Habilidades Informaticas-->
                                             <div class="col-12" v-if="this.informaticas_cv">
-                                                <h5>Habilidades informaticas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_informaticas_cv_EditIndex }}</h5>
+                                                <h5>Habilidades informaticas (<a href="#tablahabilidadesinformaticas"> ver mis habilidades informáticas registradas )</a></h5>
+                                                 <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadesinformaticas">Aquí debes seleccionar tu habilidad informática que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadesinformaticas">Esta es tu habilidad informática llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesinformaticas">Modo edición activado: id: {{ this.habilidades_informaticas_cv_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Informaticas-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.informaticas_cv">
@@ -1872,7 +2039,7 @@
                                                 </button>
                                             </div>
                                              <!-- Habilidades Oficios-->
-                                             <div class="col-sm-12 col-md-12 col-xl-12">
+                                             <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesoficoo">
                                                 <label class="text-dark" for="">¿Realiza algún oficio/subactividad?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_oficios"
@@ -1891,8 +2058,12 @@
                                             </div>
                                             <!-- Selección Habilidades Oficios-->
                                             <div class="col-12" v-if="this.oficios">
-                                                <h5>Oficio/Subactividad</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.oficios_subactividades_EditIndex }}</h5>
+                                                <h5>Oficio/Subactividad (<a href="#tablahabilidadesoficios"> ver mis oficios/subactividades registradas )</a></h5>
+                                                 <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadesoficio">Aquí debes seleccionar otro oficio/sub-actividad que realices, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadesoficio">Esta es tu oficio/sub-actividad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesoficio">Modo edición activado: id: {{ this.oficios_subactividades_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Oficios-->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.oficios">
@@ -1950,7 +2121,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Otros Oficios-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesotros">
                                                 <label class="text-dark" for="">¿Tiene alguna otra habilidad, ya sea interpersonal o profesional?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_otros_habi"
@@ -1969,8 +2140,12 @@
                                             </div>
                                             <!-- Selección Habilidades Otros-->
                                             <div class="col-12" v-if="this.otro_habili">
-                                                <h5>Habilidades Interpersonales</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.otro_habilidades_EditIndex }}</h5>
+                                                <h5>Habilidades Interpersonales (<a href="#tablahabilidadesotros"> ver mis otras habilidades registradas )</a></h5>
+                                                 <p class="text-danger text-justify"v-if="!this.modoeditionhabilidadesotro">Aquí debes registrar tu otra hablidad que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionhabilidadesotro">Esta es tu otra hablidad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesotro">Modo edición activado: id: {{ this.otro_habilidades_EditIndex }}</h5>
                                             </div>
                                             <!--Descripción Habilidades Otros-->       
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.otro_habili">
@@ -1991,7 +2166,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Comunicativas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadescomunicativas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Comunicativas Registradas </h5>
                                                 </div>
@@ -2026,7 +2201,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Creativas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadescreativas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Creativas Registradas </h5>
                                                 </div>
@@ -2061,7 +2236,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Liderazgo Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesliderazgo">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades de Liderazgo Registradas </h5>
                                                 </div>
@@ -2096,7 +2271,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Informáticas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesinformaticas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Informáticas Registradas </h5>
                                                 </div>
@@ -2131,7 +2306,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Oficios Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesoficios">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Oficios/Subactividades Registradas </h5>
                                                 </div>
@@ -2166,7 +2341,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Otros Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesotros">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Otras Habilidades Registradas </h5>
                                                 </div>
@@ -2225,8 +2400,12 @@
                                         v-if="this.mostrarcapacitaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Cursos</h3>
+                                             <p class="text-danger text-justify"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Curso.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditioncursos">Esta es tu información de cursos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Curso.</p>
                                             <!-- edicion -->
-                                            <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
+                                            <h5 v-if="this.modoeditioncursos">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
                                             <div class="col-sm-12 col-md-12 col-xl-12">
                                                 <label class="text-dark" for="">Nombre de la institución</label>
                                                 <div class="input-group-icon">
@@ -2474,14 +2653,18 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <!-- Otros datos Relevantes -->
+                                    <!-- Logros -->
                                     <div class="tab-pane fade"
                                         :class="{ 'show active': this.activeTab === 'relevantes' }" id="nav-relevante"
                                         role="tabpanel" aria-labelledby="nav-relevante-tab"
                                         v-if="this.mostrardatosrelevantes">
                                         <form class="row g-4 mt-5">
                                             <h3>Logros Obtenidos</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
+                                             <p class="text-danger text-justify"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Logros.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Logros.</p>
+                                            <h5 v-if="this.modoeditionlogros">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Tipo de logro obtenido</label>
                                                 <div class="input-group-icon">
@@ -2589,7 +2772,11 @@
                                         v-if="this.mostrarinformacioncontacto">
                                         <form class="row g-4 mt-5">
                                             <h3>Referencias Personales</h3>
-                                            <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
+                                            <p class="text-danger text-justify"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Referencia.</p>
+                                                <p class="text-danger text-justify" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Referencia.</p>
+                                            <h5 v-if="this.modoeditionreferencias">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
                                             <label for="" class="text-dark">Agregue Máximo 3 Referencias Personales</label>
                                             <div class="col-6">
                                                 <label for="" class="text-dark">Nombres</label>
@@ -2636,7 +2823,7 @@
                                                 </div>
                                                 
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-4" v-if="!correoErrornue">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarInformacionContacto">
                                                     {{ informacion_contactoEditIndex !== null ? 'Editar Referencia' : 'Agregar Referencia' }}
                                                 </button>
@@ -2733,12 +2920,90 @@
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
-                                <div class="custom-btn-group mt-4">
+                                <div class="custom-btn-group mt-4" v-if="!this.descargando">
 
                                     <a href="#" class="btn button custom-btn custom-btn-bg custom-btn-link" @click="downloadCV"><i
                                             class='uil uil-file-alt'></i>Descargar CV
                                     </a>
                                 </div>
+                                <!--<div id="deadline" v-if="!this.descargando">
+                                    <svg preserveAspectRatio="none" id="line" viewBox="0 0 581 158">
+                                        <g id="fire">
+                                        <rect id="mask-fire-black" x="511" y="41" width="38" height="34"/>
+                                        <g>
+                                            <defs>
+                                            <rect id="mask_fire" x="511" y="41" width="38" height="34"/>
+                                            </defs>
+                                            <clipPath id="mask-fire_1_">
+                                            <use xlink:href="#mask_fire"  overflow="visible"/>
+                                            </clipPath>
+                                            <g id="group-fire" clip-path="url(#mask-fire_1_)">
+                                            <path id="red-flame" fill="#B71342" d="M528.377,100.291c6.207,0,10.947-3.272,10.834-8.576 c-0.112-5.305-2.934-8.803-8.237-10.383c-5.306-1.581-3.838-7.9-0.79-9.707c-7.337,2.032-7.581,5.891-7.11,8.238 c0.789,3.951,7.56,4.402,5.077,9.48c-2.482,5.079-8.012,1.129-6.319-2.257c-2.843,2.233-4.78,6.681-2.259,9.703 C521.256,98.809,524.175,100.291,528.377,100.291z"/>
+                                            <path id="yellow-flame" opacity="0.71" fill="#F7B523" d="M528.837,100.291c4.197,0,5.108-1.854,5.974-5.417 c0.902-3.724-1.129-6.207-5.305-9.931c-2.396-2.137-1.581-4.176-0.565-6.32c-4.401,1.918-3.384,5.304-2.482,6.658 c1.511,2.267,2.099,2.364,0.42,5.8c-1.679,3.435-5.42,0.764-4.275-1.527c-1.921,1.512-2.373,4.04-1.528,6.563 C522.057,99.051,525.994,100.291,528.837,100.291z"/>
+                                            <path id="white-flame" opacity="0.81" fill="#FFFFFF" d="M529.461,100.291c-2.364,0-4.174-1.322-4.129-3.469 c0.04-2.145,1.117-3.56,3.141-4.198c2.022-0.638,1.463-3.195,0.302-3.925c2.798,0.821,2.89,2.382,2.711,3.332 c-0.301,1.597-2.883,1.779-1.938,3.834c0.912,1.975,3.286,0.938,2.409-0.913c1.086,0.903,1.826,2.701,0.864,3.924 C532.18,99.691,531.064,100.291,529.461,100.291z"/>
+                                            </g>
+                                        </g>
+                                        </g>
+                                        <g id="progress-trail">
+                                        <path fill="#FFFFFF" d="M491.979,83.878c1.215-0.73-0.62-5.404-3.229-11.044c-2.583-5.584-5.034-10.066-7.229-8.878
+                                                                c-2.854,1.544-0.192,6.286,2.979,11.628C487.667,80.917,490.667,84.667,491.979,83.878z"/>
+                                        <path fill="#FFFFFF" d="M571,76v-5h-23.608c0.476-9.951-4.642-13.25-4.642-13.25l-3.125,4c0,0,3.726,2.7,3.625,5.125
+                                                                c-0.071,1.714-2.711,3.18-4.962,4.125H517v5h10v24h-25v-5.666c0,0,0.839,0,2.839-0.667s6.172-3.667,4.005-6.333
+                                                                s-7.49,0.333-9.656,0.166s-6.479-1.5-8.146,1.917c-1.551,3.178,0.791,5.25,5.541,6.083l-0.065,4.5H16c-2.761,0-5,2.238-5,5v17
+                                                                c0,2.762,2.239,5,5,5h549c2.762,0,5-2.238,5-5v-17c0-2.762-2.238-5-5-5h-3V76H571z"/>
+                                        <path fill="#FFFFFF" d="M535,65.625c1.125,0.625,2.25-1.125,2.25-1.125l11.625-22.375c0,0,0.75-0.875-1.75-2.125
+                                                                s-3.375,0.25-3.375,0.25s-8.75,21.625-9.875,23.5S533.875,65,535,65.625z"/>
+                                        </g>
+                                        <g>
+                                        <defs>
+                                            <path id="SVGID_1_" d="M484.5,75.584c-3.172-5.342-5.833-10.084-2.979-11.628c2.195-1.188,4.646,3.294,7.229,8.878
+                                                                c2.609,5.64,4.444,10.313,3.229,11.044C490.667,84.667,487.667,80.917,484.5,75.584z M571,76v-5h-23.608
+                                                                c0.476-9.951-4.642-13.25-4.642-13.25l-3.125,4c0,0,3.726,2.7,3.625,5.125c-0.071,1.714-2.711,3.18-4.962,4.125H517v5h10v24h-25
+                                                                v-5.666c0,0,0.839,0,2.839-0.667s6.172-3.667,4.005-6.333s-7.49,0.333-9.656,0.166s-6.479-1.5-8.146,1.917
+                                                                c-1.551,3.178,0.791,5.25,5.541,6.083l-0.065,4.5H16c-2.761,0-5,2.238-5,5v17c0,2.762,2.239,5,5,5h549c2.762,0,5-2.238,5-5v-17
+                                                                c0-2.762-2.238-5-5-5h-3V76H571z M535,65.625c1.125,0.625,2.25-1.125,2.25-1.125l11.625-22.375c0,0,0.75-0.875-1.75-2.125
+                                                                s-3.375,0.25-3.375,0.25s-8.75,21.625-9.875,23.5S533.875,65,535,65.625z"/>
+                                        </defs>
+                                        <clipPath id="SVGID_2_">
+                                            <use xlink:href="#SVGID_1_"  overflow="visible"/>
+                                        </clipPath>
+                                        <rect id="progress-time-fill" x="-100%" y="34" clip-path="url(#SVGID_2_)" fill="#BE002A" width="586" height="103"/>
+                                        </g>
+                                    
+                                        <g id="death-group">
+                                        <path id="death" fill="#BE002A" d="M-46.25,40.416c-5.42-0.281-8.349,3.17-13.25,3.918c-5.716,0.871-10.583-0.918-10.583-0.918
+                                                                            C-67.5,49-65.175,50.6-62.083,52c5.333,2.416,4.083,3.5,2.084,4.5c-16.5,4.833-15.417,27.917-15.417,27.917L-75.5,84.75
+                                                                            c-1,12.25-20.25,18.75-20.25,18.75s39.447,13.471,46.25-4.25c3.583-9.333-1.553-16.869-1.667-22.75
+                                                                            c-0.076-3.871,2.842-8.529,6.084-12.334c3.596-4.22,6.958-10.374,6.958-15.416C-38.125,43.186-39.833,40.75-46.25,40.416z
+                                                                            M-40,51.959c-0.882,3.004-2.779,6.906-4.154,6.537s-0.939-4.32,0.112-7.704c0.82-2.64,2.672-5.96,3.959-5.583
+                                                                            C-39.005,45.523-39.073,48.8-40,51.959z"/>
+                                        <path id="death-arm" fill="#BE002A" d="M-53.375,75.25c0,0,9.375,2.25,11.25,0.25s2.313-2.342,3.375-2.791
+                                                                                c1.083-0.459,4.375-1.75,4.292-4.75c-0.101-3.627,0.271-4.594,1.333-5.043c1.083-0.457,2.75-1.666,2.75-1.666
+                                                                                s0.708-0.291,0.5-0.875s-0.791-2.125-1.583-2.959c-0.792-0.832-2.375-1.874-2.917-1.332c-0.542,0.541-7.875,7.166-7.875,7.166
+                                                                                s-2.667,2.791-3.417,0.125S-49.833,61-49.833,61s-3.417,1.416-3.417,1.541s-1.25,5.834-1.25,5.834l-0.583,5.833L-53.375,75.25z"/>
+                                        <path id="death-tool" fill="#BE002A" d="M-20.996,26.839l-42.819,91.475l1.812,0.848l38.342-81.909c0,0,8.833,2.643,12.412,7.414
+                                                                                c5,6.668,4.75,14.084,4.75,14.084s4.354-7.732,0.083-17.666C-10,32.75-19.647,28.676-19.647,28.676l0.463-0.988L-20.996,26.839z"/>
+                                        </g>
+                                        <path id="designer-body" fill="#FEFFFE" d="M514.75,100.334c0,0,1.25-16.834-6.75-16.5c-5.501,0.229-5.583,3-10.833,1.666
+                                                                                c-3.251-0.826-5.084-15.75-0.834-22c4.948-7.277,12.086-9.266,13.334-7.833c2.25,2.583-2,10.833-4.5,14.167
+                                                                                c-2.5,3.333-1.833,10.416,0.5,9.916s8.026-0.141,10,2.25c3.166,3.834,4.916,17.667,4.916,17.667l0.917,2.5l-4,0.167L514.75,100.334z
+                                                                                "/>
+                                    
+                                        <circle id="designer-head" fill="#FEFFFE" cx="516.083" cy="53.25" r="6.083"/>
+                                    
+                                        <g id="designer-arm-grop">
+                                        <path id="designer-arm" fill="#FEFFFE" d="M505.875,64.875c0,0,5.875,7.5,13.042,6.791c6.419-0.635,11.833-2.791,13.458-4.041s2-3.5,0.25-3.875
+                                                                                    s-11.375,5.125-16,3.25c-5.963-2.418-8.25-7.625-8.25-7.625l-2,1.125L505.875,64.875z"/>
+                                        <path id="designer-pen" fill="#FEFFFE" d="M525.75,59.084c0,0-0.423-0.262-0.969,0.088c-0.586,0.375-0.547,0.891-0.547,0.891l7.172,8.984l1.261,0.453
+                                                                                    l-0.104-1.328L525.75,59.084z"/>
+                                        </g>
+                                    </svg>
+                                    
+                                    <div class="deadline-days">
+                                        Deadline <span class="day">7</span> <span class="days">days</span>
+                                    </div>
+                                
+                                </div>-->
                             </div>
                         </div>
                         <!-- 
@@ -2783,6 +3048,7 @@
                                             <img src="@/assets/images/icons/si-1.png" alt="">
                                         </div>
                                         <h4>Mis Datos Personales</h4>
+                                        
                                         <p>Número de Cédula: {{ this.CIInfPer }}</p>
                                         <p>Nombres y Apellidos: {{ this.NombInfPer }} {{ this.ApellInfPer }} {{ this.ApellMatInfPer }} </p>
                                         <p>Nacionalidad: {{ this.NacionalidadPer }} </p>
@@ -2802,10 +3068,10 @@
                                         <h4>Referencias Personales</h4>
                                         <div v-if="informacion_contactoarray.length > 0">
                                             <div v-for="(reffe, index) in informacion_contactoarray" :key="index">
-                                                <p class="text-center">Referencia Nº {{ index+1 }} </p>
+                                                <b class="text-dark aling-items-center">Referencia Nº {{ index+1 }} </b>
                                                 <p>Nombres y Apellidos: {{ reffe.referencia_nombres }} {{ reffe.referencia_apellidos }}</p>
                                                 <p>Correo Elecctrónico: {{ reffe.referencia_correo_electronico }}</p>
-                                                <p>Teléfono: {{ reffe.referencia_telefono }}</p>
+                                                <p>Teléfono: {{ reffe.referencia_telefono }}</p><br>
                                             </div>
                                         </div>
                                         <div v-else>
@@ -2824,10 +3090,10 @@
                                         <h4>Logros Obtenidos</h4>
                                         <div v-if="otros_datos_personalesarray.length > 0">
                                             <div v-for="(logro, index) in otros_datos_personalesarray" :key="index">
-                                                <p class="">*Logro Nº {{ index+1 }} </p>
+                                                <b class="text-dark">Logro Nº {{ index+1 }} </b>
                                                 <p>Tipo de Logro: {{ logro.tipo_logros }}</p>
                                                 <p>Decripción del Logro: {{ logro.descripcion_logros }}</p>
-                                                <p>Decripción de Fracasos: {{ logro.descripcion_fracasos }}</p>
+                                                <p>Decripción de Fracasos: {{ logro.descripcion_fracasos }}</p><br>
                                             </div>
                                         </div>
                                         <div v-else>
@@ -3263,6 +3529,7 @@ export default {
             editingIndex: null,
             logueado:null,
             editingIndex2: null,
+            descargando: false,
             sigueestudiandouniversidad: false,
             mensajenuevo: false,
             estudioactualtitulosUniversitarios: [],
@@ -3314,7 +3581,7 @@ export default {
             mostrarformacionacademica: true,
             univer: false,
             posgrado: false,
-            modoedition: false,
+            
             bachiler: false,
             sidatos: true,
             mostraridformacion_academica: false,
@@ -3628,6 +3895,30 @@ export default {
             isValidURL: false,
             correoErrornue: false,
             telfErrornue: false,
+            facultadcarreraselected_faci: false,
+            facultadcarreraselected_facae: false,
+            facultadcarreraselected_facsos: false,
+            facultadcarreraselected_facped: false,
+            facultadcarreraselected_facap: false,
+            facultadcarreraselected_sede: false,
+            //modo edicion:
+            modoeditionformacionuniversidad: false,
+            modoeditionformacionposgrado: false,
+            modoeditionexperienciasempresa: false,
+            modoeditionexperienciaspracticas: false,
+            modoeditioncursos: false,
+            modoeditionpublicaciones: false,
+            modoeditionidiomas: false,
+            modoeditionhabilidadescomuni: false,
+            modoeditionhabilidadescreative: false,
+            modoeditionhabilidadeslidel: false,
+            modoeditionhabilidadesinformaticas: false,
+            modoeditionhabilidadesoficio: false,
+            modoeditionhabilidadesotro: false,
+            modoeditioncursos: false,
+            modoeditionlogros: false,
+            modoeditionreferencias: false,
+
 
         };
     },
@@ -3788,7 +4079,7 @@ export default {
         cerrarsesion() {
             console.clear();
             localStorage.clear();
-            window.location.replace('/');
+            window.location.replace('/home');
         },
         async Logueados() {
            //this.loadStylesBasedOnRole();
@@ -4004,7 +4295,49 @@ export default {
                 this.bachiler = false;
             }
         },
-       
+        //Scroll to top tabla TItulos Universitarios
+        scrollToTopTituloUniversitarios() {
+            const target = document.getElementById("formacionacademicagaurd");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Universitarios
+        scrollToTopRegresarTituloUniversitarios() {
+            const target = document.getElementById("registrouniversitario");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla TItulos Bachiller
+        scrollToTopTituloBechiller() {
+            const target = document.getElementById("formacionacademicagaurdbachiller");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Bachiller
+        scrollToTopRegresarTituloBechiller() {
+            const target = document.getElementById("regresarestudiosbachiller");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+         //Scroll to top tabla TItulos Posgrado
+        scrollToTopTituloPosgrado() {
+            const target = document.getElementById("formacionacademiposgrado");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Posgrado
+        scrollToTopRegresarTituloPosgrado() {
+            const target = document.getElementById("registrouniversitarioposgrado");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+
         // Métodos para añadir/editar títulos
         async agregarEditarTituloBachiller() {
             const usuario = await getMe();
@@ -4033,9 +4366,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.tituloBachillerEditIndex = null;
-                    this.modoedition=false;
+                    //this.modoedition=false;
                     this.resetNuevoTituloBachiller();
-                    this.scrollToTop();
+                    this.scrollToTopTituloBechiller();
                 } else {
                 
                     try {
@@ -4049,7 +4382,7 @@ export default {
                             };
                             
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                         
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título de Bachiller Agregado con éxito');
                     
@@ -4059,7 +4392,7 @@ export default {
                             fecha_graduacion_bachiller: this.nuevoTituloBachiller.fecha_graduacion_bachiller.trim(),
                             especialidad_bachiller: this.nuevoTituloBachiller.especialidad_bachiller.trim()});
                         this.resetNuevoTituloBachiller();
-                        this.scrollToTop();
+                        this.scrollToTopTituloBechiller();
                         if(this.titulosBachiller.length > 0){
                             this.sidatos=false;
                         }else{
@@ -4082,10 +4415,57 @@ export default {
         EstudioacctualCarg(){
             if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACI'){
                 this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing."
+                this.facultadcarreraselected_faci = true;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+
             }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACAP'){
-                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing."
-            }else{
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing.";
+                this.facultadcarreraselected_facap = true;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACPED'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic.";
+                this.facultadcarreraselected_facped = true;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACAE'){
                 this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic."
+                this.facultadcarreraselected_facae = true;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACSOS'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic."
+                this.facultadcarreraselected_facsos = true;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='SEDE'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing."
+                this.facultadcarreraselected_sede = true;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
             }
             this.estudionuevoTituloUniversitario.fechaestudioactual = new Date().toISOString().split('T')[0];
         },
@@ -4108,7 +4488,7 @@ export default {
                             };
                             
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                         
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Estado de estudio universitario actual almacenado');
                     
@@ -4132,6 +4512,7 @@ export default {
             }
            
         },
+        //Titulo Universitario
         async agregarEditarTituloUniversitario() {
             const usuario = await getMe();
             //console.log(usuario);
@@ -4159,9 +4540,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.tituloUniversitarioEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionformacionuniversidad=false;
                     this.resetNuevoTituloUniversitario();
-                    this.scrollToTop();
+                    this.scrollToTopTituloUniversitarios();
                 } else {
                 
                     try {
@@ -4175,7 +4556,7 @@ export default {
                             };
                             
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                         
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título Universitario Agregado con éxito');
                     
@@ -4185,7 +4566,7 @@ export default {
                                 fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
                                 especialidad: this.nuevoTituloUniversitario.especialidad.trim()});
                         this.resetNuevoTituloUniversitario();
-                        this.scrollToTop();
+                        this.scrollToTopTituloUniversitarios();
                         
                         
                         
@@ -4226,9 +4607,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.tituloPosgradoEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionformacionposgrado=false;
                     this.resetNuevoTituloPosgrado();
-                    this.scrollToTop();
+                    this.scrollToTopTituloPosgrado();
                 } else {
                    
                     try {
@@ -4242,7 +4623,7 @@ export default {
                             };
                             
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                         
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica', 'Título de Posgrado Agregado con éxito');
                        
@@ -4252,7 +4633,7 @@ export default {
                                 fecha_graduacion_posgrado: this.nuevoTituloPosgrado.fecha_graduacion_posgrado.trim(),
                                 especialidad_posgrado: this.nuevoTituloPosgrado.especialidad_posgrado.trim()});
                         this.resetNuevoTituloPosgrado();
-                        this.scrollToTop();
+                        this.scrollToTopTituloPosgrado();
     
                     } catch (error) {
                         console.log(error)
@@ -4271,8 +4652,8 @@ export default {
             if (index !== -1) {
                 this.nuevoTituloBachiller = { ...this.titulosBachiller[index] };
                 this.tituloBachillerEditIndex = idformacion_academica;
-                this.modoedition=true;
-                this.scrollToTop();
+                //this.modoedition=true;
+                this.scrollToTopRegresarTituloBechiller();
             }
         },
         editarTituloUniversitario(idformacion_academica) {
@@ -4283,8 +4664,8 @@ export default {
             if (index !== -1) {
                 this.nuevoTituloUniversitario = { ...this.titulosUniversitarios[index] };
                 this.tituloUniversitarioEditIndex = idformacion_academica;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionformacionuniversidad=true;
+                this.scrollToTopRegresarTituloUniversitarios();
             }
         },
         editarTituloPosgrado(idformacion_academica) {
@@ -4295,8 +4676,8 @@ export default {
             if (index !== -1) {
                 this.nuevoTituloPosgrado = { ...this.titulosPosgrado[index] };
                 this.tituloPosgradoEditIndex = idformacion_academica;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionformacionposgrado=true;
+                this.scrollToTopRegresarTituloPosgrado();
             }
         },
         // Métodos para eliminar títulos
@@ -4318,7 +4699,7 @@ export default {
             }
             this.resetNuevoTituloBachiller();
             this.scrollToTop();
-            this.modoedition=false;
+            //this.modoedition=false;
         },
         async eliminarTituloUniversitario32(idformacion_academica) {
             const index = this.estudioactualtitulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
@@ -4333,7 +4714,7 @@ export default {
             }
             this.resetNuevoTituloUniversitario22();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionformacionuniversidad=false;
             this.mensajenuevo= false;
         },
         async eliminarTituloUniversitario(idformacion_academica) {
@@ -4349,7 +4730,7 @@ export default {
             }
             this.resetNuevoTituloUniversitario();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionformacionuniversidad=false;
         },
         
         async eliminarTituloPosgrado(idformacion_academica) {
@@ -4365,7 +4746,7 @@ export default {
             }
             this.resetNuevoTituloPosgrado();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionformacionposgrado=false;
         },
         // Restablecer objetos de nuevos títulos
         resetNuevoTituloBachiller() {
@@ -4383,6 +4764,12 @@ export default {
             
             this.estudios_universitarios_culminados = "";
             this.sigueestudiandouniversidad=false;
+            this.facultadcarreraselected_sede = false;
+            this.facultadcarreraselected_faci = false;
+            this.facultadcarreraselected_facap = false;
+            this.facultadcarreraselected_facped = false;
+            this.facultadcarreraselected_facae = false;
+            this.facultadcarreraselected_facsos = false;
             this.Titulouni();
            
             this.estudionuevoTituloUniversitario = {
@@ -4471,6 +4858,33 @@ export default {
         },
 
         // Métodos para añadir/editar experiencias
+        //Scroll to top tabla Experiencias Empresas
+        scrollToTopExperienciasEmpresas() {
+            const target = document.getElementById("experienciasprofesionalesempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Experiencias Practicas
+        scrollToTopRegresarExperienciasEmpresas() {
+            const target = document.getElementById("regresarexperienciaempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        scrollToTopExperienciasPracticas() {
+            const target = document.getElementById("experienciasprofesionalesempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Experiencias Practicas
+        scrollToTopRegresarExperienciasPracticas() {
+            const target = document.getElementById("experienciasprofesionalespracticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
         async agregarEditarEmpresa() {
             const usuario = await getMe();
             //console.log(usuario);
@@ -4501,9 +4915,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.cargosEmpresasEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionexperienciasempresa=false;
                     this.resetNuevoEmpresa();
-                    this.scrollToTop();
+                    this.scrollToTopExperienciasEmpresas();
                 } else {
                     try {
     
@@ -4518,7 +4932,7 @@ export default {
                                 logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale', 'Experiencia en Empresas Agregado con éxito');
                        
@@ -4530,7 +4944,7 @@ export default {
                             descripcion_funciones_empresa: this.nuevocargosEmpresas.descripcion_funciones_empresa.trim(),
                             logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim()});
                         this.resetNuevoEmpresa();
-                        this.scrollToTop();
+                        this.scrollToTopExperienciasEmpresas();
                         
                     } catch (error) {
                         console.log(error)
@@ -4570,9 +4984,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.cargosPasantiasEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionexperienciaspracticas=false;
                     this.resetNuevoPracticas();
-                    this.scrollToTop();
+                    this.scrollToTopExperienciasPracticas();
                 } else {
                    
                     try {
@@ -4587,7 +5001,7 @@ export default {
                             };
                             
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                         
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale', 'Experiencias en Pasantías Agregado con éxito');
                        
@@ -4598,7 +5012,7 @@ export default {
                                 area_trabajo_practicas: this.nuevocargosPasantias.area_trabajo_practicas.trim(),
                                 descripcion_funciones_practicas: this.nuevocargosPasantias.descripcion_funciones_practicas.trim()});
                         this.resetNuevoPracticas();
-                        this.scrollToTop();
+                        this.scrollToTopExperienciasPracticas();
                         
                     } catch (error) {
                         console.log(error)
@@ -4616,8 +5030,8 @@ export default {
             if (index !== -1) {
                 this.nuevocargosEmpresas = { ...this.cargosEmpresas[index] };
                 this.cargosEmpresasEditIndex = idexperiencias_profesionales;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionexperienciasempresa=true;
+                this.scrollToTopRegresarExperienciasEmpresas();
             }
         },
         editarSeleccionPracticas(idexperiencias_profesionales) {
@@ -4627,8 +5041,8 @@ export default {
             if (index !== -1) {
                 this.nuevocargosPasantias = { ...this.cargosPasantias[index] };
                 this.cargosPasantiasEditIndex = idexperiencias_profesionales;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionexperienciaspracticas=true;
+                this.scrollToTopRegresarExperienciasPracticas();
             }
         },
         // Métodos para eliminar cargos
@@ -4645,7 +5059,7 @@ export default {
             }
             this.resetNuevoEmpresa();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionexperienciasempresa=false;
         },
         async eliminarSeleccionPracticas(idexperiencias_profesionales) {
             const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
@@ -4660,7 +5074,7 @@ export default {
             }
             this.resetNuevoPracticas();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionexperienciaspracticas=false;
         },
         // Restablecer objetos de nuevos cargos
         resetNuevoEmpresa() {
@@ -4731,7 +5145,7 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.publicacionesEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionpublicaciones=false;
                     this.resetNuevoPubliciones();
                     this.scrollToTop();
                 } else {
@@ -4746,7 +5160,7 @@ export default {
                                 congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione', 'Publicaciones Agregada con éxito');
                        
@@ -4775,7 +5189,7 @@ export default {
             if (index !== -1) {
                 this.nuevaspublicaciones = { ...this.publicacionesarray[index] };
                 this.publicacionesEditIndex = idinvestigacion_publicaciones;
-                this.modoedition=true;
+                this.modoeditionpublicaciones=true;
                 this.scrollToTop();
             }
         },
@@ -4793,7 +5207,7 @@ export default {
             }
             this.resetNuevoPubliciones();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionpublicaciones=false;
         },
         // Restablecer objetos de nuevos publicacionies
         resetNuevoPubliciones() {
@@ -4841,7 +5255,7 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.idiomasEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionidiomas=false;
                     this.resetNuevoIdiomas();
                     this.scrollToTop();
                 } else {
@@ -4858,7 +5272,7 @@ export default {
                                 certificado: this.nuevosidiomas.certificado.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma', 'Idioma Agregado con éxito');
                        
@@ -4888,7 +5302,7 @@ export default {
             if (index !== -1) {
                 this.nuevosidiomas = { ...this.idiomasarray[index] };
                 this.idiomasEditIndex = idlenguaje;
-                this.modoedition=true;
+                this.modoeditionidiomas=true;
                 this.scrollToTop();
             }
         },
@@ -4906,7 +5320,7 @@ export default {
             }
             this.resetNuevoIdiomas();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionidiomas=false;
         },
         // Restablecer objetos de nuevos idiomas
         resetNuevoIdiomas() {
@@ -5027,6 +5441,90 @@ export default {
                 this.otro_habili = false;
             }
         },
+        //Scroll to top tabla Habilidades Comunicativas
+        scrollToTopHabilidadesComunicativas() {
+            const target = document.getElementById("tablahabilidadescomunicativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Comunicativas
+        scrollToTopRegresarHabilidadesComunicativas() {
+            const target = document.getElementById("regresarhabilidadescomunicativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Creativas
+        scrollToTopHabilidadesCreativas() {
+            const target = document.getElementById("tablahabilidadescreativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Creativas
+        scrollToTopRegresarHabilidadesCreativas() {
+            const target = document.getElementById("regresarhabilidadescreativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Liderazgo
+        scrollToTopHabilidadesLiderazgo() {
+            const target = document.getElementById("tablahabilidadesliderazgo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Liderazgo
+        scrollToTopRegresarHabilidadesLiderazgo() {
+            const target = document.getElementById("regresarhabilidadesliderazgo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Informaticas
+        scrollToTopHabilidadesInformaticas() {
+            const target = document.getElementById("tablahabilidadesinformaticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Informaticas
+        scrollToTopRegresarHabilidadesInformaticas() {
+            const target = document.getElementById("regresarhabilidadesinformaticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Oficio
+        scrollToTopHabilidadesOficio() {
+            const target = document.getElementById("tablahabilidadesoficios");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Oficio
+        scrollToTopRegresarHabilidadesOficio() {
+            const target = document.getElementById("regresarhabilidadesoficoo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Otro
+        scrollToTopHabilidadesOtro() {
+            const target = document.getElementById("tablahabilidadesotros");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Otro
+        scrollToTopRegresarHabilidadesOtro() {
+            const target = document.getElementById("regresarhabilidadesotros");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
         // Métodos para añadir/editar habilidades Comunicativas
         async agregarEditarHabilidadesComunicativas() {
             const usuario = await getMe();
@@ -5053,9 +5551,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.habilidades_comunicativas_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadescomuni=false;
                     this.resetNuevasHabilidadesComunicativas();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesComunicativas();
                 } else {
                     try {
     
@@ -5065,7 +5563,7 @@ export default {
                                 descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
@@ -5073,7 +5571,7 @@ export default {
                             habilidades_comunicativas: this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim(),
                             descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim()});
                         this.resetNuevasHabilidadesComunicativas();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesComunicativas();
                         
                     } catch (error) {
                         console.log(error)
@@ -5093,8 +5591,8 @@ export default {
             if (index !== -1) {
                 this.nuevashabilidades_comunicativas = { ...this.habilidades_comunicativas_array[index] };
                 this.habilidades_comunicativas_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadescomuni=true;
+                this.scrollToTopRegresarHabilidadesComunicativas();
             }
             
         },
@@ -5113,7 +5611,7 @@ export default {
             }
             this.resetNuevasHabilidadesComunicativas();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionhabilidadescomuni=false;
         },
         // Restablecer objetos de nuevas habilidades Comunicativas
         resetNuevasHabilidadesComunicativas() {
@@ -5151,9 +5649,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.habilidades_creativas_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadescreative=false;
                     this.resetNuevasHabilidadesCreativas();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesCreativas();
                 } else {
                     try {
     
@@ -5163,7 +5661,7 @@ export default {
                                 descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
@@ -5171,7 +5669,7 @@ export default {
                             habilidades_creativas: this.nuevashabilidades_creativas.habilidades_creativas.trim(),
                             descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim()});
                         this.resetNuevasHabilidadesCreativas();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesCreativas();
                         
                     } catch (error) {
                         console.log(error)
@@ -5190,8 +5688,8 @@ export default {
             if (index !== -1) {
                 this.nuevashabilidades_creativas = { ...this.habilidades_creativas_array[index] };
                 this.habilidades_creativas_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadescreative=true;
+                this.scrollToTopRegresarHabilidadesCreativas();
             }
         },
         // Métodos para eliminar habilidades Creativas
@@ -5208,7 +5706,7 @@ export default {
             }
             this.resetNuevasHabilidadesCreativas();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionhabilidadescreative=false;
         },
         // Restablecer objetos de nuevas habilidades Creativas
         resetNuevasHabilidadesCreativas() {
@@ -5247,9 +5745,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.habilidades_liderazgo_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadeslidel=false;
                     this.resetNuevasHabilidadesLiderazgo();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesLiderazgo();
                 } else {
                     try {
     
@@ -5259,7 +5757,7 @@ export default {
                                 descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
@@ -5267,7 +5765,7 @@ export default {
                             habilidades_liderazgo: this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim(),
                             descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim()});
                         this.resetNuevasHabilidadesLiderazgo();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesLiderazgo();
                         
                     } catch (error) {
                         console.log(error)
@@ -5286,8 +5784,8 @@ export default {
             if (index !== -1) {
                 this.nuevashabilidades_liderazgo = { ...this.habilidades_liderazgo_array[index] };
                 this.habilidades_liderazgo_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadeslidel=true;
+                this.scrollToTopRegresarHabilidadesLiderazgo();
             }
         },
         // Métodos para eliminar habilidades Liderazgo
@@ -5304,7 +5802,7 @@ export default {
             }
             this.resetNuevasHabilidadesLiderazgo();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionhabilidadeslidel=false;
         },
         // Restablecer objetos de nuevas habilidades Liderazgo
         resetNuevasHabilidadesLiderazgo() {
@@ -5343,9 +5841,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.habilidades_informaticas_cv_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadesinformaticas=false;
                     this.resetNuevasHabilidadesInfor_cv();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesInformaticas();
                 } else {
                     try {
     
@@ -5355,7 +5853,7 @@ export default {
                                 descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
@@ -5363,7 +5861,7 @@ export default {
                             habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim(),
                             descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim()});
                         this.resetNuevasHabilidadesInfor_cv();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesInformaticas();
                         
                     } catch (error) {
                         console.log(error)
@@ -5382,8 +5880,8 @@ export default {
             if (index !== -1) {
                 this.nuevashabilidades_informaticas_cv = { ...this.habilidades_informaticas_array[index] };
                 this.habilidades_informaticas_cv_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadesinformaticas=true;
+                this.scrollToTopRegresarHabilidadesInformaticas();
             }
         },
         // Métodos para eliminar habilidades Infor_cv
@@ -5400,7 +5898,7 @@ export default {
             }
             this.resetNuevasHabilidadesInfor_cv();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionhabilidadesinformaticas=false;
         },
         // Restablecer objetos de nuevas habilidades Infor_cv
         resetNuevasHabilidadesInfor_cv() {
@@ -5439,9 +5937,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.oficios_subactividades_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadesoficio=false;
                     this.resetNuevasHabilidadesOficios();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesOficio();
                 } else {
                     try {
     
@@ -5451,7 +5949,7 @@ export default {
                                 descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
@@ -5459,7 +5957,7 @@ export default {
                             oficios_subactividades: this.nuevasoficios_subactividades.oficios_subactividades.trim(),
                             descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim()});
                         this.resetNuevasHabilidadesOficios();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesOficio();
                         
                     } catch (error) {
                         console.log(error)
@@ -5478,8 +5976,8 @@ export default {
             if (index !== -1) {
                 this.nuevasoficios_subactividades = { ...this.oficios_subactividades_array[index] };
                 this.oficios_subactividades_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadesoficio=true;
+                this.scrollToTopRegresarHabilidadesOficio();
             }
         },
         // Métodos para eliminar habilidades Oficios
@@ -5495,7 +5993,7 @@ export default {
                 console.error('La respuesta no contiene los datos esperados:', response);
             }
             this.resetNuevasHabilidadesOficios();
-            this.modoedition=false;
+            this.modoeditionhabilidadesoficio=false;
         },
         // Restablecer objetos de nuevas habilidades Oficios
         resetNuevasHabilidadesOficios() {
@@ -5533,9 +6031,9 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.otro_habilidades_EditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionhabilidadesotro=false;
                     this.resetNuevasHabilidadesOtros_Oficios();
-                    this.scrollToTop();
+                    this.scrollToTopHabilidadesOtro();
                 } else {
                     try {
     
@@ -5544,14 +6042,14 @@ export default {
                                 otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
                        
                         this.otro_habilidades_array.push({ idhabilidades_informaticas: response.data.data.id, 
                             otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim()});
                         this.resetNuevasHabilidadesOtros_Oficios();
-                        this.scrollToTop();
+                        this.scrollToTopHabilidadesOtro();
                         
                     } catch (error) {
                         console.log(error)
@@ -5570,8 +6068,8 @@ export default {
             if (index !== -1) {
                 this.nuevasotro_habilidades = { ...this.otro_habilidades_array[index] };
                 this.otro_habilidades_EditIndex = idhabilidades_informaticas;
-                this.modoedition=true;
-                this.scrollToTop();
+                this.modoeditionhabilidadesotro=true;
+                this.scrollToTopRegresarHabilidadesOtro();
             }
         },
         // Métodos para eliminar habilidades Otros_Oficios
@@ -5588,7 +6086,7 @@ export default {
             }
             this.resetNuevasHabilidadesOtros_Oficios();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionhabilidadesotro=false;
         },
         // Restablecer objetos de nuevas habilidades Otros_Oficios
         resetNuevasHabilidadesOtros_Oficios() {
@@ -5634,7 +6132,7 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.curso_capacitacionEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditioncursos=false;
                     this.resetNuevasCursosCapacitaciones();
                     this.scrollToTop();
                 } else {
@@ -5654,7 +6152,7 @@ export default {
                                 horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion', 'Curso y/o Capactitación Agregado con éxito');
                        
@@ -5687,7 +6185,7 @@ export default {
             if (index !== -1) {
                 this.nuevoscurso_capacitacion = { ...this.curso_capacitacionarray[index] };
                 this.curso_capacitacionEditIndex = idcursoscapacitaciones;
-                this.modoedition=true;
+                this.modoeditioncursos=true;
                 this.scrollToTop();
             }
         },
@@ -5705,7 +6203,7 @@ export default {
             }
             this.resetNuevasCursosCapacitaciones();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditioncursos=false;
         },
         // Restablecer objetos de nuevos Cursos Capcitaciones
         resetNuevasCursosCapacitaciones() {
@@ -5750,7 +6248,7 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.otros_datos_personalesEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionlogros=false;
                     this.resetNuevosOtrosDatosRelevantes();
                     this.scrollToTop();
                 } else {
@@ -5763,7 +6261,7 @@ export default {
                                 descripcion_fracasos: this.nuevosotros_datos_personales.descripcion_fracasos.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante', 'Logro Agregado con éxito');
                        
@@ -5789,7 +6287,7 @@ export default {
             if (index !== -1) {
                 this.nuevosotros_datos_personales = { ...this.otros_datos_personalesarray[index] };
                 this.otros_datos_personalesEditIndex = idotros_datos_personales;
-                this.modoedition=true;
+                this.modoeditionlogros=true;
                 this.scrollToTop();
             }
         },
@@ -5807,7 +6305,7 @@ export default {
             }
             this.resetNuevosOtrosDatosRelevantes();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionlogros=false;
         },
         // Restablecer objetos de nuevos Otros Datos Relevantes
         resetNuevosOtrosDatosRelevantes() {
@@ -5847,7 +6345,7 @@ export default {
                         console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.informacion_contactoEditIndex = null;
-                    this.modoedition=false;
+                    this.modoeditionreferencias=false;
                     this.resetNuevasInformacionContacto();
                     this.scrollToTop();
                 } else {
@@ -5861,7 +6359,7 @@ export default {
                                 referencia_telefono: this.nuevosinformacion_contacto.referencia_telefono.trim(),
                             };
                         
-                        console.log(parametros);
+                        //console.log(parametros);
                        
                         const response = await enviarsolig('POST', parametros, 'http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto', 'Referencia Personal Agregada con éxito');
                        
@@ -5888,7 +6386,7 @@ export default {
             if (index !== -1) {
                 this.nuevosinformacion_contacto = { ...this.informacion_contactoarray[index] };
                 this.informacion_contactoEditIndex = idinformacion_contacto;
-                this.modoedition=true;
+                this.modoeditionreferencias=true;
                 this.scrollToTop();
             }
         },
@@ -5906,7 +6404,7 @@ export default {
             }
             this.resetNuevasInformacionContacto();
             this.scrollToTop();
-            this.modoedition=false;
+            this.modoeditionreferencias=false;
         },
         // Restablecer objetos de nuevos Informacion de Contacto
         resetNuevasInformacionContacto() {
@@ -6065,7 +6563,7 @@ export default {
 
 
         },
-         async regresarAFormacionAcademica() {
+        async regresarAFormacionAcademica() {
            
            
             try {
@@ -6168,7 +6666,29 @@ export default {
                 return response;
             } catch (error) {
                 console.error('Error al obtener formación académica:', error);
-                throw error; 
+                if(this.titulosBachiller.length > 0){
+                        this.sidatos=false;
+                }else{
+                    const response2 = await axios.get(this.url11);
+                    const data2 = response2.data.data;
+                    this.sidatos=true;
+                    this.estudios_bachiller_culminados = 'Si';
+                    this.Titulobachi();
+                    this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
+                    this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
+                    this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
+                    this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
+                }
+                    
+                this.isEditing8 = false;
+                    
+                this.modoedit8 = true;
+                this.regresar3 = false;
+                this.Titulouni();
+                this.Posgra();
+                this.Titulobachi();
+                this.activeTab = "formacion";
+                this.mostrarformacionacademica = true;
             }
         },
         //Guardar Experiencia
@@ -6245,7 +6765,18 @@ export default {
                 
             } catch (error) {
                 console.error('Error al obtener Expreciencas Profesionales:', error);
-                throw error; 
+                this.fechacargos="";
+                this.fechaFinLabel="";
+                this.trabajo = false;
+                this.isEditing1 = false;
+                this.modoedit1 = true;
+                this.regresar4 = false;
+                this.activeTab = "experiencia";
+                this.Cargos();
+                this.Practicas();
+                this.FechaCarg();
+                this.mostrarexperienciasprofesionales = true;
+                //throw error; 
             }
         },
         //Guardar Investigacion
@@ -6262,18 +6793,15 @@ export default {
 
         },
         async regresarAInvestigacion() {
-           
-           
-           
-                    const response = await axios.get(this.url4);
+            try {
+                const response = await axios.get(this.url4);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.publicacionesarray = [];
-    
                     data.forEach(item => {
                         if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
+                                
                             this.publicacionesarray.push({
-    
                                 idinvestigacion_publicaciones: item.id,
                                 publicacion_tipo: item.publicacion_tipo || '',
                                 publicacion_titulo: item.publicacion_titulo || '',
@@ -6281,10 +6809,8 @@ export default {
                                 congreso_evento: item.congreso_evento || ''
                             });
                         }
-                        
-    
+                            
                     });
-
                     this.isEditing2 = true;
                     this.modoedit2 = false;
                     this.regresar5 = false;
@@ -6300,6 +6826,18 @@ export default {
                     this.Investigaciones();
                 }
                 return response;
+            } catch (error) {
+                console.error('Error al obtener Investigaciones:', error);
+                this.isEditing2 = false;
+                this.modoedit2 = true;
+                this.regresar5 = false;
+                this.activeTab = "investigacion";
+                this.mostrarinvestigacionpublicaciones = true;
+                this.Investigaciones();
+                
+            }
+            
+            
         },
         //Guardar Idiomas
         async guardaIdiomas(event) {
@@ -6313,32 +6851,25 @@ export default {
 
         },
         async regresarAIdiomas() {
-            
-           
-                    
-                    const response = await axios.get(this.url5);
+            try {
+                const response = await axios.get(this.url5);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.idiomasarray = [];
-    
                     data.forEach(item => {
-                        
-                            this.idiomasarray.push({
-    
-                                idlenguaje: item.id,
-                                idioma: item.idioma || '',
-                                comprension_auditiva: item.comprension_auditiva || '',
-                                comprension_lectura: item.comprension_lectura || '',
-                                interaccion_oral: item.interaccion_oral || '',
-                                expresion_oral: item.expresion_oral || '',
-                                expresion_escrita: item.expresion_escrita || '',
-                                certificado: item.certificado || '',
-                            });
-                        
-                        
-    
+                        this.idiomasarray.push({
+                            idlenguaje: item.id,
+                            idioma: item.idioma || '',
+                            comprension_auditiva: item.comprension_auditiva || '',
+                            comprension_lectura: item.comprension_lectura || '',
+                            interaccion_oral: item.interaccion_oral || '',
+                            expresion_oral: item.expresion_oral || '',
+                            expresion_escrita: item.expresion_escrita || '',
+                            certificado: item.certificado || '',
+                        });
+                            
+                            
                     });
-                    
                     this.isEditing3 = true;
                     this.modoedit3 = false;
                     this.regresar6 = false;
@@ -6352,6 +6883,16 @@ export default {
                     this.mostraridiomas = true;
                 }
                 return response;
+                
+            } catch (error) {
+                console.error('Error al obtener Idiomas:', error);
+                this.isEditing3 = false;
+                this.modoedit3 = true;
+                this.regresar6 = false;
+                this.activeTab = "idioma";
+                this.mostraridiomas = true;
+            }
+            
         },
         //Guardar Habilidades
         async guardaHabilidades(event) {
@@ -6363,10 +6904,8 @@ export default {
             this.regresar9 = true;
         },
         async regresarAHabilidades() {
-            // Lógica para regresar a datos personales
-           
-           
-                    const response = await axios.get(this.url6);
+            try {
+                const response = await axios.get(this.url6);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.habilidades_comunicativas_array = [];
@@ -6375,11 +6914,9 @@ export default {
                     this.habilidades_liderazgo_array = [];
                     this.oficios_subactividades_array = [];
                     this.otro_habilidades_array = [];
-                    
                     data.forEach(item => {
                         if (item.habilidades_comunicativas || item.descripcion_habilidades_comunicativas) {
                             this.habilidades_comunicativas_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 habilidades_comunicativas: item.habilidades_comunicativas || '',
                                 descripcion_habilidades_comunicativas: item.descripcion_habilidades_comunicativas || '',
@@ -6387,16 +6924,13 @@ export default {
                         }
                         if (item.habilidades_creativas || item.descripcion_habilidades_creativas) {
                             this.habilidades_creativas_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 habilidades_creativas: item.habilidades_creativas || '',
                                 descripcion_habilidades_creativas: item.descripcion_habilidades_creativas || '',
                             });
                         }
-                        
                         if (item.habilidades_informaticas_cv || item.descripcion_habilidades_informaticas_cv) {
                             this.habilidades_informaticas_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 habilidades_informaticas_cv: item.habilidades_informaticas_cv || '',
                                 descripcion_habilidades_informaticas_cv: item.descripcion_habilidades_informaticas_cv || '',
@@ -6404,7 +6938,6 @@ export default {
                         }
                         if (item.habilidades_liderazgo || item.descripcion_habilidades_liderazgo) {
                             this.habilidades_liderazgo_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 habilidades_liderazgo: item.habilidades_liderazgo || '',
                                 descripcion_habilidades_liderazgo: item.descripcion_habilidades_liderazgo || '',
@@ -6412,7 +6945,6 @@ export default {
                         }
                         if (item.oficios_subactividades || item.descripcion_oficios_subactividades) {
                             this.oficios_subactividades_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 oficios_subactividades: item.oficios_subactividades || '',
                                 descripcion_oficios_subactividades: item.descripcion_oficios_subactividades || '',
@@ -6420,13 +6952,11 @@ export default {
                         }
                         if (item.otro_habilidades) {
                             this.otro_habilidades_array.push({
-                                
                                 idhabilidades_informaticas: item.id,
                                 otro_habilidades: item.otro_habilidades || '',
                             });
                         }
                     });
-                    
                     this.isEditing4 = true;
                     this.modoedit4 = false;
                     this.regresar9 = false;
@@ -6452,6 +6982,21 @@ export default {
                     this.mostrarsw = true;
                 }
                 return response;
+            } catch (error) {
+                console.error('Error al obtener Habilidades:', error);
+                this.isEditing4 = false;
+                this.modoedit4 = true;
+                this.regresar9 = false;
+                this.ComunHabi();
+                this.CreaHabi();
+                this.LideHabi();
+                this.InfoHabi();
+                this.OfiHabi();
+                this.OtrosHabi();
+                this.activeTab = "habilidades";
+                this.mostrarsw = true;
+            }
+            
         },
         //Guardar Cursos Capacitacines
         async guardaCursosCapacitaciones(event) {
@@ -6463,36 +7008,30 @@ export default {
             this.regresar7 = true;
         },
         async regresarACursosCapacitaciones() {
-            // Lógica para regresar a datos personales
-           
-           
-                    const response = await axios.get(this.url10);
+            try {
+                const response = await axios.get(this.url10);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.curso_capacitacionarray = [];
-    
+        
                     data.forEach(item => {
-                        
-                            this.curso_capacitacionarray.push({
-
-                                idcursoscapacitaciones: item.id,
-                                intitucion_curso: item.intitucion_curso || '',
-                                tipo_evento: item.tipo_evento || '',
-                                area_estudios: item.area_estudios || '',
-                                nombre_evento: item.nombre_evento || '',
-                                facilitador_curso: item.facilitador_curso || '',
-                                tipo_certificado: item.tipo_certificado || '',
-                                fecha_inicio_curso: item.fecha_inicio_curso || '',
-                                fecha_fin_curso: item.fecha_fin_curso || '',
-                                dias_curso: item.dias_curso || '',
-                                horas_curso: item.horas_curso || '',
-                              
-                            });
-                        
-                        
-
+                        this.curso_capacitacionarray.push({
+                            idcursoscapacitaciones: item.id,
+                            intitucion_curso: item.intitucion_curso || '',
+                            tipo_evento: item.tipo_evento || '',
+                            area_estudios: item.area_estudios || '',
+                            nombre_evento: item.nombre_evento || '',
+                            facilitador_curso: item.facilitador_curso || '',
+                            tipo_certificado: item.tipo_certificado || '',
+                            fecha_inicio_curso: item.fecha_inicio_curso || '',
+                            fecha_fin_curso: item.fecha_fin_curso || '',
+                            dias_curso: item.dias_curso || '',
+                            horas_curso: item.horas_curso || '',
+                                
+                        });
+                            
+                            
                     });
-                    
                     this.isEditing9 = true;
                     this.modoedit9 = false;
                     this.regresar7 = false;
@@ -6506,6 +7045,17 @@ export default {
                     this.mostrarcapacitaciones = true;
                 }
                 return response;
+                
+            } catch (error) {
+                console.error('Error al obtener Cursos y Capacitaciones:', error);
+                this.isEditing9 = false;
+                this.modoedit9 = true;
+                this.regresar7 = false;
+                this.activeTab = "capacitaciones";
+                this.mostrarcapacitaciones = true;
+                
+            }
+            
         },
         //Guardar Relevantes
         async guardaRelevantes(event) {
@@ -6521,29 +7071,23 @@ export default {
 
         },
         async regresarARelevantes() {
-            // Lógica para regresar a datos personales
-               
-           
-                    const response = await axios.get(this.url7);
+            try {
+                const response = await axios.get(this.url7);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.otros_datos_personalesarray = [];
-    
+        
                     data.forEach(item => {
-                        
-                            this.otros_datos_personalesarray.push({
-
-                                idotros_datos_personales: item.id,
-                                tipo_logros: item.tipo_logros || '',
-                                descripcion_logros: item.descripcion_logros || '',
-                                descripcion_fracasos: item.descripcion_fracasos || '',
-                              
-                            });
-                        
-                        
-
+                            
+                        this.otros_datos_personalesarray.push({
+                            idotros_datos_personales: item.id,
+                            tipo_logros: item.tipo_logros || '',
+                            descripcion_logros: item.descripcion_logros || '',
+                            descripcion_fracasos: item.descripcion_fracasos || '',
+                        });
+                            
+                            
                     });
-
                     this.isEditing5 = true;
                     this.modoedit5 = false;
                     this.activeTab = "relevantes";
@@ -6557,6 +7101,16 @@ export default {
                     this.mostrardatosrelevantes = true;
                 }
                 return response;
+                
+            } catch (error) {
+                console.error('Error al regresar a Relevantes:', error);
+                this.isEditing5 = false;
+                this.modoedit5 = true;
+                this.regresar8 = false;
+                this.activeTab = "relevantes";
+                this.mostrardatosrelevantes = true;
+            }
+            
         },
         //Guardar Contacto
         async guardaContacto(event) {
@@ -7195,12 +7749,14 @@ export default {
                 img.src = url;
             });
         },
+        //Scroll to top Todo
         scrollToTop() {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         },
+       
        
         //Datos Personales
         async getDatosPersonales() {
@@ -7228,8 +7784,8 @@ export default {
                     }else{
                         this.GeneroPer = genhom;
                     }
-                    console.log(data.GeneroPer);
-                    console.log(this.GeneroPer);
+                    //console.log(data.GeneroPer);
+                    //console.log(this.GeneroPer);
                     this.CiudadPer = data.CiudadPer.toUpperCase();
                     this.DirecDomicilioPer = data.DirecDomicilioPer;
                     this.Telf1InfPer = data.Telf1InfPer;
