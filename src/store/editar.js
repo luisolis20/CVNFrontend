@@ -10,7 +10,7 @@ export default {
         return {
             idus: 0,
             //Datos Personales
-            url1: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacionpersonal",
+            url1: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/informacionpersonal",
             iddatos_personales: 0,
             datos_personales: null,
            
@@ -30,8 +30,8 @@ export default {
             edad: "",
 
             //Formacion Academica
-            url2: "http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica",
-            url11: "http://192.168.38.177/cvubackendv2/api/cvn/v1/fichasocioeconomica",
+            url2: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/formacion_academica",
+            url11: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/fichasocioeconomica",
             idformacion_academica: 0,
             idfichasocioeconomica: 0,
             formacion_academica: null,
@@ -74,7 +74,7 @@ export default {
            
 
             //Experiencias Profesionales
-            url3: "http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale",
+            url3: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/experiencia_profesionale",
             idexperiencias_profesionales: 0,
             experiencias_profesionales: null,
             mostrarexperienciasprofesionales: true,
@@ -115,7 +115,7 @@ export default {
 
 
             //Investigacion y publicaciones
-            url4: "http://192.168.38.177/cvubackendv2/api/cvn/v1/investigacion_publicacione",
+            url4: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/investigacion_publicacione",
             idinvestigacion_publicaciones: 0,
             investigacion_publicaciones: null,
            
@@ -134,7 +134,7 @@ export default {
 
            
             //Idioma
-            url5: "http://192.168.38.177/cvubackendv2/api/cvn/v1/idioma",
+            url5: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/idioma",
             idlenguaje: 0,
             lenguaje: null,
            
@@ -155,7 +155,7 @@ export default {
 
           
             //SW
-            url6: "http://192.168.38.177/cvubackendv2/api/cvn/v1/habilidades_informatica",
+            url6: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/habilidades_informatica",
             idhabilidades_informaticas: 0,
             habilidades_informaticas: null,
 
@@ -213,7 +213,7 @@ export default {
 
             //Cursos Capacitaciones
            
-            url10: "http://192.168.38.177/cvubackendv2/api/cvn/v1/cursoscapacitacion",
+            url10: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/cursoscapacitacion",
             idcursoscapacitaciones: 0,
             curso_capacitacion: null,
             curso_capacitacionarray: [],
@@ -234,7 +234,7 @@ export default {
 
 
             //Datos Relevantes
-            url7: "http://192.168.38.177/cvubackendv2/api/cvn/v1/otros_datos_relevante",
+            url7: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/otros_datos_relevante",
             idotros_datos_personales: 0,
             otros_datos_personales: null,
            
@@ -250,7 +250,7 @@ export default {
 
             
             //Informacion de Contacto
-            url8: "http://192.168.38.177/cvubackendv2/api/cvn/v1/informacion_contacto",
+            url8: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/informacion_contacto",
             idinformacion_contacto: 0,
             informacion_contacto: null,
            
@@ -265,7 +265,7 @@ export default {
             },
            
             //Declaracion Personal
-            url9: "http://192.168.38.177/cvubackendv2/api/cvn/v1/declaracion_personal",
+            url9: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/declaracion_personal",
             iddeclaracion_personal: 0,
             declaracion_personal: null,
            

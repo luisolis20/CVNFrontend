@@ -7,7 +7,7 @@ export default {
     return {
       emaillo: "",
       clave: "",
-      url2: "http://192.168.38.177/cvubackendv2/api/cvn/login",
+      url2: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/login",
     };
   },
   methods: {

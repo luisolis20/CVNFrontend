@@ -131,7 +131,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://192.168.38.177/cvubackendv2/api/cvn/v1/experiencia_profesionale',
+            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/experiencia_profesionale',
             experiencia_profesionales: [],
             experiencia_profesionalesData: [],
             searchQuery: '',

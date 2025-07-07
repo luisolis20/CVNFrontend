@@ -20,7 +20,7 @@ export default {
       correoTouched: false,
       correoError: '',
       correoErrornue: false,
-      url: "http://192.168.38.177/cvubackendv2/api/cvn/v1/users",
+      url: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/users",
     };
   },
   watch: {
@@ -106,14 +106,14 @@ export default {
         mensaje: this.mensaje
       };
 
-      await axios.post('http://192.168.38.177/cvubackendv2/api/cvn/v1/enviar-comentario', comentarioData)
+      await axios.post('http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/enviar-comentario', comentarioData)
         .then(response => {
           mostraralertas2('Comentario enviado con éxito','success');
           this.apellidonombre = '';
           this.correoss = '';
           this.mensaje = '';
           window.setTimeout(function(){
-                window.location.href='/cvn'
+                window.location.href='/home'
               },4000);
         })
         .catch(error => {
@@ -121,9 +121,6 @@ export default {
           this.apellidonombre = '';
           this.correoss = '';
           this.mensaje = '';
-          window.setTimeout(function(){
-            window.location.href='/cvn'
-          },4000);
         });
     },
     async enviarCodigo() {
@@ -132,7 +129,7 @@ export default {
         if (this.email.trim() === '') {
             mostraralertas('Ingrese un correo electrónico válido para estudiantes', 'warning', 'email');
         }else{
-          const response = await axios.post("http://192.168.38.177/cvubackendv2/api/cvn/v1/enviar-correo",
+          const response = await axios.post("http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/enviar-correo",
           {
             email: this.email.trim(),
             }

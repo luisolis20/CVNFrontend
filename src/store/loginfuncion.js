@@ -30,13 +30,13 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
           mensaje: response.data.mensaje,
         };
       } else if (response.data.Rol === "Estudiante") {
-        store.commit("setRol", response.data.Rol);
-        store.commit("setemail", response.data.mailPer);
-        store.commit("setid", response.data.CIInfPer);
+        store.commit("setRol_CVN", response.data.Rol);
+        store.commit("setemail_CVN", response.data.mailPer);
+        store.commit("setid_CVN", response.data.CIInfPer);
 
-        store.commit("setname", response.data.ApellInfPer);
-        store.commit("setToken", response.data.token);
-        store.commit("setTokenType", response.data.token_type || "Bearer");
+        store.commit("setname_CVN", response.data.ApellInfPer);
+        store.commit("setToken_CVN", response.data.token);
+        store.commit("setTokenType_CVN", response.data.token_type || "Bearer");
         return {
           token: response.data.token,
           Rol: response.data.Rol,
@@ -46,13 +46,13 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
           token_type: response.data.token_type,
         };
       } else if (response.data.Rol === "Docente") {
-        store.commit("setRol", response.data.Rol);
-        store.commit("setemail", response.data.mailPer);
-        store.commit("setid", response.data.CIInfPer);
+        store.commit("setRol_CVN", response.data.Rol);
+        store.commit("setemail_CVN", response.data.mailPer);
+        store.commit("setid_CVN", response.data.CIInfPer);
 
-        store.commit("setname", response.data.ApellInfPer);
-        store.commit("setToken", response.data.token);
-        store.commit("setTokenType", response.data.token_type || "Bearer");
+        store.commit("setname_CVN", response.data.ApellInfPer);
+        store.commit("setToken_CVN", response.data.token);
+        store.commit("setTokenType_CVN", response.data.token_type || "Bearer");
         return {
           token: response.data.token,
           Rol: response.data.Rol,
@@ -60,13 +60,13 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
           ApellInfPer: response.data.ApellInfPer,
         };
       } else if (response.data.Rol === "Administrador") {
-        store.commit("setRol", response.data.Rol);
-        store.commit("setemail", response.data.email);
-        store.commit("setid", response.data.id);
+        store.commit("setRol_CVN", response.data.Rol);
+        store.commit("setemail_CVN", response.data.email);
+        store.commit("setid_CVN", response.data.id);
 
-        store.commit("setname", response.data.name);
-        store.commit("setToken", response.data.token);
-        store.commit("setTokenType", response.data.token_type || "Bearer");
+        store.commit("setname_CVN", response.data.name);
+        store.commit("setToken_CVN", response.data.token);
+        store.commit("setTokenType_CVN", response.data.token_type || "Bearer");
         return {
           token: response.data.token,
           Rol: response.data.Rol,

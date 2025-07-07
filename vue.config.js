@@ -20,7 +20,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.38.177/cvubackendv2',
+        target: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2',
         changeOrigin: true,
         pathRewrite: { '^/api': '' },
       },

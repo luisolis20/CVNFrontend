@@ -169,7 +169,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://192.168.38.177/cvubackendv2/api/cvn/v1/formacion_academica',
+            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/formacion_academica',
             formacion_academicas: [],
             DataAca: [],
             searchQuery: '',

@@ -4,7 +4,7 @@ import store from "@/store";
 
 const logged = ref(false);
 const user = ref('');
-const meURL = 'http://192.168.38.177/cvubackendv2/api/cvn/me'; // ajusta la URL según tu backend
+const meURL = 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/me'; // ajusta la URL según tu backend
 
 const apiClient = axios.create({
   baseURL: meURL,
@@ -15,8 +15,8 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    const tokenType = localStorage.getItem('token_type');
+    const token = localStorage.getItem('token_cvn');
+    const tokenType = localStorage.getItem('token_type_cvn');
     if (token && tokenType) {
       config.headers.Authorization = `${tokenType} ${token}`;
     }
@@ -28,7 +28,7 @@ apiClient.interceptors.request.use(
 export const getMe = async () => {
   try {
     const response = await apiClient.get('');
-    localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem('user_cvn', JSON.stringify(response.data));
     logged.value = true;
     user.value = response.data;
     //console.log(response.data);
