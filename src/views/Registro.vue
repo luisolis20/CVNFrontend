@@ -5,7 +5,7 @@
               <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
                   class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
               <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                  class="text-white">cvn.utelvt@gmail.com</a></small>
+                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
               <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>

@@ -10,7 +10,8 @@ import 'owl.carousel';
 import $ from 'jquery';
 
 
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js' 
 
 import '@/assets/lib/animate/animate.min.css'
 import '@/assets/lib/animate/animate.css'

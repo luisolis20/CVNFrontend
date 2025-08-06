@@ -9,7 +9,7 @@
               <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#Comentario"
                   class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
               <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#Comentario"
-                  class="text-white">cvn.utelvt@gmail.com</a></small>
+                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
               <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
@@ -132,7 +132,7 @@
               <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
                   class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
               <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                  class="text-white">cvn.utelvt@gmail.com</a></small>
+                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
               <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
@@ -150,20 +150,19 @@
           <h2 class="paneladmin">Panel de Administración</h2>
 
           <div class="navbar-nav align-items-center ms-auto">
-
-
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="@/assets/images/bienes.png" alt=""
-                  style="width: 40px; height: 40px;">
+              <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="rounded-circle me-lg-2" src="@/assets/images/bienes.png" alt="" style="width: 40px; height: 40px;">
                 <span class="d-none d-lg-inline-flex">{{ names }}</span>
               </a>
-              <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-
-                <a href="#" class="dropdown-item" v-on:click="cerrarsesion">Cerrar Sesion</a>
-              </div>
+              <ul class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                <li>
+                  <a href="#" class="dropdown-item" @click="cerrarsesion">Cerrar Sesión</a>
+                </li>
+              </ul>
             </div>
           </div>
+
         </nav>
         <!-- Navbar End -->
         <router-view v-if="showNavbarNue"></router-view>
