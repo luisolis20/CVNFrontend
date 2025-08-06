@@ -9,6 +9,10 @@ export default {
     data() {
         return {
             idus: 0,
+            pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            // página inicial (se reemplaza al llamar al modal)
+            pdfPage: 1,
+            pdfKey: 0,
             //Datos Personales
             url1: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/informacionpersonal",
             iddatos_personales: 0,
@@ -303,7 +307,24 @@ export default {
 
         ])
     },
+    computed: {
+        pdfSrc() {
+            return `${this.pdfUrl}#page=${this.pdfPage}`;
+        }
+    },
     methods: {
+            openPdfModal(page) {
+            this.pdfPage = page;
+            this.pdfKey++;
+            const modalEl = this.$refs.pdfModal;
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        },
+        closePdfModal() {
+            const modalEl = this.$refs.pdfModal;
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+        },
         //Datos Personales
         async getDatosPersonales() {
             try {

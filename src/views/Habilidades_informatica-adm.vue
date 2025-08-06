@@ -4,6 +4,7 @@
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h4 class="mb-0">Habilidades Registradas</h4>
+                 <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(80)">aquí</a> para ver la guia de este punto</p>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <form class="d-none d-md-flex ms-4">
@@ -264,6 +265,28 @@
             </div>
         </div>
     </div>
+     <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
+        ref="pdfModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Iframe con el PDF -->
+                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+                        <p>
+                            Tu navegador no soporta PDFs embebidos.
+                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                                Ábrelo aquí
+                            </a>.
+                        </p>
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Recent Sales End -->
 </template>
 <style>
@@ -277,6 +300,10 @@ export default {
     data() {
         return {
             idus: 0,
+             pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            // página inicial (se reemplaza al llamar al modal)
+            pdfPage: 1,
+            pdfKey: 0,
             url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/habilidades_informatica',
             habilidades_informaticas: [],
             HabiDATA: [],
@@ -288,6 +315,10 @@ export default {
         }
     },
     computed: {
+         pdfSrc() {
+            return `${this.pdfUrl}#page=${this.pdfPage}`;
+        },
+        
         filteredComunicativas() {
             const query = this.searchQuery.trim();
             return this.habilidades_informaticas
@@ -332,7 +363,18 @@ export default {
     },
 
     methods: {
-        
+          openPdfModal(page) {
+            this.pdfPage = page;
+            this.pdfKey++;
+            const modalEl = this.$refs.pdfModal;
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        },
+        closePdfModal() {
+            const modalEl = this.$refs.pdfModal;
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+        },
         async gethabilidades_informaticas() {
             this.cargando = true;
 

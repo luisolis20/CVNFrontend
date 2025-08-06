@@ -48,11 +48,36 @@
                             </div>
                         </form>
                     </div>
+                      <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(75)">aquí</a>
+                    para ver la guia de este punto</p>
                 </div>
 
             </div>
         </div>
 
+    </div>
+     <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
+        ref="pdfModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Iframe con el PDF -->
+                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%"
+                        height="600">
+                        <p>
+                            Tu navegador no soporta PDFs embebidos.
+                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                                Ábrelo aquí
+                            </a>.
+                        </p>
+                    </object>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <style>
