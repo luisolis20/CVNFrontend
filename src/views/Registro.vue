@@ -47,12 +47,15 @@
                     <li class="nav-item" v-if="this.registro">
                         <a href="#Idiomas" class="nav-link Projects"><span data-hover="Idiomas">Idiomas</span></a>
                     </li>
+                    <li class="nav-item" v-if="this.registro">
+                        <a @click="openPdfModal(61)" class="nav-link Projects"><span data-hover="Ver Guía de Esta página">Ver Guía de Esta página</span></a>
+                    </li>
                     
                     <li class="nav-item" >
                         <a href="#" class="nav-link Contact" v-on:click="cerrarsesion"><span data-hover="Cerrar Sesión">Cerrar Sesión</span></a>
                     </li>
                     <li class="nav-item" v-if="this.eseditar">
-                        <a href="#" class="nav-link Contact" v-on:click="salir"><span data-hover="Salir del Perfil">Salir del Perfil</span></a>
+                        <a href="#" class="nav-link Contact" v-on:click="salir"><span data-hover="Salir de Actualizar Curriculum">Salir de Actualizar Curriculum</span></a>
                     </li>
                 </ul>
 
@@ -82,70 +85,70 @@
                                 <div class="nav1 nav-tabs1 voyage-tabs" id="nav-tab" role="tablist">
                                     <!-- Datos personales -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'datos' }"
-                                        id="nav-datos-tab" data-bs-toggle="tab" data-bs-target="#nav-datos"
+                                        id="nav-datos-tab" 
                                         type="button" role="tab" aria-controls="nav-datos" aria-selected="true"
                                         v-if="this.mostrardatospersonales" title="Datos personales" @click="activarTab('datos')">
                                         <i class="far fa-address-book"></i>
                                     </button>
                                     <!-- Declaracion Personal -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'personal' }"
-                                        id="nav-declaracion-tab" data-bs-toggle="tab" data-bs-target="#nav-declaracion"
+                                        id="nav-declaracion-tab" 
                                         type="button" role="tab" aria-controls="nav-declaracion" aria-selected="false"
                                         v-if="this.mostrardelaracionpersonal" title="Resumen libre del currículum" @click="activarTab('personal')">
                                         <i class="fas fa-bullseye"></i>
                                     </button>
                                     <!-- Formacion Academica -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'formacion' }"
-                                        id="nav-formacion-tab" data-bs-toggle="tab" data-bs-target="#nav-formacion"
+                                        id="nav-formacion-tab" 
                                         type="button" role="tab" aria-controls="nav-formacion" aria-selected="false"
                                         v-if="this.mostrarformacionacademica" title="Formación Académica"  @click="activarTab('formacion')">
                                         <i class="fas fa-graduation-cap"></i>
                                     </button>
                                     <!-- Experiencia Profesional -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'experiencia' }"
-                                        id="nav-experiencia-tab" data-bs-toggle="tab" data-bs-target="#nav-experiencia"
+                                        id="nav-experiencia-tab" 
                                         type="button" role="tab" aria-controls="nav-experiencia" aria-selected="false"
                                         v-if="this.mostrarexperienciasprofesionales" title="Experiencia Profesional"  @click="activarTab('experiencia')">
                                         <i class="fas fa-chart-line"></i>
                                     </button>
                                     <!-- Investigacion y Publicaciones -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'investigacion' }"
-                                        id="nav-investiga-tab" data-bs-toggle="tab" data-bs-target="#nav-investiga"
+                                        id="nav-investiga-tab" 
                                         type="button" role="tab" aria-controls="nav-investiga" aria-selected="false"
                                         v-if="this.mostrarinvestigacionpublicaciones"  title="Investigación y Publicaciones" @click="activarTab('investigacion')">
                                         <i class="fas fa-glasses"></i>
                                     </button>
                                     <!-- Idiomas -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'idioma' }"
-                                        id="nav-idioma-tab" data-bs-toggle="tab" data-bs-target="#nav-idioma"
+                                        id="nav-idioma-tab" 
                                         type="button" role="tab" aria-controls="nav-idioma" aria-selected="false"
                                         v-if="this.mostraridiomas" title="Idiomas"  @click="activarTab('idioma')">
                                         <i class="fas fa-language"></i>
                                     </button>
                                     <!-- Habilidades -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'habilidades' }"
-                                        id="nav-habilidades-tab" data-bs-toggle="tab" data-bs-target="#nav-habilidades"
+                                        id="nav-habilidades-tab" 
                                         type="button" role="tab" aria-controls="nav-habilidades" aria-selected="false"
                                         v-if="this.mostrarsw" title="Habilidades" @click="activarTab('habilidades')">
                                         <i class="fas fa-laptop"></i>
                                     </button>
                                     <!-- Cursos o Capacitaciones -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'capacitaciones' }"
-                                        id="nav-capacitaciones-tab" data-bs-toggle="tab" data-bs-target="#nav-capacitaciones"
+                                        id="nav-capacitaciones-tab" 
                                         type="button" role="tab" aria-controls="nav-capacitaciones" aria-selected="false"
                                         v-if="this.mostrarcapacitaciones" title="Cursos o Capacitaciones" @click="activarTab('capacitaciones')">
                                         <i class="fas fa-bezier-curve"></i>
                                     </button>
                                     <!-- Otros datos Relevantes -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'relevantes' }"
-                                        id="nav-relevante-tab" data-bs-toggle="tab" data-bs-target="#nav-relevante"
+                                        id="nav-relevante-tab" 
                                         type="button" role="tab" aria-controls="nav-relevante" aria-selected="false"
                                         v-if="this.mostrardatosrelevantes" title="Otros Datos Relevantes" @click="activarTab('relevantes')">
                                         <i class="fas fa-splotch"></i>
                                     </button>
                                     <!-- Informacion de Contacto -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'contacto' }"
-                                        id="nav-contacto-tab" data-bs-toggle="tab" data-bs-target="#nav-contacto"
+                                        id="nav-contacto-tab" 
                                         type="button" role="tab" aria-controls="nav-contacto" aria-selected="false"
                                         v-if="this.mostrarinformacioncontacto" title="Información de Contacto" @click="activarTab('contacto')">
                                         <i class="fas fa-user-tie"></i>
@@ -163,6 +166,8 @@
                                             debe dar clic en Siguiente apartado. 
                                             Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
                                             <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
+
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(12)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Apellido Paterno -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Apellido paterno</label>
@@ -357,6 +362,7 @@
                                             objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Puedes modificar lo que anteriormente
                                             llenaste. Luego de que termines debes dar clic en el botón Actualizar y Continuar.</p>
                                             <!-- Descripción -->
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(13)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-12">
                                                 <label class="text-dark" for="">Descripción</label>
                                                 <div class="input-group-icon">
@@ -397,6 +403,7 @@
                                             Los datos de estudios de bachiller aparecen automáticamente. Cada que llenes los datos correspondientes te aparecerá un botón para añadir tu formación académica.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Estudios de bachiller culminados -->
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(15)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-6 col-xl-12" v-if="this.sidatos" id="regresarestudiosbachiller">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios de bachiller?</label>
                                                 <div class="input-group-icon">
@@ -1002,6 +1009,7 @@
                                             llenes los datos correspondientes te aparecerá un botón para añadir tus experiencias profesionales.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- ¿Ha trabajado en alguna empresa/institución? -->
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(27)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciaempresa">
                                                 <label class="text-dark" for="">¿Ha trabajado en alguna empresa/institución?</label>
                                                 <div class="input-group-icon">
@@ -1332,6 +1340,7 @@
                                                 <p class="text-danger text-justify" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Publicaciones.</p> 
                                             <h5 v-if="this.modoeditionpublicaciones">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(34)">aquí</a> para ver la guia de este punto</p>
                                             <!-- ¿Ha realizado algúna publicación? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Ha realizado alguna publicación?</label>
@@ -1489,6 +1498,7 @@
                                                 <p class="text-danger text-justify" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Idioma.</p>
                                             <h5 v-if="this.modoeditionidiomas">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(36)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Idiomas -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Idiomas</label>
@@ -1756,6 +1766,7 @@
                                             llenes los datos correspondientes te aparecerá un botón para añadir tus habilidades.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Habilidades comunicativas-->
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(40)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadescomunicativas">
                                                 <label class="text-dark" for="">¿Posee habilidades comunicativas?</label>
                                                 <div class="input-group-icon">
@@ -2405,6 +2416,7 @@
                                                 dar clic en Editar Curso.</p>
                                             <!-- edicion -->
                                             <h5 v-if="this.modoeditioncursos">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
+                                             <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(52)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-12 col-xl-12">
                                                 <label class="text-dark" for="">Nombre de la institución</label>
                                                 <div class="input-group-icon">
@@ -2664,6 +2676,7 @@
                                                 <p class="text-danger text-justify" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Logros.</p>
                                             <h5 v-if="this.modoeditionlogros">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(54)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Tipo de logro obtenido</label>
                                                 <div class="input-group-icon">
@@ -2776,6 +2789,7 @@
                                                 <p class="text-danger text-justify" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Referencia.</p>
                                             <h5 v-if="this.modoeditionreferencias">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(57)">aquí</a> para ver la guia de este punto</p>
                                             <label for="" class="text-dark">Agregue Máximo 3 Referencias Personales</label>
                                             <div class="col-6">
                                                 <label for="" class="text-dark">Nombres</label>
@@ -3501,6 +3515,28 @@
         </div>
 
     </div>
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
+        ref="pdfModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Iframe con el PDF -->
+                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+                        <p>
+                            Tu navegador no soporta PDFs embebidos.
+                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                                Ábrelo aquí
+                            </a>.
+                        </p>
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Botón para Subir Start -->
     <a href="#" class="btn btn-primary btn-md-square back-to-top">
         <i class="fa fa-arrow-up"></i>
@@ -3524,6 +3560,11 @@ import { mostraralertas2, enviarsolig, enviarsoliedit, confimar } from '@/store/
 export default {
     data() {
         return {
+            // ruta base de tu PDF
+            pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            // página inicial (se reemplaza al llamar al modal)
+            pdfPage: 1,
+            pdfKey: 0,
             idus: 0,
             editingIndex: null,
             logueado:null,
@@ -3953,6 +3994,9 @@ export default {
                 return count;
             }
             return '';
+        },
+         pdfSrc() {
+            return `${this.pdfUrl}#page=${this.pdfPage}`;
         }
     },
     watch: {
@@ -4079,6 +4123,18 @@ export default {
             console.clear();
             localStorage.clear();
             window.location.replace('/cvn/home');
+        },
+        openPdfModal(page) {
+            this.pdfPage = page;
+            this.pdfKey++;
+            const modalEl = this.$refs.pdfModal;
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        },
+        closePdfModal() {
+            const modalEl = this.$refs.pdfModal;
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
         },
         async Logueados() {
            //this.loadStylesBasedOnRole();

@@ -15,6 +15,7 @@ module.exports = defineConfig({
         'window.jQuery': 'jquery',
       }),
     ],
+    
   },
 
   devServer: {

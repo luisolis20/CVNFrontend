@@ -240,11 +240,14 @@
                       </h6>
                     </div>
                     &nbsp;&nbsp;
+                    <a class="text-center text-white" @click="openPdfModal(1)"><i class="fas fa-book-open"></i><b> Ver Manual de Usuario</b></a>
+                    
+                     &nbsp;&nbsp;
                     <div class="herose">
 
                       <a href="https://www.youtube.com/watch?v=_5GJJpFVXkk" class="glightbox btn-watch-video2 text-center"><i class="fa-solid fa-circle-play"></i><span>Ver Tutorial</span></a>
                     </div>
-                    <!--<p class="text-white">Si no tienes conocimiento de como usar la plataforma puedes dar clic <a href="">aquí</a> para que puedas ver una guía detallada</p>-->
+                    
                   </div>
                 </form>
                 <!-- Formulario Login End-->
@@ -682,7 +685,28 @@
     <i class="fa fa-arrow-up"></i>
   </a>
   <!-- Botón para Subir End -->
-
+   <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
+        ref="pdfModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Iframe con el PDF -->
+                    <object :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+                        <p>
+                            Tu navegador no soporta PDFs embebidos.
+                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                                Ábrelo aquí
+                            </a>.
+                        </p>
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <!-- Importación Estilos Necesarios Start-->
