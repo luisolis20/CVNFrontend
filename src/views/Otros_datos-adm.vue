@@ -141,7 +141,7 @@ export default {
             url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/otros_datos_relevante',
             otros_datos_relevantes: [],
             otrosDATA: [],
-              pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,

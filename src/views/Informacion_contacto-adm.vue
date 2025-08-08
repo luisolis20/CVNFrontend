@@ -108,7 +108,7 @@ export default {
             currentPage: 1,
             lastPage: 1,
             buscando: false,
-            pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,

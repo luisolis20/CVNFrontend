@@ -83,6 +83,9 @@
             </div>
         </div>
     </div>
+    <div>
+        <canvas id="cvnPieChart"></canvas>
+    </div>
     <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
         ref="pdfModal">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -116,12 +119,15 @@ import { useRoute } from 'vue-router';
 import store from "@/store";
 import jsPDF from 'jspdf';
 import { mostraralertas2 } from '@/store/funciones';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 export default {
+    props: ['data'],
     data() {
         return {
             idus: 0,
              // ruta base de tu PDF
-            pdfUrl: '/Docs/Manual_CVN__V1.pdf',
+            pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,
@@ -159,6 +165,29 @@ export default {
         };
     },
     mounted() {
+            const ctx = document.getElementById('cvnPieChart');
+            const labels = Object.keys(this.data);
+            const values = Object.values(this.data);
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                    label: 'Usuarios CVN',
+                    data: values,
+                    backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                    }
+                }
+            });
         const ruta = useRoute();
         this.idus = ruta.params.id;
         Promise.all([

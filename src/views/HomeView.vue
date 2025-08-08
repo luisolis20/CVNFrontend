@@ -236,7 +236,7 @@
                     &nbsp;&nbsp;
                     <div class="login-text">
                       <h6 class="text-white">
-                        ¿Deseas saber cómo funciona el cvn?, Da clic en ver tutorial
+                        ¿Deseas saber cómo funciona el cvn?, Da clic en ver tutorial o en ver Manual de Usuario.
                       </h6>
                     </div>
                     &nbsp;&nbsp;
