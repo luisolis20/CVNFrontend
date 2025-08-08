@@ -34,13 +34,13 @@ export default {
           console.log(response.id);
          //console.log(response);
           if (role === 'Administrador') {
-            mostraralertas('Bienvenido ADMIN ' + (response.name || ''), 'success');
+            mostraralertas('LE DAMOS LA BIENVENIDA ADMIN ' + (response.name || ''), 'success');
             this.$router.push('/adminus/' + response.id);
           } else if (role === 'Estudiante') {
-            mostraralertas('Bienvenido ESTUDIANTE ' + (response.ApellInfPer || ''), 'success');
+            mostraralertas('LE DAMOS LA BIENVENIDA ESTUDIANTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/user/' + response.CIInfPer);
           } else if (role === 'Docente') {
-            mostraralertas('Bienvenido DOCENTE ' + (response.ApellInfPer || ''), 'success');
+            mostraralertas('LE DAMOS LA BIENVENIDA DOCENTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/userdocente/' + response.CIInfPer);
           }
         }
