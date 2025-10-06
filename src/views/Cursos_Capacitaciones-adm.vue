@@ -112,7 +112,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/cursoscapacitacion',
+            url255: 'http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion',
             cursos_capa: [],
             filteredcursos: [],
             searchQuery: '',

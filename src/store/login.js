@@ -7,7 +7,7 @@ export default {
     return {
       emaillo: "",
       clave: "",
-      url2: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/login",
+      url2: "http://cvubackendv2.test/api/cvn/login",
     };
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
           // Redirección según el rol
           const role = response.Rol;
           const tok = response.token;
-          console.log(response.id);
+          //console.log(response.id);
          //console.log(response);
           if (role === 'Administrador') {
             mostraralertas('LE DAMOS LA BIENVENIDA ADMIN ' + (response.name || ''), 'success');

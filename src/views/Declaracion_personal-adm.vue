@@ -101,7 +101,7 @@ export default {
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,
-            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/declaracion_personal',
+            url255: 'http://cvubackendv2.test/api/cvn/v1/declaracion_personal',
             declaracion_personals: [],
             filtereddeclaracion_personals: [],
             searchQuery: '',

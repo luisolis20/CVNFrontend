@@ -109,7 +109,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/idioma',
+            url255: 'http://cvubackendv2.test/api/cvn/v1/idioma',
             idiomas: [],
             pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)

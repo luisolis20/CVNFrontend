@@ -86,7 +86,7 @@ export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/users',
+            url255: 'http://cvubackendv2.test/api/cvn/v1/users',
             usuarios: null,
             pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
@@ -130,7 +130,7 @@ export default {
             );
         },
         eliminar(id, nombre) {
-            confimar2('http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/eliminar/', id, 'Deshabilitar Usuario', '¿Realmente desea deshabilitar a ' + nombre + '?');
+            confimar2('http://cvubackendv2.test/api/cvn/v1/eliminar/', id, 'Deshabilitar Usuario', '¿Realmente desea deshabilitar a ' + nombre + '?');
             this.getUsuarios();
             this.cargando = false;
             this.$router.push('/adminus/' + this.idus);

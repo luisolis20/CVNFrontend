@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const authClient = axios.create({
-  baseURL: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn',
+  baseURL: 'http://cvubackendv2.test/api/cvn',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -20,7 +20,7 @@ export default {
       correoTouched: false,
       correoError: '',
       correoErrornue: false,
-      url: "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/users",
+      url: "http://cvubackendv2.test/api/cvn/v1/users",
     };
   },
   watch: {
@@ -106,7 +106,7 @@ export default {
         mensaje: this.mensaje
       };
 
-      await axios.post('http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/enviar-comentario', comentarioData)
+      await axios.post('http://cvubackendv2.test/api/cvn/v1/enviar-comentario', comentarioData)
         .then(response => {
           mostraralertas2('Comentario enviado con éxito','success');
           this.apellidonombre = '';
@@ -129,7 +129,7 @@ export default {
         if (this.email.trim() === '') {
             mostraralertas('Ingrese un correo electrónico válido para estudiantes', 'warning', 'email');
         }else{
-          const response = await axios.post("http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/enviar-correo",
+          const response = await axios.post("http://cvubackendv2.test/api/cvn/v1/enviar-correo",
           {
             email: this.email.trim(),
             }

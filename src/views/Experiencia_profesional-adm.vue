@@ -159,7 +159,7 @@ export default {
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,
-            url255: 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api/cvn/v1/experiencia_profesionale',
+            url255: 'http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale',
             experiencia_profesionales: [],
             experiencia_profesionalesData: [],
             searchQuery: '',
