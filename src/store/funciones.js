@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import API from '@/store/axios'
 
 export function mostraralertas(titulo,icono,foco=''){
     if(foco!=''){
@@ -65,7 +65,7 @@ export function confimar2(urlconslash,id,titulo,mensaje){
    
 }
 export function enviarsoli(metodo,parametros,url,mensaje){
-    axios({
+    API({
         method:metodo,
         url:url,
         data:parametros
@@ -85,7 +85,7 @@ export function enviarsoli(metodo,parametros,url,mensaje){
     });
 }
 export function enviarsolig(metodo,parametros,url,mensaje){
-    return axios({
+    return API({
         method:metodo,
         url:url,
         data:parametros
@@ -105,7 +105,7 @@ export function enviarsolig(metodo,parametros,url,mensaje){
 }
 export async function enviarsoliedit(metodo,parametros,url,mensaje){
     try {
-        var response = await axios({
+        var response = await API({
         method: metodo,
         url: url,
         data: parametros

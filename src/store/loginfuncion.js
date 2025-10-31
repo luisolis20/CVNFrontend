@@ -1,3 +1,4 @@
+//Funcion para el login del usuario
 import axios from "axios";
 import store from "@/store";
 export async function enviarsolilogin(method, parametros, url, mensaje) {
@@ -9,27 +10,31 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
     });
 
     if (response.data && response.data.token) {
-      // ✅ Guardar token y tipo en Vuex (y localStorage automáticamente)
-      /*store.commit("setToken", response.data.token);
-      store.commit("setTokenType", response.data.token_type || "Bearer");
-
-      // ✅ Guardar datos del usuario en Vuex
-      store.commit("setRol", response.data.Rol || "");
-      store.commit("setemail", response.data.email || "");
-      store.commit("setid", response.data.id || "");
-      store.commit("setname", response.data.name || "");
-
-      // ✅ (Opcional) Guardar toda la info del usuario si la necesitas
-      localStorage.setItem("user", JSON.stringify(response.data.user || {}));
-      //console.log(response.data);
-      // ✅ Guardar el token en el store  */
       if (response.data.error) {
         return {
           error: response.data.error,
           clave: response.data.clave,
           mensaje: response.data.mensaje,
         };
-      } else if (response.data.Rol === "Estudiante") {
+      }
+       else if (response.data.Rol === "Estudiante Graduado") {
+        store.commit("setRol_CVN", response.data.Rol);
+        store.commit("setemail_CVN", response.data.mailPer);
+        store.commit("setid_CVN", response.data.CIInfPer);
+
+        store.commit("setname_CVN", response.data.ApellInfPer);
+        store.commit("setToken_CVN", response.data.token);
+        store.commit("setTokenType_CVN", response.data.token_type || "Bearer");
+        return {
+          token: response.data.token,
+          Rol: response.data.Rol,
+          CIInfPer: response.data.CIInfPer,
+          ApellInfPer: response.data.ApellInfPer,
+          mailPer: response.data.mailPer,
+          token_type: response.data.token_type,
+        };
+      }
+       else if (response.data.Rol === "Estudiante") {
         store.commit("setRol_CVN", response.data.Rol);
         store.commit("setemail_CVN", response.data.mailPer);
         store.commit("setid_CVN", response.data.CIInfPer);

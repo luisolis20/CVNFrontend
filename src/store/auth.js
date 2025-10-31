@@ -1,18 +1,20 @@
-import { ref } from 'vue';
-import axios from 'axios';
+//Codigo para la autenticación del usuario
+import { ref } from 'vue';// Librería para poder usar el ref
+import axios from 'axios'; //Librería para poder usar el axios
 import store from "@/store";
+// Importación de la librería para poder usar el ref
+const logged = ref(false); // Variable para almacenar si el usuario está logueado o no
+const user = ref('');// Variable para almacenar el usuario logueado
+const meURL = `${__API_CVN__}/cvn/me`; // URL para el endpoint de login
 
-const logged = ref(false);
-const user = ref('');
-const meURL = 'http://cvubackendv2.test/api/cvn/me'; // ajusta la URL según tu backend
-
+// Creación de un cliente de axios
 const apiClient = axios.create({
   baseURL: meURL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
+// Interceptor para agregar el token al header de la petición
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token_cvn');
@@ -24,7 +26,7 @@ apiClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
+// Función para obtener el usuario logueado
 export const getMe = async () => {
   try {
     const response = await apiClient.get('');
@@ -35,7 +37,7 @@ export const getMe = async () => {
     return response.data;
   } catch (error) {
     localStorage.clear();
-    window.location.href = '/';
+    window.location.href = '/cvn/home';
     console.error('Error al obtener perfil data:', error);
     throw error;
   }

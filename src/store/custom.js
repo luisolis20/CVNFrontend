@@ -141,7 +141,7 @@ export default {
       var rut;
       rut = this.$route.name;
 
-      return this.rolUsuario === "Estudiante";
+      return ((this.rolUsuario === "Estudiante") || (this.rolUsuario === "Estudiante Graduado"));
     },
     showNavbaruserdocente() {
 
@@ -164,7 +164,15 @@ export default {
       this.emaile = this.emailUsuario;
       this.idus = this.idUsuario;
       this.names = this.nombreUsuario;
-      return this.rolUsuario === "Estudiante";
+      return ((this.rolUsuario === "Estudiante") || (this.rolUsuario === "Estudiante Graduado"));
+    },
+    mostrarOpcionesgraduado() {
+      //console.log(this.rolUsuario);
+      this.roles = this.rolUsuario;
+      this.emaile = this.emailUsuario;
+      this.idus = this.idUsuario;
+      this.names = this.nombreUsuario;
+      return this.rolUsuario === "Estudiante Graduado";
     },
   },
   methods: {

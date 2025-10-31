@@ -1,13 +1,13 @@
 import { mostraralertas } from "@/store/funciones";
 import { enviarsolilogin } from "@/store/loginfuncion";
 import store from "@/store";
-import { getMe } from '@/store/auth'; 
+import { getMe } from '@/store/auth';
 export default {
   data() {
     return {
       emaillo: "",
       clave: "",
-      url2: "http://cvubackendv2.test/api/cvn/login",
+      url2: `${__API_CVN__}/cvn/login`,
     };
   },
   methods: {
@@ -23,8 +23,8 @@ export default {
 
         if (response.error) {
           mostraralertas(response.mensaje, 'warning');
-        } else if(response) {
-          // ✅ Aquí llamas a getMe() justo después de guardar el token
+        } else if (response) {
+          //  getMe() justo después de guardar el token
           const usuario = await getMe(); // Esto obtiene los datos del usuario autenticado desde /auth/me
           //console.log("Usuario autenticado:", usuario);
 
@@ -32,20 +32,30 @@ export default {
           const role = response.Rol;
           const tok = response.token;
           //console.log(response.id);
-         //console.log(response);
+          //console.log(response);
           if (role === 'Administrador') {
             mostraralertas('LE DAMOS LA BIENVENIDA ADMIN ' + (response.name || ''), 'success');
             this.$router.push('/adminus/' + response.id);
           } else if (role === 'Estudiante') {
             mostraralertas('LE DAMOS LA BIENVENIDA ESTUDIANTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/user/' + response.CIInfPer);
-          } else if (role === 'Docente') {
+
+          } else if (role === 'Estudiante Graduado') {
+            mostraralertas('LE DAMOS LA BIENVENIDA ESTUDIANTE GRADUADO ' + (response.ApellInfPer || ''), 'success');
+            this.$router.push('/user/' + response.CIInfPer);
+          }
+          else if (role === 'Docente') {
             mostraralertas('LE DAMOS LA BIENVENIDA DOCENTE ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/userdocente/' + response.CIInfPer);
           }
         }
       } catch (error) {
-        mostraralertas(error.response.data.mensaje, 'warning');
+        console.error("Error en login:", error);
+        if (error.response?.data?.mensaje) {
+          mostraralertas(error.response.data.mensaje, 'warning');
+        } else {
+          mostraralertas('No se pudo conectar con el servidor o error inesperado.', 'error');
+        }
       }
     },
   },
