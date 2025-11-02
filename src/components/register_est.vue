@@ -678,11 +678,13 @@
                                             <!-- Estudios Universitarios -->
                                             <div class="col-12" v-if="this.univer">
                                                 <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
-                                                <p class="text-danger text-justify" v-if="!this.modoeditionformacionuniversidad">Aquí te saldrá tu título registrado en la UTLVTE, no podrás editarlo. 
-                                                Si tu titulo aparece debes dar clic en Agregar Título Univeristario. Si tienes más de un título debes dar clic en Ver Siguiente Título y luego Agregar Título Univeristario.</p>
+                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulos">El sistema ha detectado que tienes titulos en nuestra institución. 
+                                                Para añadirlo debes dar clic en Agregar Título Universitario. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
+                                                Nota: Al tener más de un título debes dar clic en Agregar Título Universitario para agregarlos todos. Estos títulos no pueden ser editados.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título Univeristario.</p>
-                                                <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios.</p>
+                                                <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                añadirlo</p>
                                                 <h5 v-if="this.modoeditionformacionuniversidad">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
                                             </div>
                                             <!-- Titulo Universitario -->
@@ -734,14 +736,69 @@
                                                 </div>
                                             </div>
                                             <!-- Botón siguiente título -->
-                                            <div v-if="titulosEncontrados.length > 1 && tituloActualIndex + 1 < titulosEncontrados.length && this.mostrarFormularioTitulos"
+                                            <div v-if="this.univer && this.mostrarFormularioTitulos">
+                                               <!-- Botón anterior título -->
+                                                <div v-if="titulosEncontrados.length > 1 && tituloActualIndex > 0 && this.mostrarFormularioTitulos"
                                                     class="text-center my-3">
-                                                <button class="btn1 btn-info1" @click="mostrarSiguienteTitulo">
-                                                    Ver siguiente título
-                                                </button>
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarTituloAnterior">
+                                                        Ver título anterior
+                                                    </button>
+                                                </div>
+
+                                                <!-- Botón siguiente título -->
+                                                <div v-if="titulosEncontrados.length > 1 && tituloActualIndex + 1 < titulosEncontrados.length && this.mostrarFormularioTitulos"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarSiguienteTitulo">
+                                                        Ver siguiente título
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- Titulo Universitario Nuevo-->
+                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Título</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.titulo_universitario_obtenido"
+                                                        type="text"
+                                                        placeholder="Ingrese el título universitario obtenido" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Institución Universitaria -->
+                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Institución</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.institucion_universitaria"
+                                                        type="text"
+                                                        placeholder="Ingrese la institución universitaria"/>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- fecha de Graduacion -->
+                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Fecha de graduación</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.fecha_graduacion"
+                                                        type="date"
+                                                        :max="currentDate"/>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Especialidad Universitario -->
+                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                               <label class="text-dark" for="">Especialidad</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.especialidad"
+                                                        type="text"
+                                                        placeholder="Ingrese la especialidad del título" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-shapes"></i></span>
+                                                </div>
                                             </div>
                                             <!-- Acciones Universitario -->
-                                            <div class="col-12 text-center" v-if="this.univer && this.mostrarFormularioTitulos">
+                                            <div class="col-12 text-center" v-if="this.univer">
                                                 <button class="btn1 btn-secondary1 mb-2"
                                                         type="button"
                                                         @click="agregarEditarTituloUniversitario">
@@ -934,7 +991,7 @@
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion }}</td>
                                                                 <td class="text-dark">{{ titulo.especialidad }}</td>
                                                                 <td>
-                                                                    <button class="btn1 btn-secondary1" type="button" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
+                                                                    <button class="btn1 btn-secondary1" type="button" v-if="!titulo.esDetectado" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
                                                                     &nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
@@ -3892,6 +3949,7 @@ export default {
             modoeditioncursos: false,
             modoeditionlogros: false,
             modoeditionreferencias: false,
+            
 
 
         };
@@ -4556,6 +4614,7 @@ export default {
                                     : this.nuevoTituloUniversitario.institucion_universitaria.trim(),
                             fecha_graduacion: titulo.fechaincorporacion || this.nuevoTituloUniversitario.fecha_graduacion.trim(),
                             especialidad: titulo.NombCarr || this.nuevoTituloUniversitario.especialidad.trim(),
+                            
                         };
 
                         const response = await enviarsolig(
@@ -4574,6 +4633,7 @@ export default {
                                 institucion_universitaria: parametros.institucion_universitaria,
                                 fecha_graduacion: parametros.fecha_graduacion,
                                 especialidad: parametros.especialidad,
+                                esDetectado: true
                             });
 
                             nuevosGuardados++;
@@ -4590,6 +4650,8 @@ export default {
                     }
 
                     this.scrollToTopTituloUniversitarios();
+                    this.resetNuevoTituloUniversitario();
+                    this.titulosEncontrados = [];
                     return;
                 }
 
@@ -4613,6 +4675,7 @@ export default {
                 this.titulosUniversitarios.push({
                     idformacion_academica: response.data.data.id,
                     ...this.nuevoTituloUniversitario,
+                    esDetectado: false
                 });
 
                 this.resetNuevoTituloUniversitario();
@@ -8008,6 +8071,8 @@ export default {
                     
                     if (this.titulosUniversitarios.length == cantidadtitulosm) {
                         this.mostrarFormularioTitulos = false;
+                        this.titulosBloqueados = false;
+                        this.resetNuevoTituloUniversitario();
                         
                     } 
                 } else {
@@ -8021,6 +8086,8 @@ export default {
                     
                     if (this.titulosUniversitarios.length == cantidadtitulosm2) {
                         this.mostrarFormularioTitulos = false;
+                        this.titulosBloqueados = false;
+                        this.resetNuevoTituloUniversitario();
                        
                     } 
                 }
@@ -8060,6 +8127,14 @@ export default {
                 // Ya mostró todos → habilita "sigue estudiando"
                 this.titulosBloqueados = false;
                 this.sigueestudiandouniversidad = true;
+            }
+        },
+        mostrarTituloAnterior() {
+            if (this.tituloActualIndex > 0) {
+                this.tituloActualIndex--;
+                this.mostrarTituloEncontrado(this.titulosEncontrados[this.tituloActualIndex]);
+            } else {
+                mostraralertas2('Ya estás en el primer título.', 'info');
             }
         },
         //Experiencias Profesionales
