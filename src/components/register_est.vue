@@ -329,6 +329,7 @@
                                                         <img v-else style="height: 120px"
                                                             src="@/assets/images/userlogo.png"
                                                             id="fotoimg" class="img-thumbnail" alt="" />
+                                                        <input ref="fileFoto" @change="cargarfoto" type="file" accept="image/jpeg, image/jpg" class="form-control text-dark mt-2">
                                                        
                                                     </div>
                                                 </div>
@@ -679,8 +680,8 @@
                                             <div class="col-12" v-if="this.univer">
                                                 <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
                                                 <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulos">El sistema ha detectado que tienes titulos en nuestra institución. 
-                                                Para añadirlo debes dar clic en Agregar Título Universitario. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
-                                                Nota: Al tener más de un título debes dar clic en Agregar Título Universitario para agregarlos todos. Estos títulos no pueden ser editados.</p>
+                                                Para añadirlo debes dar clic en Agregar Título Universitario UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
+                                                <b>Nota: Al tener más de un título debes dar clic en Agregar Título Universitario UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título Univeristario.</p>
                                                 <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios que tiene en la institución. Si tiene otro título universitario en otra institución puedes
@@ -692,7 +693,7 @@
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        v-model="nuevoTituloUniversitario.titulo_universitario_obtenido"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido"
                                                         type="text"
                                                         placeholder="Ingrese el título universitario obtenido"
                                                         :disabled="this.titulosBloqueados" />
@@ -704,7 +705,7 @@
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        v-model="nuevoTituloUniversitario.institucion_universitaria"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.institucion_universitaria"
                                                         type="text"
                                                         placeholder="Ingrese la institución universitaria"
                                                         :disabled="titulosBloqueados" />
@@ -716,7 +717,7 @@
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        v-model="nuevoTituloUniversitario.fecha_graduacion"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.fecha_graduacion"
                                                         type="date"
                                                         :max="currentDate"
                                                         :disabled="titulosBloqueados" />
@@ -728,7 +729,7 @@
                                                <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        v-model="nuevoTituloUniversitario.especialidad"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.especialidad"
                                                         type="text"
                                                         placeholder="Ingrese la especialidad del título"
                                                         :disabled="titulosBloqueados" />
@@ -753,6 +754,15 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                            <!-- Acciones Universitario -->
+                                            <div class="col-12 text-center" v-if="this.univer && this.mostrarFormularioTitulos">
+                                                <button class="btn1 btn-secondary1 mb-2"
+                                                        type="button"
+                                                        @click="agregarEditarTituloUniversitarioUTLVTE">
+                                                     Agregar Título Universitario UTLVTE
+                                                </button>
+                                            </div>
+                                            <!-- nuevo  titulo universitario -->
                                             <!-- Titulo Universitario Nuevo-->
                                             <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Título</label>
@@ -798,7 +808,7 @@
                                                 </div>
                                             </div>
                                             <!-- Acciones Universitario -->
-                                            <div class="col-12 text-center" v-if="this.univer">
+                                            <div class="col-12 text-center" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <button class="btn1 btn-secondary1 mb-2"
                                                         type="button"
                                                         @click="agregarEditarTituloUniversitario">
@@ -826,14 +836,94 @@
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
                                                 <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
-                                                 <p class="text-danger text-justify" v-if="!this.modoeditionformacionposgrado">Aquí debes registrar tu título de posgrado obtenido, luego de que llenes los campos correspondientes debes
-                                                dar clic en Agregar Título de Posgrado.</p>
+                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulosPosgrado">El sistema ha detectado que tienes titulos de posgrado en nuestra institución. 
+                                                Para añadirlo debes dar clic en Agregar Posgrado UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
+                                                <b>Nota: Al tener más de un título debes dar clic en Agregar Posgrado UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título de Posgrado.</p>
+                                                <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                añadirlo</p>
                                                 <h5 v-if="this.modoeditionformacionposgrado">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
                                             </div>
                                             <!-- Titulos Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Título de posgrado</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="titulo_posgrado_obtenido"
+                                                        v-model="nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido" type="text"
+                                                        placeholder="Ingrese el título de posgrado obtenido" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-user-graduate"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Institucion Posgrado -->
+                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Institución</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="institucion_posgrado" v-model="nuevoTituloPosgradoUTLVTE.institucion_posgrado"
+                                                        type="text" placeholder="Ingrese la institución del título de posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-building"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Fecha de graduacion de Posgrado -->
+                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Fecha de graduación</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="fecha_graduacion_posgrado"
+                                                        v-model="nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado"
+                                                         type="date" :max="currentDate" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Especialidad Posgrado -->
+                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Especialidad</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="especialidad_posgrado" v-model="nuevoTituloPosgradoUTLVTE.especialidad_posgrado"
+                                                        type="text" placeholder="Ingrese la especialidad del título de posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-shapes"> </i></span>
+                                                </div>
+                                            </div>
+                                            <div v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                               <!-- Botón anterior título -->
+                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualPosgradoIndex > 0 && this.mostrarFormularioTitulosPosgrado"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarTituloAnteriorPosgrado">
+                                                        Ver título anterior
+                                                    </button>
+                                                </div>
+
+                                                <!-- Botón siguiente título -->
+                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualIndexPosgrado + 1 < titulosEncontradosPosgrado.length && this.mostrarFormularioTitulosPosgrado"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarSiguienteTituloPosgrado">
+                                                        Ver siguiente título
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- Acciones Posgrado -->
+                                            <div class="col-12 text-center" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloPosgradoUTLVTE">
+                                                Agregar Título de Posgrado UTLVTE
+                                                </button>
+                                            </div>
+                                            
+                                            <!-- Titulos Posgrado -->
+                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Título de posgrado</label>
                                                 <div class="input-group-icon">
                                                     
@@ -846,7 +936,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -858,7 +948,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion de Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -869,7 +959,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -881,7 +971,7 @@
                                                 </div>
                                             </div>
                                             <!-- Acciones Posgrado -->
-                                            <div class="col-12 text-center" v-if="this.posgrado">
+                                            <div class="col-12 text-center" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloPosgrado">
                                                     {{ tituloPosgradoEditIndex !== null ? 'Editar Título de Posgrado' : 'Agregar Título de Posgrado' }}
                                                 </button>
@@ -964,6 +1054,8 @@
                                                     </table>
                                                 </div>
                                             </div>
+                                            <!-- Titulos Universitarios UTLVTE Registrados Tabla-->
+                                            
                                             <!-- Titulos Universitarios Registrados Tabla-->
                                             <div class="text-center rounded p-4" id="formacionacademicagaurd">
                                                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -991,7 +1083,7 @@
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion }}</td>
                                                                 <td class="text-dark">{{ titulo.especialidad }}</td>
                                                                 <td>
-                                                                    <button class="btn1 btn-secondary1" type="button" v-if="!titulo.esDetectado" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
+                                                                    <button class="btn1 btn-secondary1" type="button"  v-if="titulo.institucion_universitaria !== 'Universidad Técnica &quot;Luis Vargas Torres&quot; de Esmeraldas'" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
                                                                     &nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
@@ -1029,7 +1121,7 @@
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion_posgrado }}</td>
                                                                 <td class="text-dark">{{ titulo.especialidad_posgrado }}</td>
                                                                 <td>
-                                                                    <button class="btn1 btn-secondary1" type="button" @click="editarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>&nbsp;
+                                                                    <button class="btn1 btn-secondary1" type="button" v-if="titulo.institucion_posgrado !== 'Universidad Técnica &quot;Luis Vargas Torres&quot; de Esmeraldas'" @click="editarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1245,15 +1337,34 @@
                                                             class="fas fa-calendar"></i></span>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.practica">
+                                                <label class="text-dark" for="">¿Sigue realizando sus practicas actualmente en la empresa/institución?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.fechacargospractica"
+                                                        v-on:change="FechaCargpractica"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione si/no 
+                                                        </option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-users"> </i></span>
+                                                </div>
+                                            </div>
                                             <!-- Fecha de finalización -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.practica">
-                                                <label class="text-dark" for="">Fecha de finalización las prácticas</label>
-                                                <div class="input-group-icon">
-                                                    <input class="form-control1 input-box form-voyage-control1"
-                                                        id="fecha_fin_practicas" v-model="nuevocargosPasantias.fecha_fin_practicas"
-                                                        type="date" :max="currentDate" /><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-calendar"></i></span>
+                                                <div v-if="this.trabajonuevoprecticas">
+                                                    <label class="text-dark" for="">{{ fechaFinLabelpracticas }}</label>
+                                                    <div class="input-group-icon">
+                                                        <input class="form-control1 input-box form-voyage-control1"
+                                                            id="fecha_fin_practicas" v-model="nuevocargosPasantias.fecha_fin_practicas"
+                                                            type="date" :disabled="fechaFinDisabledpracticas" :max="currentDate" /><span
+                                                            class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                                class="fas fa-calendar"></i></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- Área de trabajo -->
@@ -1360,7 +1471,7 @@
                                                                 <td class="text-dark">{{ cargpasantia.descripcion_funciones_practicas }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionPracticas(cargpasantia.idexperiencias_profesionales)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionPracticas(cargpasantia.idexperiencias_profesionales)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1460,12 +1571,12 @@
                                                 <label class="text-dark" for="">Link de la publicación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1" @input="validarURL"
-                                                        id="titulo" v-model="nuevaspublicaciones.link_publicación" type="text"
+                                                        id="titulo" v-model="nuevaspublicaciones.link_publicacion" type="text"
                                                         placeholder="Ingrese el Link de su publicación" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-book"> </i></span>
                                                 </div>
-                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicación" class="text-danger">Por favor, ingrese un URL válido.</p>
+                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicacion" class="text-danger">Por favor, ingrese un URL válido.</p>
                                             </div>
                                             <!-- ponencias -->
                                             <div class="col-6" v-if="this.investiga">
@@ -1516,10 +1627,10 @@
                                                                 <td class="text-dark">{{ publicacionfor.idinvestigacion_publicaciones }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_tipo }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_titulo }}</td>
-                                                                <td class="text-dark">{{ publicacionfor.link_publicación }}</td>
+                                                                <td class="text-dark">{{ publicacionfor.link_publicacion }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionPublicaciones(publicacionfor.idinvestigacion_publicaciones)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionPublicaciones(publicacionfor.idinvestigacion_publicaciones)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1720,30 +1831,39 @@
                                                             class="fas fa-chart-line"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- ¿Posee un certificado del idioma? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Posee un certificado del idioma?</label>
                                                 <div class="input-group-icon">
-                                                    <select v-model="nuevosidiomas.certificado"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione si/no
-                                                        </option>
+                                                    <select v-model="certificadoselected"
+                                                                @change="actualizarCertificado"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
                                                         <option value="Si">Si</option>
                                                         <option value="No">No</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <!-- Subir certificado -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="nuevosidiomas.certificado === 'Si'">
-                                                <p class="text-danger">Esta función aún no está disponible</p>
-                                                <div class="input-group-icon">
-                                                    <label class="text-dark" for="archivoCertificado">Subir certificado (PDF):</label>
-                                                    <input type="file" id="archivoCertificado"  class="form-control1 input-box" @change="handleFileUpload" accept=".pdf" disabled>
-                                                </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="certificadoselected === 'Si'">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el link donde se encuentra el certificado
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado"
+                                                        class="form-control1 input-box"
+                                                        v-model="nuevosidiomas.certificado"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
                                             </div>
                                             <!-- Acciones -->
                                             <div class="col-4">
@@ -3013,13 +3133,14 @@
                        --> 
                         <div class="col-lg-5 order-1 order-lg-2">
                             <img src="@/assets/images/superior.png" class="img-fluid anima2" alt="">
+                            
                         </div>
 
                     </div>
                 </div>
             </section>
              <!-- Services Section Begin--> 
-             <section class="services spad" id="sobremi">
+            <section class="services spad" id="sobremi">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-4">
@@ -3031,11 +3152,23 @@
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
-                                <!-- Services Section Begin
-                                <img v-if="this.imagen" height="100" :src="this.imagen" id="fotoimg" class="img-fluid" alt="svg image">
-                                <img v-else style="height: 120px;"
-                                src="@/assets/images/userlogo.png"
-                                id="fotoimg" class="img-fluid" alt="svg image">--> 
+                                <!-- Foto con marco decorativo -->
+                                <div class="foto-marco">
+                                    <img
+                                        v-if="fotografia"
+                                        :src="'data:image/png;base64,' + fotografia"
+                                        id="fotoimg"
+                                        class="imagen-foto"
+                                        alt="Foto de perfil"
+                                    />
+                                    <img
+                                        v-else
+                                        src="@/assets/images/userlogo.png"
+                                        id="fotoimg"
+                                        class="imagen-foto"
+                                        alt="Imagen por defecto"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
@@ -3555,6 +3688,10 @@ export default {
             mostrarFormularioTitulos: true,
             tituloActualIndex: 0,
             titulosBloqueados: false, // control para inputs bloqueado
+            titulosEncontradosPosgrado: [],
+            mostrarFormularioTitulosPosgrado: true,
+            tituloActualIndexPosgrado: 0,
+            titulosBloqueadosPosgrado: false, // control para inputs bloqueado
             editingIndex: null,
             logueado:null,
             editingIndex2: null,
@@ -3625,11 +3762,23 @@ export default {
                 titulo_universitario_obtenido: "",
                 institucion_universitaria: "",
                 fecha_graduacion: "",
-                especialidad: ""
+                especialidad: "",
+            },
+            nuevoTituloUniversitarioUTLVTE: {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: "",
             },
             tituloUniversitarioEditIndex: null, 
             // nuevo título de posgrado
             nuevoTituloPosgrado: {
+                titulo_posgrado_obtenido: "",
+                institucion_posgrado: "",
+                fecha_graduacion_posgrado: "",
+                especialidad_posgrado: ""
+            },
+            nuevoTituloPosgradoUTLVTE: {
                 titulo_posgrado_obtenido: "",
                 institucion_posgrado: "",
                 fecha_graduacion_posgrado: "",
@@ -3689,6 +3838,11 @@ export default {
             fechaFinDisabled: false,
             trabajo: false,
             trabajonuevo: false,
+            fechacargospractica: "",
+            fechaFinLabelpracticas: "",
+            fechaFinDisabledpracticas: false,
+            trabajopractica: false,
+            trabajonuevoprecticas: false,
             regresar3: false,
 
             //fechas del curso
@@ -3713,7 +3867,7 @@ export default {
             nuevaspublicaciones: {
                 publicacion_tipo: "",
                 publicacion_titulo: "",
-                link_publicación: "",
+                link_publicacion: "",
                 congreso_evento: "",
             },
             publicacionesEditIndex: null, 
@@ -3724,6 +3878,7 @@ export default {
             idlenguaje: 0,
             lenguaje: null,
             mostraridiomas: true,
+            certificadoselected: "",
 
             idiomasarray: [],
             //  Idiomas
@@ -4150,6 +4305,7 @@ export default {
                 this.getDeclaracionPersonal(),
                 this.getFormacionAcademica(),
                 this.getTitulosRegistrados(),
+                this.getTitulosRegistradosPosgrado(),
                 this.getExperienciasProfesionales(),
                 this.getInvestigacionPublicaciones(),
                 this.getIdiomas(),
@@ -4232,7 +4388,7 @@ export default {
                 '(\\#[-a-z\\d_]*)?$', 'i' 
             );
 
-            this.isValidURL = urlPattern.test(this.nuevaspublicaciones.link_publicación);
+            this.isValidURL = urlPattern.test(this.nuevaspublicaciones.link_publicacion);
             
         },
         validarNumero(event) {
@@ -4561,6 +4717,84 @@ export default {
            
         },
         //Titulo Universitario
+        async agregarEditarTituloUniversitarioUTLVTE() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido!=='' && this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria!=='' && this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion !=='' && this.nuevoTituloUniversitarioUTLVTE.especialidad !==''){
+                
+                    // 🟢 Si no está editando — Agregar nuevos títulos
+                let nuevosGuardados = 0;
+
+                // Si hay títulos encontrados en la base (UTLVTE o similares)
+                if (this.titulosEncontrados.length > 0) {
+                    for (const titulo of this.titulosEncontrados) {
+                        // Si ya fue guardado, saltar
+                        if (titulo.idformacion_academica) continue;
+
+                        // Tomar valores del título actual
+                        const parametros = {
+                            CIInfPer: this.idus,
+                            estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                            titulo_universitario_obtenido:
+                                (this.GeneroPer === 'MUJER' ? titulo.titulom : titulo.tituloh) ||
+                                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido.trim(),
+                            institucion_universitaria:
+                                titulo.inst_cod === 'UTELVT'
+                                    ? 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas'
+                                    : this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria.trim(),
+                            fecha_graduacion: titulo.fechaincorporacion || this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion.trim(),
+                            especialidad: titulo.NombCarr || this.nuevoTituloUniversitarioUTLVTE.especialidad.trim(),
+                            
+                        };
+
+                        const response = await enviarsolig(
+                            'POST',
+                            parametros,
+                            '/cvn/v1/formacion_academica',
+                            'Título Universitario Agregado con éxito'
+                        );
+
+                        if (response && response.data && response.data.data.id) {
+                            titulo.idformacion_academica = response.data.data.id;
+
+                            this.titulosUniversitarios.push({
+                                idformacion_academica: response.data.data.id,
+                                titulo_universitario_obtenido: parametros.titulo_universitario_obtenido,
+                                institucion_universitaria: parametros.institucion_universitaria,
+                                fecha_graduacion: parametros.fecha_graduacion,
+                                especialidad: parametros.especialidad,
+                                esDetectado: true,
+                            });
+
+                            nuevosGuardados++;
+                        }
+                    }
+
+                    // Si guardó todos los títulos, bloquea inputs
+                    if (nuevosGuardados > 0) {
+                        mostraralertas2(`Se guardaron ${nuevosGuardados} títulos exitosamente.`, 'success');
+                        this.titulosBloqueados = true;
+                        this.mostrarFormularioTitulos = false; // 👈 oculta inputs
+                    } else {
+                        mostraralertas2('No hay títulos nuevos para guardar.', 'info');
+                    }
+
+                    this.scrollToTopTituloUniversitarios();
+                    this.resetNuevoTituloUniversitarioUTLVTE();
+                    this.titulosEncontrados = [];
+                    this.titulosBloqueados = true;
+                    this.mostrarFormularioTitulos = false;
+                    return;
+                }
+
+                
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+           
+        },
         async agregarEditarTituloUniversitario() {
             const usuario = await getMe();
             //console.log(usuario);
@@ -4593,27 +4827,70 @@ export default {
                     this.scrollToTopTituloUniversitarios();
                 } else {
                     // 🟢 Si no está editando — Agregar nuevos títulos
+                
+
+                    // 🟢 Si no hay títulos encontrados (el usuario los ingresa manualmente)
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                        titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
+                        institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
+                        fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
+                        especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
+                    };
+
+                    const response = await enviarsolig(
+                        'POST',
+                        parametros,
+                        '/cvn/v1/formacion_academica',
+                        'Título Universitario Agregado con éxito'
+                    );
+
+                    this.titulosUniversitarios.push({
+                        idformacion_academica: response.data.data.id,
+                        ...this.nuevoTituloUniversitario,
+                        esDetectado: false
+                    });
+
+                    this.resetNuevoTituloUniversitario();
+                    this.scrollToTopTituloUniversitarios();
+                    this.titulosBloqueados = true;
+                    this.mostrarFormularioTitulos = false;
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+           
+        },
+        
+        async agregarEditarTituloPosgradoUTLVTE() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido!=='' && this.nuevoTituloPosgradoUTLVTE.institucion_posgrado!=='' && this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado !=='' && this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado !==''){
+               
                 let nuevosGuardados = 0;
 
                 // Si hay títulos encontrados en la base (UTLVTE o similares)
-                if (this.titulosEncontrados.length > 0) {
-                    for (const titulo of this.titulosEncontrados) {
+                if (this.titulosEncontradosPosgrado.length > 0) {
+                    for (const titulo of this.titulosEncontradosPosgrado) {
                         // Si ya fue guardado, saltar
                         if (titulo.idformacion_academica) continue;
 
                         // Tomar valores del título actual
                         const parametros = {
                             CIInfPer: this.idus,
-                            estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
-                            titulo_universitario_obtenido:
+                            estudios_posgrado_culminados: this.estudios_posgrado_culminados.trim(),
+                            titulo_posgrado_obtenido:
                                 (this.GeneroPer === 'MUJER' ? titulo.titulom : titulo.tituloh) ||
-                                this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
-                            institucion_universitaria:
+                                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido.trim(),
+                            institucion_posgrado:
                                 titulo.inst_cod === 'UTELVT'
                                     ? 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas'
-                                    : this.nuevoTituloUniversitario.institucion_universitaria.trim(),
-                            fecha_graduacion: titulo.fechaincorporacion || this.nuevoTituloUniversitario.fecha_graduacion.trim(),
-                            especialidad: titulo.NombCarr || this.nuevoTituloUniversitario.especialidad.trim(),
+                                    : this.nuevoTituloPosgradoUTLVTE.institucion_posgrado.trim(),
+                            fecha_graduacion_posgrado: titulo.fechaincorporacion || this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado.trim(),
+                            especialidad_posgrado: titulo.NombCarr || this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado.trim(),
                             
                         };
 
@@ -4621,19 +4898,19 @@ export default {
                             'POST',
                             parametros,
                             '/cvn/v1/formacion_academica',
-                            'Título Universitario Agregado con éxito'
+                            'Título de Posgrado Agregado con éxito'
                         );
 
                         if (response && response.data && response.data.data.id) {
                             titulo.idformacion_academica = response.data.data.id;
 
-                            this.titulosUniversitarios.push({
+                            this.titulosPosgrado.push({
                                 idformacion_academica: response.data.data.id,
-                                titulo_universitario_obtenido: parametros.titulo_universitario_obtenido,
-                                institucion_universitaria: parametros.institucion_universitaria,
-                                fecha_graduacion: parametros.fecha_graduacion,
-                                especialidad: parametros.especialidad,
-                                esDetectado: true
+                                titulo_posgrado_obtenido: parametros.titulo_posgrado_obtenido,
+                                institucion_posgrado: parametros.institucion_posgrado,
+                                fecha_graduacion_posgrado: parametros.fecha_graduacion_posgrado,
+                                especialidad_posgrado: parametros.especialidad_posgrado,
+                                
                             });
 
                             nuevosGuardados++;
@@ -4643,50 +4920,23 @@ export default {
                     // Si guardó todos los títulos, bloquea inputs
                     if (nuevosGuardados > 0) {
                         mostraralertas2(`Se guardaron ${nuevosGuardados} títulos exitosamente.`, 'success');
-                        this.titulosBloqueados = true;
-                        this.mostrarFormularioTitulos = false; // 👈 oculta inputs
+                        this.titulosBloqueadosPosgrado = true;
+                        this.mostrarFormularioTitulosPosgrado = false; // 👈 oculta inputs
                     } else {
                         mostraralertas2('No hay títulos nuevos para guardar.', 'info');
                     }
 
-                    this.scrollToTopTituloUniversitarios();
-                    this.resetNuevoTituloUniversitario();
-                    this.titulosEncontrados = [];
+                    this.resetNuevoTituloPosgrado();
+                        this.scrollToTopTituloPosgrado();
+                    this.titulosEncontradosPosgrado = [];
+                    this.titulosBloqueadosPosgrado = true;
+                    this.mostrarFormularioTitulosPosgrado = false;
                     return;
                 }
 
-                // 🟢 Si no hay títulos encontrados (el usuario los ingresa manualmente)
-                const parametros = {
-                    CIInfPer: this.idus,
-                    estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
-                    titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
-                    institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
-                    fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
-                    especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
-                };
-
-                const response = await enviarsolig(
-                    'POST',
-                    parametros,
-                    '/cvn/v1/formacion_academica',
-                    'Título Universitario Agregado con éxito'
-                );
-
-                this.titulosUniversitarios.push({
-                    idformacion_academica: response.data.data.id,
-                    ...this.nuevoTituloUniversitario,
-                    esDetectado: false
-                });
-
-                this.resetNuevoTituloUniversitario();
-                this.scrollToTopTituloUniversitarios();
-                this.titulosBloqueados = true;
-                this.mostrarFormularioTitulos = false;
-                }
             }else{
                 mostraralertas2('No deje campos en blanco','warning');
             }
-           
         },
         async agregarEditarTituloPosgrado() {
             const usuario = await getMe();
@@ -4840,6 +5090,21 @@ export default {
             this.scrollToTop();
             this.modoeditionformacionuniversidad=false;
         },
+        async eliminarTituloUniversitarioUTLVTE(idformacion_academica) {
+            const index = this.titulosEncontrados.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el Título Universitario?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.titulosEncontrados.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloUniversitarioUTLVTE();
+            this.scrollToTop();
+           // this.modoeditionformacionuniversidad=false;
+        },
         
         async eliminarTituloPosgrado(idformacion_academica) {
             const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
@@ -4899,6 +5164,18 @@ export default {
                 especialidad: ""
             };
         },
+        resetNuevoTituloUniversitarioUTLVTE() {
+            
+            this.estudios_universitarios_culminados = "";
+            this.Titulouni();
+           
+            this.nuevoTituloUniversitarioUTLVTE = {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: ""
+            };
+        },
         resetNuevoTituloPosgrado() {
             this.estudios_posgrado_culminados = "";
             this.Posgra();
@@ -4945,6 +5222,23 @@ export default {
                 this.nuevocargosEmpresas.fecha_fin_empresa = ''; 
                 this.fechaFinDisabled = false;
                 this.trabajonuevo = true;
+            }
+        },
+        FechaCargpractica() {
+            if(this.fechacargospractica === ""){
+                this.fechaFinLabelpracticas = "";
+                //this.trabajonuevo = false;
+            }
+            if (this.fechacargospractica === "Si") {
+                this.fechaFinLabelpracticas = "Fecha actual de realización de prácticas";
+                this.nuevocargosPasantias.fecha_fin_practicas = new Date().toISOString().split('T')[0]; 
+                this.fechaFinDisabledpracticas = true;
+                this.trabajonuevoprecticas = true;
+            }if (this.fechacargospractica === "No"){
+                this.fechaFinLabelpracticas = "Fecha de finalización de prácticas en la Empresa/Institución";
+                this.nuevocargosPasantias.fecha_fin_practicas = ''; 
+                this.fechaFinDisabledpracticas = false;
+                this.trabajonuevoprecticas = true;
             }
         },
         FechaCursos2() {
@@ -5206,6 +5500,7 @@ export default {
             
             this.practicas_profesionales = "";
             this.Practicas();
+            this.FechaCarg();
             this.cargos=false;
             this.nuevocargosPasantias = {
                 empresa_institucion_practicas: "",
@@ -5230,7 +5525,7 @@ export default {
             //console.log(usuario);
             this.idus = usuario.CIInfPer;
             //console.log(this.idus);
-            if(this.nuevaspublicaciones.publicacion_tipo.trim()!=='' && this.nuevaspublicaciones.publicacion_titulo.trim()!=='' && this.nuevaspublicaciones.link_publicación.trim() !=='' && this.nuevaspublicaciones.congreso_evento.trim() !=='' ){
+            if(this.nuevaspublicaciones.publicacion_tipo.trim()!=='' && this.nuevaspublicaciones.publicacion_titulo.trim()!=='' && this.nuevaspublicaciones.link_publicacion.trim() !=='' && this.nuevaspublicaciones.congreso_evento.trim() !=='' ){
 
                 if (this.publicacionesEditIndex !== null) {
                     const parametros = {
@@ -5238,7 +5533,7 @@ export default {
                         publicaciones: this.publicaciones.trim(),
                         publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                         publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
-                        link_publicación: this.nuevaspublicaciones.link_publicación.trim(),
+                        link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
                         congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                     };
     
@@ -5264,7 +5559,7 @@ export default {
                                 publicaciones: this.publicaciones.trim(),
                                 publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                                 publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
-                                link_publicación: this.nuevaspublicaciones.link_publicación.trim(),
+                                link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
                                 congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                             };
                         
@@ -5275,7 +5570,7 @@ export default {
                         this.publicacionesarray.push({ idinvestigacion_publicaciones: response.data.data.id, 
                                 publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                                 publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
-                                link_publicación: this.nuevaspublicaciones.link_publicación.trim(),
+                                link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
                                 congreso_evento: this.nuevaspublicaciones.congreso_evento.trim()});
                         this.resetNuevoPubliciones();
                         this.scrollToTop();
@@ -5325,84 +5620,96 @@ export default {
             this.nuevaspublicaciones = {
                 publicacion_tipo: "",
                 publicacion_tipo: "",
-                link_publicación: "",
+                link_publicacion: "",
                 congreso_evento: ""
             };
         },
-        
+
+        actualizarCertificado() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.certificadoselected === 'No') {
+                this.nuevosidiomas.certificado = 'No';
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.certificadoselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
+                this.nuevosidiomas.certificado = '';
+            }
+        },
 
         //Idioma
         // Métodos para añadir/editar idiomas
-        async agregarEditarIdiomas() {
+         async agregarEditarIdiomas() {
             const usuario = await getMe();
-            //console.log(usuario);
             this.idus = usuario.CIInfPer;
-            //console.log(this.idus);
-            if(this.nuevosidiomas.comprension_auditiva.trim()!=='' && this.nuevosidiomas.comprension_lectura.trim()!=='' && this.nuevosidiomas.interaccion_oral.trim() !=='' && this.nuevosidiomas.expresion_oral.trim() !=='' && this.nuevosidiomas.expresion_escrita.trim() !=='' && this.nuevosidiomas.certificado.trim() !==''){
+
+            // Validar que no haya campos vacíos (excepto certificado si es "No")
+            if (this.nuevosidiomas.comprension_auditiva.trim() !== '' &&
+                this.nuevosidiomas.comprension_lectura.trim() !== '' &&
+                this.nuevosidiomas.interaccion_oral.trim() !== '' &&
+                this.nuevosidiomas.expresion_oral.trim() !== '' &&
+                this.nuevosidiomas.expresion_escrita.trim() !== '') 
+            {
+                // Forzar coherencia de certificado
+                if (this.certificadoselected === 'No') {
+                    this.nuevosidiomas.certificado = 'No';
+                }
+
+                const parametros = {
+                    CIInfPer: this.idus,
+                    idioma: this.nuevosidiomas.idioma.trim(),
+                    comprension_auditiva: this.nuevosidiomas.comprension_auditiva.trim(),
+                    comprension_lectura: this.nuevosidiomas.comprension_lectura.trim(),
+                    interaccion_oral: this.nuevosidiomas.interaccion_oral.trim(),
+                    expresion_oral: this.nuevosidiomas.expresion_oral.trim(),
+                    expresion_escrita: this.nuevosidiomas.expresion_escrita.trim(),
+                    certificado: this.nuevosidiomas.certificado.trim(),
+                };
 
                 if (this.idiomasEditIndex !== null) {
-                    const parametros = {
-                        CIInfPer: this.idus,
-                        idioma: this.nuevosidiomas.idioma.trim(),
-                        comprension_auditiva: this.nuevosidiomas.comprension_auditiva.trim(),
-                        comprension_lectura: this.nuevosidiomas.comprension_lectura.trim(),
-                        interaccion_oral: this.nuevosidiomas.interaccion_oral.trim(),
-                        expresion_oral: this.nuevosidiomas.expresion_oral.trim(),
-                        expresion_escrita: this.nuevosidiomas.expresion_escrita.trim(),
-                        certificado: this.nuevosidiomas.certificado.trim(),
-                    };
-    
-                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/idioma/' + this.idiomasEditIndex, 'Idioma Actualizado con éxito');
-    
+                    // EDITAR
+                    const response = await enviarsolig(
+                        'PUT',
+                        parametros,
+                        '/cvn/v1/idioma/' + this.idiomasEditIndex,
+                        'Idioma Actualizado con éxito'
+                    );
+
                     if (response && response.data) {
-                        const index = this.idiomasarray.findIndex(titulo => titulo.idlenguaje === this.idiomasEditIndex);
+                        const index = this.idiomasarray.findIndex(
+                            titulo => titulo.idlenguaje === this.idiomasEditIndex
+                        );
                         if (index !== -1) {
-                            this.idiomasarray.splice(index, 1, { ...this.nuevosidiomas });
+                            this.idiomasarray.splice(index, 1, {
+                                idlenguaje: this.idiomasEditIndex,
+                                ...this.nuevosidiomas,
+                            });
                         }
-                    } else {
-                        console.error('La respuesta no contiene los datos esperados:', response);
                     }
                     this.idiomasEditIndex = null;
-                    this.modoeditionidiomas=false;
+                    this.modoeditionidiomas = false;
                     this.resetNuevoIdiomas();
+                    this.certificadoselected = '';
                     this.scrollToTop();
                 } else {
-                    try {
-    
-                        const parametros = {
-                                CIInfPer: this.idus,
-                                idioma: this.nuevosidiomas.idioma.trim(),
-                                comprension_auditiva: this.nuevosidiomas.comprension_auditiva.trim(),
-                                comprension_lectura: this.nuevosidiomas.comprension_lectura.trim(),
-                                interaccion_oral: this.nuevosidiomas.interaccion_oral.trim(),
-                                expresion_oral: this.nuevosidiomas.expresion_oral.trim(),
-                                expresion_escrita: this.nuevosidiomas.expresion_escrita.trim(),
-                                certificado: this.nuevosidiomas.certificado.trim(),
-                            };
-                        
-                        //console.log(parametros);
-                       
-                        const response = await enviarsolig('POST', parametros, '/cvn/v1/idioma', 'Idioma Agregado con éxito');
-                       
-                        this.idiomasarray.push({ idlenguaje: response.data.data.id, 
-                                idioma: this.nuevosidiomas.idioma.trim(),
-                                comprension_auditiva: this.nuevosidiomas.comprension_auditiva.trim(),
-                                comprension_lectura: this.nuevosidiomas.comprension_lectura.trim(),
-                                interaccion_oral: this.nuevosidiomas.interaccion_oral.trim(),
-                                expresion_oral: this.nuevosidiomas.expresion_oral.trim(),
-                                expresion_escrita: this.nuevosidiomas.expresion_escrita.trim(),
-                                certificado: this.nuevosidiomas.certificado.trim()});
-                        this.resetNuevoIdiomas();
-                        this.scrollToTop();
-                        
-                    } catch (error) {
-                        console.log(error)
-                    }
+                    // AGREGAR
+                    const response = await enviarsolig(
+                        'POST',
+                        parametros,
+                        '/cvn/v1/idioma',
+                        'Idioma Agregado con éxito'
+                    );
+
+                    this.idiomasarray.push({
+                        idlenguaje: response.data.data.id,
+                        ...this.nuevosidiomas,
+                    });
+                    this.resetNuevoIdiomas();
+                    this.certificadoselected = '';
+                    this.scrollToTop();
                 }
-            }else{
-                mostraralertas2('No deje campos en blanco','warning');
+            } else {
+                mostraralertas2('No deje campos en blanco', 'warning');
             }
-            
         },
         // Métodos para editar idiomas
         editarSeleccionIdiomas(idlenguaje) {
@@ -5411,6 +5718,13 @@ export default {
                 this.nuevosidiomas = { ...this.idiomasarray[index] };
                 this.idiomasEditIndex = idlenguaje;
                 this.modoeditionidiomas=true;
+                // Ajusta el select según el valor del certificado guardado
+                if (this.nuevosidiomas.certificado === 'No') {
+                    this.certificadoselected = 'No';
+                } else {
+                    this.certificadoselected = 'Si';
+                }
+
                 this.scrollToTop();
             }
         },
@@ -6721,6 +7035,7 @@ export default {
                                 fecha_graduacion: item.fecha_graduacion || '',
                                 especialidad: item.especialidad || ''
                             });
+                            this.mostrarFormularioTitulos = false;
                         }
                         if (item.estudios_universitarios_culminados === 'No' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
                             this.estudioactualtitulosUniversitarios.push({
@@ -6742,6 +7057,7 @@ export default {
                                 fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
                                 especialidad_posgrado: item.especialidad_posgrado || ''
                             });
+                            this.mostrarFormularioTitulosPosgrado = false;
                         }
                     });
                     
@@ -6921,7 +7237,7 @@ export default {
                                 idinvestigacion_publicaciones: item.id,
                                 publicacion_tipo: item.publicacion_tipo || '',
                                 publicacion_titulo: item.publicacion_titulo || '',
-                                link_publicación: item.link_publicación || '',
+                                link_publicacion: item.link_publicacion || '',
                                 congreso_evento: item.congreso_evento || ''
                             });
                         }
@@ -7250,12 +7566,44 @@ export default {
        
        
         cargarfoto(event) {
-            var reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]);
-            reader.onload = function () {
-                var mifoto = document.getElementById("fotoimg");
-                mifoto.src = reader.result;
-                this.imagen = mifoto.src;
+           const file = event.target.files[0];
+            if (!file) return;
+
+            // Validar que sea imagen
+            const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+            if (!allowedTypes.includes(file.type)) {
+                mostraralertas('Solo se permiten imágenes en formato JPG o JPEG.', 'warning', '');
+                this.$refs.fileFoto.value = ""; // Limpia input
+                this.previewFoto = '';
+                this.fotografia = '';
+                this.Errorfoto = true;
+                return;
+            }
+
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = () => {
+                // Crear un canvas de 320x240
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = 320;
+                canvas.height = 240;
+
+
+                ctx.drawImage(img, 0, 0, 320, 240);
+
+
+                const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+
+                this.previewFoto = dataUrl;
+                this.fotografia = dataUrl.replace(/^data:image\/jpeg;base64,/, "");
+                this.Errorfoto = false;
+            };
+
+            img.onerror = () => {
+                mostraralertas('Error al cargar la imagen.', 'error', '');
+                this.$refs.fileFoto.value = "";
             };
         },
 
@@ -7594,7 +7942,7 @@ export default {
                     const publicacionData2 = [
                         { label: 'Tipo de Publicación:', key: 'publicacion_tipo' },
                         { label: 'Título de la Publicación:', key: 'publicacion_titulo' },
-                        { label: 'Likn de la Publicación:', key: 'link_publicación' }
+                        { label: 'Likn de la Publicación:', key: 'link_publicacion' }
                     ];
 
                     publicacionData2.forEach(item => {
@@ -7957,6 +8305,7 @@ export default {
                     this.titulosUniversitarios = [];
                     this.titulosPosgrado = [];
                     this.estudioactualtitulosUniversitarios = [];
+                    this.titulosEncontrados = [];
                     
                     
                     data.forEach(item => {
@@ -7984,6 +8333,7 @@ export default {
                                 fecha_graduacion: item.fecha_graduacion || '',
                                 especialidad: item.especialidad || ''
                             });
+                            this.mostrarFormularioTitulos = false;
                         }
                         if (item.estudios_universitarios_culminados === 'No' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
                             this.estudioactualtitulosUniversitarios.push({
@@ -8005,6 +8355,7 @@ export default {
                                 fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
                                 especialidad_posgrado: item.especialidad_posgrado || ''
                             });
+                            this.mostrarFormularioTitulosPosgrado = false;
                         }
                     });
                     
@@ -8068,13 +8419,7 @@ export default {
                     this.sigueestudiandouniversidad = false;
                     const cantidadtitulosm = this.titulosEncontrados.length;
 
-                    
-                    if (this.titulosUniversitarios.length == cantidadtitulosm) {
-                        this.mostrarFormularioTitulos = false;
-                        this.titulosBloqueados = false;
-                        this.resetNuevoTituloUniversitario();
-                        
-                    } 
+                   
                 } else {
                     //this.estudios_universitarios_culminados = 'Si';
                     //this.Titulouni();
@@ -8084,12 +8429,7 @@ export default {
                     this.sigueestudiandouniversidad = false;
                     const cantidadtitulosm2 = this.titulosEncontrados.length;
                     
-                    if (this.titulosUniversitarios.length == cantidadtitulosm2) {
-                        this.mostrarFormularioTitulos = false;
-                        this.titulosBloqueados = false;
-                        this.resetNuevoTituloUniversitario();
-                       
-                    } 
+                   
                 }
             } catch (error) {
                 if (error.response && error.response.status === 404) {
@@ -8103,20 +8443,73 @@ export default {
                 }
             }
         },
+        async getTitulosRegistradosPosgrado() {
+            const usuario = await getMe();
+            const id = usuario.CIInfPer;
+
+            try {
+                const response = await API.get(`/cvn/v1/titulogPosgrados/${id}`);
+
+                if (response.data.multiple) {
+                    this.titulosEncontradosPosgrado = response.data.titulos;
+                    this.tituloActualIndexPosgrado = 0;
+                    this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[0]);
+                    this.titulosBloqueadosPosgrado = true;
+                    //this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm = this.titulosEncontradosPosgrado.length;
+
+                   
+                } else {
+                    //this.estudios_universitarios_culminados = 'Si';
+                    //this.Titulouni();
+                    this.titulosEncontradosPosgrado = [response.data.titulo];
+                    this.mostrarTituloEncontradoPosgrado(response.data.titulo);
+                    this.titulosBloqueadosPosgrado = true;
+                    //this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm2 = this.titulosEncontradosPosgrado.length;
+                    
+                   
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    // No tiene títulos registrados
+                    this.titulosEncontradosPosgrado = [];
+                    this.titulosBloqueadosPosgrado = false;
+                    //this.sigueestudiandouniversidad = false;
+                    this.mostrarFormularioTitulosPosgrado = false; // 👈 no tiene → mostrar formulario
+                } else {
+                    console.error("Error al obtener los títulos:", error);
+                }
+            }
+        },
 
         mostrarTituloEncontrado(titulo) {
             if(this.GeneroPer === 'MUJER'){
-                this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.titulom || '';
+                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido = titulo.titulom || '';
             }else{
-                this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.tituloh || '';
+                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido = titulo.tituloh || '';
             }
             if(titulo.inst_cod ==='UTELVT'){
 
-                this.nuevoTituloUniversitario.institucion_universitaria = 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas';
+                this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria = 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas';
             }
             //this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.tituloh || titulo.titulom || '';
-            this.nuevoTituloUniversitario.fecha_graduacion = titulo.fechaincorporacion || '';
-            this.nuevoTituloUniversitario.especialidad = titulo.NombCarr || '';
+            this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion = titulo.fechaincorporacion || '';
+            this.nuevoTituloUniversitarioUTLVTE.especialidad = titulo.NombCarr || '';
+        },
+        mostrarTituloEncontradoPosgrado(titulo) {
+            if(this.GeneroPer === 'MUJER'){
+                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido = titulo.titulom || '';
+            }else{
+                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido = titulo.tituloh || '';
+            }
+            if(titulo.inst_cod ==='UTELVT'){
+
+                this.nuevoTituloPosgradoUTLVTE.institucion_posgrado = 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas';
+            }
+            //this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.tituloh || titulo.titulom || '';
+            this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado = titulo.fechaincorporacion || '';
+            this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado = titulo.NombCarr || '';
         },
 
         mostrarSiguienteTitulo() {
@@ -8129,6 +8522,25 @@ export default {
                 this.sigueestudiandouniversidad = true;
             }
         },
+        mostrarSiguienteTituloPosgrado() {
+            if (this.tituloActualIndexPosgrado + 1 < this.titulosEncontradosPosgrado.length) {
+                this.tituloActualIndexPosgrado++;
+                this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]);
+            } else {
+                // Ya mostró todos → habilita "sigue estudiando"
+                this.titulosBloqueadosPosgrado = false;
+                this.sigueestudiandouniversidad = true;
+            }
+        },
+        mostrarTituloAnteriorPosgrado() {
+            if (this.tituloActualIndexPosgrado > 0) {
+                this.tituloActualIndexPosgrado--;
+                this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]);
+            } else {
+                mostraralertas2('Ya estás en el primer título.', 'info');
+            }
+        },
+        
         mostrarTituloAnterior() {
             if (this.tituloActualIndex > 0) {
                 this.tituloActualIndex--;
@@ -8219,7 +8631,7 @@ export default {
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                     this.publicacionesarray = [];
-    
+                    //console.log(data);
                     data.forEach(item => {
                         if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
                             this.publicacionesarray.push({
@@ -8227,7 +8639,7 @@ export default {
                                 idinvestigacion_publicaciones: item.id,
                                 publicacion_tipo: item.publicacion_tipo || '',
                                 publicacion_titulo: item.publicacion_titulo || '',
-                                link_publicación: item.link_publicación || '',
+                                link_publicacion: item.link_publicacion || '',
                                 congreso_evento: item.congreso_evento || ''
                             });
                         }
@@ -8611,23 +9023,12 @@ export default {
             /*var mifoto = document.getElementById('fotoimg');
             this.imagen = mifoto.src;*/
 
-            /*var parametros = {
-                CIInfPer: this.CIInfPer.trim(),
-                ApellInfPer: this.ApellInfPer.trim(),
-                ApellMatInfPer: this.ApellMatInfPer.trim(),
-                NombInfPer: this.NombInfPer.trim(),
-                NacionalidadPer: this.NacionalidadPer.trim(),
-                LugarNacimientoPer: this.LugarNacimientoPer.trim(),
-                FechNacimPer: this.FechNacimPer.trim(),
-                GeneroPer: this.GeneroPer.trim(),
-                CiudadPer: this.CiudadPer.trim(),
-                DirecDomicilioPer: this.DirecDomicilioPer.trim(),
-                Telf1InfPer: this.Telf1InfPer.trim(),
-                mailPer: this.mailPer.trim(),
-                fotografia: this.imagen.trim()
+            const parametros = {
+                fotografia: this.fotografia,
 
 
-            }*/
+            }
+            enviarsolig('PUT', parametros, this.url1, 'Foto de perfil actualizada');
 
             //mostraralertas2('Experiencias Profesionales Actualizada','success');
             this.activeTab = "personal";

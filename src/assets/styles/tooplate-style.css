@@ -1386,6 +1386,74 @@ div.idomm {
   animation: show-flames 20s ease infinite, red-flame 100ms ease infinite;
   transform-origin: center bottom;
 }
+.foto-marco {
+  position: relative;
+  display: inline-block;
+  width: 75%;
+  max-width: 400px; /* opcional, para no exceder */
+  aspect-ratio: 3/4; /* mantiene proporción vertical */
+  margin: 0 auto;
+  border-radius: 20px; /* 🔸 borde redondeado general */
+  overflow: hidden; /* evita que el marco sobresalga */
+}
+
+.imagen-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border-radius: 20px; /* 🔸 mismo radio que el marco */
+  display: block;
+}
+
+/* Marco decorativo en las esquinas */
+.foto-marco::before,
+.foto-marco::after {
+  content: "";
+  position: absolute;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border: 2px solid transparent;
+  border-radius: 20px; /* 🔸 redondeado del marco */
+  pointer-events: none;
+}
+
+.foto-marco::before {
+  border-top-color: #126E1B;
+  border-left-color: #126E1B;
+  top: 0;
+  left: 0;
+}
+
+.foto-marco::after {
+  border-bottom-color: #126E1B;
+  border-right-color: #126E1B;
+  bottom: 0;
+  right: 0;
+}
+
+/* Líneas adicionales tipo art déco */
+.foto-marco::before,
+.foto-marco::after {
+  box-shadow:
+    4px 0 0 0 #126E1B,
+    8px 0 0 0 #000,
+    0 4px 0 0 #126E1B,
+    0 8px 0 0 #000;
+}
+
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .foto-marco {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 16px;
+  }
+  .imagen-foto {
+    border-radius: 16px;
+  }
+}
 
 @keyframes progress-fill {
   0% {
