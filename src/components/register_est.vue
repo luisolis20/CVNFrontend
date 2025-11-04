@@ -7864,14 +7864,14 @@ export default {
             // === Añadir QR solo en portada ===
             const qrSize = 25;
             const qrX = pageWidth / 2 - qrSize / 2;
-            const qrY = pageHeight - 40;
+            const qrY = pageHeight - 45;
             doc.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
 
             doc.setFontSize(9);
             doc.setTextColor(60, 60, 60);
             doc.setFont('Arial', 'bold');
-            doc.text(`Código de validación del CVN: ${codigoUnico}`, qrX + qrSize / 2, qrY + qrSize + 5, { align: 'center' });
-            doc.text(`Valida tu CVN aquí: ${urlVerificacion}`);
+            doc.text(`Código de validación del CVN: ${codigoUnico}\nValida tu CVN aquí: ${urlVerificacion}`, qrX + qrSize / 2, qrY + qrSize + 5, { align: 'center' });
+           // doc.text(`Valida tu CVN aquí: ${urlVerificacion}`);
 
             doc.setFontSize(currentFontSize);
             doc.setFont(currentFont.fontName, currentFont.fontStyle);
