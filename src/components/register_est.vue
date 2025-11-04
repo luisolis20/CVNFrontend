@@ -1,19 +1,19 @@
 <template>
     <div class="container-fluid topbar bg-primary d-none d-lg-block sticky-top">
-          <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <div class="top-info ps-2">
               <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
                   class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
               <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
+                  class="text-white">example@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
               <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
               <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank" class="text-white"><small class="text-white mx-2">Instagram</small>/</a>
               <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank" class="text-white"><small class="text-white ms-2">YouTube</small></a>
             </div>
-          </div>
         </div>
+    </div>
     <!-- MENU -->
     <nav class="navbar navbar-expand-sm navbar-light d-lg-block sticky-top">
         <div class="container-fluid">
@@ -166,7 +166,7 @@
                                             debe dar clic en Siguiente apartado. 
                                             Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
                                             <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
-
+                                            <p><b>Nota: Solo podrás añadir una foto, los demás datos no puedes editarlos aquí.</b></p>    
                                             <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(12)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Apellido Paterno -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
@@ -322,9 +322,9 @@
                                             <div class="col-sm-6 col-md-6 col-xl-10">
                                                 <div class="input-group-icon">
                                                     <div class="text-center">
-                                                        <img v-if="previewFoto" :src="previewFoto" height="150px" width="150px"
+                                                        <img v-if="previewFoto" :src="previewFoto" width="200" height="400"
                                                             id="fotoimg" class="img-fluid" alt="" />
-                                                        <img v-else-if="fotografia" :src="'data:image/jpeg;base64,' + fotografia" style="height: 120px"
+                                                        <img v-else-if="fotografia" :src="'data:image/jpeg;base64,' + fotografia" width="75%" height="400"
                                                             id="fotoimg" class="img-thumbnail" alt="" />
                                                         <img v-else style="height: 120px"
                                                             src="@/assets/images/userlogo.png"
@@ -3671,10 +3671,12 @@ import script2 from "@/store/custom.js";
 import API from '@/store/axios';
 import { useRoute } from "vue-router";
 import store from "@/store";
+import QRCode from "qrcode";
+import { v4 as uuidv4 } from "uuid";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getMe } from '@/store/auth'; 
-import { mostraralertas2, enviarsolig, enviarsoliedit, confimar } from '@/store/funciones';
+import { mostraralertas2, enviarsolig, enviarsoliedit, confimar, enviarsoligqr } from '@/store/funciones';
 export default {
     data() {
         return {
@@ -4019,6 +4021,7 @@ export default {
             regresar8: false,
             //Declaracion Personal
             url9: "/cvn/v1/declaracion_personal",
+            urlqr: "/cvn/v1/validar",
             iddeclaracion_personal: 0,
             declaracion_personal: null,
             mostrardelaracionpersonal: true,
@@ -7623,7 +7626,40 @@ export default {
             
             const headerImg = await this.toDataURL(headerImageUrl);
             const footerImg = await this.toDataURL(footerImageUrl);
+             // === Generar código único + fecha + QR ===
+            const timestamp = new Date();
+            const fechaFormateada = timestamp.toLocaleString('es-EC', { timeZone: 'America/Guayaquil' });
+            const codigoUnico = uuidv4().split('-')[0].toUpperCase();
 
+
+            // 🔗 URL de validación (ajusta dominio según tu entorno)
+            const urlVerificacion = `https://tusitio.com/verificar-cvn/${codigoUnico}`;
+             // === Preparar formato de nombre completo ===
+            const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
+           
+            // Texto embebido dentro del QR
+            const textoQR = `CVN generado por: ${nombreCompleto}\nFecha: ${fechaFormateada}\nCódigo: ${codigoUnico}\nVerificar en: ${urlVerificacion}`;
+
+            // Generar QR
+            const qrDataURL = await QRCode.toDataURL(textoQR, {
+                width: 100,
+                margin: 1,
+                color: { dark: "#126E1B", light: "#FFFFFF" }
+            });
+
+            // Enviar registro de validación al backend
+            try {
+                await enviarsoligqr('POST', {
+                    CIInfPer: this.CIInfPer,
+                    nombres: this.NombInfPer,
+                    apellidos: `${this.ApellInfPer} ${this.ApellMatInfPer}`,
+                    codigo_unico: codigoUnico
+                }, this.urlqr);
+            } catch (error) {
+                console.error("Error guardando validación del CVN:", error);
+            }
+            
+           
             const addHeaderAndFooter = (doc, isFirstPage = false) => {
                 if (isFirstPage) {
                     doc.addImage(headerImg, 'JPEG', 0, 0, pageWidth, pageHeight);
@@ -7649,21 +7685,37 @@ export default {
                 return y + 14;
             };
 
-            const addText = (text, x, y) => {
+            const addText = (text, x, y, justify = false) => {
                 doc.setFontSize(11);
-                const lines = doc.splitTextToSize(text, pageWidth - x - 10);
-                lines.forEach(line => {
+                const maxWidth = pageWidth - x - 10;
+                const lines = doc.splitTextToSize(text, maxWidth);
+
+                lines.forEach((line, i) => {
                     if (y > pageHeight - marginBottom) {
                         doc.addPage();
                         addHeaderAndFooter(doc);
                         addVerticalLine(doc, marginTop, pageHeight - marginBottom);
                         y = marginTop;
                     }
-                    
-                    doc.text(line, x, y);
-                    y += 5; 
+
+                    if (justify && i !== lines.length - 1) {
+                        // 🔹 Justificar todas las líneas menos la última
+                        const textWidth = doc.getTextWidth(line);
+                        const spaces = line.split(" ").length - 1;
+                        const extraSpace = (maxWidth - textWidth) / spaces;
+
+                        let cursor = x;
+                        line.split(" ").forEach(word => {
+                            doc.text(word, cursor, y);
+                            cursor += doc.getTextWidth(word + " ") + extraSpace;
+                        });
+                    } else {
+                        doc.text(line, x, y);
+                    }
+
+                    y += 5;
                 });
-                return y ;
+                return y;
             };
 
             const addBoldText = (text, x, y) => {
@@ -7729,32 +7781,97 @@ export default {
             }
 
             
-            if(this.titulosUniversitarios.length > 0){
-                this.titulosUniversitarios.forEach((nuevouni2) => {
-                    
-                    titulacioncarr = nuevouni2['titulo_universitario_obtenido'];
-                    carrera = "";
-                });
-                //this.estudioactualtitulosUniversitarios=[];
-            }
-            else if(this.estudioactualtitulosUniversitarios.length > 0 ){
-                this.estudioactualtitulosUniversitarios.forEach((nuevouni) => {
-                    
-                    carrera = nuevouni['carrera_universidad'];
-                    titulacioncarr = nuevouni['titulo_carrera_universidad'];
-                });
-            }
-            else {
-                titulacioncarr = "Estudiante";
-                carrera = "";
-            }
+           
             
-            const text =`${this.NombInfPer}\n${this.ApellInfPer} ${this.ApellMatInfPer}\n${titulacioncarr} ${carrera}\n${this.CiudadPer}-${nuevanacionalidad}\n${this.mailPer} `;
+
+            // === Función para abreviar títulos universitarios ===
+            const abreviarTitulo = (titulo, genero = "M") => {
+                if (!titulo) return "";
+
+                const t = titulo.toLowerCase();
+
+                // Títulos de grado
+                if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lic.";
+                if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
+                if (t.includes("doctor") || t.includes("medicina")) return "Dr.";
+                if (t.includes("abogado")) return genero === "F" ? "Abg.a" : "Abg.";
+                if (t.includes("tecnólogo")) return genero === "F" ? "Tnlg.a" : "Tnlg.";
+                if (t.includes("bachiller")) return genero === "F" ? "Bch.a" : "Bch.";
+                
+                // Títulos de posgrado
+                if (t.includes("magister") || t.includes("maestría") || t.includes("maestria")) return "MSc.";
+                if (t.includes("doctorado") || t.includes("phd")) return "PhD.";
+                if (t.includes("especialista")) return "Esp.";
+                if (t.includes("postgrado") || t.includes("posgrado")) return "Pg.";
+                if (t.includes("master")) return "MSc.";
+
+                return titulo; // Si no se detecta abreviación, dejar original
+            };
+
+            // === Detectar género ===
+            let genero = "M"; // por defecto Hombre
+            if (this.GeneroPer && this.GeneroPer.toUpperCase().startsWith("M")) {
+                genero = "F";
+            }
+
+            // === Tomar los títulos más recientes ===
+            let tituloUniv = "";
+            let tituloPos = "";
+
+            if (this.titulosUniversitarios.length > 0) {
+                const masRecienteU = this.titulosUniversitarios.reduce((a, b) =>
+                    new Date(b.fecha_graduacion) > new Date(a.fecha_graduacion) ? b : a
+                );
+                tituloUniv = abreviarTitulo(masRecienteU.titulo_universitario_obtenido, genero);
+            }
+
+            if (this.titulosPosgrado.length > 0) {
+                const masRecienteP = this.titulosPosgrado.reduce((a, b) =>
+                    new Date(b.fecha_graduacion_posgrado) > new Date(a.fecha_graduacion_posgrado) ? b : a
+                );
+                tituloPos = abreviarTitulo(masRecienteP.titulo_posgrado_obtenido, genero);
+            }
+
+            // === Si aún estudia, usar el título en curso ===
+            if (!tituloUniv && this.estudioactualtitulosUniversitarios.length > 0) {
+                const actual = this.estudioactualtitulosUniversitarios[0];
+                tituloUniv = abreviarTitulo(actual.titulo_carrera_universidad, genero);
+            }
+
+            // === Armar la cadena final ===
+            let lineaTitulo = "";
+
+            if (tituloUniv && tituloPos) {
+                lineaTitulo = `${tituloUniv} ${nombreCompleto}, ${tituloPos}`;
+            } else if (tituloUniv) {
+                lineaTitulo = `${tituloUniv} ${nombreCompleto}`;
+            } else {
+                lineaTitulo = `${nombreCompleto}`;
+            }
+
+            // === Mostrar texto más pequeño ===
+            doc.setFontSize(13);
+            doc.setTextColor(2, 107, 41);
+            doc.setFont('Arial', 'bold');
+
+            const text = `${lineaTitulo}\n${this.CiudadPer}-${nuevanacionalidad}\n${this.mailPer}`;
             const textWidth = doc.getStringUnitWidth(text) * 5 / doc.internal.scaleFactor;
-            const x1 = pageWidth - textWidth - 65; 
-            const y1 = pageHeight - 50; 
+            const x1 = pageWidth - textWidth - 85;
+            const y1 = pageHeight - 70; 
 
             doc.text(text, x1, y1);
+            // === Añadir QR solo en portada ===
+            const qrSize = 25;
+            const qrX = pageWidth / 2 - qrSize / 2;
+            const qrY = pageHeight - 40;
+            doc.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
+
+            doc.setFontSize(9);
+            doc.setTextColor(60, 60, 60);
+            doc.setFont('Arial', 'bold');
+            doc.text(`Código de validación del CVN: ${codigoUnico}`, qrX + qrSize / 2, qrY + qrSize + 5, { align: 'center' });
+            doc.text(`Valida tu CVN aquí: ${urlVerificacion}`);
 
             doc.setFontSize(currentFontSize);
             doc.setFont(currentFont.fontName, currentFont.fontStyle);
@@ -7766,18 +7883,32 @@ export default {
 
             let y = marginTop;
             
-            // Cuadrado para foto tamaño carnet
-            
+            // === Cuadro + Foto tamaño carnet ===
+            const fotoX = 10;
+            const fotoY = y;
+            const fotoAncho = 40;
+            const fotoAlto = 50;
+
             doc.setDrawColor(0, 0, 0);
             doc.setLineWidth(0.5);
-            doc.rect(10, y, 40, 50); 
+            doc.rect(fotoX, fotoY, fotoAncho, fotoAlto); // recuadro
+
+            // 🔹 Si hay foto, añadir dentro del recuadro
+            if (this.fotografia) {
+                try {
+                    const fotoData = await this.toDataURL(`data:image/png;base64,${this.fotografia}`);
+                    doc.addImage(fotoData, 'PNG', fotoX, fotoY, fotoAncho, fotoAlto);
+                } catch (error) {
+                    console.error("Error al cargar la foto:", error);
+                }
+            }
             
             y += 5;
 
             // Declaración Personal
             let x = 60;
             y = addSectionHeader('Descripción libre del curriculum', x, y);
-            y = addText(`${this.texto}`, x, y);
+            y = addText(`${this.texto}`, x, y, true);
             y = addBoldText('', x, y);
 
             // Datos personales
@@ -7899,7 +8030,7 @@ export default {
 
                     experienciaData.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${empresa[item.key]}`, x + 60, y); 
+                        y = addText(`${empresa[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -7923,7 +8054,7 @@ export default {
 
                     experienciaData.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${pasn[item.key]}`, x + 60, y); 
+                        y = addText(`${pasn[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -7997,7 +8128,7 @@ export default {
 
                     habilidadData2.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habi[item.key]}`, x + 60, y); 
+                        y = addText(`${habi[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8016,7 +8147,7 @@ export default {
 
                     habilidadData3.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habic[item.key]}`, x + 60, y); 
+                        y = addText(`${habic[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8035,7 +8166,7 @@ export default {
 
                     habilidadData4.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habic4[item.key]}`, x + 60, y); 
+                        y = addText(`${habic4[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8054,7 +8185,7 @@ export default {
 
                     habilidadData5.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habic5[item.key]}`, x + 60, y); 
+                        y = addText(`${habic5[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8073,7 +8204,7 @@ export default {
 
                     habilidadData6.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habic6[item.key]}`, x + 60, y); 
+                        y = addText(`${habic6[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8091,7 +8222,7 @@ export default {
 
                     habilidadData7.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${habic7[item.key]}`, x + 60, y); 
+                        y = addText(`${habic7[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8140,7 +8271,7 @@ export default {
 
                     logrosData2.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${logr[item.key]}`, x + 60, y); 
+                        y = addText(`${logr[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8228,7 +8359,7 @@ export default {
                 const genhom = "HOMBRE";
                 const genMuj = "MUJER";
                 const response = await API.get(this.url1);
-                console.log(response);
+                //console.log(response);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data[0];
                     this.CIInfPer = data.CIInfPer;
@@ -8439,7 +8570,7 @@ export default {
                     this.sigueestudiandouniversidad = false;
                     this.mostrarFormularioTitulos = false; // 👈 no tiene → mostrar formulario
                 } else {
-                    console.error("Error al obtener los títulos:", error);
+                    //console.error("Error al obtener los títulos:", error);
                 }
             }
         },
@@ -8478,7 +8609,7 @@ export default {
                     //this.sigueestudiandouniversidad = false;
                     this.mostrarFormularioTitulosPosgrado = false; // 👈 no tiene → mostrar formulario
                 } else {
-                    console.error("Error al obtener los títulos:", error);
+                    //console.error("Error al obtener los títulos:", error);
                 }
             }
         },

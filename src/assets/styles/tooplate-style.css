@@ -924,58 +924,57 @@ b, strong {
 }
 
 section.services {
-  background-image: url(@/assets/images/fondo.png);
+  /*background-image: url(@/assets/images/fondo.png); background-color: #126E1B;*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 section.about {
-  background-image: url(@/assets/images/fondo1.png);
+  /*background-image: url(@/assets/images/fondo1.png);*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
+  /*background-color: #126E1B;*/
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 
 section.registro {
-  background-image: url(@/assets/images/fondo1.png);
+  /*background-image: url(@/assets/images/fondo1.png);*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
+  /*background-color: #126E1B;*/
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 section.resume {
-  background-image: url(@/assets/images/fondo1.png);
+  /*background-image: url(@/assets/images/fondo1.png);*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
+  /*background-color: #126E1B;*/
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 div.habili {
-  background-image: url(@/assets/images/fondo1.png);
+  /*background-image: url(@/assets/images/fondo1.png);*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
+  /*background-color: #126E1B;*/
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 div.idomm {
-  background-image: url(@/assets/images/fondo1.png);
+  /*background-image: url(@/assets/images/fondo1.png);*/
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #126E1B;
+  /*background-color: #126E1B;*/
   padding-bottom: 100px;
   padding: 0px 30px 100px 30px;
 }
 
 
 .services {
-  background: #FFFEFE;
+  /*background: #FFFEFE;*/
   padding-bottom: 60px;
   padding-top: 110px;
 }
