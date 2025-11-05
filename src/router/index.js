@@ -15,12 +15,18 @@ import User from '../views/Registro.vue'
 import AdminEdit from '../views/AdminEdit.vue'
 import Cursos_capa from '../views/Cursos_Capacitaciones-adm.vue'
 import Userdocente from '../views/RegistroDocente.vue'
+import ValidacionCVNView from '../views/ValidacionCVNView.vue'
  
 const routes = [
   {
     path: '/home',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/validacion_cvn',
+    name: 'validacion_cvn',
+    component: ValidacionCVNView
   },
   {
     path: '/adminus/:id',

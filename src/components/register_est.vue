@@ -7653,7 +7653,7 @@ export default {
                     CIInfPer: this.CIInfPer,
                     nombres: this.NombInfPer,
                     apellidos: `${this.ApellInfPer} ${this.ApellMatInfPer}`,
-                    codigo_unico: codigoUnico
+                    codigo_unico: codigoUnico,
                 }, this.urlqr);
             } catch (error) {
                 console.error("Error guardando validación del CVN:", error);
