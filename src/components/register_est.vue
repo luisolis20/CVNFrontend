@@ -679,7 +679,7 @@
                                             <!-- Estudios Universitarios -->
                                             <div class="col-12" v-if="this.univer">
                                                 <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
-                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulos">El sistema ha detectado que tienes titulos en nuestra institución. 
+                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulos">Si tienes un o más títulos universitarios en nuestra institución el sistema lo detectará.
                                                 Para añadirlo debes dar clic en Agregar Título Universitario UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
                                                 <b>Nota: Al tener más de un título debes dar clic en Agregar Título Universitario UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
@@ -836,9 +836,11 @@
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
                                                 <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
-                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulosPosgrado">El sistema ha detectado que tienes titulos de posgrado en nuestra institución. 
+                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
+                                                
                                                 Para añadirlo debes dar clic en Agregar Posgrado UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
                                                 <b>Nota: Al tener más de un título debes dar clic en Agregar Posgrado UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
+                                                
                                                 <p class="text-danger text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título de Posgrado.</p>
                                                 <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
@@ -3688,6 +3690,7 @@ export default {
             idus: 0,
             titulosEncontrados: [],
             mostrarFormularioTitulos: true,
+            mostrarnormal: false,
             tituloActualIndex: 0,
             titulosBloqueados: false, // control para inputs bloqueado
             titulosEncontradosPosgrado: [],
@@ -4934,6 +4937,7 @@ export default {
                     this.titulosEncontradosPosgrado = [];
                     this.titulosBloqueadosPosgrado = true;
                     this.mostrarFormularioTitulosPosgrado = false;
+                    this.mostrarnormal = true;
                     return;
                 }
 
@@ -7061,6 +7065,7 @@ export default {
                                 especialidad_posgrado: item.especialidad_posgrado || ''
                             });
                             this.mostrarFormularioTitulosPosgrado = false;
+                            this.mostrarnormal = true;
                         }
                     });
                     
@@ -7096,6 +7101,8 @@ export default {
                     this.Titulobachi();
                     this.activeTab = "formacion";
                     this.mostrarformacionacademica = true;
+                    this.mostrarnormal = true;
+
                 }
                 
                 return response;
@@ -7124,6 +7131,7 @@ export default {
                 this.Titulobachi();
                 this.activeTab = "formacion";
                 this.mostrarformacionacademica = true;
+                this.mostrarnormal = true;
             }
         },
         //Guardar Experiencia
@@ -8519,6 +8527,7 @@ export default {
                     this.modoedit8 = true;
                     this.registro = false;
                     this.us = true;
+                    this.mostrarnormal = true;
                 }
                 return response;
             } catch (error) {
@@ -8532,6 +8541,7 @@ export default {
                 }
                 this.registro = false;
                 this.us = true;
+                 this.mostrarnormal = true;
                 return null;
             }
         },
@@ -8601,13 +8611,17 @@ export default {
                     
                    
                 }
+                this.mostrarFormularioTitulosPosgrado = false;
+                 this.mostrarnormal = true;
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     // No tiene títulos registrados
                     this.titulosEncontradosPosgrado = [];
                     this.titulosBloqueadosPosgrado = false;
                     //this.sigueestudiandouniversidad = false;
-                    this.mostrarFormularioTitulosPosgrado = false; // 👈 no tiene → mostrar formulario
+                    this.mostrarFormularioTitulosPosgrado = false;
+                    this.mostrarnormal = true;
+                     // 👈 no tiene → mostrar formulario
                 } else {
                     //console.error("Error al obtener los títulos:", error);
                 }
