@@ -5,7 +5,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
 
   // ✅ Usa ruta raíz en producción (evita revelar nombre de carpeta)
-  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/cvn/' : '/',
 
   // ✅ Carpeta limpia para build
   outputDir: 'dist',
@@ -30,8 +30,8 @@ module.exports = defineConfig({
       new webpack.DefinePlugin({
         __API_CVN__: JSON.stringify(
           process.env.NODE_ENV === 'production'
-            ? 'http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api'
-            : 'http://cvubackendv2.test/api'
+            ? 'http://192.168.1.19/cvubackendv2/api'
+            : 'http://192.168.1.19/cvubackendv2/api'
         ),
       }),
 

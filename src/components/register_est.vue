@@ -7640,8 +7640,8 @@ export default {
             const codigoUnico = uuidv4().split('-')[0].toUpperCase();
 
 
-            // 🔗 URL de validación (ajusta dominio según tu entorno)
-            const urlVerificacion = `https://tusitio.com/verificar-cvn/${codigoUnico}`;
+            // 🔗 URL de validación
+            const urlVerificacion = `http://192.168.1.19/cvn/validacion_cvn`;
              // === Preparar formato de nombre completo ===
             const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
            
