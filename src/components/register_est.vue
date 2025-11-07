@@ -7641,7 +7641,7 @@ export default {
 
 
             // 🔗 URL de validación
-            const urlVerificacion = `http://192.168.1.19/cvn/validacion_cvn`;
+            const urlVerificacion = `http://vinculacionconlasociedad.utelvt.edu.ec/cvn/validacion_cvn`;
              // === Preparar formato de nombre completo ===
             const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
            
@@ -7800,7 +7800,9 @@ export default {
 
                 // Títulos de grado
                 if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
-                if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lic.";
+                if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("licenciado")) return genero === "F" ? "Lic." : "Lic.";
+                if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lcda.";
                 if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
                 if (t.includes("doctor") || t.includes("medicina")) return "Dr.";
                 if (t.includes("abogado")) return genero === "F" ? "Abg.a" : "Abg.";
@@ -9173,7 +9175,7 @@ export default {
 
 
             }
-            enviarsolig('PUT', parametros, this.url1, 'Foto de perfil actualizada');
+            //enviarsolig('PUT', parametros, this.url1, 'Foto de perfil actualizada');
 
             //mostraralertas2('Experiencias Profesionales Actualizada','success');
             this.activeTab = "personal";
