@@ -24,11 +24,12 @@
 import script2 from '@/store/custom.js';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+import API from '@/store/axios';
 export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/users',
+            url255: '/cvn/v1/users',
             usuarios: null,
             cargando: false
         }
@@ -44,7 +45,7 @@ export default {
     methods: {
         getUsuarios() {
             this.cargando = true;
-            axios.get(this.url255).then(
+            API.get(this.url255).then(
                 res => {
                     this.usuarios = res.data;
                     this.cargando = false;

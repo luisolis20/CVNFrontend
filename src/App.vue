@@ -12,9 +12,12 @@
                   class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
-              <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
-              <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank" class="text-white"><small class="text-white mx-2">Instagram</small>/</a>
-              <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank" class="text-white"><small class="text-white ms-2">YouTube</small></a>
+              <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small
+                  class="text-white mx-2">WhatsApp</small>/</a>
+              <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank" class="text-white"><small
+                  class="text-white mx-2">Instagram</small>/</a>
+              <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank" class="text-white"><small
+                  class="text-white ms-2">YouTube</small></a>
             </div>
           </div>
         </div>
@@ -125,20 +128,38 @@
       </div>
       <!-- Sidebar End -->
 
-      <div class="content">
-        <div class="container-fluid topbar bg-primary d-none d-lg-block">
-          <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-              <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
-                  class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
-              <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
+      <div class="content container-fluid">
+        <!-- Topbar -->
+        <div class="container-fluid topbar bg-primary py-2 px-3">
+          <div class="d-flex flex-wrap justify-content-between align-items-center text-white">
+            <!-- Información de contacto -->
+            <div class="top-info mb-2 mb-lg-0 text-center text-lg-start">
+              <small class="d-block d-lg-inline me-lg-3">
+                <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                <a href="#" class="text-white text-decoration-none">Bienestar Universiversitario, Nuevos Horizontes,
+                  Esmeraldas, Ecuador</a>
+              </small>
+              <small class="d-block d-lg-inline">
+                <i class="fas fa-envelope me-2 text-secondary"></i>
+                <a href="#" class="text-white text-decoration-none">bienestaruniversitario@utelvt.edu.ec</a>
+              </small>
             </div>
-            <div class="top-link pe-2">
-              <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
-              <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank" class="text-white"><small class="text-white mx-2">Instagram</small>/</a>
-              <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank" class="text-white"><small class="text-white ms-2">YouTube</small></a>
-            </div>
+
+            <!-- Redes sociales
+            <div class="top-link text-center text-lg-end">
+              <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank"
+                class="text-white text-decoration-none">
+                <small class="mx-2">WhatsApp</small>
+              </a>/
+              <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank"
+                class="text-white text-decoration-none">
+                <small class="mx-2">Instagram</small>
+              </a>/
+              <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank"
+                class="text-white text-decoration-none">
+                <small class="mx-2">YouTube</small>
+              </a>
+            </div> -->
           </div>
         </div>
         <!-- Navbar Start -->
@@ -151,8 +172,10 @@
 
           <div class="navbar-nav align-items-center ms-auto">
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="rounded-circle me-lg-2" src="@/assets/images/bienes.png" alt="" style="width: 40px; height: 40px;">
+              <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img class="rounded-circle me-lg-2" src="@/assets/images/bienes.png" alt=""
+                  style="width: 40px; height: 40px;">
                 <span class="d-none d-lg-inline-flex">{{ names }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -183,17 +206,19 @@
 
   <footer>
     <div class="container-fluid copyright bg-white py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-dark"><a href="#"><i class="fas fa-copyright me-2"></i>CVN</a>, Todos los derechos reservados.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-dark">
-                        Designed By <a class="border-bottom" href="#">Don_Monta</a> Distributed By <a class="border-bottom" href="https://www.utelvt.edu.ec/site/" target="_blank">UTLVTE</a>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <span class="text-dark"><a href="#"><i class="fas fa-copyright me-2"></i>CVN</a>, Todos los derechos
+              reservados.</span>
+          </div>
+          <div class="col-md-6 my-auto text-center text-md-end text-dark">
+            Designed By <a class="border-bottom" href="#">Don_Monta</a> Distributed By <a class="border-bottom"
+              href="https://www.utelvt.edu.ec/site/" target="_blank">UTLVTE</a>
+          </div>
         </div>
+      </div>
+    </div>
   </footer>
 </template>
 
@@ -210,6 +235,7 @@
 import script2 from '@/store/custom.js';
 import { mapActions } from 'vuex';
 import store from '@/store';
+import API from "@/store/axios";
 
 export default {
   mounted() {
@@ -218,10 +244,40 @@ export default {
   //Creción de Métodos
   methods: {
     //Método para cerrar Sesión
-    cerrarsesion() {
-      console.clear();
-            localStorage.clear();
-            window.location.replace('/cvn/home');
+    async cerrarsesion() {
+      try {
+        const token = localStorage.getItem("token_cvn");
+
+        if (!token) {
+          console.warn("⚠️ No hay token, cerrando sesión localmente...");
+          localStorage.clear();
+          //window.location.href = "/cvn/home";
+          return;
+        }
+
+        const response = await API.get(
+          "/cvn/logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("✅ Sesión cerrada:", response.data);
+
+        // Limpia todo lo del localStorage
+        //localStorage.clear();
+
+        // Redirige al login
+        //window.location.href = "/cvn/home";
+      } catch (error) {
+        console.error("❌ Error al cerrar sesión:", error.response?.data || error);
+        // Si el token no es válido o expiró, limpiar igual
+        //localStorage.clear();
+        //window.location.href = "/cvn/home";
+      }
     },
     //Método para Ocultar el menu del Archivo Administrador.vue
     ocultar() {

@@ -4272,10 +4272,40 @@ export default {
             this.correoElectronicoTouched2 = true;
             this.validateCorreoElectronico2(this.nuevosinformacion_contacto.referencia_correo_electronico);
         },*/
-        cerrarsesion() {
-            console.clear();
-            localStorage.clear();
-            window.location.replace('/cvn/home');
+        async cerrarsesion() {
+            try {
+                const token = localStorage.getItem("token_cvn");
+
+                if (!token) {
+                console.warn("⚠️ No hay token, cerrando sesión localmente...");
+                localStorage.clear();
+                window.location.href = "/cvn/home";
+                return;
+                }
+
+                const response = await API.get(
+                "/cvn/logout",
+                {},
+                {
+                    headers: {
+                    Authorization: `Bearer ${token}`,
+                    },
+                }
+                );
+
+                console.log("✅ Sesión cerrada:", response.data);
+
+                // Limpia todo lo del localStorage
+                localStorage.clear();
+
+                // Redirige al login
+                window.location.href = "/cvn/home";
+            } catch (error) {
+                console.error("❌ Error al cerrar sesión:", error.response?.data || error);
+                // Si el token no es válido o expiró, limpiar igual
+                localStorage.clear();
+                window.location.href = "/cvn/home";
+            }
         },
         openPdfModal(page) {
             this.pdfPage = page;
