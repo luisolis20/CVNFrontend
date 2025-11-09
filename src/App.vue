@@ -188,12 +188,15 @@
 
         </nav>
         <!-- Navbar End -->
-        <router-view v-if="showNavbarNue"></router-view>
+        <div>
+          <router-view v-if="showNavbarNue"></router-view>
+        </div>
       </div>
 
     </div>
   </div>
 
+ 
   <!-- En el caso de que sea un usuario Estudiante se mostrará la pagina de portafolio y/o Registro. Llamado al Archivo Registro.vue-->
   <div>
     <router-view v-if="showNavbaruser"></router-view>
@@ -251,7 +254,7 @@ export default {
         if (!token) {
           console.warn("⚠️ No hay token, cerrando sesión localmente...");
           localStorage.clear();
-          //window.location.href = "/cvn/home";
+          window.location.href = "/cvn/home";
           return;
         }
 
@@ -268,15 +271,15 @@ export default {
         console.log("✅ Sesión cerrada:", response.data);
 
         // Limpia todo lo del localStorage
-        //localStorage.clear();
+        localStorage.clear();
 
         // Redirige al login
-        //window.location.href = "/cvn/home";
+        window.location.href = "/cvn/home";
       } catch (error) {
         console.error("❌ Error al cerrar sesión:", error.response?.data || error);
         // Si el token no es válido o expiró, limpiar igual
-        //localStorage.clear();
-        //window.location.href = "/cvn/home";
+        localStorage.clear();
+        window.location.href = "/cvn/home";
       }
     },
     //Método para Ocultar el menu del Archivo Administrador.vue

@@ -3,14 +3,15 @@
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h4 class="mb-0">Estudiantes Con CVN</h4>
-                 <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(71)">aquí</a> para ver la guia de este punto</p>
+                <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(71)">aquí</a>
+                    para ver la guia de este punto</p>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <form class="d-none d-md-flex ms-4">
                     <input class="form-control border-0 text-dark" type="search" placeholder="Buscar"
                         v-model="searchQuery" @input="filterResults" @keypress="onlyNumbers">
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <label class="text-dark"> Total de Usuarios con cvn: {{ personasdata.length }}</label>
+                    <label class="text-dark"> Total de Usuarios con cvn: {{totalusercvn}}</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 </form>
                 <div>
@@ -21,6 +22,7 @@
                             <option value="Completado">Completado</option>
                             <option value="Incompleto">Incompleto</option>
                             <option value="En Proceso">En Proceso</option>
+                            <option value="No ha hecho CVN">No ha hecho CVN</option>
                         </select>
                     </div>
                 </div>
@@ -30,10 +32,9 @@
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">Identificación</th>
-                            <th scope="col">Apellido Paterno</th>
-                            <th scope="col">Apellido Materno</th>
-                            <th scope="col">Nombres</th>
+                            <th scope="col">Estudiante</th>
                             <th scope="col">Estado del CVN</th>
+                            <th scope="col">Foto</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,9 +48,8 @@
                         <tr v-else v-for="datos in Filtrados" :key="datos.CIInfPer">
 
                             <td v-text="datos.CIInfPer"></td>
-                            <td v-text="datos.ApellInfPer"></td>
-                            <td v-text="datos.ApellMatInfPer"></td>
-                            <td v-text="datos.NombInfPer"></td>
+                            <td v-text="datos.ApellInfPer + ' ' + datos.ApellMatInfPer + ' ' + datos.NombInfPer"></td>
+
                             <td>
                                 <router-link :to="{ path: '/useredit/' + datos.CIInfPer }" :class="{
                                     'btn btn-success': datos.completionStatus === 'Completado',
@@ -62,6 +62,14 @@
                                 <button v-else class="btn btn-danger" disabled>
                                     {{ datos.completionStatus }}
                                 </button>
+                            </td>
+                            <td>
+                                <img v-if="datos.fotografia" :src="datos.fotografia" alt="Foto del estudiante"
+                                    class="rounded-circle border" width="80" height="80" style="object-fit: cover;" />
+                                <img v-else
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png"
+                                    class="rounded-circle border" width="80" height="80" style="object-fit: cover;"
+                                    alt="Sin foto" />
                             </td>
 
                         </tr>
@@ -82,6 +90,12 @@
                 <button class="btn btn-primary" @click="actualizar">Actualizar Datos</button>
             </div>
         </div>
+        <div class="alert alert-info d-flex justify-content-around fw-bold text-dark">
+            <div>Total de usuarios con CVN: {{ totalusercvn }} -</div>
+            <div>Total de CVN completos: <span class="text-success">{{ totalcvncompleto }} -</span></div>
+            <div>Total de CVN incompletos: <span class="text-warning">{{ totalcvnincompleto }} -</span></div>
+            <div>Total de usuarios sin CVN: <span class="text-danger">{{ totalsincvn }}</span></div>
+        </div>
     </div>
     <div>
         <canvas id="cvnPieChart"></canvas>
@@ -96,7 +110,8 @@
                 </div>
                 <div class="modal-body p-0">
                     <!-- Iframe con el PDF -->
-                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%"
+                        height="600">
                         <p>
                             Tu navegador no soporta PDFs embebidos.
                             <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
@@ -114,11 +129,13 @@
 </style>
 <script>
 import script2 from '@/store/custom.js';
+import API from '@/store/axios';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import store from "@/store";
 import jsPDF from 'jspdf';
 import { mostraralertas2 } from '@/store/funciones';
+import debounce from 'lodash.debounce';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 export default {
@@ -126,22 +143,22 @@ export default {
     data() {
         return {
             idus: 0,
-             // ruta base de tu PDF
+            // ruta base de tu PDF
             pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,
-            urlPersonal: "http://cvubackendv2.test/api/cvn/v1/informacionpersonal",
-            //urlDeclaracionPersonal: "http://cvubackendv2.test/api/cvn/v1/declaracion_personal",
-            urlDeclaracionPersonal: "http://cvubackendv2.test/api/cvn/v1/sicvn",
-            urlExperienciaProfesional: "http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale",
-            urlFormacionAcademica: "http://cvubackendv2.test/api/cvn/v1/formacion_academica",
-            urlHabilidadesInformatica: "http://cvubackendv2.test/api/cvn/v1/habilidades_informatica",
-            urlIdiomas: "http://cvubackendv2.test/api/cvn/v1/idioma",
-            urlInformacionContacto: "http://cvubackendv2.test/api/cvn/v1/informacion_contacto",
-            urlInvestigacionPublicaciones: "http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione",
-            urlOtrosDatosRelevantes: "http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante",
-            urlCursosCapa: "http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion",
+            urlPersonal: "/cvn/v1/informacionpersonal",
+            //urlDeclaracionPersonal: "/cvn/v1/declaracion_personal",
+            urlDeclaracionPersonal: "/cvn/v1/sicvn",
+            urlExperienciaProfesional: "/cvn/v1/experiencia_profesionale",
+            urlFormacionAcademica: "/cvn/v1/formacion_academica",
+            urlHabilidadesInformatica: "/cvn/v1/habilidades_informatica",
+            urlIdiomas: "/cvn/v1/idioma",
+            urlInformacionContacto: "/cvn/v1/informacion_contacto",
+            urlInvestigacionPublicaciones: "/cvn/v1/investigacion_publicacione",
+            urlOtrosDatosRelevantes: "/cvn/v1/otros_datos_relevante",
+            urlCursosCapa: "/cvn/v1/cursoscapacitacion",
 
             filteredDatosPersonales: [],
             personasdata: [],
@@ -162,10 +179,14 @@ export default {
             lastPage: 1,
             buscando: false,
             filtros: '',
+            totalusercvn: 0,
+            totalcvncompleto: 0,
+            totalcvnincompleto: 0,
+            totalsincvn: 0,
         };
     },
     mounted() {
-            const ctx = document.getElementById('cvnPieChart');
+        /*    const ctx = document.getElementById('cvnPieChart');
             const labels = Object.keys(this.data);
             const values = Object.values(this.data);
 
@@ -187,24 +208,17 @@ export default {
                     }
                     }
                 }
-            });
+            });*/
         const ruta = useRoute();
         this.idus = ruta.params.id;
         Promise.all([
 
             this.getDatos_Personales(),
-            this.getformacion_academicas(),
-            this.getexperiencia_profesionales(),
-            this.getinvestigacion_publicaciones(),
-            this.getidiomas(),
-            this.gethabilidades_informaticas(),
-            this.getcursos_capa(),
-            this.getotros_datos_relevantes(),
-            this.getinformacion_contactos()
+
 
         ])
     },
-      computed: {
+    computed: {
         pdfSrc() {
             return `${this.pdfUrl}#page=${this.pdfPage}`;
         }
@@ -216,69 +230,50 @@ export default {
             this.cargando = true;
 
             try {
-                // Traer todos los datos de la API sin paginación
-                const response = await axios.get(`${this.urlDeclaracionPersonal}?all=true`);
+                const response = await API.get(`${this.urlPersonal}?all=true`);
                 const allData = response.data.data;
 
-                console.log(response);
+                // ✅ Traemos el estado real del backend (verificar)
+                const updatedData = await Promise.all(allData.map(async (person) => {
+                    const ci = person.CIInfPer;
+                    const verif = await this.verificarCVN(ci);
 
-                // Clasificar y ordenar los datos
-                const sortedData = allData.map((person) => {
-                    if (!person || !person.CIInfPer) return null;
+                    // Normalizamos el estado
+                    let estado = 'En Proceso';
+                    if (verif.estado.includes('CVN completo')) estado = 'Completado';
+                    else if (verif.estado.includes('CVN incompleto')) estado = 'Incompleto';
+                    else if (verif.estado.includes('No ha')) estado = 'No ha hecho CVN';
 
-                    const CIInfPer = person.CIInfPer;
-
-                    const hasDataInAtLeastOneTable =
-                        this.filteredcursos.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.experiencia_profesionales.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.formacion_academicas.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.habilidades_informaticas.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.filteredidiomas.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.filteredreferencias.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.otros_datos_relevantes.some((data) => data.CIInfPer === CIInfPer) ||
-                        this.filteredpublicacion.some((data) => data.CIInfPer === CIInfPer);
-
-                    const hasDataInAllTables =
-                        this.filteredcursos.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.experiencia_profesionales.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.formacion_academicas.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.habilidades_informaticas.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.filteredidiomas.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.filteredreferencias.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.otros_datos_relevantes.some((data) => data.CIInfPer === CIInfPer) &&
-                        this.filteredpublicacion.some((data) => data.CIInfPer === CIInfPer);
-
-                    // Asignar estado según los datos
-                    if (hasDataInAllTables) {
-                        person.completionStatus = "Completado";
-                    } else if (hasDataInAtLeastOneTable) {
-                        person.completionStatus = "Incompleto";
-                    } else {
-                        person.completionStatus = "En Proceso";
-                    }
-
+                    person.completionStatus = estado;
                     return person;
-                }).filter(Boolean);
+                }));
 
                 // Ordenar los datos
-                sortedData.sort((a, b) => {
-                    const statusOrder = {
-                        "Completado": 1,
-                        "Incompleto": 2,
-                        "En Proceso": 3,
-                    };
+                updatedData.sort((a, b) => {
+                    const statusOrder = { "Completado": 1, "Incompleto": 2, "En Proceso": 3, "No ha hecho CVN": 4 };
                     return statusOrder[a.completionStatus] - statusOrder[b.completionStatus];
                 });
 
-                // Guardar datos ordenados y configurar paginación local
-                this.personasdata = sortedData;
+                this.personasdata = updatedData;
+                //console.log(this.personasdata);
                 this.lastPage = Math.ceil(this.personasdata.length / 10);
                 this.updateFilteredData();
+                this.contarOfertas();
 
             } catch (error) {
                 console.error("Error al obtener datos:", error);
             } finally {
                 this.cargando = false;
+            }
+        },
+        async verificarCVN(ci) {
+            try {
+                const response = await API.get(`/cvn/v1/verficiar_cvn/${ci}`);
+                //console.log(response);
+                return response.data; // contiene estado, detalle, totales, etc.
+            } catch (error) {
+                console.error("Error verificando CVN:", error);
+                return { estado: "Error al verificar" };
             }
         },
 
@@ -295,48 +290,20 @@ export default {
             Promise.all([
 
                 this.getDatos_Personales(),
-                this.getformacion_academicas(),
-                this.getexperiencia_profesionales(),
-                this.getinvestigacion_publicaciones(),
-                this.getidiomas(),
-                this.gethabilidades_informaticas(),
-                this.getcursos_capa(),
-                this.getotros_datos_relevantes(),
-                this.getinformacion_contactos()
+
 
             ])
             this.filtros = '';
         },
-        async getexperiencia_profesionales() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlExperienciaProfesional}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.experiencia_profesionales = data;
-
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
+        contarOfertas() {
+            this.totalusercvn = this.personasdata.filter(u => u.completionStatus != "No ha hecho CVN").length;
+            this.totalcvncompleto = this.personasdata.filter(u => u.completionStatus == "Completado").length;
+            this.totalcvnincompleto = this.personasdata.filter(u => u.completionStatus == "Incompleto").length;
+            this.totalsincvn = this.personasdata.filter(u => u.completionStatus == "No ha hecho CVN").length;
+            
         },
-        async getformacion_academicas() {
-            this.cargando = true;
 
-            try {
-                const response = await axios.get(`${this.urlFormacionAcademica}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.formacion_academicas = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-          openPdfModal(page) {
+        openPdfModal(page) {
             this.pdfPage = page;
             this.pdfKey++;
             const modalEl = this.$refs.pdfModal;
@@ -348,94 +315,10 @@ export default {
             const modal = bootstrap.Modal.getInstance(modalEl);
             modal.hide();
         },
-        async gethabilidades_informaticas() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlHabilidadesInformatica}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.habilidades_informaticas = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-        async getidiomas() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlIdiomas}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.filteredidiomas = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-        async getinformacion_contactos() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlInformacionContacto}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.filteredreferencias = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-        async getcursos_capa() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlCursosCapa}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.filteredcursos = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-        async getinvestigacion_publicaciones() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlInvestigacionPublicaciones}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.filteredpublicacion = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
-        async getotros_datos_relevantes() {
-            this.cargando = true;
-
-            try {
-                const response = await axios.get(`${this.urlOtrosDatosRelevantes}?all=true`);
-                const { data, current_page, last_page } = response.data;
-
-                this.otros_datos_relevantes = data;
-            } catch (error) {
-                console.error("Error al obtener datos:", error);
-            } finally {
-                this.cargando = false;
-            }
-        },
 
 
-        filterResults() {
 
+        filterResultsNow() {
             const query = this.searchQuery.trim();
             if (query) {
                 this.buscando = true;
@@ -447,6 +330,10 @@ export default {
                 this.actualizar();
             }
         },
+        // ✅ versión con debounce
+        filterResults: debounce(function () {
+            this.filterResultsNow();
+        }, 800),
         onlyNumbers(event) {
             const charCode = event.which ? event.which : event.keyCode;
             if (charCode < 48 || charCode > 57) {
@@ -479,6 +366,6 @@ export default {
 
     },
     mixins: [script2],
-    name:'admin_personal_data',
+    name: 'admin_personal_data',
 };
 </script>
