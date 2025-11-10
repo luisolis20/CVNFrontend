@@ -1428,8 +1428,8 @@ export default {
 
                 // Títulos de grado
                 if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
-                if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
-                if (t.includes("licenciado")) return genero === "F" ? "Lic." : "Lic.";
+                if (t.includes("ingeniera")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("licenciad")) return genero === "F" ? "Lic." : "Lic.";
                 if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lcda.";
                 if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
                 if (t.includes("doctor") || t.includes("medicina")) return "Dr.";

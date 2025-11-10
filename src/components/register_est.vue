@@ -7859,9 +7859,9 @@ export default {
 
                 // Títulos de grado
                 if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
-                if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("ingeniera")) return genero === "F" ? "Ing." : "Ing.";
                 if (t.includes("licenciado")) return genero === "F" ? "Lic." : "Lic.";
-                if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lcda.";
+                if (t.includes("licenciada")) return genero === "F" ? "Lcda." : "Lcda.";
                 if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
                 if (t.includes("doctor") || t.includes("medicina")) return "Dr.";
                 if (t.includes("abogado")) return genero === "F" ? "Abg.a" : "Abg.";
@@ -8371,6 +8371,7 @@ export default {
             }
 
             doc.save(`CVN-${this.CIInfPer}-${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}.pdf`);
+            console.clear();
         },
 
 
@@ -9229,7 +9230,7 @@ export default {
             /*var mifoto = document.getElementById('fotoimg');
             this.imagen = mifoto.src;*/
             //console.log(this.previewFoto);
-            console.log(this.fotografia);
+            //console.log(this.fotografia);
             try {
                 
                 const parametros = {
