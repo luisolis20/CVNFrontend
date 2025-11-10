@@ -8,21 +8,20 @@
             </div>
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <form class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0 text-dark" type="search" placeholder="Buscar"
+                    <input class="form-control border-0 text-dark" type="search" placeholder="Buscar por Cédula..."
                         v-model="searchQuery" @input="filterResults" @keypress="onlyNumbers">
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <label class="text-dark"> Total de Usuarios con cvn: {{totalusercvn}}</label>
+                    <label class="text-dark"> Total de Usuarios con cvn: {{ totalusercvn }}</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 </form>
                 <div>
-                    <label class="text-dark" for="">Filtrar por:</label>
+                    <label class="text-dark" for="">Filtrar por Estado:</label>
                     <div class="input-group-icon">
-                        <select v-model="filtros" class="form-select1 form-voyage-select input-box" id="inputPersonOne">
-                            <option value="" disabled selected>Seleccione..</option>
+                        <select v-model="filtros" @change="applyStateFilter"
+                            class="form-select1 form-voyage-select input-box" id="inputPersonOne">
+                            <option value="">Todos</option> <!-- Cambiado para facilitar la lógica -->
                             <option value="Completado">Completado</option>
                             <option value="Incompleto">Incompleto</option>
-                            <option value="En Proceso">En Proceso</option>
-                            <option value="No ha hecho CVN">No ha hecho CVN</option>
                         </select>
                     </div>
                 </div>
@@ -77,11 +76,11 @@
                 </table>
             </div>
             <div class="pagination">
-                <button @click="previousPage" :disabled="currentPage === 1 || buscando" class="btn btn-primary">
+                <button @click="previousPage" :disabled="currentPage === 1 || cargando" class="btn btn-primary">
                     Anterior
                 </button>
                 <span class="text-dark">Página {{ currentPage }} de {{ lastPage }}</span>
-                <button @click="nextPage" :disabled="currentPage === lastPage || buscando" class="btn btn-primary">
+                <button @click="nextPage" :disabled="currentPage === lastPage || cargando" class="btn btn-primary">
                     Siguiente
                 </button>
             </div>
@@ -160,180 +159,161 @@ export default {
             urlOtrosDatosRelevantes: "/cvn/v1/otros_datos_relevante",
             urlCursosCapa: "/cvn/v1/cursoscapacitacion",
 
-            filteredDatosPersonales: [],
-            personasdata: [],
-            filtereddeclaracion_personals: [],
-            filteredcursos: [],
-            experiencia_profesionales: [],
-            formacion_academicas: [],
-            habilidades_informaticas: [],
-            filteredidiomas: [],
-            filteredreferencias: [],
-            filteredpublicacion: [],
-            otros_datos_relevantes: [],
-            totalperson: "",
+            // datos originales del servidor (solo CVN iniciados)
+            allCVNData: [],
+
+            // array que contiene los datos después de aplicar la búsqueda/filtro de estado, antes de la paginación.
+            currentFilteredData: [],
+            // array que solo contiene la página actual.
+            paginatedData: [],
 
             searchQuery: "",
             cargando: false,
             currentPage: 1,
             lastPage: 1,
-            buscando: false,
-            filtros: '',
+            filtros: '', // 'Completado', 'Incompleto', o '' (Todos)
             totalusercvn: 0,
             totalcvncompleto: 0,
             totalcvnincompleto: 0,
-            totalsincvn: 0,
+            totalsincvn: 0, // Conteo de usuarios omitidos (los que nunca han hecho CVN)
         };
     },
     mounted() {
-        /*    const ctx = document.getElementById('cvnPieChart');
-            const labels = Object.keys(this.data);
-            const values = Object.values(this.data);
 
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                    label: 'Usuarios CVN',
-                    data: values,
-                    backgroundColor: ['#28a745', '#ffc107', '#dc3545']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                    }
-                }
-            });*/
         const ruta = useRoute();
         this.idus = ruta.params.id;
-        Promise.all([
-
-            this.getDatos_Personales(),
+        this.getDatos_Personales();
 
 
-        ])
     },
     computed: {
         pdfSrc() {
             return `${this.pdfUrl}#page=${this.pdfPage}`;
+        },
+        // La propiedad computada ahora solo devuelve la página actual de la data filtrada.
+        Filtrados() {
+            return this.paginatedData;
+        }
+    },
+    watch: {
+        // Observar cambios en el filtro de estado
+        filtros(newVal, oldVal) {
+            // Reaplicar todos los filtros (búsqueda + estado)
+            this.filterResultsNow();
+        },
+        // Observar cambios en la cadena de búsqueda (ya está con debounce, pero esta es la función final)
+        searchQuery(newVal, oldVal) {
+            // Esto se maneja mejor con el @input y debounce en el template
+            // Si el debounce llama a filterResultsNow(), no necesitamos watch.
         }
     },
     methods: {
 
         async getDatos_Personales() {
-            if (this.buscando) return;
+            if (this.cargando) return; // Evitar llamadas múltiples
             this.cargando = true;
 
             try {
+                // 1. Traer todos los datos de CVN iniciados + el conteo de omitidos
                 const response = await API.get(`${this.urlPersonal}?all=true`);
                 const allData = response.data.data;
+                this.totalsincvn = response.data.omittedCount || 0;
 
-                // ✅ Traemos el estado real del backend (verificar)
-                const updatedData = await Promise.all(allData.map(async (person) => {
-                    const ci = person.CIInfPer;
-                    const verif = await this.verificarCVN(ci);
+                // 2. Guardar la data original (solo CVN iniciados)
+                this.allCVNData = allData;
 
-                    // Normalizamos el estado
-                    let estado = 'En Proceso';
-                    if (verif.estado.includes('CVN completo')) estado = 'Completado';
-                    else if (verif.estado.includes('CVN incompleto')) estado = 'Incompleto';
-                    else if (verif.estado.includes('No ha')) estado = 'No ha hecho CVN';
-
-                    person.completionStatus = estado;
-                    return person;
-                }));
-
-                // Ordenar los datos
-                updatedData.sort((a, b) => {
-                    const statusOrder = { "Completado": 1, "Incompleto": 2, "En Proceso": 3, "No ha hecho CVN": 4 };
-                    return statusOrder[a.completionStatus] - statusOrder[b.completionStatus];
-                });
-
-                this.personasdata = updatedData;
-                //console.log(this.personasdata);
-                this.lastPage = Math.ceil(this.personasdata.length / 10);
-                this.updateFilteredData();
-                this.contarOfertas();
+                // 3. Aplicar los filtros iniciales (estado por defecto y posible búsqueda)
+                this.filterResultsNow();
 
             } catch (error) {
                 console.error("Error al obtener datos:", error);
+                this.totalsincvn = 0;
             } finally {
                 this.cargando = false;
             }
         },
-        async verificarCVN(ci) {
-            try {
-                const response = await API.get(`/cvn/v1/verficiar_cvn/${ci}`);
-                //console.log(response);
-                return response.data; // contiene estado, detalle, totales, etc.
-            } catch (error) {
-                console.error("Error verificando CVN:", error);
-                return { estado: "Error al verificar" };
-            }
+
+        applyStateFilter() {
+            // Cuando cambia el filtro de estado, se aplica inmediatamente
+            this.currentPage = 1; // Reiniciar la paginación al cambiar el filtro
+            this.filterResultsNow();
         },
 
-        updateFilteredData() {
-            // Aplicar paginación local
+        filterResultsNow() {
+            const query = this.searchQuery.trim();
+            let dataToFilter = this.allCVNData; // Empezamos con todos los CVN iniciados
+
+            // 1. FILTRADO por CÉDULA (se aplica sobre toda la data)
+            if (query) {
+                dataToFilter = dataToFilter.filter(person =>
+                    person.CIInfPer.includes(query)
+                );
+            }
+
+            // 2. FILTRADO por ESTADO (se aplica sobre el resultado del filtro de cédula)
+            if (this.filtros !== '') {
+                dataToFilter = dataToFilter.filter(person =>
+                    person.completionStatus === this.filtros
+                );
+            }
+
+            // 3. ACTUALIZAR EL ARRAY FILTRADO Y RECALCULAR PAGINACIÓN
+            this.currentFilteredData = dataToFilter;
+            this.lastPage = Math.ceil(this.currentFilteredData.length / 10);
+            this.currentPage = Math.min(this.currentPage, this.lastPage > 0 ? this.lastPage : 1); // Asegurar que la página actual sea válida
+
+            // 4. Actualizar la data visible (paginación)
+            this.updatePaginatedData();
+
+            // 5. Recalcular contadores (para mostrar los totales correctos en el pie de página)
+            this.contarOfertas();
+        },
+
+        // Función con debounce para la búsqueda por cédula
+        filterResults: debounce(function () {
+            this.currentPage = 1; // Reiniciar la paginación al buscar
+            this.filterResultsNow();
+        }, 800),
+
+        updatePaginatedData() {
+            // Aplicar paginación local sobre la data ya filtrada (currentFilteredData)
             const startIndex = (this.currentPage - 1) * 10;
             const endIndex = startIndex + 10;
-            this.filtereddeclaracion_personals = this.personasdata.slice(startIndex, endIndex);
+            this.paginatedData = this.currentFilteredData.slice(startIndex, endIndex);
         },
 
         actualizar() {
             this.cargando = true;
-
-            Promise.all([
-
-                this.getDatos_Personales(),
-
-
-            ])
             this.filtros = '';
+            this.searchQuery = '';
+            this.getDatos_Personales();
         },
         contarOfertas() {
-            this.totalusercvn = this.personasdata.filter(u => u.completionStatus != "No ha hecho CVN").length;
-            this.totalcvncompleto = this.personasdata.filter(u => u.completionStatus == "Completado").length;
-            this.totalcvnincompleto = this.personasdata.filter(u => u.completionStatus == "Incompleto").length;
-            this.totalsincvn = this.personasdata.filter(u => u.completionStatus == "No ha hecho CVN").length;
-            
+            // Los conteos se hacen sobre la data original (allCVNData) para mostrar los totales generales correctos
+            this.totalusercvn = this.allCVNData.length;
+            this.totalcvncompleto = this.allCVNData.filter(u => u.completionStatus == "Completado").length;
+            this.totalcvnincompleto = this.allCVNData.filter(u => u.completionStatus == "Incompleto").length;
+            // this.totalsincvn ya viene del backend (omittedCount)
+
         },
 
         openPdfModal(page) {
             this.pdfPage = page;
             this.pdfKey++;
-            const modalEl = this.$refs.pdfModal;
-            const modal = new bootstrap.Modal(modalEl);
-            modal.show();
-        },
-        closePdfModal() {
-            const modalEl = this.$refs.pdfModal;
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            modal.hide();
-        },
-
-
-
-        filterResultsNow() {
-            const query = this.searchQuery.trim();
-            if (query) {
-                this.buscando = true;
-                this.filtereddeclaracion_personals = this.personasdata.filter(person =>
-                    person.CIInfPer.includes(query)
-                );
-            } else {
-                this.buscando = false;
-                this.actualizar();
+            const modalEl = document.getElementById('pdfModal');
+            if (modalEl && typeof bootstrap !== 'undefined') {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
             }
         },
-        // ✅ versión con debounce
-        filterResults: debounce(function () {
-            this.filterResultsNow();
-        }, 800),
+        closePdfModal() {
+            const modalEl = document.getElementById('pdfModal');
+            if (modalEl && typeof bootstrap !== 'undefined') {
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+            }
+        },
+
         onlyNumbers(event) {
             const charCode = event.which ? event.which : event.keyCode;
             if (charCode < 48 || charCode > 57) {
@@ -341,30 +321,15 @@ export default {
             }
         },
         nextPage() {
-            if (this.currentPage < this.lastPage) {
-                this.currentPage++;
-                this.updateFilteredData();
-            }
+            this.currentPage++;
+            this.updatePaginatedData();
         },
         previousPage() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-                this.updateFilteredData();
-            }
+            this.currentPage--;
+            this.updatePaginatedData();
         },
     },
-    computed: {
-        Filtrados() {
-            if (this.filtros === '') {
-                // Si no hay categoría seleccionada, mostrar todas las ofertas
-                return this.filtereddeclaracion_personals;
-            } else {
-                // Si hay una categoría seleccionada, filtrar las ofertas
-                return this.filtereddeclaracion_personals.filter(estado => estado.completionStatus === this.filtros);
-            }
-        }
 
-    },
     mixins: [script2],
     name: 'admin_personal_data',
 };

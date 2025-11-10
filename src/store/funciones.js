@@ -103,6 +103,25 @@ export function enviarsolig(metodo,parametros,url,mensaje){
         mostraralertas('Servidor no Disponible','error');
     });
 }
+export function enviarsoligfoot(metodo,parametros,url,mensaje){
+    return API({
+        method:metodo,
+        url:url,
+        data:parametros
+    }).then(function(res){
+        var estado = res.status;
+        if(estado==200){
+            mostraralertas(mensaje,'success');
+            return res;   
+        }else{
+            mostraralertas('No se pudo recuperar la respuesta','error');
+
+        }
+    }).catch(function(error){
+        console.log(error);
+        mostraralertas('Servidor no Disponible','error');
+    });
+}
 export function enviarsoligqr(metodo,parametros,url){
     return API({
         method:metodo,

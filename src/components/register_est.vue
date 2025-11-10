@@ -324,8 +324,8 @@
                                                     <div class="text-center">
                                                         <img v-if="previewFoto" :src="previewFoto" width="200" height="400"
                                                             id="fotoimg" class="img-fluid" alt="" />
-                                                        <img v-else-if="fotografia" :src="'data:image/jpeg;base64,' + fotografia" width="75%" height="400"
-                                                            id="fotoimg" class="img-thumbnail" alt="" />
+                                                        <img v-else-if="fotografia" :src="'data:image/png;base64,' + fotografia" width="200" height="400"
+                                                            id="fotoimg" class="img-fluid" alt="" />
                                                         <img v-else style="height: 120px"
                                                             src="@/assets/images/userlogo.png"
                                                             id="fotoimg" class="img-thumbnail" alt="" />
@@ -337,7 +337,7 @@
                                              <!-- Acciones -->
                                             <div class="col-12 col-xl-10 col-lg-12 d-grid mt-6" v-if="this.boton1">
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.modoedit"
-                                                    @click="guardarDatosPersonales">
+                                                    @click="editarDatosPersonales">
                                                     Siguiente Apartado
                                                 </button>
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.isEditing"
@@ -3678,7 +3678,7 @@ import { v4 as uuidv4 } from "uuid";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getMe } from '@/store/auth'; 
-import { mostraralertas2, enviarsolig, enviarsoliedit, confimar, enviarsoligqr } from '@/store/funciones';
+import { mostraralertas2, enviarsolig, enviarsoliedit, confimar, enviarsoligqr, enviarsoligfoot } from '@/store/funciones';
 export default {
     data() {
         return {
@@ -6965,24 +6965,24 @@ export default {
             this.idus = usuario.CIInfPer;
             //console.log(this.idus);
             if(this.texto.trim()!==''){
-                if(this.texto.trim().length<250){
+                /*if(this.texto.trim().length<250){
                     mostraralertas2('La descripción del curriculum debe tener mínimo de 250 caracteres','warning');
                     return;
                 }
                 else{
 
-                    var parametros = {
-                        CIInfPer: this.idus,
-                        texto: this.texto.trim()
-        
-        
-                    }
-        
-                    enviarsolig('POST', parametros, '/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
-                    this.activeTab = "formacion";
-                    this.mostrardelaracionpersonal = false;
-                    this.regresar2 = true;
-                }
+                }*/
+               var parametros = {
+                   CIInfPer: this.idus,
+                   texto: this.texto.trim()
+   
+   
+               }
+   
+               enviarsolig('POST', parametros, '/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
+               this.activeTab = "formacion";
+               this.mostrardelaracionpersonal = false;
+               this.regresar2 = true;
             }else{
                 mostraralertas2('No deje campos en blanco','warning');
             }
@@ -7607,14 +7607,14 @@ export default {
        
        
         cargarfoto(event) {
-           const file = event.target.files[0];
+            const file = event.target.files[0];
             if (!file) return;
 
-            // Validar que sea imagen
+            // Tipos permitidos
             const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
             if (!allowedTypes.includes(file.type)) {
-                mostraralertas('Solo se permiten imágenes en formato JPG o JPEG.', 'warning', '');
-                this.$refs.fileFoto.value = ""; // Limpia input
+                mostraralertas('Solo se permiten imágenes JPG o PNG.', 'warning', '');
+                this.$refs.fileFoto.value = "";
                 this.previewFoto = '';
                 this.fotografia = '';
                 this.Errorfoto = true;
@@ -7625,19 +7625,48 @@ export default {
             img.src = URL.createObjectURL(file);
 
             img.onload = () => {
-                // Crear un canvas de 320x240
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
-                canvas.width = 320;
-                canvas.height = 240;
 
+                // Tamaño base razonable (reduce fotos grandes)
+                const maxWidth = 320;
+                const maxHeight = 240;
+                let width = img.width;
+                let height = img.height;
 
-                ctx.drawImage(img, 0, 0, 320, 240);
+                // Mantener proporción
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round(height * (maxWidth / width));
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round(width * (maxHeight / height));
+                        height = maxHeight;
+                    }
+                }
 
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
 
-                const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+                let quality = 0.9;
+                let dataUrl = canvas.toDataURL("image/jpeg", quality);
+                let base64Size = Math.ceil((dataUrl.length * 3) / 4); // tamaño en bytes
 
+                // Reducir calidad si excede 64KB
+                const MAX_BYTES = 64 * 1024;
+                while (base64Size > MAX_BYTES && quality > 0.2) {
+                    quality -= 0.1;
+                    dataUrl = canvas.toDataURL("image/jpeg", quality);
+                    base64Size = Math.ceil((dataUrl.length * 3) / 4);
+                }
+
+                // Mostrar previsualización
                 this.previewFoto = dataUrl;
+
+                // Enviar solo Base64 sin encabezado
                 this.fotografia = dataUrl.replace(/^data:image\/jpeg;base64,/, "");
                 this.Errorfoto = false;
             };
@@ -8427,7 +8456,7 @@ export default {
                     this.Telf1InfPer = data.Telf1InfPer;
                     this.mailPer = data.mailPer;
                     this.fotografia = data.fotografia;
-                    this.previewFoto = 'data:image/jpeg;base64,' + data.fotografia;
+                    this.previewFoto ='data:image/jpeg;base64,' + data.fotografia;
                     const añoActual = new Date().getFullYear();
                     const añoNacimiento = new Date(data.FechNacimPer).getFullYear();
                     this.edad = añoActual - añoNacimiento;
@@ -9199,19 +9228,26 @@ export default {
             event.preventDefault();
             /*var mifoto = document.getElementById('fotoimg');
             this.imagen = mifoto.src;*/
-
-            const parametros = {
-                fotografia: this.fotografia,
-
-
+            //console.log(this.previewFoto);
+            console.log(this.fotografia);
+            try {
+                
+                const parametros = {
+                    fotografia: this.fotografia,
+    
+    
+                }
+                enviarsoligfoot('PUT', parametros, '/cvn/v1/informacionpersonal/' + this.idus, 'Foto de perfil actualizada');
+    
+                //mostraralertas2('Experiencias Profesionales Actualizada','success');
+                this.activeTab = "personal";
+                this.mostrardatospersonales = false;
+                this.regresar1 = true;
+                this.isEditing = false;
+            } catch (error) {
+                console.error('Error al actualizar foto:', error);
+                mostraralertas2('Error al actualizar la foto.', 'error', '');
             }
-            //enviarsolig('PUT', parametros, this.url1, 'Foto de perfil actualizada');
-
-            //mostraralertas2('Experiencias Profesionales Actualizada','success');
-            this.activeTab = "personal";
-            this.mostrardatospersonales = false;
-            this.regresar1 = true;
-            this.isEditing = false;
 
 
         },
