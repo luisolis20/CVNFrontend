@@ -49,6 +49,7 @@ export default {
             titulosUniversitarios: [],
             titulosPosgrado: [],
             titulosBachiller: [],
+            estudioactualtitulosUniversitarios: [],
             //  título universitario
             nuevoTituloUniversitario: {
                 titulo_universitario_obtenido: "",
@@ -391,6 +392,7 @@ export default {
                 this.edad = añoActual - añoNacimiento;
 
                 this.formacion_academica = data.formacion_academica;
+                console.log(this.formacion_academica);
 
                 data.formacion_academica.forEach(item => {
                     if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
