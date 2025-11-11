@@ -1578,7 +1578,10 @@
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-book"> </i></span>
                                                 </div>
-                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicacion" class="text-danger">Por favor, ingrese un URL válido.</p>
+                                                <!-- El mensaje de error solo se muestra si HAY contenido y es INVÁLIDO -->
+                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicacion" class="text-danger">
+                                                    Por favor, ingrese un URL válido que comience con http:// o https://.
+                                                </p>
                                             </div>
                                             <!-- ponencias -->
                                             <div class="col-6" v-if="this.investiga">
@@ -1600,10 +1603,18 @@
                                             </div>
                                             <!-- Acciones -->
                                             <div class="col-4" v-if="this.investiga">
+                                                <!-- El botón se muestra si la URL es válida (incluyendo si está vacía) -->
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones" v-if="isValidURL">
                                                     {{ publicacionesEditIndex !== null ? 'Editar Publicaciones' : 'Agregar Publicaciones' }}
                                                 </button>
-                                                <h6 class="text-danger" v-else>Añada el link donde se encuentra guardada para que le aparezca el botón Agregar Publicaciones</h6>
+                                                <!-- El mensaje de ayuda se muestra solo si la URL es inválida (y tiene contenido) -->
+                                                <h6 class="text-danger" v-else-if="!isValidURL && nuevaspublicaciones.link_publicacion">
+                                                    Corrija el link para que aparezca el botón Agregar/Editar Publicaciones.
+                                                </h6>
+                                                <!-- Mensaje si está vacío y no hay edición en curso, o el mensaje anterior si no se cumple el v-else-if -->
+                                                <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link es correcto o si lo deja vacío.
+                                                </h6>
                                             </div>
                                             <!-- Publicaciones Registradas Tabla-->
                                             <div class="text-center rounded p-4">
@@ -1858,7 +1869,7 @@
                                                     <div class="input-group-icon">
                                                         <input
                                                         type="text"
-                                                        id="nombreCertificado"
+                                                        id="nombreCertificado" @input="validarURL2"
                                                         class="form-control1 input-box"
                                                         v-model="nuevosidiomas.certificado"
                                                         />
@@ -1867,11 +1878,23 @@
                                                         </span>
                                                     </div>
                                             </div>
+                                            <!-- El mensaje de error solo se muestra si HAY contenido y es INVÁLIDO -->
+                                                <p v-if="!isValidURL && nuevosidiomas.certificado && certificadoselected === 'Si'" class="text-danger">
+                                                    Por favor, ingrese un URL válido que comience con http:// o https://.
+                                                </p>
                                             <!-- Acciones -->
                                             <div class="col-4">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarIdiomas">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarIdiomas" v-if="isValidURL">
                                                     {{ idiomasEditIndex !== null ? 'Editar Idioma' : 'Agregar Idioma' }}
                                                 </button>
+                                                 <!-- El mensaje de ayuda se muestra solo si la URL es inválida (y tiene contenido)--> 
+                                                <h6 class="text-danger" v-else-if="!isValidURL && nuevosidiomas.certificado">
+                                                    Corrija el link para que aparezca el botón Agregar/Editar Idioma.
+                                                </h6>
+                                                <!-- Mensaje si está vacío y no hay edición en curso, o el mensaje anterior si no se cumple el v-else-if -->
+                                                <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link es correcto o si lo deja vacío.
+                                                </h6>
                                             </div>
                                             <!-- Idiomas Registrados -->
                                             <div class="text-center rounded p-4">
@@ -2767,16 +2790,53 @@
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  @input="validarNumero"
                                                         id="horas_curso" v-model="nuevoscurso_capacitacion.horas_curso"
-                                                        type="text" placeholder="Ingrese el número de horas del curso" /><span
+                                                        type="text" placeholder="Ingrese el total de horas del curso" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="far fa-envelope-open"> </i></span>
                                                 </div>
                                             </div>
+                                             <div class="col-sm-6 col-md-6 col-xl-5">
+                                                <label class="text-dark" for="">¿Posee un certificado del curso?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="certificadoscursoelected"
+                                                                @change="actualizarCertificadocurso"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="certificadoscursoelected === 'Si'">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el link donde se encuentra el certificado
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado" @input="validarURL23"
+                                                        class="form-control1 input-box"
+                                                        v-model="nuevoscurso_capacitacion.certificado_curso"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
+                                            </div>
                                             <!-- Acciones de Agregar Editar -->
                                             <div class="col-4">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursosCapacitaciones">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursosCapacitaciones" v-if="isValidURL">
                                                     {{ curso_capacitacionEditIndex !== null ? 'Editar Curso' : 'Agregar Curso' }}
                                                 </button>
+                                                 <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link es correcto o si lo deja vacío.
+                                                </h6>
                                             </div>
                                            <!-- Cusos Capacitaciones Registradas -->
                                            <div class="text-center rounded p-4">
@@ -3884,6 +3944,7 @@ export default {
             lenguaje: null,
             mostraridiomas: true,
             certificadoselected: "",
+            certificadoscursoelected: "",
 
             idiomasarray: [],
             //  Idiomas
@@ -3984,6 +4045,7 @@ export default {
                 fecha_fin_curso: "",
                 dias_curso: "",
                 horas_curso: "",
+                certificado_curso: "",
             },
             curso_capacitacionEditIndex: null,
             regresar9: false,
@@ -4415,16 +4477,72 @@ export default {
             }
         },
         validarURL() {
+            const link = this.nuevaspublicaciones.link_publicacion;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
             const urlPattern = new RegExp(
-                '^(https?:\\/\\/)?' + 
-                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + 
-                '((\\d{1,3}\\.){3}\\d{1,3}))' + 
-                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + 
-                '(\\?[;&a-z\\d%_.~+=-]*)?' + 
-                '(\\#[-a-z\\d_]*)?$', 'i' 
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
             );
 
-            this.isValidURL = urlPattern.test(this.nuevaspublicaciones.link_publicacion);
+            this.isValidURL = urlPattern.test(link.trim());
+            
+        },
+        validarURL2() {
+            const link = this.nuevosidiomas.certificado;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
+            const urlPattern = new RegExp(
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
+            );
+
+            this.isValidURL = urlPattern.test(link.trim());
+            
+        },
+        validarURL23() {
+            const link = this.nuevoscurso_capacitacion.certificado_curso;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
+            const urlPattern = new RegExp(
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
+            );
+
+            this.isValidURL = urlPattern.test(link.trim());
             
         },
         validarNumero(event) {
@@ -5666,10 +5784,24 @@ export default {
             // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
             if (this.certificadoselected === 'No') {
                 this.nuevosidiomas.certificado = 'No';
+                this.isValidURL = true;
             } 
             // Si elige "Si", se deja el campo editable
             else if (this.certificadoselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
                 this.nuevosidiomas.certificado = '';
+                this.isValidURL = false;
+            }
+        },
+        actualizarCertificadocurso() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.certificadoscursoelected === 'No') {
+                this.nuevoscurso_capacitacion.certificado_curso = 'No';
+                this.isValidURL = true;
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.certificadoscursoelected === 'Si' && this.nuevoscurso_capacitacion.certificado_curso === 'No') {
+                this.nuevoscurso_capacitacion.certificado_curso = '';
+                this.isValidURL = false;
             }
         },
 
@@ -6564,7 +6696,9 @@ export default {
             this.idus = usuario.CIInfPer;
             //console.log(this.idus);
             if(this.nuevoscurso_capacitacion.intitucion_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_evento.trim()!=='' && this.nuevoscurso_capacitacion.area_estudios.trim()!=='' && this.nuevoscurso_capacitacion.nombre_evento.trim()!=='' && this.nuevoscurso_capacitacion.facilitador_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_certificado.trim()!=='' && this.nuevoscurso_capacitacion.fecha_inicio_curso.trim()!=='' && this.nuevoscurso_capacitacion.fecha_fin_curso.trim()!=='' && this.nuevoscurso_capacitacion.dias_curso!=='' && this.nuevoscurso_capacitacion.horas_curso.trim()!==''){
-
+                if (this.certificadoscursoelected === 'No') {
+                    this.nuevoscurso_capacitacion.certificado_curso = 'No';
+                }
                 if (this.curso_capacitacionEditIndex !== null) {
                     const parametros = {
                         CIInfPer: this.idus,
@@ -6578,6 +6712,7 @@ export default {
                         fecha_fin_curso: this.nuevoscurso_capacitacion.fecha_fin_curso.trim(),
                         dias_curso: this.nuevoscurso_capacitacion.dias_curso,
                         horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
+                        certificado_curso: this.nuevoscurso_capacitacion.certificado_curso.trim(),
                     };
     
                     const response = await enviarsolig('PUT', parametros, '/cvn/v1/cursoscapacitacion/' + this.curso_capacitacionEditIndex, 'Curso y/o Capactitación Actualizado con éxito');
@@ -6609,6 +6744,7 @@ export default {
                                 fecha_fin_curso: this.nuevoscurso_capacitacion.fecha_fin_curso.trim(),
                                 dias_curso: this.nuevoscurso_capacitacion.dias_curso,
                                 horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
+                                certificado_curso: this.nuevoscurso_capacitacion.certificado_curso.trim(),
                             };
                         
                         //console.log(parametros);
@@ -7500,6 +7636,7 @@ export default {
                             fecha_fin_curso: item.fecha_fin_curso || '',
                             dias_curso: item.dias_curso || '',
                             horas_curso: item.horas_curso || '',
+                            certificado_curso: item.certificado_curso || '',
                                 
                         });
                             
@@ -7716,6 +7853,7 @@ export default {
 
             // Enviar registro de validación al backend
             try {
+                
                 await enviarsoligqr('POST', {
                     CIInfPer: this.CIInfPer,
                     nombres: this.NombInfPer,
@@ -8167,12 +8305,13 @@ export default {
                         { label: 'Comprensión de Lectura:', key: 'comprension_lectura' },
                         { label: 'Interacción Oral:', key: 'interaccion_oral' },
                         { label: 'Expresión Oral:', key: 'expresion_oral' },
-                        { label: 'Expresión Escrita:', key: 'expresion_escrita' }
+                        { label: 'Expresión Escrita:', key: 'expresion_escrita' },
+                        { label: 'Certificado:', key: 'certificado' }
                     ];
 
                     idiomasData2.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${idio[item.key]}`, x + 60, y); 
+                        y = addText(`${idio[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -8313,12 +8452,13 @@ export default {
                         { label: 'Area de Estudios:', key: 'area_estudios' },
                         { label: 'Tipó de Certificado:', key: 'tipo_certificado' },
                         { label: 'Dias:', key: 'dias_curso' },
-                        { label: 'Horas:', key: 'horas_curso' }
+                        { label: 'Horas:', key: 'horas_curso' },
+                        { label: 'Cerificado:', key: 'certificado_curso' },
                     ];
 
                     cursosData2.forEach(item => {
                         y = addBoldText2(item.label, x, y);
-                        y = addText(`${cur[item.key]}`, x + 60, y); 
+                        y = addText(`${cur[item.key]}`, x + 60, y, true); 
                     });
 
                     y = addBoldText('', x, y); 
@@ -9047,6 +9187,7 @@ export default {
                                 fecha_fin_curso: item.fecha_fin_curso || '',
                                 dias_curso: item.dias_curso || '',
                                 horas_curso: item.horas_curso || '',
+                                certificado_curso: item.certificado_curso || '',
                               
                             });
                         
