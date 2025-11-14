@@ -63,12 +63,9 @@
                                 </button>
                             </td>
                             <td>
-                                <img v-if="datos.fotografia" :src="datos.fotografia" alt="Foto del estudiante"
-                                    class="rounded-circle border" width="80" height="80" style="object-fit: cover;" />
-                                <img v-else
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png"
+                                <img :src="getFotoUrl(datos.CIInfPer)" alt="Foto del estudiante"
                                     class="rounded-circle border" width="80" height="80" style="object-fit: cover;"
-                                    alt="Sin foto" />
+                                    @error.once="$event.target.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png'" />
                             </td>
 
                         </tr>
@@ -193,7 +190,8 @@ export default {
         // La propiedad computada ahora solo devuelve la página actual de la data filtrada.
         Filtrados() {
             return this.paginatedData;
-        }
+        },
+
     },
     watch: {
         // Observar cambios en el filtro de estado
@@ -208,7 +206,16 @@ export default {
         }
     },
     methods: {
+        getFotoUrl(ci) {
+            if (!ci) {
+                return 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png';
+            }
+            // Obtenemos la URL base de Axios para asegurarnos de que el endpoint sea absoluto
+            const baseURL = API.defaults.baseURL || '';
 
+            // Generamos la URL completa que llama al nuevo método de streaming en Laravel
+            return `${baseURL}/cvn/v1/informacionpersonal/${ci}/foto`;
+        },
         async getDatos_Personales() {
             if (this.cargando) return; // Evitar llamadas múltiples
             this.cargando = true;
