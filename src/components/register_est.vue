@@ -1601,6 +1601,41 @@
                                                     
                                                 </div>
                                             </div>
+                                            <!-- Grupo de Investigación -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5">
+                                                <label class="text-dark" for="">¿Pertenece a un grupo de investigación?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="grupoinvestigaselected"
+                                                                @change="actualizargrupoinvestiga"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="grupoinvestigaselected === 'Si'">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el link donde se encuentra el certificado
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado" 
+                                                        class="form-control1 input-box"
+                                                        v-model="nuevosidiomas.certificado"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
+                                            </div>
                                             <!-- Acciones -->
                                             <div class="col-4" v-if="this.investiga">
                                                 <!-- El botón se muestra si la URL es válida (incluyendo si está vacía) -->
@@ -1629,6 +1664,7 @@
                                                                 <th scope="col">ID</th>
                                                                 <th scope="col">Tipo de publicación</th>
                                                                 <th scope="col">Título de la publicación</th>
+                                                                <th scope="col">Grupo de Investigación</th>
                                                                 <th scope="col">Link</th>
                                                                 <th scope="col">Acciones</th>
                                                                
@@ -1641,6 +1677,7 @@
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_tipo }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_titulo }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.link_publicacion }}</td>
+                                                                <td class="text-dark">{{ publicacionfor.grupo_investigacion }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionPublicaciones(publicacionfor.idinvestigacion_publicaciones)"><i class="fa-solid fa-edit"></i></button>
                                                                     &nbsp;&nbsp;&nbsp;<br>
@@ -3933,6 +3970,7 @@ export default {
                 publicacion_tipo: "",
                 publicacion_titulo: "",
                 link_publicacion: "",
+                grupo_investigacion: "",
                 congreso_evento: "",
             },
             publicacionesEditIndex: null, 
@@ -3944,6 +3982,7 @@ export default {
             lenguaje: null,
             mostraridiomas: true,
             certificadoselected: "",
+            grupoinvestigaselected: "",
             certificadoscursoelected: "",
 
             idiomasarray: [],
@@ -5682,6 +5721,9 @@ export default {
             //console.log(this.idus);
             if(this.nuevaspublicaciones.publicacion_tipo.trim()!=='' && this.nuevaspublicaciones.publicacion_titulo.trim()!=='' && this.nuevaspublicaciones.link_publicacion.trim() !=='' && this.nuevaspublicaciones.congreso_evento.trim() !=='' ){
 
+                if (this.grupoinvestigaselected === 'No') {
+                    this.nuevaspublicaciones.grupo_investigacion = 'No';
+                }
                 if (this.publicacionesEditIndex !== null) {
                     const parametros = {
                         CIInfPer: this.idus,
@@ -5689,6 +5731,7 @@ export default {
                         publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                         publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
                         link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                        grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
                         congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                     };
     
@@ -5705,6 +5748,7 @@ export default {
                     this.publicacionesEditIndex = null;
                     this.modoeditionpublicaciones=false;
                     this.resetNuevoPubliciones();
+                    this.grupoinvestigaselected = '';
                     this.scrollToTop();
                 } else {
                     try {
@@ -5715,6 +5759,7 @@ export default {
                                 publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                                 publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
                                 link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                                grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
                                 congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
                             };
                         
@@ -5726,8 +5771,10 @@ export default {
                                 publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
                                 publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
                                 link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                                grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
                                 congreso_evento: this.nuevaspublicaciones.congreso_evento.trim()});
                         this.resetNuevoPubliciones();
+                        this.certificadoselected = '';
                         this.scrollToTop();
                         
                     } catch (error) {
@@ -5776,7 +5823,8 @@ export default {
                 publicacion_tipo: "",
                 publicacion_tipo: "",
                 link_publicacion: "",
-                congreso_evento: ""
+                grupo_investigacion: "",
+                congreso_evento: "",
             };
         },
 
@@ -5790,6 +5838,18 @@ export default {
             else if (this.certificadoselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
                 this.nuevosidiomas.certificado = '';
                 this.isValidURL = false;
+            }
+        },
+        actualizargrupoinvestiga() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.grupoinvestigaselected === 'No') {
+                this.nuevaspublicaciones.grupo_investigacion = 'No';
+                
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.grupoinvestigaselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
+                this.nuevaspublicaciones.grupo_investigaciono = '';
+                
             }
         },
         actualizarCertificadocurso() {
@@ -7415,7 +7475,8 @@ export default {
                                 publicacion_tipo: item.publicacion_tipo || '',
                                 publicacion_titulo: item.publicacion_titulo || '',
                                 link_publicacion: item.link_publicacion || '',
-                                congreso_evento: item.congreso_evento || ''
+                                grupo_investigacion: item.grupo_investigacion || '',
+                                congreso_evento: item.congreso_evento || '',
                             });
                         }
                             
@@ -8987,6 +9048,7 @@ export default {
                                 publicacion_tipo: item.publicacion_tipo || '',
                                 publicacion_titulo: item.publicacion_titulo || '',
                                 link_publicacion: item.link_publicacion || '',
+                                grupo_investigacion: item.grupo_investigacion || '',
                                 congreso_evento: item.congreso_evento || ''
                             });
                         }
