@@ -25,14 +25,13 @@
                     v-if="mostrarOpciones2" v-on:click="perfil"><i class="uil uil-user"></i>Actualizar Mi Currículum </a>
             </div>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler py-2 px-3" v-on:click="toggleNavbarCollapse" ref="navbarToggler"
+                aria-expanded="false" aria-controls="navbarCollapse">
+                <span class="fa fa-bars text-primary"></span>
+            
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse py-3" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item" v-if="this.registro">
                         <a href="#sobremi" class="nav-link About"><span data-hover="Sobre mi">Sobre mi</span></a>
@@ -162,7 +161,7 @@
                                         v-if="this.mostrardatospersonales">
                                         <form class="row g-4 mt-5">
                                             <h3>Datos personales</h3>
-                                            <p class="text-danger text-justify">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
+                                            <p class="text-dark text-justify">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
                                             debe dar clic en Siguiente apartado. 
                                             Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
                                             <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
@@ -357,7 +356,7 @@
                                             <p class="text-dark text-justify" v-if="this.modoedit7">En este apartado debes describir en 250 palabras tus intereses, 
                                             objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. 
                                             Incluye también tus metas a medio/largo plazo. Luego de que termines debes dar clic en el botón Guardar y Continuar</p>
-                                            <p class="text-danger text-justify" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
+                                            <p class="text-dark text-justify" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
                                             objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Puedes modificar lo que anteriormente
                                             llenaste. Luego de que termines debes dar clic en el botón Actualizar y Continuar.</p>
                                             <!-- Descripción -->
@@ -1510,7 +1509,7 @@
                                         v-if="this.mostrarinvestigacionpublicaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Publicaciones</h3>
-                                            <p class="text-danger text-justify"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Publicaciones.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Publicaciones.</p> 
@@ -1602,7 +1601,7 @@
                                                 </div>
                                             </div>
                                             <!-- Grupo de Investigación -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5">
+                                            <div class="col-sm-6 col-md-6 col-xl-5"  v-if="this.investiga">
                                                 <label class="text-dark" for="">¿Pertenece a un grupo de investigación?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="grupoinvestigaselected"
@@ -1622,14 +1621,14 @@
                                             <!-- Campo para link solo si eligió "Si" -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="grupoinvestigaselected === 'Si'">
                                                     <label class="text-dark" for="nombreCertificado">
-                                                        Ingrese el link donde se encuentra el certificado
+                                                        Ingrese el nombre del grupo de investigación
                                                     </label>
                                                     <div class="input-group-icon">
                                                         <input
                                                         type="text"
                                                         id="nombreCertificado" 
                                                         class="form-control1 input-box"
-                                                        v-model="nuevosidiomas.certificado"
+                                                        v-model="nuevaspublicaciones.grupo_investigacion"
                                                         />
                                                         <span class="nav-link-icon text-800 fs--1 input-box-icon">
                                                         <i class="fas fa-certificate"></i>
@@ -1716,7 +1715,7 @@
                                         v-if="this.mostraridiomas">
                                         <form class="row g-4 mt-5">
                                             <h3>Idiomas</h3>
-                                            <p class="text-danger text-justify"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Idioma.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Idioma.</p>
@@ -2654,7 +2653,7 @@
                                         v-if="this.mostrarcapacitaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Cursos</h3>
-                                             <p class="text-danger text-justify"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
+                                             <p class="text-dark text-justify"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Curso.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditioncursos">Esta es tu información de cursos llenado anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Curso.</p>
@@ -2952,7 +2951,7 @@
                                         v-if="this.mostrardatosrelevantes">
                                         <form class="row g-4 mt-5">
                                             <h3>Logros Obtenidos</h3>
-                                             <p class="text-danger text-justify"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
+                                             <p class="text-dark text-justify"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Logros.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Logros.</p>
@@ -3065,7 +3064,7 @@
                                         v-if="this.mostrarinformacioncontacto">
                                         <form class="row g-4 mt-5">
                                             <h3>Referencias Personales</h3>
-                                            <p class="text-danger text-justify"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Referencia.</p>
                                                 <p class="text-danger text-justify" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Referencia.</p>
@@ -3251,7 +3250,7 @@
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
                                 &nbsp;&nbsp;
-                                <!-- Foto con marco decorativo -->
+                                <!-- Foto con marco decorativo 
                                 <div class="foto-marco">
                                     <img
                                         v-if="fotografia"
@@ -3267,7 +3266,7 @@
                                         class="imagen-foto"
                                         alt="Imagen por defecto"
                                     />
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="col-lg-8">
@@ -4406,6 +4405,24 @@ export default {
                 // Si el token no es válido o expiró, limpiar igual
                 localStorage.clear();
                 window.location.href = "/cvn/home";
+            }
+        },
+        toggleNavbarCollapse() {
+            const navbarCollapse = document.getElementById('navbarCollapse');
+            const toggler = this.$refs.navbarToggler; // Usaremos una referencia ref
+
+            if (navbarCollapse.classList.contains('show')) {
+                // Si está abierto, lo cierra (añade 'collapse' y quita 'show')
+                navbarCollapse.classList.remove('show');
+                toggler.setAttribute('aria-expanded', 'false');
+                // Opcional: añade 'collapsing' para la animación, luego 'collapse'
+                // Por simplicidad, solo manejamos show/collapse
+                navbarCollapse.classList.add('collapse');
+            } else {
+                // Si está cerrado, lo abre (quita 'collapse' y añade 'show')
+                navbarCollapse.classList.add('show');
+                navbarCollapse.classList.remove('collapse');
+                toggler.setAttribute('aria-expanded', 'true');
             }
         },
         openPdfModal(page) {

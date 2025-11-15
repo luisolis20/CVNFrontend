@@ -28,8 +28,8 @@
               <a href="index.html" class="navbar-brand">
                 <img class="img-fluid" src="@/assets/images/logo.gif" width="250px" height="250px" alt="">
               </a>
-              <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
+              <button class="navbar-toggler py-2 px-3" v-on:click="toggleNavbarCollapse" ref="navbarToggler"
+                aria-expanded="false" aria-controls="navbarCollapse">
                 <span class="fa fa-bars text-primary"></span>
               </button>
               <div class="collapse navbar-collapse py-3" id="navbarCollapse">
@@ -196,7 +196,7 @@
     </div>
   </div>
 
- 
+
   <!-- En el caso de que sea un usuario Estudiante se mostrará la pagina de portafolio y/o Registro. Llamado al Archivo Registro.vue-->
   <div>
     <router-view v-if="showNavbaruser"></router-view>
@@ -288,7 +288,25 @@ export default {
       $('.sidebar, .content').toggleClass("open");
       return false;
 
-    }
+    },
+    toggleNavbarCollapse() {
+      const navbarCollapse = document.getElementById('navbarCollapse');
+      const toggler = this.$refs.navbarToggler; // Usaremos una referencia ref
+
+      if (navbarCollapse.classList.contains('show')) {
+        // Si está abierto, lo cierra (añade 'collapse' y quita 'show')
+        navbarCollapse.classList.remove('show');
+        toggler.setAttribute('aria-expanded', 'false');
+        // Opcional: añade 'collapsing' para la animación, luego 'collapse'
+        // Por simplicidad, solo manejamos show/collapse
+        navbarCollapse.classList.add('collapse');
+      } else {
+        // Si está cerrado, lo abre (quita 'collapse' y añade 'show')
+        navbarCollapse.classList.add('show');
+        navbarCollapse.classList.remove('collapse');
+        toggler.setAttribute('aria-expanded', 'true');
+      }
+    },
   },
   mixins: [script2],//Habilitar el uso del archivos js
 };

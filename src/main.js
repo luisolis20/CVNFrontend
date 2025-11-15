@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 
-import $ from 'jquery';
+
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -29,3 +29,7 @@ import '@/assets/lib/aos/aos.css'
 
 createApp(App).use(store).use(router).mount('#app')
 import 'bootstrap/dist/js/bootstrap'
+
+import $ from 'jquery';
+window.$ = $;
+window.jQuery = $;
