@@ -294,7 +294,7 @@
 </style>
 <script>
 import script2 from '@/store/custom.js';
-import axios from 'axios';
+import API from '@/store/axios';
 import { useRoute } from 'vue-router';
 export default {
     data() {
@@ -304,7 +304,7 @@ export default {
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
             pdfKey: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/habilidades_informatica',
+            url255: '/cvn/v1/habilidades_informatica',
             habilidades_informaticas: [],
             HabiDATA: [],
             searchQuery: '',
@@ -379,7 +379,7 @@ export default {
             this.cargando = true;
 
             try {
-                const response = await axios.get(`${this.url255}?all=true`);
+                const response = await API.get(`${this.url255}?all=true`);
                 const allData = response.data.data;
 
                 this.HabiDATA = allData;

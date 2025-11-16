@@ -392,7 +392,7 @@ export default {
                 this.edad = añoActual - añoNacimiento;
 
                 this.formacion_academica = data.formacion_academica;
-                console.log(this.formacion_academica);
+                //console.log(this.formacion_academica);
 
                 data.formacion_academica.forEach(item => {
                     if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
@@ -480,19 +480,19 @@ export default {
 
                 this.investigacion_publicaciones = data.investigacion_publicaciones;
                 data.investigacion_publicaciones.forEach(item => {
-                        if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
-                            this.publicacionesarray.push({
+                    if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
+                        this.publicacionesarray.push({
 
-                                idinvestigacion_publicaciones: item.id,
-                                publicacion_tipo: item.publicacion_tipo || '',
-                                publicacion_titulo: item.publicacion_titulo || '',
-                                link_publicacion: item.link_publicacion || '',
-                                congreso_evento: item.congreso_evento || ''
-                            });
-                        }
+                            idinvestigacion_publicaciones: item.id,
+                            publicacion_tipo: item.publicacion_tipo || '',
+                            publicacion_titulo: item.publicacion_titulo || '',
+                            link_publicacion: item.link_publicacion || '',
+                            congreso_evento: item.congreso_evento || ''
+                        });
+                    }
 
 
-                    });
+                });
                 this.idiomas = data.idiomas;
                 data.idiomas.forEach(item => {
 
@@ -1271,7 +1271,7 @@ export default {
 
 
             // 🔗 URL de validación
-            const urlVerificacion = `http://vinculacionconlasociedad.utelvt.edu.ec/cvn/validacion_cvn`;
+            const urlVerificacion = `http://192.168.1.19/cvn/validacion_cvn`;
             // === Preparar formato de nombre completo ===
             const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
 
@@ -1431,8 +1431,8 @@ export default {
                 // Títulos de grado
                 if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
                 if (t.includes("ingeniera")) return genero === "F" ? "Ing." : "Ing.";
-                if (t.includes("licenciad")) return genero === "F" ? "Lic." : "Lic.";
-                if (t.includes("licenciado")) return genero === "F" ? "Lcda." : "Lcda.";
+                if (t.includes("licenciado")) return genero === "F" ? "Lic." : "Lic.";
+                if (t.includes("licenciada")) return genero === "F" ? "Lcda." : "Lcda.";
                 if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
                 if (t.includes("doctor") || t.includes("medicina")) return "Dr.";
                 if (t.includes("abogado")) return genero === "F" ? "Abg.a" : "Abg.";
@@ -1474,10 +1474,10 @@ export default {
             }
 
             // === Si aún estudia, usar el título en curso ===
-            if (!tituloUniv && this.estudioactualtitulosUniversitarios.length > 0) {
+            /*if (!tituloUniv && this.estudioactualtitulosUniversitarios.length > 0) {
                 const actual = this.estudioactualtitulosUniversitarios[0];
                 tituloUniv = abreviarTitulo(actual.titulo_carrera_universidad, genero);
-            }
+            }*/
 
             // === Armar la cadena final ===
             let lineaTitulo = "";
@@ -1625,6 +1625,22 @@ export default {
                     y = addBoldText('', x, y);
                 });
                 y = addBoldText('', x, y);
+            }
+            if (this.estudioactualtitulosUniversitarios.length > 0) {
+                //console.log(this.estudioactualtitulosUniversitarios);
+                y = addBoldText3('Formación Académica - Estudios Universitarios Actuales UTLVTE', x, y);
+                this.estudioactualtitulosUniversitarios.forEach((estudioactual, index) => {
+                    y = addBoldText(``, x, y);
+                    const formacionAcademicaData4 = [
+                        { label: 'Facultad:', key: 'facultades_universidad' },
+                        { label: 'Especialidad:', key: 'carrera_universidad' }
+                    ];
+                    formacionAcademicaData4.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${estudioactual[item.key]}`, x + 60, y);
+                    });
+                    y = addBoldText('', x, y);
+                });
             }
 
             if (this.titulosPosgrado.length > 0) {

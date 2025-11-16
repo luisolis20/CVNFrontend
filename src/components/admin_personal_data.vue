@@ -290,7 +290,7 @@ export default {
         },
 
         actualizar() {
-            this.cargando = true;
+            //this.cargando = true;
             this.filtros = '';
             this.searchQuery = '';
             this.getDatos_Personales();

@@ -94,13 +94,13 @@
 </style>
 <script>
 import script2 from '@/store/custom.js';
-import axios from 'axios';
+import API from '@/store/axios';
 import { useRoute } from 'vue-router';
 export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/informacion_contacto',
+            url255: '/cvn/v1/informacion_contacto',
             informacion_contactos: [],
             filteredreferencias: [],
             searchQuery: '',
@@ -144,7 +144,7 @@ export default {
             this.cargando = true;
 
             try {
-                const response = await axios.get(`${this.url255}?all=true`);
+                const response = await API.get(`${this.url255}?all=true`);
                 const allData = response.data.data;
 
                 this.informacion_contactos = allData;

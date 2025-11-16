@@ -60,6 +60,7 @@
                         <tr class="text-dark">
                             <th scope="col">ID</th>
                             <th scope="col">Identificación</th>
+                             <th scope="col">Tipo de Fracasos</th>
                             <th scope="col">Descripción de Fracasos</th>
                             <th scope="col">Registro</th>
                             <th scope="col">Actualización</th>
@@ -78,6 +79,8 @@
 
                             <td v-text="otros_dato.id"></td>
                             <td v-text="otros_dato.CIInfPer"></td>
+                            
+                            <td v-text="otros_dato.tipo_logros"></td>
                             <td v-text="otros_dato.descripcion_fracasos"></td>
                             <td v-text="new Date(otros_dato.created_at).toLocaleDateString('en-US')"></td>
                             <td v-text="new Date(otros_dato.updated_at).toLocaleDateString('en-US')"></td>
@@ -132,13 +135,13 @@
 </style>
 <script>
 import script2 from '@/store/custom.js';
-import axios from 'axios';
+import API from '@/store/axios';
 import { useRoute } from 'vue-router';
 export default {
     data() {
         return {
             idus: 0,
-            url255: 'http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante',
+            url255: '/cvn/v1/otros_datos_relevante',
             otros_datos_relevantes: [],
             otrosDATA: [],
             pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
@@ -193,7 +196,7 @@ export default {
             this.cargando = true;
 
             try {
-                const response = await axios.get(`${this.url255}?all=true`);
+                const response = await API.get(`${this.url255}?all=true`);
                 const allData = response.data.data;
 
                 this.otrosDATA = allData;
