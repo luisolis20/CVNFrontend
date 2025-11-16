@@ -3323,8 +3323,8 @@
                                             <div v-for="(logro, index) in otros_datos_personalesarray" :key="index">
                                                 <b class="text-dark">Logro Nº {{ index+1 }} </b>
                                                 <p>Tipo de Logro: {{ logro.tipo_logros }}</p>
-                                                <p>Decripción del Logro: {{ logro.descripcion_logros }}</p>
-                                                <p>Decripción de Fracasos: {{ logro.descripcion_fracasos }}</p><br>
+                                                <p class="descripcionmia">Decripción del Logro: {{ logro.descripcion_logros }}</p>
+                                                <p class="descripcionmia">Decripción de Fracasos: {{ logro.descripcion_fracasos }}</p><br>
                                             </div>
                                         </div>
                                         <div v-else>
@@ -3377,7 +3377,7 @@
                                         <h3>
                                             <small>Cargo: {{ expe.cargo_desempenado_empresa }}</small>
                                         </h3>
-                                        <p>Funciones: {{ expe.descripcion_funciones_empresa }}</p>
+                                        <p class="descripcionmia">Funciones: {{ expe.descripcion_funciones_empresa }}</p>
                                     </div>
                                 </div>
 
@@ -3404,7 +3404,7 @@
                                             <h3>
                                                 <small>Área: {{ pasan.area_trabajo_practicas }}</small>
                                             </h3>
-                                            <p>Funciones: {{ pasan.descripcion_funciones_practicas }}</p>
+                                            <p class="descripcionmia">Funciones: {{ pasan.descripcion_funciones_practicas }}</p>
                                         </div>
                                     </div>
 
@@ -3566,11 +3566,11 @@
                                 <div id="tab1-1" class="tab-pane fade show p-0 active" v-if="habilidades_comunicativas_array.length > 0">
                                     <div class="row gy-5 gx-4" >
                                         <div class="col-sm-6" v-for="(habi1, index) in habilidades_comunicativas_array" :key="index">
-                                            <p class="text-primary mb-1">Habilidad Comunicativa</p>
+                                            
                                             <h5>{{ habi1.habilidades_comunicativas }}</h5>
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi1.descripcion_habilidades_comunicativas }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi1.descripcion_habilidades_comunicativas }}</h6>
                                         </div>
                                        
                                         
@@ -3580,11 +3580,11 @@
                                 <div id="tab1-2" class="tab-pane fade show p-0" v-if="habilidades_creativas_array.length > 0">
                                     <div class="row gy-5 gx-4">
                                         <div class="col-sm-6" v-for="(habi2, index) in habilidades_creativas_array" :key="index">
-                                            <p class="text-primary mb-1">Habilidad Creativa</p>
+                                            
                                             <h5>{{ habi2.habilidades_creativas }}</h5>
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi2.descripcion_habilidades_creativas }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi2.descripcion_habilidades_creativas }}</h6>
                                         </div>
                                        
                                     </div>
@@ -3593,11 +3593,11 @@
                                 <div id="tab1-3" class="tab-pane fade show p-0" v-if="habilidades_liderazgo_array.length > 0">
                                     <div class="row gy-5 gx-4">
                                         <div class="col-sm-6" v-for="(habi3, index) in habilidades_liderazgo_array" :key="index">
-                                            <p class="text-primary mb-1">Habilidad de Liderazgo</p>
+                                           
                                             <h5>{{ habi3.habilidades_liderazgo }}</h5>
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi3.descripcion_habilidades_liderazgo }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi3.descripcion_habilidades_liderazgo }}</h6>
                                         </div>
                                        
                                     </div>
@@ -3606,11 +3606,11 @@
                                 <div id="tab1-4" class="tab-pane fade show p-0" v-if="habilidades_informaticas_array.length > 0">
                                     <div class="row gy-5 gx-4">
                                         <div class="col-sm-6" v-for="(habi4, index) in habilidades_informaticas_array" :key="index">
-                                            <p class="text-primary mb-1">Habilidad Informáctica</p>
+                                            
                                             <h5>{{ habi4.habilidades_informaticas_cv }}</h5>
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi4.descripcion_habilidades_informaticas_cv }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi4.descripcion_habilidades_informaticas_cv }}</h6>
                                         </div>
                                        
                                     </div>
@@ -3619,11 +3619,11 @@
                                 <div id="tab1-5" class="tab-pane fade show p-0" v-if="oficios_subactividades_array.length > 0">
                                     <div class="row gy-5 gx-4">
                                         <div class="col-sm-6" v-for="(habi5, index) in oficios_subactividades_array" :key="index">
-                                            <p class="text-primary mb-1">Oficios/Subactividades</p>
+                                            
                                             <h5>{{ habi5.oficios_subactividades }}</h5>
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi5.descripcion_oficios_subactividades }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi5.descripcion_oficios_subactividades }}</h6>
                                         </div>
                                        
                                     </div>
@@ -3632,10 +3632,10 @@
                                 <div id="tab1-6" class="tab-pane fade show p-0" v-if="otro_habilidades_array.length > 0">
                                     <div class="row gy-5 gx-4">
                                         <div class="col-sm-6" v-for="(habi6, index) in otro_habilidades_array" :key="index">
-                                            <p class="text-primary mb-1">Otra Habilidad</p>
+                                            
                                             <hr class="text-primary my-2">
                                             
-                                            <h6 class="mb-0">Descripción: {{ habi6.otro_habilidades }}</h6>
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi6.otro_habilidades }}</h6>
                                         </div>
                                        
                                     </div>
@@ -3727,8 +3727,42 @@
                     </div>
                 </div>
             </div>
-            <!-- Idiomas Y Cursos End -->
-            
+            <!-- Descargas -->
+            <section class="project py-5">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-11 text-center mx-auto">
+
+                            <div class="col-lg-8 mx-auto">
+                                <h2>Historial de Descargas</h2>
+                            </div>
+                            <!-- Tabla de Descargas -->
+                            <div class="table-responsive">
+                                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                    <thead>
+                                        <tr class="text-dark">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Código de Descarga</th>
+                                            <th scope="col">Fecha de Descarga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido">
+                                        <tr v-for="us,  in this.historialdescargas" :key="us.id">
+                                            <td class="text-dark" v-text="us.id"></td>
+                                            <td class="text-dark" v-text="us.codigo_unico"></td>
+                                            <td class="text-dark" v-text="us.fecha_generacion"></td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </section>
             
         </div>
 
@@ -3787,6 +3821,8 @@ export default {
             pdfKey: 0,
             idus: 0,
             titulosEncontrados: [],
+            historialdescargas: [],
+
             mostrarFormularioTitulos: true,
             mostrarnormal: false,
             tituloActualIndex: 0,
@@ -4468,7 +4504,8 @@ export default {
                 this.getHabilidadesInformaticas(),
                 this.getCursosCapacitaciones(),
                 this.getDatosRelevantes(),
-                this.getInformacionContacto()
+                this.getInformacionContacto(),
+                this.getValidar()
                 
             ])
         },
@@ -8616,6 +8653,7 @@ export default {
 
             doc.save(`CVN-${this.CIInfPer}-${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}.pdf`);
             console.clear();
+            this.getValidar();
         },
 
 
@@ -9451,6 +9489,36 @@ export default {
                 //console.log("El estudiante no ha llenado la declaración personal y es su primera vez.");
                 this.registro = false;
                 this.us = true;
+                return null;
+            }
+        },
+        async getValidar() {
+            try {
+
+                const response = await API.get(`/cvn/v1/historialDe/${this.idus}`);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    //console.log(data);
+                    data.sort((a, b) => {
+                        // Convertimos las cadenas de fecha a objetos Date para compararlas.
+                        // Usamos 'fecha_generacion' o el campo de fecha que estés usando.
+                        const fechaA = new Date(a.fecha_generacion || a.created_at); 
+                        const fechaB = new Date(b.fecha_generacion || b.created_at);
+                        
+                        // b - a da el orden descendente (más reciente primero)
+                        return fechaB - fechaA; 
+                    });
+                    this.historialdescargas = data;
+                    //console.log(this.historialdescargas);
+
+                    
+                } else {
+                    //console.log("No hay datos");
+                   
+                }
+                return response;
+            } catch (error) {
+               
                 return null;
             }
         },
