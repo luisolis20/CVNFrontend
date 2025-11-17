@@ -3735,7 +3735,8 @@
                         <div class="col-lg-11 text-center mx-auto">
 
                             <div class="col-lg-8 mx-auto">
-                                <h2>Historial de Descargas</h2>
+                                <h2>Historial de Descargas de CVN</h2>
+                                <p class="text-muted">Aquí encontrarás tus descargas de CVN realizadas</p>
                             </div>
                             <!-- Tabla de Descargas -->
                             <div class="table-responsive">
@@ -3748,22 +3749,411 @@
                                         </tr>
                                     </thead>
                                     <tbody id="contenido">
-                                        <tr v-for="us,  in this.historialdescargas" :key="us.id">
+                                        <!-- Usamos la propiedad computada que contiene solo los 10 más recientes -->
+                                        <tr v-if="cargando">
+                                            <td colspan="3">
+                                                <div class="spinner-border text-primary d-flex justify-content-center" role="status">
+                                                    <span class="visually-hidden">Cargando...</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr v-else-if="top10Historial.length === 0">
+                                            <td colspan="3" class="text-center text-secondary">
+                                                No hay registros de descargas recientes para mostrar.
+                                            </td>
+                                        </tr>
+                                        <tr v-else v-for="us in top10Historial" :key="us.id">
                                             <td class="text-dark" v-text="us.id"></td>
                                             <td class="text-dark" v-text="us.codigo_unico"></td>
                                             <td class="text-dark" v-text="us.fecha_generacion"></td>
-                                            
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            
+                            <!-- Indicador de total de registros si hay más de 10 -->
+                            <p v-if="historialdescargas.length > 10" class="text-muted mt-3">
+                                Mostrando los {{ top10Historial.length }} registros más recientes de un total de {{ historialdescargas.length }}.
+                            </p>
                             
 
                         </div>
                     </div>
                 </div>
             </section>
-            
+            <!-- Ofertas de Empleo -->
+            <div class="p-4 rounded" v-if="this.opciongraduado">
+                <p>Al ser estudiante graduado, conocerás las ofertas de empleo que la Bolsa de empleos de la UTLVTE ofrece</p>
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas Más Recientes</h4>
+                        <p class="text-dark">Aquí encontrarás las ofertas más recientes con las empresas que la UTLVTE tiene
+                        convenios</p><br>
+                        <form class="container-fluid row g-1 mt-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <div class="input-group-icon">
+                                            <select v-model="categoriaSeleccionada" class="form-select form-voyage-select input-box text-dark"
+                                                id="inputPersonOne">
+                                                <option value="" selected>
+                                                Categorías / Área
+                                                </option>
+                                                <option value="Administración y RRHH">Administración y RRHH</option>
+                                                <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                                <option value="Comercial">Comercial</option>
+                                                <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                                público
+                                                </option>
+                                                <option value="Educación y Docencia">Educación y Docencia</option>
+                                                <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                                <option value="Ingenierías">Ingenierías</option>
+                                                <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                                <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                                Comunicación y Diseño
+                                                </option>
+                                                <option value="Oficios">Oficios</option>
+                                                <option value="Producción y Operarios">Producción y Operarios</option>
+                                                <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                                Bioquímica</option>
+                                                <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                                <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                                <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                                <option value="Textil">Textil</option>
+                                                <option value="Ventas">Ventas</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class=" justify-content-center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div v-for="ofe in ofertasFiltradas.slice(0, 10)" :key="ofe.id"
+                                class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+
+                                <div>
+                                    <div v-if="new Date(ofe.fechaFinOferta) <= new Date()"
+                                    class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                                    Ofertas Caducada</div>
+                                    <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                    style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                </div>
+                                <div class="p-4 rounded-bottom">
+                                    <div class="row">
+                                    <div class="col-md-12 col-lg-3">
+                                        <div class="text-center">
+
+                                        <img v-if="ofe.imagen" :src="'data:image/jpeg;base64,' + ofe.imagen" width="100%" height="300"
+                                            style="border-radius: 10px; object-fit: cover;" />
+                                        <img v-else src="https://emprendedores.biz/wp-content/uploads/2023/08/QEE-2.png" width="100%"
+                                            height="300" style="border-radius: 10px; object-fit: cover;" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-12 col-lg-8">
+                                        <h4>{{ ofe.titulo }}</h4>
+                                        <h6>Fecha de publicación: {{ new Date(ofe.created_at).toLocaleDateString('es-ES') }}</h6>
+                                        <div v-if="new Date(ofe.fechaFinOferta) > new Date() && tiemposRestantes[ofe.id]">
+                                            <h6 class="text-success">
+                                                {{ calcularDiasRestantes(ofe.fechaFinOferta) }} - Tiempo restante:
+                                                <span :class="{
+                                                    'text-success': !tiemposRestantes[ofe.id].includes('Caducada'),
+                                                    'text-danger': tiemposRestantes[ofe.id].includes('Caducada')
+                                                    }">
+                                                    {{ tiemposRestantes[ofe.id] }}
+                                                </span>
+                                            </h6>
+                                        </div>
+                                        <div v-else>
+                                            <h6 class="text-danger">La oferta ya caducó</h6>
+                                        </div>
+                                        <h6>Categoría / Área: {{ ofe.categoria }}</h6>
+                                        <p class="text-dark">Descripcion: {{ ofe.descripcion }}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">Nombre de la Empresa: {{ ofe.Empresa }}</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <br><br><br>
+                                            <a href="http://192.168.1.19/b_e" target="_blank"
+                                                class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </form>
+                        <div v-if="ofertas.length === 0" class="text-center">
+                            <h3>No hay Ofertas publicadas</h3>
+                        </div>
+                        <div v-else class="d-flex justify-content-center">
+                            <a href="http://192.168.1.19/b_e" target="_blank" class="btn btn-primary text-white"><i
+                                class="fa-solid fa-eye me-2 text-white"></i> Ver todas las ofertas en la Bolsa de Empleo de la UTLVTE</a>
+                        </div>
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="bg-white p-4 rounded" v-if="this.opciongraduado">
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas en sitios webs</h4>
+                        <p class="text-dark">Aquí encontrarás ofertas en sitios webs, si deseas verlos puedes dar clic y te
+                        lllevará al sitio donde se encuentra publicado</p><br>
+                        <h3>Aun no se pueden ver ofertas de sitios web</h3>
+                        <!--<form class="container-fluid row g-1 mt-1">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <div class="input-group-icon">
+                                        <select v-model="categoriaSeleccionada"
+                                            class="form-select form-voyage-select input-box text-dark" id="inputPersonOne">
+                                            <option value="" selected>
+                                            Categorías / Área
+                                            </option>
+                                            <option value="Administración y RRHH">Administración y RRHH</option>
+                                            <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                            <option value="Comercial">Comercial</option>
+                                            <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                            público
+                                            </option>
+                                            <option value="Educación y Docencia">Educación y Docencia</option>
+                                            <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                            <option value="Ingenierías">Ingenierías</option>
+                                            <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                            <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                            Comunicación y Diseño
+                                            </option>
+                                            <option value="Oficios">Oficios</option>
+                                            <option value="Producción y Operarios">Producción y Operarios</option>
+                                            <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                            Bioquímica</option>
+                                            <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                            <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                            <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                            <option value="Textil">Textil</option>
+                                            <option value="Ventas">Ventas</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="owl-carousel vegetable-carousel justify-content-center">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h3>Aun no se pueden ver ofertas de sitios web</h3>
+                                    
+                                    <div v-for="ofe in ofertasFiltradas.slice(0, 10)" :key="ofe.id"
+                                    class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+
+                                    <div>
+                                        <div v-if="new Date(ofe.fechaFinOferta) <= new Date()"
+                                        class="text-white bg-danger px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Caducada</div>
+                                        <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                    </div>
+                                    <div class="p-4 rounded-bottom">
+                                        <h4>{{ ofe.titulo }}</h4>
+                                        <h6>Fecha de publicación: {{ new Date(ofe.created_at).toLocaleDateString('es-ES') }}</h6>
+                                        <div v-if="new Date(ofe.fechaFinOferta) > new Date() && tiemposRestantes[ofe.id]">
+                                        <h6 class="text-success">
+                                            {{ calcularDiasRestantes(ofe.fechaFinOferta) }} - Tiempo restante:
+                                            <span :class="{
+                                            'text-success': !tiemposRestantes[ofe.id].includes('Caducada'),
+                                            'text-danger': tiemposRestantes[ofe.id].includes('Caducada')
+                                            }">
+                                            {{ tiemposRestantes[ofe.id] }}
+                                            </span>
+                                        </h6>
+                                        </div>
+                                        <div v-else>
+                                        <h6 class="text-danger">La oferta ya caducó</h6>
+                                        </div>
+                                        <h6>Categoría / Área: {{ ofe.categoria }}</h6>
+                                        <p class="text-dark">Descripcion: {{ ofe.descripcion }}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <p class="text-dark fs-5 fw-bold mb-0">Nombre de la Empresa: {{ ofe.Empresa }}</p>
+                                        <router-link :to="{ path: '/postularse/' + idus + '/' + ofe.id }"
+                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                            class="fa-solid fa-eye me-2 text-primary"></i> Ver Detalle</router-link>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                </form>
+                                <div v-if="ofertas.length === 0" class="text-center">
+                                <h3>No hay Ofertas publicadas</h3>
+                                </div>-->
+
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="bg-white p-4 rounded"v-if="this.opciongraduado"> 
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas de emprendimientos</h4>
+                        <p class="text-dark">Aquí encontrarás ofertas de estudiantes que tienen emprendimientos y desean que
+                        postules a ellas.</p><br>
+                        <form class="container-fluid row g-1 mt-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <div class="input-group-icon">
+                                            <select v-model="categoriaSeleccionada2" class="form-select form-voyage-select input-box text-dark"
+                                                id="inputPersonOne">
+                                                <option value="" selected>
+                                                    Categorías / Área
+                                                </option>
+                                                <option value="Administración y RRHH">Administración y RRHH</option>
+                                                <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                                <option value="Comercial">Comercial</option>
+                                                <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                                público
+                                                </option>
+                                                <option value="Educación y Docencia">Educación y Docencia</option>
+                                                <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                                <option value="Ingenierías">Ingenierías</option>
+                                                <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                                <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                                Comunicación y Diseño
+                                                </option>
+                                                <option value="Oficios">Oficios</option>
+                                                <option value="Producción y Operarios">Producción y Operarios</option>
+                                                <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                                Bioquímica</option>
+                                                <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                                <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                                <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                                <option value="Textil">Textil</option>
+                                                <option value="Ventas">Ventas</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="justify-content-center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div v-for="ofe2 in ofertasemprendFiltradas.slice(0, 10)" :key="ofe2.id"
+                                class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+
+                                    <div>
+                                        <div v-if="new Date(ofe2.fechaFinOferta) <= new Date()"
+                                        class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                                        Ofertas Caducada</div>
+                                        <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                    </div>
+                                    <div class="p-4 rounded-bottom">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-3">
+                                                <div class="text-center">
+
+                                                    <img v-if="ofe2.logo" :src="'data:image/jpeg;base64,' + ofe2.logo" width="100%" height="300"
+                                                        style="border-radius: 10px; object-fit: cover;" />
+                                                    <img v-else src="https://emprendedores.biz/wp-content/uploads/2023/08/QEE-2.png" width="100%"
+                                                        height="300" style="border-radius: 10px; object-fit: cover;" />
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12 col-lg-8">
+                                                <h4>{{ ofe2.titulo }}</h4>
+                                                <h6>Fecha de publicación: {{ new Date(ofe2.created_at).toLocaleDateString('es-ES') }}</h6>
+                                                <div v-if="new Date(ofe2.fechaFinOferta) > new Date() && tiemposRestantes2[ofe2.id]">
+                                                    <h6 class="text-success">
+                                                        {{ calcularDiasRestantes(ofe2.fechaFinOferta) }} - Tiempo restante:
+                                                        <span :class="{
+                                                        'text-success': !tiemposRestantes2[ofe2.id].includes('Caducada'),
+                                                        'text-danger': tiemposRestantes2[ofe2.id].includes('Caducada')
+                                                        }">
+                                                        {{ tiemposRestantes2[ofe2.id] }}
+                                                        </span>
+                                                    </h6>
+                                                </div>
+                                                <div v-else>
+                                                    <h6 class="text-danger">La oferta ya caducó</h6>
+                                                </div>
+                                                <h6>Categoría / Área: {{ ofe2.categoria }}</h6>
+                                                <p class="text-dark">Descripcion: {{ ofe2.descripcion }}</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">Nombre del Emprendimiento: {{ ofe2.Empresa }}</p>
+                                                </div>
+                                                <div class="text-center">
+                                                    <br><br><br>
+                                                    <a href="http://192.168.1.19/b_e" target="_blank"
+                                                        class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                        class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </form>
+                        <div v-if="ofertas_emprendi.length === 0" class="text-center">
+                            <h3>No hay Ofertas publicadas</h3>
+                        </div>
+                        <div v-else class="d-flex justify-content-center">
+                            <a href="http://192.168.1.19/b_e" target="_blank" class="btn btn-primary text-white"><i
+                                class="fa-solid fa-eye me-2 text-white"></i> Ver Todas las ofertas de
+                                emprendimientos en la Bolsa de Empleo de la UTLVTE</a>
+                        </div>
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
 
     </div>
@@ -3803,18 +4193,40 @@
 <script>
 import script2 from "@/store/custom.js";
 import API from '@/store/axios';
+import axios from 'axios';
 import { useRoute } from "vue-router";
 import store from "@/store";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/es';
 import QRCode from "qrcode";
 import { v4 as uuidv4 } from "uuid";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getMe } from '@/store/auth'; 
 import { mostraralertas2, enviarsolig, enviarsoliedit, confimar, enviarsoligqr, enviarsoligfoot } from '@/store/funciones';
+
+
+dayjs.extend(relativeTime);
+dayjs.extend(localizedFormat);
+dayjs.locale('es');
+
 export default {
     data() {
         return {
             // ruta base de tu PDF
+            url2553: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostofert`,
+            url2552: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostempre`,
+            ofertas: [],
+            opciongraduado: false,
+            ofertas_emprendi: [],
+            categoriaSeleccionada: '',
+            categoriaSeleccionada2: '',
+            currentPage: 1,
+            lastPage: 1,
+            tiemposRestantes: {},
+            tiemposRestantes2: {},
             pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
             // página inicial (se reemplaza al llamar al modal)
             pdfPage: 1,
@@ -3835,6 +4247,7 @@ export default {
             logueado:null,
             editingIndex2: null,
             descargando: false,
+            cargando: false,
             sigueestudiandouniversidad: false,
             mensajenuevo: false,
             estudioactualtitulosUniversitarios: [],
@@ -4256,9 +4669,22 @@ export default {
     mounted() {
         
         this.Logueados();
+        this.getOFertas().then(() => {
+            this.actualizarTiemposRestantes();
+            setInterval(this.actualizarTiemposRestantes, 1000); // Actualiza cada segundo
+        });
+        this.getOFertasEmpr().then(() => {
+            this.actualizarTiemposRestantes2();
+            setInterval(this.actualizarTiemposRestantes2, 1000); // Actualiza cada segundo
+        });
        
     },
     computed: {
+        // Obtiene solo los 10 primeros registros del historial ordenado
+        top10Historial() {
+            // .slice(0, 10) toma del índice 0 (inclusive) hasta el 10 (exclusive), es decir, los primeros 10 elementos.
+            return this.historialdescargas.slice(0, 10);
+        },
         contarpalabra() {
             return this.texto.split(/\s+/).filter(palabr => palabr.length > 0).length;
         },
@@ -4286,9 +4712,58 @@ export default {
             }
             return '';
         },
-         pdfSrc() {
+        pdfSrc() {
             return `${this.pdfUrl}#page=${this.pdfPage}`;
-        }
+        },
+        ofertasFiltradas() {
+            let ofertasFiltradas = this.ofertas;
+
+            // Filtro por categoría si se ha seleccionado alguna
+            if (this.categoriaSeleccionada !== '') {
+                ofertasFiltradas = ofertasFiltradas.filter(
+                oferta => oferta.categoria === this.categoriaSeleccionada
+                );
+            }
+
+            // Separar vigentes y caducadas
+            const ahora = new Date();
+
+            const vigentes = ofertasFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) > ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            const caducadas = ofertasFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) <= ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            // Unirlas: primero vigentes, luego caducadas
+            return [...vigentes, ...caducadas];
+        },
+    //
+        ofertasemprendFiltradas() {
+            let ofertasempFiltradas = this.ofertas_emprendi;
+
+            // Filtro por categoría si se ha seleccionado alguna
+            if (this.categoriaSeleccionada2 !== '') {
+                ofertasempFiltradas = ofertasempFiltradas.filter(
+                oferta => oferta.categoria === this.categoriaSeleccionada2
+                );
+            }
+
+            // Separar vigentes y caducadas
+            const ahora = new Date();
+
+            const vigentes = ofertasempFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) > ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            const caducadas = ofertasempFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) <= ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            // Unirlas: primero vigentes, luego caducadas
+            return [...vigentes, ...caducadas];
+        },
     },
     watch: {
         calcularDiasCurso(newVal) {
@@ -4508,6 +4983,89 @@ export default {
                 this.getValidar()
                 
             ])
+            if(usuario.role === "Estudiante Graduado"){
+                this.opciongraduado = true;
+            }
+            else{
+                this.opciongraduado = false;
+            }
+        },
+        async getOFertas() {
+            //this.cargando = true;
+            return axios.get(`${this.url2553}?all=true`, {
+                params: { user_id: this.idus }
+            }).then(res => {
+                this.ofertas = res.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }).finally(() => {
+                this.cargando = false;
+            });
+        },
+        async getOFertasEmpr() {
+            //this.cargando = true;
+            return axios.get(`${this.url2552}?all=true`, {
+                params: { CIInfPer: this.idus }
+            }).then(res => {
+                this.ofertas_emprendi = res.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }).finally(() => {
+                this.cargando = false;
+            });
+        },
+        calcularDiasRestantes(fechaFin) {
+            const hoy = new Date();
+            const fin = new Date(fechaFin);
+
+            // Limpiar hora para comparar solo fechas
+            hoy.setHours(0, 0, 0, 0);
+            fin.setHours(0, 0, 0, 0);
+
+            const diferenciaMs = fin - hoy;
+            const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+            if (diasRestantes === 0) return 'La oferta Caduca hoy';
+            if (diasRestantes < 0) return 'Caducada';
+            return `Faltan ${diasRestantes} día(s) para que la oferta caduque`;
+        },
+        actualizarTiemposRestantes() {
+        const ahora = new Date();
+
+            this.ofertas.forEach(ofe => {
+                const fin = new Date(ofe.fechaFinOferta);
+                const diferenciaMs = fin - ahora;
+
+                if (diferenciaMs <= 0) {
+                // Oferta caducada
+                    this.tiemposRestantes[ofe.id] = 'Caducada';
+                } else {
+                    const dias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+                    const horas = Math.floor((diferenciaMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+                    const segundos = Math.floor((diferenciaMs % (1000 * 60)) / 1000);
+
+                    this.tiemposRestantes[ofe.id] =
+                        `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+                    }
+            });
+        },
+        actualizarTiemposRestantes2() {
+            const ahora = new Date();
+
+            this.ofertas_emprendi.forEach(ofe2 => {
+                const fin = new Date(ofe2.fechaFinOferta);
+                const diferenciaMs = fin - ahora;
+
+                if (diferenciaMs <= 0) {
+                // Oferta caducada
+                this.tiemposRestantes2[ofe2.id] = 'Caducada';
+                } else {
+                const dias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferenciaMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferenciaMs % (1000 * 60)) / 1000);
+
+                this.tiemposRestantes2[ofe2.id] =
+                    `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+                }
+            });
         },
         perfil() {
             this.editus= false;
