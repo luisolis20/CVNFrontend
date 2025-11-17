@@ -113,7 +113,7 @@ export default {
           this.correoss = '';
           this.mensaje = '';
           window.setTimeout(function(){
-                window.location.href='/home'
+                window.location.href='cvn/home'
               },4000);
         })
         .catch(error => {
