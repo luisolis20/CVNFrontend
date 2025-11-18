@@ -4216,8 +4216,8 @@ export default {
     data() {
         return {
             // ruta base de tu PDF
-            url2553: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostofert`,
-            url2552: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostempre`,
+            url2553: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
+            url2552: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
             ofertas: [],
             opciongraduado: false,
             ofertas_emprendi: [],
@@ -4992,6 +4992,9 @@ export default {
         },
         async getOFertas() {
             //this.cargando = true;
+            const usuario = await getMe()
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
             return axios.get(`${this.url2553}?all=true`, {
                 params: { user_id: this.idus }
             }).then(res => {
@@ -5002,6 +5005,8 @@ export default {
         },
         async getOFertasEmpr() {
             //this.cargando = true;
+            const usuario = await getMe()
+            this.idus = usuario.CIInfPer;
             return axios.get(`${this.url2552}?all=true`, {
                 params: { CIInfPer: this.idus }
             }).then(res => {
