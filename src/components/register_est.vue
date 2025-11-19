@@ -836,14 +836,14 @@
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
                                                 <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
-                                                <p class="text-danger text-justify" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
+                                                <p class="text-dark text-justify" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
                                                 
                                                 Para añadirlo debes dar clic en Agregar Posgrado UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
                                                 <b>Nota: Al tener más de un título debes dar clic en Agregar Posgrado UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
                                                 
-                                                <p class="text-danger text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título de Posgrado.</p>
-                                                <p class="text-danger text-justify" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                <p class="text-dark text-justify" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
                                                 añadirlo</p>
                                                 <h5 v-if="this.modoeditionformacionposgrado">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
                                             </div>
@@ -4216,8 +4216,8 @@ export default {
     data() {
         return {
             // ruta base de tu PDF
-            url2553: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
-            url2552: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
+            url2553: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostofertp`,
+            url2552: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostemprep`,
             ofertas: [],
             opciongraduado: false,
             ofertas_emprendi: [],
@@ -9498,7 +9498,7 @@ export default {
 
             try {
                 const response = await API.get(`/cvn/v1/titulogPosgrados/${id}`);
-
+                console.log(response);
                 if (response.data.multiple) {
                     this.titulosEncontradosPosgrado = response.data.titulos;
                     this.tituloActualIndexPosgrado = 0;
@@ -9546,7 +9546,7 @@ export default {
 
                 this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria = 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas';
             }
-            //this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.tituloh || titulo.titulom || '';
+            
             this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion = titulo.fechaincorporacion || '';
             this.nuevoTituloUniversitarioUTLVTE.especialidad = titulo.NombCarr || '';
         },
@@ -9560,7 +9560,7 @@ export default {
 
                 this.nuevoTituloPosgradoUTLVTE.institucion_posgrado = 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas';
             }
-            //this.nuevoTituloUniversitario.titulo_universitario_obtenido = titulo.tituloh || titulo.titulom || '';
+            
             this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado = titulo.fechaincorporacion || '';
             this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado = titulo.NombCarr || '';
         },
