@@ -1,7 +1,8 @@
 <template>
   <!-- Spinner Start -->
   <div id="spinner"
-    class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+    class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+    style="z-index: 9999;">
     <div class="spinner-grow text-primary" role="status"></div>
   </div>
   <!-- Spinner End -->
@@ -204,7 +205,7 @@
               <!-- Formulario Start-->
               <div class="registration-form">
                 <!-- Formulario Login Start-->
-                <form id="login-form">
+                <form>
                   <div class="row">
                     <div class="col-md-12">
                       <fieldset>
@@ -216,15 +217,15 @@
                             El usuario y contraseña es la misma que usa en el SIAD.
                           </p>
                         </div>
-                        <input v-model="emaillo" id="emaillo" type="email" class="form-control" placeholder="Usuario"
+                        <input v-model="emaillo" type="email" class="form-control" placeholder="Usuario"
                           required />
                       </fieldset>
                     </div>
                     <div class="col-md-12">
                       <div class="input-group-icon">
-                        <input type="password" class="form-control" v-model="clave" id="clave" placeholder="Contraseña"
+                        <input type="password" class="form-control clave" v-model="clave2" placeholder="Contraseña"
                           required />
-                        <span toggle="#clave" class="fa fa-fw fa-eye field-icon toggle-password text-white"></span>
+                        <span toggle=".clave" class="fa fa-fw fa-eye field-icon toggle-password text-white"></span>
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -240,76 +241,20 @@
                       </h6>
                     </div>
                     &nbsp;&nbsp;
-                    <a class="text-center text-white" @click="openPdfModal(1)"><i class="fas fa-book-open"></i><b> Ver Manual de Usuario</b></a>
-                    
-                     &nbsp;&nbsp;
+                    <a class="text-center text-white" @click="openPdfModal(1)"><i class="fas fa-book-open"></i><b> Ver
+                        Manual de Usuario</b></a>
+
+                    &nbsp;&nbsp;
                     <div class="herose">
 
-                      <a href="https://www.youtube.com/watch?v=_5GJJpFVXkk" class="glightbox btn-watch-video2 text-center"><i class="fa-solid fa-circle-play"></i><span>Ver Tutorial</span></a>
+                      <a href="https://www.youtube.com/watch?v=_5GJJpFVXkk"
+                        class="glightbox btn-watch-video2 text-center"><i class="fa-solid fa-circle-play"></i><span>Ver
+                          Tutorial</span></a>
                     </div>
-                    
+
                   </div>
                 </form>
-                <!-- Formulario Login End-->
-                <!-- 
-                <form id="registration-form">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <fieldset>
-                        <div class="login-text">
-                          <p class="text-white">No Tienes cuenta? Regístrate Ahora!!.</p>
-                        </div>
-                        <input name="name" type="text" class="form-control" v-model="nombre" id="nombre"
-                          placeholder="Nombres Completos" required />
-                      </fieldset>
-                    </div>
-                    <div class="col-md-12">
-                      <fieldset>
-                        <input name="email" type="email" class="form-control" v-model="email" id="email" @input="onEmailInput"
-                          placeholder="Correo Institucional" required />
-                          <p v-if="correoError" class="text-danger">{{ correoError }}</p>
-                      </fieldset>
-                    </div>
-                    <div class="col-md-12">
-                    <div class="input-group-icon">
-                        <input type="password" class="form-control" v-model="claven" id="claven"
-                          @input="onPasswordInput"
-                          placeholder="Contraseña" required />
-                        <span toggle="#claven" class="fa fa-fw fa-eye field-icon toggle-password text-white"></span>
-                      </div>
-                      <p v-if="passwordTouched && passwordError" class="text-danger">{{ passwordError }}</p>
-                    </div>
-                    <div class="col-md-12" v-if="envio1">
-                      <div class="col-md-12">
-                        <p class="text-white">Para continuar necesitamos verificar tu correo. Da clic <a href="#registration-form" class="button" v-on:click="enviarCodigo">aquí</a></p>
-                      </div>
-                    </div>
-                    <div class="col-md-12" v-if="mostringreso">
-                     
-                        <p class="text-white">Hemos enviado un código de verificación a tu correo.</p>
-                        <input  type="text" class="form-control" v-model="codigov" id="codigov"
-                          placeholder="Ingresa el Código de verificación" required />
-                          <button type="submit" class="button" v-on:click="verificarCodigo">
-                          Verificar Código
-                        </button>
-                     
-                    </div>
-                    <div class="col-md-12" v-if="mostrarregister">
-                        
-                        <p class="text-white">Correo Verificado. Puedes continuar</p>
-                        
-                      
-                    </div>
-                    <div class="col-md-12">
-                      <fieldset>
-                        <button  type="submit" class="button" v-if="mostrarregister" v-on:click="guardar">
-                          Registrarse
-                        </button>
-                      </fieldset>
-                    </div>
-                  </div>
-                </form>
-                 -->
+                
               </div>
               <!-- formulario End-->
             </div>
@@ -651,17 +596,17 @@
                 <div class="row">
                   <div class="col-lg-6 col-12">
                     <input type="text" class="form-control text-dark" name="name"
-                      placeholder="Ingresa tus nombres y apellidos" v-model="apellidonombre" id="name">
+                      placeholder="Ingresa tus nombres y apellidos" v-model="apellidonombre">
                   </div>
 
                   <div class="col-lg-6 col-12">
                     <input type="email" @input="validateEmail" class="form-control text-dark" name="email"
-                      placeholder="Ingresa tu email" v-model="correoss" id="email">
+                      placeholder="Ingresa tu email" v-model="correoss">
                   </div>
                   <p v-if="correoErrornue" class="text-danger">Por favor, ingrese un correo válido</p>
 
                   <div class="col-12">
-                    <textarea name="message" rows="6" class="form-control text-dark" id="message" v-model="mensaje"
+                    <textarea name="message" rows="6" class="form-control text-dark" v-model="mensaje"
                       placeholder="Describe tu experiencia y que deseas que se mejore"></textarea>
                   </div>
 
@@ -685,28 +630,27 @@
     <i class="fa fa-arrow-up"></i>
   </a>
   <!-- Botón para Subir End -->
-   <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
-        ref="pdfModal">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
-                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <!-- Iframe con el PDF -->
-                    <object :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
-                        <p>
-                            Tu navegador no soporta PDFs embebidos.
-                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
-                                Ábrelo aquí
-                            </a>.
-                        </p>
-                    </object>
-                </div>
-            </div>
+  <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true" ref="pdfModal">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+          <button type="button" class="btn-close" @click="closePdfModal()"></button>
         </div>
+        <div class="modal-body p-0">
+          <!-- Iframe con el PDF -->
+          <object :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+            <p>
+              Tu navegador no soporta PDFs embebidos.
+              <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                Ábrelo aquí
+              </a>.
+            </p>
+          </object>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <!-- Importación Estilos Necesarios Start-->
@@ -786,14 +730,17 @@ export default defineComponent({
     //Método para ocultar y mostrar la clave del formulario Login
     $(".toggle-password").click(function () {
       $(this).toggleClass("fa-eye fa-eye-slash");
-      var input = $($(this).attr("toggle"));
+      // Ahora, asume que 'toggle' es un selector de clase (ej: .login-clave)
+      var selector = $(this).attr("toggle"); 
+      var input = $(selector); 
+
       if (input.attr("type") == "password") {
         input.attr("type", "text");
       } else {
         input.attr("type", "password");
       }
     });
-   
+
     //Método para mostrar y ocultar los Features al pasar el cursor
     $("section.features-post").hover(
       function () {

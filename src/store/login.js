@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       emaillo: "",
-      clave: "",
+      clave2: "",
       url2: `${__API_CVN__}/cvn/login`,
     };
   },
@@ -16,7 +16,7 @@ export default {
       try {
         var parametros = {
           CIInfPer: this.emaillo.trim(),
-          codigo_dactilar: this.clave.trim(),
+          codigo_dactilar: this.clave2.trim(),
         };
 
         const response = await enviarsolilogin('POST', parametros, this.url2, 'Logueado');

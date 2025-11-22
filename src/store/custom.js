@@ -16,14 +16,14 @@ export default {
     };
   },
   mounted() {
-    // Spinner
+    /* Spinner
     var spinner = function () {
       setTimeout(function () {
         if ($('#spinner').length > 0) {
           $('#spinner').removeClass('show');
         }
       }, 1);
-    };
+    };*/
     new WOW().init();
     // Fixed Navbar
     $(window).scroll(function () {
@@ -77,7 +77,7 @@ export default {
       $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
       return false;
     });
-    spinner(0);
+    //spinner(0);
     $(".color-mode").click(function () {
       $(".color-mode-icon").toggleClass("active");
       $("body").toggleClass("dark-mode");

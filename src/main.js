@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 //import 'bootstrap/dist/css/bootstrap.css'
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
-
+import $ from 'jquery';
 
 
 
@@ -29,7 +29,23 @@ import '@/assets/lib/aos/aos.css'
 
 createApp(App).use(store).use(router).mount('#app')
 import 'bootstrap/dist/js/bootstrap'
+// 🆕 Lógica del Spinner Global:
+router.beforeEach((to, from, next) => {
+    // Muestra el spinner (añade la clase 'show') al iniciar la navegación de una ruta
+    if ($('#spinner').length > 0) {
+        $('#spinner').addClass('show'); 
+    }
+    next();
+});
 
-import $ from 'jquery';
+router.afterEach(() => {
+    // Oculta el spinner (remueve la clase 'show') cuando la navegación ha terminado
+    setTimeout(() => {
+        if ($('#spinner').length > 0) {
+            $('#spinner').removeClass('show');
+        }
+    }, 300); // 💡 Damos un pequeño retraso para asegurar que la vista cargó
+});
+
 window.$ = $;
 window.jQuery = $;
