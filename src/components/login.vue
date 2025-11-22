@@ -1,10 +1,10 @@
 <template>
-  <!-- Spinner Start -->
+  <!-- Spinner Start 
   <div id="spinner"
     class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
     style="z-index: 9999;">
     <div class="spinner-grow text-primary" role="status"></div>
-  </div>
+  </div>-->
   <!-- Spinner End -->
 
   <!-- Inicio Start -->

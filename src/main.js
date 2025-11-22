@@ -25,27 +25,28 @@ import '@/assets/lib/glightbox/js/glightbox.min.js'
 import '@/assets/lib/swiper/swiper-bundle.min.js'
 import '@/assets/lib/glightbox/css/glightbox.min.css'
 import '@/assets/lib/aos/aos.css'
-
-
-createApp(App).use(store).use(router).mount('#app')
 import 'bootstrap/dist/js/bootstrap'
+window.$ = $;
+window.jQuery = $;
+
 // 🆕 Lógica del Spinner Global:
 router.beforeEach((to, from, next) => {
-    // Muestra el spinner (añade la clase 'show') al iniciar la navegación de una ruta
+    // Muestra el spinner (si existe, para evitar errores)
     if ($('#spinner').length > 0) {
         $('#spinner').addClass('show'); 
     }
-    next();
+    next(); 
 });
 
 router.afterEach(() => {
-    // Oculta el spinner (remueve la clase 'show') cuando la navegación ha terminado
+    // Oculta el spinner después de un breve retraso
     setTimeout(() => {
         if ($('#spinner').length > 0) {
             $('#spinner').removeClass('show');
         }
-    }, 300); // 💡 Damos un pequeño retraso para asegurar que la vista cargó
+    }, 50); 
 });
 
-window.$ = $;
-window.jQuery = $;
+createApp(App).use(store).use(router).mount('#app')
+
+// 🆕 Lógica del Spinner Global:

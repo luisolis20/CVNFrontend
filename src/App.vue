@@ -1,5 +1,10 @@
 <template>
   <!-- Menu y Topbar que se muestra por defecto al cargar la página. Start-->
+  <div id="spinner"
+    class="w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
+    style="z-index: 9999;">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
   <div class="container-fluid sticky-top px-0">
     <div class="container-fluid px-0">
       <div class="container-fluid px-0" v-if="showNavbar">
