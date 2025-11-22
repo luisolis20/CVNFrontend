@@ -1034,6 +1034,65 @@ div.idomm {
 .anima2 {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
+/* 1. CLASE PRINCIPAL para agrupar todo */
+.ofertas-empleo-graduado {
+    /* Opcional: Asegurar que el padding sea coherente en todos los dispositivos */
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* 2. OPTIMIZACIÓN DE CONTENEDORES - Mejora la legibilidad en pantallas pequeñas */
+/* Ajusta el padding para que no sea demasiado grande en móvil */
+.ofertas-empleo-graduado .container-fluid.py-5 {
+    padding-top: 2rem !important; /* Reducir el padding superior */
+    padding-bottom: 2rem !important; /* Reducir el padding inferior */
+}
+
+/* 3. ESTILOS PARA LAS TARJETAS DE OFERTAS (Bloques con borde) */
+/* Asegura que las tarjetas se vean bien, especialmente el margen y el padding. */
+.ofertas-empleo-graduado .border.border-primary.rounded {
+    /* En pantallas pequeñas, el margen se ajusta para que no se peguen mucho */
+    margin: 15px auto !important;
+    max-width: 95%; /* Que no ocupe todo el ancho en pantallas muy pequeñas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Sombra sutil para destacarlas */
+    transition: transform 0.2s; /* Efecto hover opcional */
+}
+
+.ofertas-empleo-graduado .border.border-primary.rounded:hover {
+    transform: translateY(-2px);
+}
+
+/* 4. OPTIMIZACIÓN DE IMÁGENES DENTRO DE LAS TARJETAS */
+/* En dispositivos móviles, la imagen debe ocupar el ancho completo del contenedor. */
+.ofertas-empleo-graduado .col-md-12.col-lg-3 .text-center img {
+    height: 200px !important; /* Altura más manejable en móvil */
+    width: 100% !important; /* Ocupa todo el ancho disponible */
+    margin-bottom: 15px; /* Espacio debajo de la imagen */
+}
+
+/* 5. DISEÑO FLEXIBLE PARA EL CONTENIDO DE LA OFERTA */
+/* Utiliza flexbox para que el título, descripción y botón se apilen en pantallas pequeñas */
+@media (max-width: 991.98px) { /* Para pantallas menores a 'lg' (Large) */
+    .ofertas-empleo-graduado .p-4.rounded-bottom .row > div {
+        /* Asegura que las columnas se apilen verticalmente en móvil */
+        margin-bottom: 20px;
+    }
+
+    .ofertas-empleo-graduado .d-flex.justify-content-between.flex-lg-wrap {
+        /* Fuerza a que el nombre de la empresa y el botón se apilen en móvil */
+        flex-direction: column;
+        align-items: center; /* Centrar elementos si es necesario */
+    }
+    
+    .ofertas-empleo-graduado .d-flex.justify-content-between.flex-lg-wrap .btn {
+        margin-top: 15px; /* Espacio entre el nombre de la empresa y el botón */
+    }
+
+    .ofertas-empleo-graduado .col-md-12.col-lg-8 {
+        /* Centrar el texto en móvil (opcional) */
+        text-align: center;
+    }
+}
 
 @keyframes up-down {
   0% {

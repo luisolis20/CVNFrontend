@@ -5,7 +5,7 @@
               <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
                   class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
               <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-                  class="text-white">example@utelvt.edu.ec </a></small>
+                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
             </div>
             <div class="top-link pe-2">
               <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
@@ -73,7 +73,7 @@
         <section class="mt-7 py-0 registro" v-if="this.us">
             <!--/.bg-holder-->
 
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 py-5 py-xl-5 py-xxl-7">
                         <h1 class="display-3 text-1000 fw-normal" v-if="this.esguardar">¡Ya estás a un paso de tener tu CVN!</h1>
@@ -161,7 +161,7 @@
                                         v-if="this.mostrardatospersonales">
                                         <form class="row g-4 mt-5">
                                             <h3>Datos personales</h3>
-                                            <p class="text-dark text-justify">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
+                                            <p class="text-dark text-justify descripcionmia">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
                                             debe dar clic en Siguiente apartado. 
                                             Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
                                             <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
@@ -353,10 +353,10 @@
                                         v-if="this.mostrardelaracionpersonal">
                                         <form class="row g-4 mt-5">
                                             <h3>Resumen libre del currículum</h3>
-                                            <p class="text-dark text-justify" v-if="this.modoedit7">En este apartado debes describir en 250 palabras tus intereses, 
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.modoedit7">En este apartado debes describir en 250 palabras tus intereses, 
                                             objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. 
                                             Incluye también tus metas a medio/largo plazo. Luego de que termines debes dar clic en el botón Guardar y Continuar</p>
-                                            <p class="text-dark text-justify" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
                                             objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Puedes modificar lo que anteriormente
                                             llenaste. Luego de que termines debes dar clic en el botón Actualizar y Continuar.</p>
                                             <!-- Descripción -->
@@ -397,7 +397,7 @@
                                         v-if="this.mostrarformacionacademica">
                                         <form class="row g-4 mt-5">
                                             <h3>Formación Académica </h3>
-                                            <p class="text-dark text-justify">En este apartado debes añadir tu formación académica, como: estudios de bachiller, universitarios o de posgrado.
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes añadir tu formación académica, como: estudios de bachiller, universitarios o de posgrado.
                                             Los datos de estudios de bachiller aparecen automáticamente. Cada que llenes los datos correspondientes te aparecerá un botón para añadir tu formación académica.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Estudios de bachiller culminados -->
@@ -426,12 +426,12 @@
                                                 <h5>Estudios de bachiller (<a href="#formacionacademicagaurdbachiller"> ver mis titulos de bachiller registrados )</a></h5>
                                                 
                                                 <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.tituloBachillerEditIndex }}</h5>
-                                                <p class="text-dark text-justify" v-if="this.modoedition">Para poder editar estos campos debe editarlos directamente en el SIAD</p>
-                                                <p class="text-dark text-justify" v-else="this.modoedition">Los datos de la institución, especialidad, título y fecha de graduación son los que usted llenó en la ficha socioeconómica (SIAD).
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoedition">Para poder editar estos campos debe editarlos directamente en el SIAD</p>
+                                                <p class="text-dark text-justify descripcionmia" v-else="this.modoedition">Los datos de la institución, especialidad, título y fecha de graduación son los que usted llenó en la ficha socioeconómica (SIAD).
                                                     Si los datos no le cargan puede volver a iniciar sesión nuevamente. Si el problema persiste ingrese a su página del <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
                                             </div>
                                             <!-- Titulo bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler">
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     
@@ -444,7 +444,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -457,7 +457,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -468,7 +468,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -530,7 +530,7 @@
                                                 </div>
                                             </div>
                                             <!-- Titulo Universitario -->
-                                            <div class="col-6" v-if="this.sigueestudiandouniversidad">
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
                                                 <label class="text-dark" for="">Título que Obtendrá</label>
                                                 <div class="input-group-icon">
                                                     
@@ -659,7 +659,7 @@
                                             </div>
                                             
                                             <!-- fecha de Graduacion -->
-                                            <div class="col-6" v-if="this.sigueestudiandouniversidad">
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
                                                 <label class="text-dark" for="">Fecha</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -678,18 +678,18 @@
                                             <!-- Estudios Universitarios -->
                                             <div class="col-12" v-if="this.univer">
                                                 <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
-                                                <p class="text-dark text-justify" v-if="this.mostrarFormularioTitulos">Si tienes uno o más títulos universitarios en nuestra institución el sistema lo detectará.
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.mostrarFormularioTitulos">Si tienes uno o más títulos universitarios en nuestra institución el sistema lo detectará.
                                                 Para añadirlo debes dar clic en Agregar Título Universitario UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título. Si eres egresado debes seleccionar que aún no terminaste
                                                 tus estudios universitarios ya que aún no tienes el título en la UTLVTE.
                                                 <b>Nota: Al tener más de un título debes dar clic en Agregar Título Universitario UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título Univeristario.</p>
-                                                <p class="text-dark text-justify" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                <p class="text-dark text-justify descripcionmia" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios que tiene en la institución. Si tiene otro título universitario en otra institución puedes
                                                 añadirlo</p>
                                                 <h5 v-if="this.modoeditionformacionuniversidad">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
                                             </div>
                                             <!-- Titulo Universitario -->
-                                            <div class="col-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -701,7 +701,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institución Universitaria -->
-                                            <div class="col-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -713,7 +713,7 @@
                                                 </div>
                                             </div>
                                             <!-- fecha de Graduacion -->
-                                            <div class="col-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -725,7 +725,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Universitario -->
-                                            <div class="col-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
                                                <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -764,7 +764,7 @@
                                             </div>
                                             <!-- nuevo  titulo universitario -->
                                             <!-- Titulo Universitario Nuevo-->
-                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -775,7 +775,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institución Universitaria -->
-                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -786,7 +786,7 @@
                                                 </div>
                                             </div>
                                             <!-- fecha de Graduacion -->
-                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -797,7 +797,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Universitario -->
-                                            <div class="col-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -836,19 +836,19 @@
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
                                                 <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
-                                                <p class="text-dark text-justify" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
                                                 
                                                 Para añadirlo debes dar clic en Agregar Posgrado UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
                                                 <b>Nota: Al tener más de un título debes dar clic en Agregar Posgrado UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
                                                 
-                                                <p class="text-dark text-justify" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Título de Posgrado.</p>
-                                                <p class="text-dark text-justify" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                <p class="text-dark text-justify descripcionmia" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
                                                 añadirlo</p>
                                                 <h5 v-if="this.modoeditionformacionposgrado">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
                                             </div>
                                             <!-- Titulos Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Título de posgrado</label>
                                                 <div class="input-group-icon">
                                                     
@@ -862,7 +862,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -875,7 +875,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion de Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -888,7 +888,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -902,7 +902,7 @@
                                             </div>
                                             <div v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
                                                <!-- Botón anterior título -->
-                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualPosgradoIndex > 0 && this.mostrarFormularioTitulosPosgrado"
+                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualIndexPosgrado > 0 && this.mostrarFormularioTitulosPosgrado"
                                                     class="text-center my-3">
                                                     <button class="btn1 btn-secondary1 mb-2" @click="mostrarTituloAnteriorPosgrado">
                                                         Ver título anterior
@@ -925,7 +925,7 @@
                                             </div>
                                             
                                             <!-- Titulos Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Título de posgrado</label>
                                                 <div class="input-group-icon">
                                                     
@@ -938,7 +938,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -950,7 +950,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion de Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -961,7 +961,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -1161,11 +1161,11 @@
                                         v-if="this.mostrarexperienciasprofesionales">
                                         <form class="row g-4 mt-5">
                                             <h3>Experiencias Profesionales</h3>
-                                            <p class="text-dark text-justify">En este apartado debes registrar tus experiencias en empresas y tus experiencias en prácticas pre-profesionales. Cada que 
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes registrar tus experiencias en empresas y tus experiencias en prácticas pre-profesionales. Cada que 
                                             llenes los datos correspondientes te aparecerá un botón para añadir tus experiencias profesionales.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- ¿Ha trabajado en alguna empresa/institución? -->
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(27)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(27)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciaempresa">
                                                 <label class="text-dark" for="">¿Ha trabajado en alguna empresa/institución?</label>
                                                 <div class="input-group-icon">
@@ -1186,10 +1186,10 @@
                                             <!-- Empresas Institución -->
                                             <div class="col-12" v-if="this.cargos">
                                                 <h5>Empresas (<a href="#experienciasprofesionalesempresa"> ver mis experiencias en empresas registradas )</a></h5>
-                                                <p class="text-danger text-justify"v-if="!this.modoeditionexperienciasempresa">Aquí debes registrar tus experiencias profesionales realizadas en alguna empresa o institución, 
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionexperienciasempresa">Aquí debes registrar tus experiencias profesionales realizadas en alguna empresa o institución, 
                                                 luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Empresa.</p>
-                                                <p class="text-danger text-justify" v-if="this.modoeditionexperienciasempresa">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionexperienciasempresa">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Empresa.</p>  
                                                 <h5 v-if="this.modoeditionexperienciasempresa">Modo edición activado: id: {{ this.cargosEmpresasEditIndex }}</h5>
                                             </div>
@@ -1310,9 +1310,9 @@
                                             <!-- Prácticas Preprofesionales -->
                                             <div class="col-12" v-if="this.practica">
                                                 <h5>Prácticas Preprofesionales (<a href="#experienciasprofesionalespracticas"> ver mis experiencias de prácticas pre-profeionales registradas )</a></h5>
-                                                <p class="text-danger text-justify"v-if="!this.modoeditionexperienciaspracticas">Aquí debes registrar tus prácticas pre-profeionales realizadas en alguna empresa o institución, luego de que llenes los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionexperienciaspracticas">Aquí debes registrar tus prácticas pre-profeionales realizadas en alguna empresa o institución, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Prácticas.</p>
-                                                <p class="text-danger text-justify" v-if="this.modoeditionexperienciaspracticas">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionexperienciaspracticas">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Prácticas.</p>  
                                                 <h5 v-if="this.modoeditionexperienciaspracticas">Modo Edición Activado: id: {{ this.cargosPasantiasEditIndex }}</h5>
                                             </div>
@@ -1510,12 +1510,12 @@
                                         v-if="this.mostrarinvestigacionpublicaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Publicaciones</h3>
-                                            <p class="text-dark text-justify"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Publicaciones.</p>
-                                                <p class="text-danger text-justify" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-danger text-justify descripcionmia" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Publicaciones.</p> 
                                             <h5 v-if="this.modoeditionpublicaciones">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(34)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(34)">aquí</a> para ver la guia de este punto</p>
                                             <!-- ¿Ha realizado algúna publicación? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Ha realizado alguna publicación?</label>
@@ -1584,7 +1584,7 @@
                                                 </p>
                                             </div>
                                             <!-- ponencias -->
-                                            <div class="col-6" v-if="this.investiga">
+                                            <div class="col-12 col-md-6" v-if="this.investiga">
                                                 <label class="text-dark" for="">¿Su publicacion ha estado en ponencias, congresos o eventos científicos?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="nuevaspublicaciones.congreso_evento"
@@ -1637,7 +1637,7 @@
                                                     </div>
                                             </div>
                                             <!-- Acciones -->
-                                            <div class="col-4" v-if="this.investiga">
+                                            <div class="col-12 col-md-6" v-if="this.investiga">
                                                 <!-- El botón se muestra si la URL es válida (incluyendo si está vacía) -->
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones" v-if="isValidURL">
                                                     {{ publicacionesEditIndex !== null ? 'Editar Publicaciones' : 'Agregar Publicaciones' }}
@@ -1716,12 +1716,12 @@
                                         v-if="this.mostraridiomas">
                                         <form class="row g-4 mt-5">
                                             <h3>Idiomas</h3>
-                                            <p class="text-dark text-justify"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Idioma.</p>
-                                                <p class="text-danger text-justify" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-danger text-justify descripcionmia" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Idioma.</p>
                                             <h5 v-if="this.modoeditionidiomas">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(36)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(36)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Idiomas -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Idiomas</label>
@@ -1916,11 +1916,11 @@
                                                     </div>
                                             </div>
                                             <!-- El mensaje de error solo se muestra si HAY contenido y es INVÁLIDO -->
-                                                <p v-if="!isValidURL && nuevosidiomas.certificado && certificadoselected === 'Si'" class="text-danger">
+                                            <p v-if="!isValidURL && nuevosidiomas.certificado && certificadoselected === 'Si'" class="text-danger">
                                                     Por favor, ingrese un URL válido que comience con http:// o https://.
-                                                </p>
+                                            </p>
                                             <!-- Acciones -->
-                                            <div class="col-4">
+                                            <div class="col-12 col-md-6">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarIdiomas" v-if="isValidURL">
                                                     {{ idiomasEditIndex !== null ? 'Editar Idioma' : 'Agregar Idioma' }}
                                                 </button>
@@ -2005,12 +2005,12 @@
                                         v-if="this.mostrarsw">
                                         <form class="row g-4 mt-5">
                                             <h3>Habilidades </h3>
-                                            <p class="text-dark text-justify">En este apartado debes registrar tus habilidades, ya sean: comunicativas, creativas
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes registrar tus habilidades, ya sean: comunicativas, creativas
                                             de liderazgo, infromáticas, algún oficio/subactividades u otro tipo de hablidad que poseas. Cada que 
                                             llenes los datos correspondientes te aparecerá un botón para añadir tus habilidades.
                                             La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Habilidades comunicativas-->
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(40)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(40)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadescomunicativas">
                                                 <label class="text-dark" for="">¿Posee habilidades comunicativas?</label>
                                                 <div class="input-group-icon">
@@ -2032,9 +2032,9 @@
                                             <!-- Habilidades Comunicativas-->
                                             <div class="col-12" v-if="this.comunicativas">
                                                 <h5>Habilidades Comunicativas (<a href="#tablahabilidadescomunicativas"> ver mis habilidades comunicativas registradas )</a></h5>
-                                                <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadescomuni">Aquí debes seleccionar tu habilidad comunicativa que poseas, luego de que llenes los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadescomuni">Aquí debes seleccionar tu habilidad comunicativa que poseas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadescomuni">Esta es tu habilidad comunicativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadescomuni">Esta es tu habilidad comunicativa llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadescomuni">Modo edición activado: id: {{ this.habilidades_comunicativas_EditIndex }}</h5>
                                             </div>
@@ -2103,9 +2103,9 @@
                                             <!-- Selección Habilidades Creativa-->
                                             <div class="col-12" v-if="this.creativas">
                                                 <h5>Habilidades creativas (<a href="#tablahabilidadescreativas"> ver mis habilidades creativas registradas )</a></h5>
-                                                <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadescreative">Aquí debes seleccionar tu habilidad creativa que poseas, luego de que llenes los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadescreative">Aquí debes seleccionar tu habilidad creativa que poseas, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadescreative">Esta es tu habilidad creativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadescreative">Esta es tu habilidad creativa llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadescreative">Modo edición activado: id: {{ this.habilidades_creativas_EditIndex }}</h5>
                                             </div>
@@ -2172,9 +2172,9 @@
                                             <!-- Selección Habilidades Liderazgo-->
                                             <div class="col-12" v-if="this.liderazgo">
                                                 <h5>Habilidades de liderazgo (<a href="#tablahabilidadesliderazgo"> ver mis habilidades de liderazgo registradas )</a></h5>
-                                                 <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadeslidel">Aquí debes seleccionar tu habilidad de liderazgo que posees, luego de que llenes los campos correspondientes debes
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadeslidel">Aquí debes seleccionar tu habilidad de liderazgo que posees, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadeslidel">Esta es tu habilidad de liderazgo llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadeslidel">Esta es tu habilidad de liderazgo llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadeslidel">Modo edición activado: id: {{ this.habilidades_liderazgo_EditIndex }}</h5>
                                             </div>
@@ -2244,9 +2244,9 @@
                                             <!-- Selección Habilidades Informaticas-->
                                             <div class="col-12" v-if="this.informaticas_cv">
                                                 <h5>Habilidades informaticas (<a href="#tablahabilidadesinformaticas"> ver mis habilidades informáticas registradas )</a></h5>
-                                                 <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadesinformaticas">Aquí debes seleccionar tu habilidad informática que posees, luego de que llenes los campos correspondientes debes
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesinformaticas">Aquí debes seleccionar tu habilidad informática que posees, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadesinformaticas">Esta es tu habilidad informática llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesinformaticas">Esta es tu habilidad informática llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadesinformaticas">Modo edición activado: id: {{ this.habilidades_informaticas_cv_EditIndex }}</h5>
                                             </div>
@@ -2293,7 +2293,7 @@
                                                 </button>
                                             </div>
                                              <!-- Habilidades Oficios-->
-                                             <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesoficoo">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesoficoo">
                                                 <label class="text-dark" for="">¿Realiza algún oficio/subactividad?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_oficios"
@@ -2313,9 +2313,9 @@
                                             <!-- Selección Habilidades Oficios-->
                                             <div class="col-12" v-if="this.oficios">
                                                 <h5>Oficio/Subactividad (<a href="#tablahabilidadesoficios"> ver mis oficios/subactividades registradas )</a></h5>
-                                                 <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadesoficio">Aquí debes seleccionar otro oficio/sub-actividad que realices, luego de que llenes los campos correspondientes debes
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesoficio">Aquí debes seleccionar otro oficio/sub-actividad que realices, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadesoficio">Esta es tu oficio/sub-actividad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesoficio">Esta es tu oficio/sub-actividad llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadesoficio">Modo edición activado: id: {{ this.oficios_subactividades_EditIndex }}</h5>
                                             </div>
@@ -2395,9 +2395,9 @@
                                             <!-- Selección Habilidades Otros-->
                                             <div class="col-12" v-if="this.otro_habili">
                                                 <h5>Habilidades Interpersonales (<a href="#tablahabilidadesotros"> ver mis otras habilidades registradas )</a></h5>
-                                                 <p class="text-dark text-justify"v-if="!this.modoeditionhabilidadesotro">Aquí debes registrar tu otra hablidad que posees, luego de que llenes los campos correspondientes debes
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesotro">Aquí debes registrar tu otra hablidad que posees, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Habilidad.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionhabilidadesotro">Esta es tu otra hablidad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesotro">Esta es tu otra hablidad llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Habilidad.</p>
                                                 <h5 v-if="this.modoeditionhabilidadesotro">Modo edición activado: id: {{ this.otro_habilidades_EditIndex }}</h5>
                                             </div>
@@ -2655,13 +2655,13 @@
                                         v-if="this.mostrarcapacitaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Cursos</h3>
-                                             <p class="text-dark text-justify"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Curso.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditioncursos">Esta es tu información de cursos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.modoeditioncursos">Esta es tu información de cursos llenado anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Curso.</p>
                                             <!-- edicion -->
                                             <h5 v-if="this.modoeditioncursos">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
-                                             <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(52)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(52)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-12 col-xl-12">
                                                 <label class="text-dark" for="">Nombre de la institución</label>
                                                 <div class="input-group-icon">
@@ -2833,7 +2833,7 @@
                                                             class="far fa-envelope-open"> </i></span>
                                                 </div>
                                             </div>
-                                             <div class="col-sm-6 col-md-6 col-xl-5">
+                                            <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Posee un certificado del curso?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="certificadoscursoelected"
@@ -2868,7 +2868,7 @@
                                                     </div>
                                             </div>
                                             <!-- Acciones de Agregar Editar -->
-                                            <div class="col-4">
+                                            <div class="col-12 col-md-6">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursosCapacitaciones" v-if="isValidURL">
                                                     {{ curso_capacitacionEditIndex !== null ? 'Editar Curso' : 'Agregar Curso' }}
                                                 </button>
@@ -2876,8 +2876,8 @@
                                                     El botón aparecerá si el link/enlace del certificado es válido.
                                                 </h6>
                                             </div>
-                                           <!-- Cusos Capacitaciones Registradas -->
-                                           <div class="text-center rounded p-4">
+                                            <!-- Cusos Capacitaciones Registradas -->
+                                            <div class="text-center rounded p-4">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Cursos Registrados </h5>
                                                 </div>
@@ -2953,12 +2953,12 @@
                                         v-if="this.mostrardatosrelevantes">
                                         <form class="row g-4 mt-5">
                                             <h3>Logros Obtenidos</h3>
-                                             <p class="text-dark text-justify"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
-                                                dar clic en Agregar Logros.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                             <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Logros. No sobrepases las 250 palabras en las descripciones.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Logros.</p>
                                             <h5 v-if="this.modoeditionlogros">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(54)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(54)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Tipo de logro obtenido</label>
                                                 <div class="input-group-icon">
@@ -2979,9 +2979,9 @@
                                             </div>
                                            
                                             <div class="col-12">
-                                                <label class="text-dark" for="">Descripción del logro</label>
+                                                <label class="text-dark" for="">Descripción del logro selecionado</label>
                                                 <div class="input-group-icon">
-                                                    <textarea class="form-control1 input-box form-voyage-control1"
+                                                    <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="descripcion_logros" v-model="nuevosotros_datos_personales.descripcion_logros"
                                                         type="text"
                                                         placeholder="Describa el logro obtenido que seleccionó" /><span
@@ -2991,15 +2991,16 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="input-group-icon">
-                                                    <textarea class="form-control1 input-box form-voyage-control1"
+                                                    <label class="text-dark" for="">Descripción del fracaso selecionado</label>
+                                                    <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="descripcion_fracasos" v-model="nuevosotros_datos_personales.descripcion_fracasos"
                                                         type="text"
-                                                        placeholder="Describa los fracasos que tuvo" /><span
+                                                        placeholder="Describa los fracasos que tuvo en base al logro selecionado" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-boxes"> </i></span>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-12 col-md-6">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarOtrosDatosRelevantes">
                                                     {{ otros_datos_personalesEditIndex !== null ? 'Editar Logro' : 'Agregar Logro' }}
                                                 </button>
@@ -3066,14 +3067,14 @@
                                         v-if="this.mostrarinformacioncontacto">
                                         <form class="row g-4 mt-5">
                                             <h3>Referencias Personales</h3>
-                                            <p class="text-dark text-justify"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
                                                 dar clic en Agregar Referencia.</p>
-                                                <p class="text-dark text-justify" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
                                                 dar clic en Editar Referencia.</p>
                                             <h5 v-if="this.modoeditionreferencias">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
-                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(57)">aquí</a> para ver la guia de este punto</p>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(57)">aquí</a> para ver la guia de este punto</p>
                                             <label for="" class="text-dark">Agregue Máximo 3 Referencias Personales</label>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Nombres</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -3084,7 +3085,7 @@
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Apellidos</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -3095,7 +3096,7 @@
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Correo electrónico</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  @input="validateEmail"
@@ -3107,7 +3108,7 @@
                                                 <p v-if="correoErrornue" class="text-danger">Por favor, ingrese un correo válido</p>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Número de Teléfono</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  inputmode="numeric" pattern="[0-9]{10}" maxlength="10"
@@ -3118,7 +3119,7 @@
                                                 </div>
                                                 
                                             </div>
-                                            <div class="col-4" v-if="!correoErrornue">
+                                            <div class="col-12 col-md-6" v-if="!correoErrornue">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarInformacionContacto">
                                                     {{ informacion_contactoEditIndex !== null ? 'Editar Referencia' : 'Agregar Referencia' }}
                                                 </button>
@@ -3201,7 +3202,9 @@
                             <div class="about-text">
                                 <small class="small-text">Le damos la bienvenida a su página de <span class="mobile-block">
                                         portafolio</span></small>
+                                    <br><br>
                                 <h1 class="animated animated-text">
+                                    
                                     <span class="mr-6">Mi nombre es </span>
                                     <div class="animated-info col-lg-12">
                                         <span class="animated-item">{{ this.ApellInfPer }} {{ this.ApellMatInfPer }} {{ this.NombInfPer }}</span>
@@ -3793,14 +3796,14 @@
                         <h4 class="mb-0 display-4">Ofertas Más Recientes</h4>
                         <p class="text-dark">Aquí encontrarás las ofertas más recientes con las empresas que la UTLVTE tiene
                         convenios</p><br>
-                        <form class="container-fluid row g-1 mt-1">
+                        <form class="row g-5 mt-5">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-12 col-md-6">
                                     <div class="col-sm-6 col-md-6 col-xl-5">
                                         <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
 
                                     </div>
-                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                    <div class="col-sm-12 col-md-6 col-xl-12">
                                         <div class="input-group-icon">
                                             <select v-model="categoriaSeleccionada" class="form-select form-voyage-select input-box text-dark"
                                                 id="inputPersonOne">
@@ -3837,10 +3840,10 @@
 
                             </div>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <div class=" justify-content-center">
+                            <div class="row justify-content-center">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <div v-for="ofe in ofertasFiltradas.slice(0, 10)" :key="ofe.id"
-                                class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+                                class="border border-primary rounded position-relative mx-4 my-3">
 
                                 <div>
                                     <div v-if="new Date(ofe.fechaFinOferta) <= new Date()"
@@ -3850,20 +3853,21 @@
                                     style="top: 10px; right: 10px;">Ofertas Recientes</div>
 
                                 </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                                 <div class="p-4 rounded-bottom">
                                     <div class="row">
-                                    <div class="col-md-12 col-lg-3">
+                                    <div class="col-md-12 col-lg-4">
                                         <div class="text-center">
 
                                         <img v-if="ofe.imagen" :src="'data:image/jpeg;base64,' + ofe.imagen" width="100%" height="300"
-                                            style="border-radius: 10px; object-fit: cover;" />
+                                            style="border-radius: 5px; object-fit: cover;" />
                                         <img v-else src="https://emprendedores.biz/wp-content/uploads/2023/08/QEE-2.png" width="100%"
                                             height="300" style="border-radius: 10px; object-fit: cover;" />
                                         </div>
 
 
                                     </div>
-                                    <div class="col-md-12 col-lg-8">
+                                    <div class="col-12 col-md-8">
                                         <h4>{{ ofe.titulo }}</h4>
                                         <h6>Fecha de publicación: {{ new Date(ofe.created_at).toLocaleDateString('es-ES') }}</h6>
                                         <div v-if="new Date(ofe.fechaFinOferta) > new Date() && tiemposRestantes[ofe.id]">
@@ -3881,7 +3885,7 @@
                                             <h6 class="text-danger">La oferta ya caducó</h6>
                                         </div>
                                         <h6>Categoría / Área: {{ ofe.categoria }}</h6>
-                                        <p class="text-dark">Descripcion: {{ ofe.descripcion }}</p>
+                                        <p class="text-dark descripcionmia">{{ ofe.descripcion }}</p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
                                             <p class="text-dark fs-5 fw-bold mb-0">Nombre de la Empresa: {{ ofe.Empresa }}</p>
                                         </div>
@@ -4216,8 +4220,8 @@ export default {
     data() {
         return {
             // ruta base de tu PDF
-            url2553: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostofertp`,
-            url2552: `http://backendbolsaempleo.test/api/b_e/vin/consultanopostemprep`,
+            url2553: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
+            url2552: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
             ofertas: [],
             opciongraduado: false,
             ofertas_emprendi: [],
@@ -7859,7 +7863,7 @@ export default {
             try {
                 const response = await API.get(this.url2);
                 //console.log(this.estudioactualmentefacultadcarreras);
-                console.log(response);
+                //console.log(response);
                     
                 
                 if (response.data.data && response.data.data.length > 0) {
@@ -8844,7 +8848,7 @@ export default {
                     const formacionAcademicaData = [
                         { label: 'Título de Bachiller:', key: 'titulo_bachiller_obtenido' },
                         { label: 'Institución Educativa:', key: 'institucion_bachiller' },
-                        { label: 'Año de Graduación:', key: 'fecha_graduacion_bachiller' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion_bachiller' },
                         { label: 'Especialidad:', key: 'especialidad_bachiller' }
                     ];
 
@@ -8868,7 +8872,7 @@ export default {
                     const formacionAcademicaData2 = [
                         { label: 'Título Universitario:', key: 'titulo_universitario_obtenido' },
                         { label: 'Institución Educativa:', key: 'institucion_universitaria' },
-                        { label: 'Año de Graduación:', key: 'fecha_graduacion' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion' },
                         { label: 'Especialidad:', key: 'especialidad' }
                     ];
 
@@ -8908,7 +8912,7 @@ export default {
                     const formacionAcademicaData3 = [
                         { label: 'Título Posgrado:', key: 'titulo_posgrado_obtenido' },
                         { label: 'Institución Educativa:', key: 'institucion_posgrado' },
-                        { label: 'Año de Graduación:', key: 'fecha_graduacion_posgrado' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion_posgrado' },
                         { label: 'Especialidad:', key: 'especialidad_posgrado' }
                     ];
 
@@ -9498,7 +9502,7 @@ export default {
 
             try {
                 const response = await API.get(`/cvn/v1/titulogPosgrados/${id}`);
-                console.log(response);
+                //console.log(response);
                 if (response.data.multiple) {
                     this.titulosEncontradosPosgrado = response.data.titulos;
                     this.tituloActualIndexPosgrado = 0;
@@ -9519,8 +9523,8 @@ export default {
                     
                    
                 }
-                this.mostrarFormularioTitulosPosgrado = false;
-                 this.mostrarnormal = true;
+                //this.mostrarFormularioTitulosPosgrado = false;
+                 //this.mostrarnormal = true;
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     // No tiene títulos registrados
