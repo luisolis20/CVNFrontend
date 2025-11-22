@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 //import 'bootstrap/dist/css/bootstrap.css'
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
-import $ from 'jquery';
+
 
 
 
@@ -26,8 +26,7 @@ import '@/assets/lib/swiper/swiper-bundle.min.js'
 import '@/assets/lib/glightbox/css/glightbox.min.css'
 import '@/assets/lib/aos/aos.css'
 import 'bootstrap/dist/js/bootstrap'
-window.$ = $;
-window.jQuery = $;
+
 
 // 🆕 Lógica del Spinner Global:
 router.beforeEach((to, from, next) => {
@@ -48,5 +47,7 @@ router.afterEach(() => {
 });
 
 createApp(App).use(store).use(router).mount('#app')
-
+import $ from 'jquery';
+window.$ = $;
+window.jQuery = $;
 // 🆕 Lógica del Spinner Global:

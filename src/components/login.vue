@@ -217,15 +217,17 @@
                             El usuario y contraseña es la misma que usa en el SIAD.
                           </p>
                         </div>
-                        <input v-model="emaillo" type="email" class="form-control" placeholder="Usuario"
-                          required />
+                        <input v-model="emaillo" type="email" class="form-control" placeholder="Usuario" required />
                       </fieldset>
                     </div>
                     <div class="col-md-12">
                       <div class="input-group-icon">
-                        <input type="password" class="form-control clave" v-model="clave2" placeholder="Contraseña"
-                          required />
-                        <span toggle=".clave" class="fa fa-fw fa-eye field-icon toggle-password text-white"></span>
+                        <input :type="passwordFieldType" class="form-control clave" v-model="clave2"
+                          placeholder="Contraseña" required />
+
+                        <span @click="togglePasswordVisibility" class="fa fa-fw field-icon toggle-password text-white"
+                          :class="{ 'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text' }">
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -254,7 +256,7 @@
 
                   </div>
                 </form>
-                
+
               </div>
               <!-- formulario End-->
             </div>
@@ -685,6 +687,13 @@ export default defineComponent({
   mixins: [script3, script4, script2],//Habilitar el uso del archivos js
   //name: "Autoplay",
   //name: 'VegetableCarousel',
+  data() {
+    return {
+      // ... (tus otras variables de datos) ...
+      // 🆕 NUEVOS DATOS PARA EL TOGGLE DE CONTRASEÑA
+      passwordFieldType: 'password',
+    };
+  },
   components: {
     Carousel,
     Slide,
@@ -704,6 +713,13 @@ export default defineComponent({
       const date = new Date();
       const options = { month: 'long', day: 'numeric', year: 'numeric' };
       return date.toLocaleDateString('es-ES', options);
+    },
+    togglePasswordVisibility() {
+      if (this.passwordFieldType === 'password') {
+        this.passwordFieldType = 'text';
+      } else {
+        this.passwordFieldType = 'password';
+      }
     },
     //Método para activar los menu link
     toggleContent() {
@@ -727,19 +743,19 @@ export default defineComponent({
     const glightbox = GLightbox({
       selector: '.glightbox'
     });
-    //Método para ocultar y mostrar la clave del formulario Login
+    /*
     $(".toggle-password").click(function () {
       $(this).toggleClass("fa-eye fa-eye-slash");
       // Ahora, asume que 'toggle' es un selector de clase (ej: .login-clave)
-      var selector = $(this).attr("toggle"); 
-      var input = $(selector); 
+      var selector = $(this).attr("toggle");
+      var input = $(selector);
 
       if (input.attr("type") == "password") {
         input.attr("type", "text");
       } else {
         input.attr("type", "password");
       }
-    });
+    });*/
 
     //Método para mostrar y ocultar los Features al pasar el cursor
     $("section.features-post").hover(
