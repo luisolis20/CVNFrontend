@@ -1432,7 +1432,7 @@
                                                                 <td class="text-dark">{{ cargempre.logros_resultados_empresa }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionEmpresa(cargempre.idexperiencias_profesionales)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                   &nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionEmpresa(cargempre.idexperiencias_profesionales)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -4665,12 +4665,16 @@ export default {
             modoeditioncursos: false,
             modoeditionlogros: false,
             modoeditionreferencias: false,
-            
+            cvnactualizado: false,
+            cvnacturequerido: false,
+            urlcheck: "/cvn/v1/checkUpdateStatus",
+            datacheckcvn: [],
 
 
         };
     },
     mounted() {
+        
         
         this.Logueados();
         this.getOFertas().then(() => {
@@ -4954,6 +4958,24 @@ export default {
             const modal = bootstrap.Modal.getInstance(modalEl);
             modal.hide();
         },
+        async CheckCVN(){
+            const response = await API.get(`${this.urlcheck}/${this.idus}`);
+            console.log(response);
+            this.datacheckcvn = response.data;
+            if(response.data.status === 'update_required'){
+                mostraralertas2(response.data.message,'warning');
+                this.us = true;
+                this.cvnacturequerido = true;
+                this.registro = false;
+                this.esguardar = false;
+                this.eseditar = true;
+            }else{
+                this.us = false;
+                this.cvnacturequerido = false;
+                this.registro = true;
+                this.eseditar = false;
+            }
+        },
         async Logueados() {
            //this.loadStylesBasedOnRole();
             const usuario = await getMe();
@@ -4984,6 +5006,7 @@ export default {
                 this.getCursosCapacitaciones(),
                 this.getDatosRelevantes(),
                 this.getInformacionContacto(),
+                this.CheckCVN(),
                 this.getValidar()
                 
             ])
@@ -5120,10 +5143,15 @@ export default {
             this.modoedit8= false;
         },
         salir() {
-            this.editus= false;
-            this.eseditar=false;
-            this.registro= true;
-            this.us= false;
+            if(this.cvnacturequerido == false){
+
+                this.editus= false;
+                this.eseditar=false;
+                this.registro= true;
+                this.us= false;
+            }else{
+                mostraralertas2('No puedes salir de la página actualmente hasta que actualice sus datos','warning');
+            }
         },
         activarTab(tab) {
             this.activeTab = tab;
@@ -10219,12 +10247,16 @@ export default {
             //mostraralertas2('Referencias Actualizadas','success');
              
             if(this.texto !="" && this.titulosBachiller.length > 0 && this.informacion_contactoarray.length > 0 || this.estudioactualtitulosUniversitarios.length > 0 || this.titulosUniversitarios.length > 0 ){
+                if(this.datacheckcvn.status === 'updated'){
+                    mostraralertas2('Sus Perfil se ha Actualizado Con Exito', 'success');
+                    this.us = false;
+                    this.registro = true;
+                    this.editus= false;
+                    this.eseditar= false;
 
-                mostraralertas2('Sus Perfil se ha Actualizado Con Exito', 'success');
-                this.us = false;
-                this.registro = true;
-                this.editus= false;
-                this.eseditar= false;
+                }else{
+                    mostraralertas2('Tiene que actualizar los datos de su cvn', 'warning');
+                }
             }else{
                 mostraralertas2('Para finalizar debe por lo menos haber llenado la Declaracion libre del curriculum, Formacion Académica y agregar una Referencia Personal', 'warning');
             }
