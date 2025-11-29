@@ -3891,7 +3891,7 @@
                                         </div>
                                         <div class="text-center">
                                             <br><br><br>
-                                            <a href="http://192.168.1.19/b_e" target="_blank"
+                                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank"
                                                 class="btn border border-secondary rounded-pill px-3 text-primary"><i
                                                 class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
                                         </div>
@@ -3907,7 +3907,7 @@
                             <h3>No hay Ofertas publicadas</h3>
                         </div>
                         <div v-else class="d-flex justify-content-center">
-                            <a href="http://192.168.1.19/b_e" target="_blank" class="btn btn-primary text-white"><i
+                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank" class="btn btn-primary text-white"><i
                                 class="fa-solid fa-eye me-2 text-white"></i> Ver todas las ofertas en la Bolsa de Empleo de la UTLVTE</a>
                         </div>
                         <br><br>
@@ -4131,7 +4131,7 @@
                                                 </div>
                                                 <div class="text-center">
                                                     <br><br><br>
-                                                    <a href="http://192.168.1.19/b_e" target="_blank"
+                                                    <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank"
                                                         class="btn border border-secondary rounded-pill px-3 text-primary"><i
                                                         class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
                                                 </div>
@@ -4148,7 +4148,7 @@
                             <h3>No hay Ofertas publicadas</h3>
                         </div>
                         <div v-else class="d-flex justify-content-center">
-                            <a href="http://192.168.1.19/b_e" target="_blank" class="btn btn-primary text-white"><i
+                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank" class="btn btn-primary text-white"><i
                                 class="fa-solid fa-eye me-2 text-white"></i> Ver Todas las ofertas de
                                 emprendimientos en la Bolsa de Empleo de la UTLVTE</a>
                         </div>
@@ -4220,8 +4220,8 @@ export default {
     data() {
         return {
             // ruta base de tu PDF
-            url2553: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
-            url2552: `http://192.168.1.19/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
+            url2553: `http://vinculacionconlasociedad.utelvt.edu.ec/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
+            url2552: `http://vinculacionconlasociedad.utelvt.edu.ec/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
             ofertas: [],
             opciongraduado: false,
             ofertas_emprendi: [],
@@ -8557,7 +8557,7 @@ export default {
 
 
             // 🔗 URL de validación
-            const urlVerificacion = `http://192.168.1.19/cvn/validacion_cvn`;
+            const urlVerificacion = `http://vinculacionconlasociedad.utelvt.edu.ec/cvn/validacion_cvn`;
              // === Preparar formato de nombre completo ===
             const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
            
