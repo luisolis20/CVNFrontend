@@ -50,7 +50,7 @@ export async function enviarsolilogin(method, parametros, url, mensaje) {
           mailPer: response.data.mailPer,
           token_type: response.data.token_type,
         };
-      } else if (response.data.Rol === "Docente") {
+      } else if (response.data.Rol === "D" || response.data.Rol === "A" || response.data.Rol === "T") {
         store.commit("setRol_CVN", response.data.Rol);
         store.commit("setemail_CVN", response.data.mailPer);
         store.commit("setid_CVN", response.data.CIInfPer);

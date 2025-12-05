@@ -20,7 +20,7 @@ export default {
         };
 
         const response = await enviarsolilogin('POST', parametros, this.url2, 'Logueado');
-
+        //console.log("Respuesta del login:", response);
         if (response.error) {
           mostraralertas(response.mensaje, 'warning');
         } else if (response) {
@@ -44,8 +44,16 @@ export default {
             mostraralertas('LE DAMOS LA BIENVENIDA ESTUDIANTE GRADUADO ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/user/' + response.CIInfPer);
           }
-          else if (role === 'Docente') {
+          else if (role === 'A') {
+            mostraralertas('LE DAMOS LA BIENVENIDA ADMINISTRATIVO ' + (response.ApellInfPer || ''), 'success');
+            this.$router.push('/userdocente/' + response.CIInfPer);
+          }
+          else if (role === 'D') {
             mostraralertas('LE DAMOS LA BIENVENIDA DOCENTE ' + (response.ApellInfPer || ''), 'success');
+            this.$router.push('/userdocente/' + response.CIInfPer);
+          }
+          else if (role === 'T') {
+            mostraralertas('LE DAMOS LA BIENVENIDA TRABAJADOR ' + (response.ApellInfPer || ''), 'success');
             this.$router.push('/userdocente/' + response.CIInfPer);
           }
         }

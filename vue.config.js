@@ -30,8 +30,8 @@ module.exports = defineConfig({
       new webpack.DefinePlugin({
         __API_CVN__: JSON.stringify(
           process.env.NODE_ENV === "production"
-            ? "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api"
-            : "http://vinculacionconlasociedad.utelvt.edu.ec/cvubackendv2/api"
+            ? "http://cvubackendv2.test/api"
+            : "http://cvubackendv2.test/api"
         ),
       }),
     ],

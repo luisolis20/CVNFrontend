@@ -1,40 +1,37 @@
 <template>
-  <!-- TopBar Star-->
-  <div class="container-fluid topbar bg-primary d-none d-lg-block">
-    <div class="d-flex justify-content-between">
-      <div class="top-info ps-2">
-        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
-            class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
-        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
-            class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
-      </div>
-      <div class="top-link pe-2">
-        <a href="#" class="text-white"><small class="text-white mx-2">Facebook</small>/</a>
-        <a href="#" class="text-white"><small class="text-white mx-2">Instagram</small>/</a>
-        <a href="#" class="text-white"><small class="text-white ms-2">Twitter</small></a>
-      </div>
+    <div class="container-fluid topbar bg-primary d-none d-lg-block sticky-top">
+        <div class="d-flex justify-content-between">
+            <div class="top-info ps-2">
+              <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#"
+                  class="text-white">Bienestar Universiversitario, Nuevos Horizontes, Esmeraldas, Ecuador</a></small>
+              <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#"
+                  class="text-white">bienestaruniversitario@utelvt.edu.ec </a></small>
+            </div>
+            <div class="top-link pe-2">
+              <a href="https://whatsapp.com/channel/0029VakylN1BfxnyuIBDjw1J" target="_blank" class="text-white"><small class="text-white mx-2">WhatsApp</small>/</a>
+              <a href="https://www.instagram.com/bienestar_utlvte/" target="_blank" class="text-white"><small class="text-white mx-2">Instagram</small>/</a>
+              <a href="https://www.youtube.com/@DIALACADEMICOUTLVTE" target="_blank" class="text-white"><small class="text-white ms-2">YouTube</small></a>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- TopBar End-->
-  <!-- MENU -->
-  <nav class="navbar navbar-expand-sm navbar-light d-lg-block">
+    <!-- MENU -->
+    <nav class="navbar navbar-expand-sm navbar-light d-lg-block sticky-top">
         <div class="container-fluid">
             <a href="" v-if="this.us">
                 <img class="imagen" src="@/assets/images/logos.png" alt="" v-on:click="perfil" />
             </a>
             <div v-if="this.registro">
                 <a class="navbar-brand usuario" type="button"
-                    v-if="mostrarOpciones2" v-on:click="perfil"><i class="uil uil-user"></i>Actualizar Mi Currículum </a>
+                    v-if="showNavbaruserdocente" v-on:click="perfil"><i class="uil uil-user"></i>Actualizar Mi Currículum </a>
             </div>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler py-2 px-3" v-on:click="toggleNavbarCollapse" ref="navbarToggler"
+                aria-expanded="false" aria-controls="navbarCollapse">
+                <span class="fa fa-bars text-primary"></span>
+            
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse py-3" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item" v-if="this.registro">
                         <a href="#sobremi" class="nav-link About"><span data-hover="Sobre mi">Sobre mi</span></a>
@@ -49,12 +46,15 @@
                     <li class="nav-item" v-if="this.registro">
                         <a href="#Idiomas" class="nav-link Projects"><span data-hover="Idiomas">Idiomas</span></a>
                     </li>
+                    <li class="nav-item" v-if="this.registro">
+                        <a @click="openPdfModal(61)" class="nav-link Projects"><span data-hover="Ver Guía de Esta página">Ver Guía de Esta página</span></a>
+                    </li>
                     
                     <li class="nav-item" >
                         <a href="#" class="nav-link Contact" v-on:click="cerrarsesion"><span data-hover="Cerrar Sesión">Cerrar Sesión</span></a>
                     </li>
                     <li class="nav-item" v-if="this.eseditar">
-                        <a href="#" class="nav-link Contact" v-on:click="salir"><span data-hover="Salir del Perfil">Salir del Perfil</span></a>
+                        <a href="#" class="nav-link Contact" v-on:click="salir"><span data-hover="Salir de Actualizar Curriculum">Salir de Actualizar Curriculum</span></a>
                     </li>
                 </ul>
 
@@ -68,86 +68,86 @@
             </div>
         </div>
     </nav>
-  
-  <div class="container-fluid py-5" v-if="this.us">
-    <section class="mt-7 py-0">
+    <div class="container-fluid registro">
+        <!-- <section> begin ============================-->
+        <section class="mt-7 py-0 registro" v-if="this.us">
             <!--/.bg-holder-->
 
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 py-5 py-xl-5 py-xxl-7">
-                        <h1 class="display-3 text-1000 fw-bold titulobach" v-if="this.esguardar">¡Ya estás a un paso de tener tu CVN!</h1>
-                        <h1 class="display-3 text-1000 fw-bold titulobach" v-if="this.eseditar">Actualiza tus datos</h1>
-                        <h1 class="display-3 subtt fw-bold titulobach">¡Complete su perfil!</h1>
+                        <h1 class="display-3 text-1000 fw-normal" v-if="this.esguardar">¡Ya estás a un paso de tener tu CVN!</h1>
+                        <h1 class="display-3 text-1000 fw-normal" v-if="this.eseditar">Actualiza tus datos</h1>
+                        <h1 class="display-3 subtt fw-bold">¡Completa tu perfil!</h1>
                         <div class="pt-5 ">
                             <nav>
                                 <div class="nav1 nav-tabs1 voyage-tabs" id="nav-tab" role="tablist">
                                     <!-- Datos personales -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'datos' }"
-                                        id="nav-datos-tab" data-bs-toggle="tab" data-bs-target="#nav-datos"
+                                        id="nav-datos-tab" 
                                         type="button" role="tab" aria-controls="nav-datos" aria-selected="true"
                                         v-if="this.mostrardatospersonales" title="Datos personales" @click="activarTab('datos')">
                                         <i class="far fa-address-book"></i>
                                     </button>
                                     <!-- Declaracion Personal -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'personal' }"
-                                        id="nav-declaracion-tab" data-bs-toggle="tab" data-bs-target="#nav-declaracion"
+                                        id="nav-declaracion-tab" 
                                         type="button" role="tab" aria-controls="nav-declaracion" aria-selected="false"
                                         v-if="this.mostrardelaracionpersonal" title="Resumen libre del currículum" @click="activarTab('personal')">
                                         <i class="fas fa-bullseye"></i>
                                     </button>
                                     <!-- Formacion Academica -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'formacion' }"
-                                        id="nav-formacion-tab" data-bs-toggle="tab" data-bs-target="#nav-formacion"
+                                        id="nav-formacion-tab" 
                                         type="button" role="tab" aria-controls="nav-formacion" aria-selected="false"
                                         v-if="this.mostrarformacionacademica" title="Formación Académica"  @click="activarTab('formacion')">
                                         <i class="fas fa-graduation-cap"></i>
                                     </button>
                                     <!-- Experiencia Profesional -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'experiencia' }"
-                                        id="nav-experiencia-tab" data-bs-toggle="tab" data-bs-target="#nav-experiencia"
+                                        id="nav-experiencia-tab" 
                                         type="button" role="tab" aria-controls="nav-experiencia" aria-selected="false"
                                         v-if="this.mostrarexperienciasprofesionales" title="Experiencia Profesional"  @click="activarTab('experiencia')">
                                         <i class="fas fa-chart-line"></i>
                                     </button>
                                     <!-- Investigacion y Publicaciones -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'investigacion' }"
-                                        id="nav-investiga-tab" data-bs-toggle="tab" data-bs-target="#nav-investiga"
+                                        id="nav-investiga-tab" 
                                         type="button" role="tab" aria-controls="nav-investiga" aria-selected="false"
                                         v-if="this.mostrarinvestigacionpublicaciones"  title="Investigación y Publicaciones" @click="activarTab('investigacion')">
                                         <i class="fas fa-glasses"></i>
                                     </button>
                                     <!-- Idiomas -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'idioma' }"
-                                        id="nav-idioma-tab" data-bs-toggle="tab" data-bs-target="#nav-idioma"
+                                        id="nav-idioma-tab" 
                                         type="button" role="tab" aria-controls="nav-idioma" aria-selected="false"
                                         v-if="this.mostraridiomas" title="Idiomas"  @click="activarTab('idioma')">
                                         <i class="fas fa-language"></i>
                                     </button>
                                     <!-- Habilidades -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'habilidades' }"
-                                        id="nav-habilidades-tab" data-bs-toggle="tab" data-bs-target="#nav-habilidades"
+                                        id="nav-habilidades-tab" 
                                         type="button" role="tab" aria-controls="nav-habilidades" aria-selected="false"
                                         v-if="this.mostrarsw" title="Habilidades" @click="activarTab('habilidades')">
                                         <i class="fas fa-laptop"></i>
                                     </button>
                                     <!-- Cursos o Capacitaciones -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'capacitaciones' }"
-                                        id="nav-capacitaciones-tab" data-bs-toggle="tab" data-bs-target="#nav-capacitaciones"
+                                        id="nav-capacitaciones-tab" 
                                         type="button" role="tab" aria-controls="nav-capacitaciones" aria-selected="false"
                                         v-if="this.mostrarcapacitaciones" title="Cursos o Capacitaciones" @click="activarTab('capacitaciones')">
                                         <i class="fas fa-bezier-curve"></i>
                                     </button>
                                     <!-- Otros datos Relevantes -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'relevantes' }"
-                                        id="nav-relevante-tab" data-bs-toggle="tab" data-bs-target="#nav-relevante"
+                                        id="nav-relevante-tab" 
                                         type="button" role="tab" aria-controls="nav-relevante" aria-selected="false"
                                         v-if="this.mostrardatosrelevantes" title="Otros Datos Relevantes" @click="activarTab('relevantes')">
                                         <i class="fas fa-splotch"></i>
                                     </button>
                                     <!-- Informacion de Contacto -->
                                     <button class="nav-link1" :class="{ active: this.activeTab === 'contacto' }"
-                                        id="nav-contacto-tab" data-bs-toggle="tab" data-bs-target="#nav-contacto"
+                                        id="nav-contacto-tab" 
                                         type="button" role="tab" aria-controls="nav-contacto" aria-selected="false"
                                         v-if="this.mostrarinformacioncontacto" title="Información de Contacto" @click="activarTab('contacto')">
                                         <i class="fas fa-user-tie"></i>
@@ -160,8 +160,13 @@
                                         id="nav-datos" role="tabpanel" aria-labelledby="nav-datos-tab"
                                         v-if="this.mostrardatospersonales">
                                         <form class="row g-4 mt-5">
-                                            <h3 class="titulobach">Datos personales</h3>
-                                            <p class="text-danger text-justify">Señor(a) docente o personal administrativo. Los datos personales cargados aquí son los que usted llenó en el sistema SIAD. Si su información no carga pruebe iniciando sesión nuevamente o ingrese al sistema <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
+                                            <h3>Datos personales</h3>
+                                            <p class="text-dark text-justify descripcionmia">Los datos personales cargados aquí son los que usted llenó en el sistema SIAD, luego que verifique sus datos
+                                            debe dar clic en Siguiente apartado. 
+                                            Si su información no carga pruebe iniciando sesión nuevamente. Si el problema persiste ingrese al sistema 
+                                            <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
+                                            <p><b>Nota: Solo podrás añadir una foto, los demás datos no puedes editarlos aquí.</b></p>    
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(12)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Apellido Paterno -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Apellido paterno</label>
@@ -248,7 +253,7 @@
                                                 <label class="text-dark" for="">Sexo</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="CIInfPer" v-model="this.GeneroPer"
+                                                        id="GeneroPer" v-model="this.GeneroPer"
                                                         type="telf"
                                                         placeholder="Ingrese su sexo" disabled/><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
@@ -297,8 +302,7 @@
                                                 </div>
                                                 
                                             </div>
-                                            
-                                             <!-- Ciudad  -->
+                                            <!-- Ciudad  -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Ciudad</label>
                                                 <div class="input-group-icon">
@@ -312,27 +316,54 @@
                                                 </div>
                                                 
                                             </div>
-                                             <!-- Foto -->
+                                            <!-- Area  -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5">
+                                                <label class="text-dark" for="">Área de desempeño de funciones</label>
+                                                <div class="input-group-icon">
+                                                    <label class="form-label visually-hidden"
+                                                        for="inputAddress2"></label>
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="areainfdoc" v-model="this.areainfdoc"
+                                                        type="name" placeholder="Ingrese su ciudad" disabled/><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="far fa-envelope-open"> </i></span>
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- CArgo  -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5">
+                                                <label class="text-dark" for="">Cargo</label>
+                                                <div class="input-group-icon">
+                                                    <label class="form-label visually-hidden"
+                                                        for="inputAddress2"></label>
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="cargoinfdoc" v-model="this.cargoinfdoc"
+                                                        type="name" placeholder="Ingrese su ciudad" disabled/><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="far fa-envelope-open"> </i></span>
+                                                </div>
+                                                
+                                            </div>
+                                             <!-- Foto-->
                                             <div class="col-sm-6 col-md-6 col-xl-10">
                                                 <div class="input-group-icon">
                                                     <div class="text-center">
-                                                        <img v-if="this.imagen" height="150px" width="150px" :src="this.imagen"
+                                                        <img v-if="previewFoto" :src="previewFoto" width="200" height="400"
+                                                            id="fotoimg" class="img-fluid" alt="" />
+                                                        <img v-else-if="fotografia" :src="'data:image/png;base64,' + fotografia" width="200" height="400"
                                                             id="fotoimg" class="img-fluid" alt="" />
                                                         <img v-else style="height: 120px"
                                                             src="@/assets/images/userlogo.png"
                                                             id="fotoimg" class="img-thumbnail" alt="" />
-                                                        <div class="input-group mb-1 xl-10">
-                                                            <input v-on:change="cargarfoto" id="inputFoto" type="file"
-                                                                accept="image/png, image/jpeg, image/gif, image/jpg"
-                                                                class="form-control1" disabled/>
-                                                        </div>
+                                                        <input ref="fileFoto" @change="cargarfoto" type="file" accept="image/jpeg, image/jpg" class="form-control text-dark mt-2">
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
                                              <!-- Acciones -->
                                             <div class="col-12 col-xl-10 col-lg-12 d-grid mt-6" v-if="this.boton1">
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.modoedit"
-                                                    @click="guardarDatosPersonales">
+                                                    @click="editarDatosPersonales">
                                                     Siguiente Apartado
                                                 </button>
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.isEditing"
@@ -344,18 +375,26 @@
                                         </form>
                                     </div>
                                     <!-- Declaracion Personal -->
+
                                     <div class="tab-pane fade" :class="{ 'show active': this.activeTab === 'personal' }"
                                         id="nav-declaracion" role="tabpanel" aria-labelledby="nav-declaracion-tab"
                                         v-if="this.mostrardelaracionpersonal">
                                         <form class="row g-4 mt-5">
                                             <h3>Resumen libre del currículum</h3>
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.modoedit7">En este apartado debes describir en 250 palabras tus intereses, 
+                                            objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. 
+                                            Incluye también tus metas a medio/largo plazo. Luego de que termines debes dar clic en el botón Guardar y Continuar</p>
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.isEditing7">Esta es tu descrpción libre registrada, la cual contiene tus intereses, 
+                                            objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Puedes modificar lo que anteriormente
+                                            llenaste. Luego de que termines debes dar clic en el botón Actualizar y Continuar.</p>
                                             <!-- Descripción -->
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(13)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-12">
                                                 <label class="text-dark" for="">Descripción</label>
                                                 <div class="input-group-icon">
                                                     <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="texto" v-model="this.texto" type="text"  @input="limitepalabras"
-                                                        placeholder="Describe en 250 palabras tus intereses, objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Incluye también tus metas a medio/largo plazo." /><span
+                                                        placeholder="Describe en 250 palabras tus intereses, objetivos, aspectos personales, peculiaridades, pasatiempos u otras características importantes. Incluye también tus metas a medio/largo plazo." required/><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="far fa-envelope-open"> </i></span>
                                                 </div>
@@ -385,9 +424,15 @@
                                         role="tabpanel" aria-labelledby="nav-formacion-tab"
                                         v-if="this.mostrarformacionacademica">
                                         <form class="row g-4 mt-5">
-                                            <h3>Formación Académica</h3>
+                                            <h3>Formación Académica </h3>
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes añadir tu formación académica, como: estudios de bachiller, universitarios o de posgrado.
+                                            Los datos de estudios de bachiller aparecen automáticamente. Cada que llenes los datos correspondientes te aparecerá un botón para añadir tu formación académica.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Estudios de bachiller culminados -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12" v-if="this.sidatos">
+                                           
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(15)">aquí</a> para ver la guia de este punto</p>
+                                            
+                                            <div class="col-sm-12 col-md-6 col-xl-12" v-if="this.sidatos" id="regresarestudiosbachiller">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios de bachiller?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.estudios_bachiller_culminados"
@@ -406,14 +451,17 @@
                                             </div>
                                             <!-- Estudios BACHILLER -->
                                             <div class="col-12" v-if="this.bachiler">
-                                                <h5>Estudios de bachiller</h5>
-                                                <p class="text-danger text-justify" v-if="this.modoedition">Los datos de la institución, especialidad, título y fecha de graduación son los que usted llenó en la ficha socioeconómica (SIAD).
-                                                 Si los datos no le cargan puede volver a iniciar sesión nuevamente. Si el problema persiste ingrese a su página del <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
+                                                <h5>Estudios de bachiller (<a href="#formacionacademicagaurdbachiller"> ver mis titulos de bachiller registrados )</a></h5>
+                                                
                                                 <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.tituloBachillerEditIndex }}</h5>
-                                                <p class="text-danger text-justify" v-if="this.modoedition">Para poder editar estos campos debe editarlos directamente en el SIAD</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoedition">Para poder editar estos campos debe editarlos directamente en el SIAD</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="!this.mostrarFormularioTitulosBachiller">¡Valla!, parece que el sistema no ha encontrado títulos de bachiller registrados en nuestra institución, te va a tocar 
+                                                registrarlo manualmente</p>
+                                                <p class="text-dark text-justify descripcionmia" v-else="this.modoedition">Los datos de la institución, especialidad, título y fecha de graduación son los que usted llenó en la ficha socioeconómica (SIAD).
+                                                    Si los datos no le cargan puede volver a iniciar sesión nuevamente. Si el problema persiste ingrese a su página del <a href="http://sistemas.utelvt.edu.ec/socioeconomica/login.aspx" target="_blank"> SIAD </a>y verfique su información</p>
                                             </div>
                                             <!-- Titulo bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     
@@ -426,7 +474,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -439,7 +487,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -450,7 +498,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad bachiller -->
-                                            <div class="col-6" v-if="this.bachiler">
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -462,91 +510,398 @@
                                                 </div>
                                             </div>
                                             <!-- Accion bachiller -->
-                                            <div class="col-12 text-center" v-if="this.bachiler">
+                                            <div class="col-12 text-center" v-if="this.bachiler && this.mostrarFormularioTitulosBachiller">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloBachiller">
                                                     {{ tituloBachillerEditIndex !== null ? 'Editar título bachiller' : 'Agregar título bachiller' }}
                                                 </button>
                                             </div>
-                                             <!-- Estudios universitarios culminados -->
-                                             <div class="col-sm-12 col-md-6 col-xl-12">
-                                                <label class="text-dark" for="">¿Ha culminado sus estudios universitarios?</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudios_universitarios_culminados"
-                                                        v-on:change="Titulouni"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione si/no
-                                                        </option>
-                                                        <option value="Si">Si</option>
-                                                        <option value="No">No</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-book-open"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Estudios Universitarios -->
-                                            <div class="col-12" v-if="this.univer">
-                                                <h5>Estudios Universitarios</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
-                                            </div>
-                                            <!-- Titulo Universitario -->
-                                            <div class="col-6" v-if="this.univer">
+                                            <!-- Titulo bachiller -->
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && !this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Título</label>
                                                 <div class="input-group-icon">
                                                     
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="titulo_universitario_obtenido"
-                                                        v-model="nuevoTituloUniversitario.titulo_universitario_obtenido" type="text"
-                                                        placeholder="Ingrese el título universitario obtenido" /><span
+                                                        id="titulo_bachiller_obtenido"
+                                                        v-model="nuevoTituloBachiller.titulo_bachiller_obtenido" type="text"
+                                                        placeholder="Ingrese el título de bachiller obtenido" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-user-graduate"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- Institución Universitaria -->
-                                            <div class="col-6" v-if="this.univer">
+                                            <!-- Institucion bachiller -->
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && !this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="institucion_universitaria"
-                                                        v-model="nuevoTituloUniversitario.institucion_universitaria" type="text"
-                                                        placeholder="Ingrese la institución universitaria" /><span
+                                                        id="institucion_bachiller"
+                                                        v-model="nuevoTituloBachiller.institucion_bachiller" type="text"
+                                                        placeholder="Ingrese la institución de donde obtuvo su título de bachiller" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-building"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- fecha de Graduacion -->
-                                            <div class="col-6" v-if="this.univer">
+                                            <!-- Fecha de graduacion -->
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && !this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="fecha_graduacion" v-model="nuevoTituloUniversitario.fecha_graduacion"
+                                                        id="fecha_graduacion_bachiller" v-model="nuevoTituloBachiller.fecha_graduacion_bachiller"
                                                         type="date" :max="currentDate" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-calendar"></i></span>
                                                 </div>
                                             </div>
-                                            <!-- Especialidad Universitario -->
-                                            <div class="col-6" v-if="this.univer">
+                                            <!-- Especialidad bachiller -->
+                                            <div class="col-12 col-md-6" v-if="this.bachiler && !this.mostrarFormularioTitulosBachiller">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="especialidad" v-model="nuevoTituloUniversitario.especialidad" type="text"
-                                                        placeholder="Ingrese la especialidad del título universitario" /><span
+                                                        id="especialidad_bachiller" v-model="nuevoTituloBachiller.especialidad_bachiller" type="text"
+                                                        placeholder="Ingrese la especialidad del título de bachiller" disabled/><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-shapes"> </i></span>
                                                 </div>
                                             </div>
+                                            <!-- Accion bachiller -->
+                                            <div class="col-12 text-center" v-if="this.bachiler && !this.mostrarFormularioTitulosBachiller">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloBachiller">
+                                                    {{ tituloBachillerEditIndex !== null ? 'Editar título bachiller' : 'Agregar título bachiller' }}
+                                                </button>
+                                            </div>
+                                            <!-- Estudios universitarios culminados -->
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="registrouniversitario">
+                                                <label class="text-dark" for="">¿Ha culminado sus estudios universitarios?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudios_universitarios_culminados"
+                                                            @change="Titulouni"
+                                                            class="form-select1 form-voyage-select input-box">
+                                                    <option value="" disabled selected>Seleccione si/no</option>
+                                                    <option value="Si">Si</option>
+                                                    <option value="No">No</option>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-book-open"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Estudio Actual -->
+                                            <!-- Estudios Universitarios -->
+                                            <div class="col-12 py-3" v-if="this.mensajenuevo">
+                                                <label class="text-danger" for="">Usted ya ha especificado que estudia actualmente. Para volverlo a especificar diríjase a la tabla "Estado Actual de Estudio Universitario" que se encuentra más abajo y elimine lo que añadió con anterioridad.</label>
+                                            </div>
+                                            <div class="col-12 py-3" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Si no ha terminado sus estudios universitarios significa que sigue estudiando, seleccione su facultad y el nombre de su carrera.
+                                                Luego de clic en Agregar Título.</label>
+                                            </div>
+                                            <!-- Facultad -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Facultad</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.facultades_universidad" v-on:change="EstudioacctualCarg"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la facultad a la que pertenece
+                                                        </option>
+                                                        <option value="FACI">FACI</option>
+                                                        <option value="FACAE">FACAE</option>
+                                                        <option value="FACPED">FACPED</option>
+                                                        <option value="FACSOS">FACSOS</option>
+                                                        <option value="FACAP">FACAP</option>
+                                                        <option value="SEDE">SEDE</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Titulo Universitario -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Título que Obtendrá</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="carrera_universidad"
+                                                        v-model="this.estudionuevoTituloUniversitario.titulo_carrera_universidad" type="text"
+                                                        placeholder="Su título saldrá dependiendo de la facultad" disabled/><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-user-graduate"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACI -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_faci">
+                                                <label class="text-dark" for="">Carreras de FACI</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Tecnologías de la Información">Tecnologías de la Información</option>
+                                                        <option value="Química">Química</option>
+                                                        <option value="Electricidad">Electricidad</option>
+                                                        <option value="Mecánica">Mecánica</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACAE -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facae">
+                                                <label class="text-dark" for="">Carreras de FACAE</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Administración de Empresas">Administración de Empresas</option>
+                                                        <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
+                                                        <option value="Comercio">Comercio</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACPED -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facped">
+                                                <label class="text-dark" for="">Carreras de FACPED</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Educación Inicial">Educación Inicial</option>
+                                                        <option value="Educación Básica">Educación Básica</option>
+                                                        <option value="Pedagogía de la Actividad Física y del Deporte">Pedagogía de la Actividad Física y del Deporte</option>
+                                                        <option value="Pedagogía de la Lengua y Literatura">Pedagogía de la Lengua y Literatura</option>
+                                                        <option value="Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas">Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas</option>
+                                                        <option value="Pedagogía de las Ciencias Experimentales de la Química y Biología">Pedagogía de las Ciencias Experimentales de la Química y Biología</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACSOS -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facsos">
+                                                <label class="text-dark" for="">Carreras de FACSOS</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Turismo">Turismo</option>
+                                                        <option value="Sociología">Sociología</option>
+                                                        <option value="Trabajo Social">Trabajo Social</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera FACAP -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facap">
+                                                <label class="text-dark" for="">Carreras de FACAP</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Zootecnia">Zootecnia</option>
+                                                        <option value="Agronomía">Agronomía</option>
+                                                        <option value="Forestal">Forestal</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Carrera SEDE -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_sede">
+                                                <label class="text-dark" for="">Carreras de SEDE</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la carrera a la que pertenece
+                                                        </option>
+                                                        <option value="Adm. de Empresas">Adm. de Empresas</option>
+                                                        <option value="Cont. y Auditoría">Cont. y Auditoría</option>
+                                                        <option value="TICS">TICS</option>
+                                                        
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-print"> </i></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- fecha de Graduacion -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Fecha</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="fecha_graduacion" v-model="this.estudionuevoTituloUniversitario.fechaestudioactual"
+                                                        type="date" :max="currentDate" disabled/><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                           <!-- Acciones Universitario -->
+                                           <div class="col-12 text-center" v-if="this.sigueestudiandouniversidad">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloUniversitario2">
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                            <!-- Estudios Universitarios -->
+                                            <div class="col-12" v-if="this.univer">
+                                                <h5>Estudios Universitarios (<a href="#formacionacademicagaurd"> ver mis titulos universitarios registrados )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.mostrarFormularioTitulos">Si tienes uno o más títulos universitarios en nuestra institución el sistema lo detectará.
+                                                Para añadirlo debes dar clic en Agregar Título Universitario UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título. Si eres egresado debes seleccionar que aún no terminaste
+                                                tus estudios universitarios ya que aún no tienes el título en la UTLVTE.
+                                                <b>Nota: Al tener más de un título debes dar clic en Agregar Título Universitario UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionformacionuniversidad">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Título Univeristario.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="!this.mostrarFormularioTitulos">Usted ya ha guardado sus títulos universitarios que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                añadirlo</p>
+                                                <h5 v-if="this.modoeditionformacionuniversidad">Modo Edición Activado: id: {{ this.tituloUniversitarioEditIndex }}</h5>
+                                            </div>
+                                            <!-- Titulo Universitario -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Título</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido"
+                                                        type="text"
+                                                        placeholder="Ingrese el título universitario obtenido"
+                                                        :disabled="this.titulosBloqueados" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Institución Universitaria -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Institución</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.institucion_universitaria"
+                                                        type="text"
+                                                        placeholder="Ingrese la institución universitaria"
+                                                        :disabled="titulosBloqueados" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- fecha de Graduacion -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Fecha de graduación</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.fecha_graduacion"
+                                                        type="date"
+                                                        :max="currentDate"
+                                                        :disabled="titulosBloqueados" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Especialidad Universitario -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && this.mostrarFormularioTitulos">
+                                               <label class="text-dark" for="">Especialidad</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitarioUTLVTE.especialidad"
+                                                        type="text"
+                                                        placeholder="Ingrese la especialidad del título"
+                                                        :disabled="titulosBloqueados" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-shapes"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Botón siguiente título -->
+                                            <div v-if="this.univer && this.mostrarFormularioTitulos">
+                                               <!-- Botón anterior título -->
+                                                <div v-if="titulosEncontrados.length > 1 && tituloActualIndex > 0 && this.mostrarFormularioTitulos"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarTituloAnterior">
+                                                        Ver título anterior
+                                                    </button>
+                                                </div>
+
+                                                <!-- Botón siguiente título -->
+                                                <div v-if="titulosEncontrados.length > 1 && tituloActualIndex + 1 < titulosEncontrados.length && this.mostrarFormularioTitulos"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarSiguienteTitulo">
+                                                        Ver siguiente título
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <!-- Acciones Universitario -->
-                                            <div class="col-12 text-center" v-if="this.univer">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloUniversitario">
+                                            <div class="col-12 text-center" v-if="this.univer && this.mostrarFormularioTitulos">
+                                                <button class="btn1 btn-secondary1 mb-2"
+                                                        type="button"
+                                                        @click="agregarEditarTituloUniversitarioUTLVTE">
+                                                     Agregar Título Universitario UTLVTE
+                                                </button>
+                                            </div>
+                                            <!-- nuevo  titulo universitario -->
+                                            <!-- Titulo Universitario Nuevo-->
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Título</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.titulo_universitario_obtenido"
+                                                        type="text"
+                                                        placeholder="Ingrese el título universitario obtenido" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Institución Universitaria -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Institución</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.institucion_universitaria"
+                                                        type="text"
+                                                        placeholder="Ingrese la institución universitaria"/>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- fecha de Graduacion -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Fecha de graduación</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.fecha_graduacion"
+                                                        type="date"
+                                                        :max="currentDate"/>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Especialidad Universitario -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                               <label class="text-dark" for="">Especialidad</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoTituloUniversitario.especialidad"
+                                                        type="text"
+                                                        placeholder="Ingrese la especialidad del título" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-shapes"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Acciones Universitario -->
+                                            <div class="col-12 text-center" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <button class="btn1 btn-secondary1 mb-2"
+                                                        type="button"
+                                                        @click="agregarEditarTituloUniversitario">
                                                     {{ tituloUniversitarioEditIndex !== null ? 'Editar Título Universitario' : 'Agregar Título Universitario' }}
                                                 </button>
                                             </div>
                                             <!-- Estudios de posgrado culminados -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="registrouniversitarioposgrado">
                                                 <label class="text-dark" for="">¿Ha culminado sus estudios de posgrado?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.estudios_posgrado_culminados"
@@ -565,11 +920,97 @@
                                             </div>
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
-                                                <h5>Estudios Posgrados</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
+                                                <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.mostrarFormularioTitulosPosgrado">Si tienes un o más títulos de posgrado en nuestra institución el sistema lo detectará. 
+                                                
+                                                Para añadirlo debes dar clic en Agregar Posgrado UTLVTE. Si aparecen más de un título te aparecerá un botón para ver siguiente título.
+                                                <b>Nota: Al tener más de un título debes dar clic en Agregar Posgrado UTLVTE para agregarlos todos. Estos títulos no pueden ser editados.</b></p>
+                                                
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionformacionposgrado">Esta es la información que anteriormente añadiste, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Título de Posgrado.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="!this.mostrarFormularioTitulosPosgrado">Usted ya ha guardado sus títulos de posgrado que tiene en la institución. Si tiene otro título universitario en otra institución puedes
+                                                añadirlo</p>
+                                                <h5 v-if="this.modoeditionformacionposgrado">Modo Edición Activado: id: {{ this.tituloPosgradoEditIndex }}</h5>
                                             </div>
                                             <!-- Titulos Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Título de posgrado</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="titulo_posgrado_obtenido"
+                                                        v-model="nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido" type="text"
+                                                        placeholder="Ingrese el título de posgrado obtenido" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-user-graduate"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Institucion Posgrado -->
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Institución</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="institucion_posgrado" v-model="nuevoTituloPosgradoUTLVTE.institucion_posgrado"
+                                                        type="text" placeholder="Ingrese la institución del título de posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-building"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Fecha de graduacion de Posgrado -->
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Fecha de graduación</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="fecha_graduacion_posgrado"
+                                                        v-model="nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado"
+                                                         type="date" :max="currentDate" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Especialidad Posgrado -->
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <label class="text-dark" for="">Especialidad</label>
+                                                <div class="input-group-icon">
+                                                    
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="especialidad_posgrado" v-model="nuevoTituloPosgradoUTLVTE.especialidad_posgrado"
+                                                        type="text" placeholder="Ingrese la especialidad del título de posgrado" 
+                                                        :disabled="titulosBloqueadosPosgrado" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-shapes"> </i></span>
+                                                </div>
+                                            </div>
+                                            <div v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                               <!-- Botón anterior título -->
+                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualIndexPosgrado > 0 && this.mostrarFormularioTitulosPosgrado"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarTituloAnteriorPosgrado">
+                                                        Ver título anterior
+                                                    </button>
+                                                </div>
+
+                                                <!-- Botón siguiente título -->
+                                                <div v-if="titulosEncontradosPosgrado.length > 1 && tituloActualIndexPosgrado + 1 < titulosEncontradosPosgrado.length && this.mostrarFormularioTitulosPosgrado"
+                                                    class="text-center my-3">
+                                                    <button class="btn1 btn-secondary1 mb-2" @click="mostrarSiguienteTituloPosgrado">
+                                                        Ver siguiente título
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- Acciones Posgrado -->
+                                            <div class="col-12 text-center" v-if="this.posgrado && this.mostrarFormularioTitulosPosgrado">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloPosgradoUTLVTE">
+                                                Agregar Título de Posgrado UTLVTE
+                                                </button>
+                                            </div>
+                                            
+                                            <!-- Titulos Posgrado -->
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Título de posgrado</label>
                                                 <div class="input-group-icon">
                                                     
@@ -582,7 +1023,7 @@
                                                 </div>
                                             </div>
                                             <!-- Institucion Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
                                                     
@@ -594,7 +1035,7 @@
                                                 </div>
                                             </div>
                                             <!-- Fecha de graduacion de Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Fecha de graduación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -605,7 +1046,7 @@
                                                 </div>
                                             </div>
                                             <!-- Especialidad Posgrado -->
-                                            <div class="col-6" v-if="this.posgrado">
+                                            <div class="col-12 col-md-6" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <label class="text-dark" for="">Especialidad</label>
                                                 <div class="input-group-icon">
                                                     
@@ -617,13 +1058,13 @@
                                                 </div>
                                             </div>
                                             <!-- Acciones Posgrado -->
-                                            <div class="col-12 text-center" v-if="this.posgrado">
+                                            <div class="col-12 text-center" v-if="this.posgrado && !this.mostrarFormularioTitulosPosgrado">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloPosgrado">
                                                     {{ tituloPosgradoEditIndex !== null ? 'Editar Título de Posgrado' : 'Agregar Título de Posgrado' }}
                                                 </button>
                                             </div>
                                             <!-- Titulos Bachiller Registrados Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="formacionacademicagaurdbachiller">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos de bachiller registrados</h5>
                                                 </div>
@@ -661,8 +1102,49 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <!-- Titulos Universitarios Registrados Tabla-->
+                                            <!-- Estudio actualmente Registrados Tabla-->
                                             <div class="text-center rounded p-4">
+                                                <div class="col-8 d-flex align-items-center justify-content-between mb-4">
+                                                    <h5 class="mb-0">Estado Actual de Estudio Universitario</h5>
+                                                </div>
+                                                
+                                                <div class="table-responsive">
+                                                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                                        <thead>
+                                                            <tr class="text-dark">
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Facultad</th>
+                                                                <th scope="col">Universidad</th>
+                                                                <th scope="col">Fecha</th>
+                                                                <th scope="col">Carrera</th>
+                                                                <th scope="col">Acciones</th>
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="contenido">
+                                                            
+                                                            <tr v-for="titulo in estudioactualtitulosUniversitarios" :key="titulo.idformacion_academica">
+                                                                <td class="text-dark">{{ titulo.idformacion_academica }}</td>
+                                                                <td class="text-dark">{{ titulo.facultades_universidad }}</td>
+                                                                <td class="text-dark">{{ titulo.titulo_carrera_universidad }}</td>
+                                                                <td class="text-dark">{{ titulo.fechaestudioactual }}</td>
+                                                                <td class="text-dark">{{ titulo.carrera_universidad }}</td>
+                                                                <td>
+                                                                    <!--<button class="btn1 btn-secondary1" type="button" @click="editarTituloBachiller(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>-->
+                                                                    &nbsp;&nbsp;
+                                                                    <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloUniversitario32(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                            
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Titulos Universitarios UTLVTE Registrados Tabla-->
+                                            
+                                            <!-- Titulos Universitarios Registrados Tabla-->
+                                            <div class="text-center rounded p-4" id="formacionacademicagaurd">
                                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos universitarios registrados</h5>
                                                 </div>
@@ -688,7 +1170,7 @@
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion }}</td>
                                                                 <td class="text-dark">{{ titulo.especialidad }}</td>
                                                                 <td>
-                                                                    <button class="btn1 btn-secondary1" type="button" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
+                                                                    <button class="btn1 btn-secondary1" type="button"  v-if="titulo.institucion_universitaria !== 'Universidad Técnica &quot;Luis Vargas Torres&quot; de Esmeraldas'" @click="editarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>
                                                                     &nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloUniversitario(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
@@ -700,7 +1182,7 @@
                                                 </div>
                                             </div>
                                             <!-- Titulos de Posgrado Registrados Tabla -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="formacionacademiposgrado">
                                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Títulos de posgrado registrados</h5>
                                                 </div>
@@ -726,7 +1208,7 @@
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion_posgrado }}</td>
                                                                 <td class="text-dark">{{ titulo.especialidad_posgrado }}</td>
                                                                 <td>
-                                                                    <button class="btn1 btn-secondary1" type="button" @click="editarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>&nbsp;
+                                                                    <button class="btn1 btn-secondary1" type="button" v-if="titulo.institucion_posgrado !== 'Universidad Técnica &quot;Luis Vargas Torres&quot; de Esmeraldas'" @click="editarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloPosgrado(titulo.idformacion_academica)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -764,8 +1246,12 @@
                                         v-if="this.mostrarexperienciasprofesionales">
                                         <form class="row g-4 mt-5">
                                             <h3>Experiencias Profesionales</h3>
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes registrar tus experiencias en empresas y tus experiencias en prácticas pre-profesionales. Cada que 
+                                            llenes los datos correspondientes te aparecerá un botón para añadir tus experiencias profesionales.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- ¿Ha trabajado en alguna empresa/institución? -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(27)">aquí</a> para ver la guia de este punto</p>
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciaempresa">
                                                 <label class="text-dark" for="">¿Ha trabajado en alguna empresa/institución?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.cargos_desempenados" v-on:change="Cargos"
@@ -784,8 +1270,13 @@
                                             
                                             <!-- Empresas Institución -->
                                             <div class="col-12" v-if="this.cargos">
-                                                <h5>Empresas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.cargosEmpresasEditIndex }}</h5>
+                                                <h5>Empresas (<a href="#experienciasprofesionalesempresa"> ver mis experiencias en empresas registradas )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionexperienciasempresa">Aquí debes registrar tus experiencias profesionales realizadas en alguna empresa o institución, 
+                                                luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Empresa.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionexperienciasempresa">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Empresa.</p>  
+                                                <h5 v-if="this.modoeditionexperienciasempresa">Modo edición activado: id: {{ this.cargosEmpresasEditIndex }}</h5>
                                             </div>
                                             <!-- Empresa/Institución -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.cargos">
@@ -884,7 +1375,7 @@
                                                 </button>
                                             </div>
                                             <!-- ¿Ha realizado prácticas profesionales en alguna empresa/intitución? -->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarexperienciapracticas">
                                                 <label class="text-dark" for="">¿Ha realizado prácticas profesionales en alguna empresa/intitución?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.practicas_profesionales"
@@ -903,8 +1394,12 @@
                                             </div>
                                             <!-- Prácticas Preprofesionales -->
                                             <div class="col-12" v-if="this.practica">
-                                                <h5>Prácticas Preprofesionales</h5>
-                                                <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.cargosPasantiasEditIndex }}</h5>
+                                                <h5>Prácticas Preprofesionales (<a href="#experienciasprofesionalespracticas"> ver mis experiencias de prácticas pre-profeionales registradas )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionexperienciaspracticas">Aquí debes registrar tus prácticas pre-profeionales realizadas en alguna empresa o institución, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Prácticas.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionexperienciaspracticas">Esta es tu experiencia profesional llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Prácticas.</p>  
+                                                <h5 v-if="this.modoeditionexperienciaspracticas">Modo Edición Activado: id: {{ this.cargosPasantiasEditIndex }}</h5>
                                             </div>
                                             <!-- Empresa/Institución -->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.practica">
@@ -929,15 +1424,34 @@
                                                             class="fas fa-calendar"></i></span>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.practica">
+                                                <label class="text-dark" for="">¿Sigue realizando sus practicas actualmente en la empresa/institución?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="this.fechacargospractica"
+                                                        v-on:change="FechaCargpractica"
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne">
+                                                        <option value="" disabled selected>
+                                                            Seleccione si/no 
+                                                        </option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-users"> </i></span>
+                                                </div>
+                                            </div>
                                             <!-- Fecha de finalización -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.practica">
-                                                <label class="text-dark" for="">Fecha de finalización las prácticas</label>
-                                                <div class="input-group-icon">
-                                                    <input class="form-control1 input-box form-voyage-control1"
-                                                        id="fecha_fin_practicas" v-model="nuevocargosPasantias.fecha_fin_practicas"
-                                                        type="date" :max="currentDate" /><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-calendar"></i></span>
+                                                <div v-if="this.trabajonuevoprecticas">
+                                                    <label class="text-dark" for="">{{ fechaFinLabelpracticas }}</label>
+                                                    <div class="input-group-icon">
+                                                        <input class="form-control1 input-box form-voyage-control1"
+                                                            id="fecha_fin_practicas" v-model="nuevocargosPasantias.fecha_fin_practicas"
+                                                            type="date" :disabled="fechaFinDisabledpracticas" :max="currentDate" /><span
+                                                            class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                                class="fas fa-calendar"></i></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- Área de trabajo -->
@@ -971,7 +1485,7 @@
                                                 </button>
                                             </div>
                                             <!-- Experiencias En Empresas Registrados Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="experienciasprofesionalesempresa">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Experiencias en empresas/instituciones registradas</h5>
                                                 </div>
@@ -1003,7 +1517,7 @@
                                                                 <td class="text-dark">{{ cargempre.logros_resultados_empresa }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionEmpresa(cargempre.idexperiencias_profesionales)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                   &nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionEmpresa(cargempre.idexperiencias_profesionales)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1014,7 +1528,7 @@
                                                 </div>
                                             </div>
                                             <!-- Prácticas Profesionales Registradas Tabla-->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="experienciasprofesionalespracticas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Prácticas realizadas en empresas/instituciones registradas</h5>
                                                 </div>
@@ -1044,7 +1558,7 @@
                                                                 <td class="text-dark">{{ cargpasantia.descripcion_funciones_practicas }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionPracticas(cargpasantia.idexperiencias_profesionales)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionPracticas(cargpasantia.idexperiencias_profesionales)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1081,7 +1595,12 @@
                                         v-if="this.mostrarinvestigacionpublicaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Publicaciones</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionpublicaciones">Aquí debes registrar tus publicaicones realizadas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Publicaciones.</p>
+                                                <p class="text-danger text-justify descripcionmia" v-if="this.modoeditionpublicaciones">Esta es tu publicación llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Publicaciones.</p> 
+                                            <h5 v-if="this.modoeditionpublicaciones">Modo edición activado: id: {{ this.publicacionesEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(34)">aquí</a> para ver la guia de este punto</p>
                                             <!-- ¿Ha realizado algúna publicación? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Ha realizado alguna publicación?</label>
@@ -1124,7 +1643,7 @@
                                                 </div>
                                             </div>
                                             <!-- Título de la publicación -->
-                                            <div class="col-6" v-if="this.investiga">
+                                            <div class="col-12" v-if="this.investiga">
                                                 <label class="text-dark" for="">Título de la publicación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -1135,19 +1654,22 @@
                                                 </div>
                                             </div>
                                             <!-- Link de la publicación -->
-                                            <div class="col-6" v-if="this.investiga">
+                                            <div class="col-12" v-if="this.investiga">
                                                 <label class="text-dark" for="">Link de la publicación</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1" @input="validarURL"
-                                                        id="titulo" v-model="nuevaspublicaciones.link_publicación" type="text"
+                                                        id="titulo" v-model="nuevaspublicaciones.link_publicacion" type="text"
                                                         placeholder="Ingrese el Link de su publicación" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-book"> </i></span>
                                                 </div>
-                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicación" class="text-danger">Por favor, ingrese un URL válido.</p>
+                                                <!-- El mensaje de error solo se muestra si HAY contenido y es INVÁLIDO -->
+                                                <p v-if="!isValidURL && nuevaspublicaciones.link_publicacion" class="text-danger">
+                                                    Por favor, ingrese un URL válido que comience con http:// o https://.
+                                                </p>
                                             </div>
                                             <!-- ponencias -->
-                                            <div class="col-6" v-if="this.investiga">
+                                            <div class="col-12 col-md-6" v-if="this.investiga">
                                                 <label class="text-dark" for="">¿Su publicacion ha estado en ponencias, congresos o eventos científicos?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="nuevaspublicaciones.congreso_evento"
@@ -1164,11 +1686,55 @@
                                                     
                                                 </div>
                                             </div>
+                                            <!-- Grupo de Investigación -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5"  v-if="this.investiga">
+                                                <label class="text-dark" for="">¿Pertenece a un grupo de investigación?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="grupoinvestigaselected"
+                                                                @change="actualizargrupoinvestiga"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-12" v-if="grupoinvestigaselected === 'Si' && this.investiga">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el nombre del grupo de investigación
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado" 
+                                                        class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevaspublicaciones.grupo_investigacion"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
+                                            </div>
                                             <!-- Acciones -->
-                                            <div class="col-4" v-if="this.investiga">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones">
+                                            <div class="col-12 col-md-6" v-if="this.investiga">
+                                                <!-- El botón se muestra si la URL es válida (incluyendo si está vacía) -->
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarPublicaciones" v-if="isValidURL">
                                                     {{ publicacionesEditIndex !== null ? 'Editar Publicaciones' : 'Agregar Publicaciones' }}
                                                 </button>
+                                                <!-- El mensaje de ayuda se muestra solo si la URL es inválida (y tiene contenido) -->
+                                                <h6 class="text-danger" v-else-if="!isValidURL && nuevaspublicaciones.link_publicacion">
+                                                    Corrija el link para que aparezca el botón Agregar/Editar Publicaciones.
+                                                </h6>
+                                                <!-- Mensaje si está vacío y no hay edición en curso, o el mensaje anterior si no se cumple el v-else-if -->
+                                                <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link/enlace de la publicación es correcto.
+                                                </h6>
                                             </div>
                                             <!-- Publicaciones Registradas Tabla-->
                                             <div class="text-center rounded p-4">
@@ -1183,6 +1749,7 @@
                                                                 <th scope="col">ID</th>
                                                                 <th scope="col">Tipo de publicación</th>
                                                                 <th scope="col">Título de la publicación</th>
+                                                                <th scope="col">Grupo de Investigación</th>
                                                                 <th scope="col">Link</th>
                                                                 <th scope="col">Acciones</th>
                                                                
@@ -1194,10 +1761,11 @@
                                                                 <td class="text-dark">{{ publicacionfor.idinvestigacion_publicaciones }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_tipo }}</td>
                                                                 <td class="text-dark">{{ publicacionfor.publicacion_titulo }}</td>
-                                                                <td class="text-dark">{{ publicacionfor.link_publicación }}</td>
+                                                                <td class="text-dark">{{ publicacionfor.grupo_investigacion }}</td>
+                                                                <td class="text-dark">{{ publicacionfor.link_publicacion }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionPublicaciones(publicacionfor.idinvestigacion_publicaciones)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionPublicaciones(publicacionfor.idinvestigacion_publicaciones)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1218,11 +1786,11 @@
                                             <div class="col-6 col-xl-10 col-lg-12 d-grid mt-6">
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.modoedit2"
                                                     @click="guardaInvestigacion">
-                                                    Guardar y Continuar
+                                                    Siguiente Apartado
                                                 </button>
                                                 <button class="btn1 btn-secondary1" type="button" v-if="this.isEditing2"
                                                     @click="editarInvestigacion">
-                                                    Actualizar Y Continuar
+                                                    Siguiente Apartado
                                                 </button>
                                             </div>
                                         </form>
@@ -1233,7 +1801,12 @@
                                         v-if="this.mostraridiomas">
                                         <form class="row g-4 mt-5">
                                             <h3>Idiomas</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionidiomas">Aquí debes registrar los idiomas que dominas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Idioma.</p>
+                                                <p class="text-danger text-justify descripcionmia" v-if="this.modoeditionidiomas">Esta es tu información de idiomas llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Idioma.</p>
+                                            <h5 v-if="this.modoeditionidiomas">Modo edición activado: id: {{ this.idiomasEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(36)">aquí</a> para ver la guia de este punto</p>
                                             <!-- Idiomas -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Idiomas</label>
@@ -1393,35 +1966,57 @@
                                                             class="fas fa-chart-line"> </i></span>
                                                 </div>
                                             </div>
-                                            <!-- ¿Posee un certificado del idioma? -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">¿Posee un certificado del idioma?</label>
                                                 <div class="input-group-icon">
-                                                    <select v-model="nuevosidiomas.certificado"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione si/no
-                                                        </option>
+                                                    <select v-model="certificadoselected"
+                                                                @change="actualizarCertificado"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
                                                         <option value="Si">Si</option>
                                                         <option value="No">No</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <!-- Subir certificado -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="nuevosidiomas.certificado === 'Si'">
-                                                <div class="input-group-icon">
-                                                    <label for="archivoCertificado">Subir certificado (PDF):</label>
-                                                    <input type="file" id="archivoCertificado"  class="form-control1 input-box" @change="handleFileUpload" accept=".pdf">
-                                                </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-12" v-if="certificadoselected === 'Si'">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el link donde se encuentra el certificado
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado" @input="validarURL2"
+                                                        class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevosidiomas.certificado"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
                                             </div>
+                                            <!-- El mensaje de error solo se muestra si HAY contenido y es INVÁLIDO -->
+                                            <p v-if="!isValidURL && nuevosidiomas.certificado && certificadoselected === 'Si'" class="text-danger">
+                                                    Por favor, ingrese un URL válido que comience con http:// o https://.
+                                            </p>
                                             <!-- Acciones -->
-                                            <div class="col-4">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarIdiomas">
+                                            <div class="col-12 col-md-6">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarIdiomas" v-if="isValidURL">
                                                     {{ idiomasEditIndex !== null ? 'Editar Idioma' : 'Agregar Idioma' }}
                                                 </button>
+                                                 <!-- El mensaje de ayuda se muestra solo si la URL es inválida (y tiene contenido)--> 
+                                                <h6 class="text-danger" v-else-if="!isValidURL && nuevosidiomas.certificado">
+                                                    Corrija el link para que aparezca el botón Agregar/Editar Idioma.
+                                                </h6>
+                                                <!-- Mensaje si está vacío y no hay edición en curso, o el mensaje anterior si no se cumple el v-else-if -->
+                                                <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link/enlace del certificado del idioma es válido.
+                                                </h6>
                                             </div>
                                             <!-- Idiomas Registrados -->
                                             <div class="text-center rounded p-4">
@@ -1495,9 +2090,13 @@
                                         v-if="this.mostrarsw">
                                         <form class="row g-4 mt-5">
                                             <h3>Habilidades </h3>
-                                            
+                                            <p class="text-dark text-justify descripcionmia">En este apartado debes registrar tus habilidades, ya sean: comunicativas, creativas
+                                            de liderazgo, infromáticas, algún oficio/subactividades u otro tipo de hablidad que poseas. Cada que 
+                                            llenes los datos correspondientes te aparecerá un botón para añadir tus habilidades.
+                                            La información que guardes aparecerá en una tabla en la parte de abajo. Después de terminar de añadir/editar puedes dar clic en Siguiente Apartado</p>
                                             <!-- Habilidades comunicativas-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(40)">aquí</a> para ver la guia de este punto</p>
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadescomunicativas">
                                                 <label class="text-dark" for="">¿Posee habilidades comunicativas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_comunicacion"
@@ -1517,8 +2116,12 @@
                                             
                                             <!-- Habilidades Comunicativas-->
                                             <div class="col-12" v-if="this.comunicativas">
-                                                <h5>Habilidades Comunicativas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_comunicativas_EditIndex }}</h5>
+                                                <h5>Habilidades Comunicativas (<a href="#tablahabilidadescomunicativas"> ver mis habilidades comunicativas registradas )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadescomuni">Aquí debes seleccionar tu habilidad comunicativa que poseas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadescomuni">Esta es tu habilidad comunicativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadescomuni">Modo edición activado: id: {{ this.habilidades_comunicativas_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Comunicativas-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.comunicativas">
@@ -1546,7 +2149,7 @@
                                                 </div>
                                             </div>
                                             <!--Descripción Habilidades Comunicativas-->
-                                                <div class="col-12" v-if="this.comunicativas">
+                                            <div class="col-12" v-if="this.comunicativas">
                                                     <label class="text-dark" for="">Descripción de la habilidad comunicativa</label>
                                                     <div class="input-group-icon">
                                                         
@@ -1557,7 +2160,7 @@
                                                                 class="fas fa-shapes"> </i></span>
                                                     </div>
                                                 
-                                                </div>        
+                                            </div>        
                                             <!-- Acciones Habilidades Comunicativas -->
                                             <div class="col-12 text-center" v-if="this.comunicativas">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarHabilidadesComunicativas">
@@ -1565,7 +2168,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Creativas-->
-                                            <div class="col-sm-12 col-md-6 col-xl-12">
+                                            <div class="col-sm-12 col-md-6 col-xl-12" id="regresarhabilidadescreativas">
                                                 <label class="text-dark" for="">¿Posee habilidades creativas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_creacion"
@@ -1584,8 +2187,12 @@
                                             </div>
                                             <!-- Selección Habilidades Creativa-->
                                             <div class="col-12" v-if="this.creativas">
-                                                <h5>Habilidades creativas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_creativas_EditIndex }}</h5>
+                                                <h5>Habilidades creativas (<a href="#tablahabilidadescreativas"> ver mis habilidades creativas registradas )</a></h5>
+                                                <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadescreative">Aquí debes seleccionar tu habilidad creativa que poseas, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadescreative">Esta es tu habilidad creativa llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadescreative">Modo edición activado: id: {{ this.habilidades_creativas_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Creativa-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.creativas">
@@ -1613,7 +2220,7 @@
                                             </div> 
                                             <!--Descripción Habilidades Creativas-->       
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.creativas">
-                                                    <label class="text-dark" for="">Descripción de la habilidad comunicativa</label>
+                                                    <label class="text-dark" for="">Descripción de la habilidad creativa</label>
                                                     <div class="input-group-icon">
                                                         
                                                         <textarea class="form-control1 input-box form-voyage-control1" rows="4"
@@ -1630,7 +2237,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Liderazgo-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesliderazgo">
                                                 <label class="text-dark" for="">¿Posee habilidades de liderazgo?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_liderazgo"
@@ -1649,8 +2256,12 @@
                                             </div>
                                             <!-- Selección Habilidades Liderazgo-->
                                             <div class="col-12" v-if="this.liderazgo">
-                                                <h5>Habilidades de liderazgo</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_liderazgo_EditIndex }}</h5>
+                                                <h5>Habilidades de liderazgo (<a href="#tablahabilidadesliderazgo"> ver mis habilidades de liderazgo registradas )</a></h5>
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadeslidel">Aquí debes seleccionar tu habilidad de liderazgo que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadeslidel">Esta es tu habilidad de liderazgo llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadeslidel">Modo edición activado: id: {{ this.habilidades_liderazgo_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Liderazgo-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.liderazgo">
@@ -1698,7 +2309,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Informaticas Cv-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesinformaticas">
                                                 <label class="text-dark" for="">¿Posee habilidades informáticas?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_informaticos_cv"
@@ -1717,8 +2328,12 @@
                                             </div>
                                             <!-- Selección Habilidades Informaticas-->
                                             <div class="col-12" v-if="this.informaticas_cv">
-                                                <h5>Habilidades informaticas</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.habilidades_informaticas_cv_EditIndex }}</h5>
+                                                <h5>Habilidades informaticas (<a href="#tablahabilidadesinformaticas"> ver mis habilidades informáticas registradas )</a></h5>
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesinformaticas">Aquí debes seleccionar tu habilidad informática que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesinformaticas">Esta es tu habilidad informática llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesinformaticas">Modo edición activado: id: {{ this.habilidades_informaticas_cv_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Informaticas-->
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.informaticas_cv">
@@ -1763,7 +2378,7 @@
                                                 </button>
                                             </div>
                                              <!-- Habilidades Oficios-->
-                                             <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesoficoo">
                                                 <label class="text-dark" for="">¿Realiza algún oficio/subactividad?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_oficios"
@@ -1782,8 +2397,12 @@
                                             </div>
                                             <!-- Selección Habilidades Oficios-->
                                             <div class="col-12" v-if="this.oficios">
-                                                <h5>Oficio/Subactividad</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.oficios_subactividades_EditIndex }}</h5>
+                                                <h5>Oficio/Subactividad (<a href="#tablahabilidadesoficios"> ver mis oficios/subactividades registradas )</a></h5>
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesoficio">Aquí debes seleccionar otro oficio/sub-actividad que realices, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesoficio">Esta es tu oficio/sub-actividad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesoficio">Modo edición activado: id: {{ this.oficios_subactividades_EditIndex }}</h5>
                                             </div>
                                             <!-- Selección Habilidades Oficios-->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.oficios">
@@ -1841,7 +2460,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Otros Oficios-->
-                                            <div class="col-sm-12 col-md-12 col-xl-12">
+                                            <div class="col-sm-12 col-md-12 col-xl-12" id="regresarhabilidadesotros">
                                                 <label class="text-dark" for="">¿Tiene alguna otra habilidad, ya sea interpersonal o profesional?</label>
                                                 <div class="input-group-icon">
                                                     <select v-model="this.habi_otros_habi"
@@ -1860,12 +2479,16 @@
                                             </div>
                                             <!-- Selección Habilidades Otros-->
                                             <div class="col-12" v-if="this.otro_habili">
-                                                <h5>Habilidades Interpersonales</h5>
-                                                <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.otro_habilidades_EditIndex }}</h5>
+                                                <h5>Habilidades Interpersonales (<a href="#tablahabilidadesotros"> ver mis otras habilidades registradas )</a></h5>
+                                                 <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionhabilidadesotro">Aquí debes registrar tu otra hablidad que posees, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Habilidad.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionhabilidadesotro">Esta es tu otra hablidad llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Habilidad.</p>
+                                                <h5 v-if="this.modoeditionhabilidadesotro">Modo edición activado: id: {{ this.otro_habilidades_EditIndex }}</h5>
                                             </div>
                                             <!--Descripción Habilidades Otros-->       
                                             <div class="col-sm-12 col-md-12 col-xl-12" v-if="this.otro_habili">
-                                                    <label class="text-dark" for="">Descripción de la otra habilidad interpersonal</label>
+                                                    <label class="text-dark" for="">Describa la habilidad interpersonal que posees</label>
                                                     <div class="input-group-icon">
                                                         
                                                         <textarea class="form-control1 input-box form-voyage-control1" rows="4"
@@ -1882,7 +2505,7 @@
                                                 </button>
                                             </div>
                                             <!-- Habilidades Comunicativas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadescomunicativas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Comunicativas Registradas </h5>
                                                 </div>
@@ -1906,7 +2529,8 @@
                                                                 <td class="text-dark">{{ habilidadfor.descripcion_habilidades_comunicativas }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesComunicativas(habilidadfor.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;
+                                                                    <br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesComunicativas(habilidadfor.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1917,7 +2541,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Creativas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadescreativas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Creativas Registradas </h5>
                                                 </div>
@@ -1941,7 +2565,7 @@
                                                                 <td class="text-dark">{{ habilidadfor1.descripcion_habilidades_creativas }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesCreativas(habilidadfor1.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesCreativas(habilidadfor1.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1952,7 +2576,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Liderazgo Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesliderazgo">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades de Liderazgo Registradas </h5>
                                                 </div>
@@ -1976,7 +2600,7 @@
                                                                 <td class="text-dark">{{ habilidadfor23.descripcion_habilidades_liderazgo }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesLiderazgo(habilidadfor23.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesLiderazgo(habilidadfor23.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -1987,7 +2611,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Informáticas Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesinformaticas">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Habilidades Informáticas Registradas </h5>
                                                 </div>
@@ -2011,7 +2635,7 @@
                                                                 <td class="text-dark">{{ habilidadfor2.descripcion_habilidades_informaticas_cv }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesInfor_cv(habilidadfor2.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesInfor_cv(habilidadfor2.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -2022,7 +2646,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Oficios Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesoficios">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Oficios/Subactividades Registradas </h5>
                                                 </div>
@@ -2046,7 +2670,7 @@
                                                                 <td class="text-dark">{{ habilidadfor3.descripcion_oficios_subactividades }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesOficios(habilidadfor3.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesOficios(habilidadfor3.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -2057,7 +2681,7 @@
                                                 </div>
                                             </div>
                                             <!-- Habilidades Otros Registradas -->
-                                            <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4" id="tablahabilidadesotros">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Otras Habilidades Registradas </h5>
                                                 </div>
@@ -2079,7 +2703,7 @@
                                                                 <td class="text-dark">{{ habilidadfor4.otro_habilidades }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionHabilidadesOtros_Oficios(habilidadfor4.idhabilidades_informaticas)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;<br>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionHabilidadesOtros_Oficios(habilidadfor4.idhabilidades_informaticas)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -2116,8 +2740,13 @@
                                         v-if="this.mostrarcapacitaciones">
                                         <form class="row g-4 mt-5">
                                             <h3>Cursos</h3>
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditioncursos">Aquí debes registrar tus cursos realizados, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Curso.</p>
+                                            <p class="text-dark text-justify descripcionmia" v-if="this.modoeditioncursos">Esta es tu información de cursos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Curso.</p>
                                             <!-- edicion -->
-                                            <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
+                                            <h5 v-if="this.modoeditioncursos">Modo Edición Activado: id: {{ this.curso_capacitacionEditIndex }}</h5>
+                                            <p class="text-dark text-justify">Da clic <a class="text-secondary" @click="openPdfModal(52)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-12 col-md-12 col-xl-12">
                                                 <label class="text-dark" for="">Nombre de la institución</label>
                                                 <div class="input-group-icon">
@@ -2166,7 +2795,7 @@
                                                         <option value="Dirección/Gerencia">Dirección/Gerencia</option>
                                                         <option value="Economía/Contabilidad">Economía/Contabilidad</option>
                                                         <option value="Eduación Básica/Cursos">Eduación Básica/Cursos</option>
-                                                        <option value="Esducación/Universidad">Esducación/Universidad</option>
+                                                        <option value="Educación/Universidad">Educación/Universidad</option>
                                                         <option value="Entretenimiento/Deportes">Entretenimiento/Deportes</option>
                                                         <option value="Fabricación">Fabricación</option>
                                                         <option value="Finanzas/Banca">Finanzas/Banca</option>
@@ -2280,23 +2909,60 @@
                                             </div>
                                             <!-- Horas del curso -->
                                             <div class="col-sm-6 col-md-6 col-xl-5">
-                                                <label class="text-dark" for="">Horas</label>
+                                                <label class="text-dark" for="">Total de horas</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  @input="validarNumero"
                                                         id="horas_curso" v-model="nuevoscurso_capacitacion.horas_curso"
-                                                        type="text" placeholder="Ingrese el número de horas del curso" /><span
+                                                        type="text" placeholder="Ingrese el total de horas del curso" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="far fa-envelope-open"> </i></span>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 col-md-6 col-xl-5">
+                                                <label class="text-dark" for="">¿Posee un certificado del curso?</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="certificadoscursoelected"
+                                                                @change="actualizarCertificadocurso"
+                                                                class="form-select1 form-voyage-select input-box"
+                                                                id="inputPersonOne">
+                                                        <option value="" disabled selected>Seleccione si/no</option>
+                                                        <option value="Si">Si</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-print"> </i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- Campo para link solo si eligió "Si" -->
+                                            <div class="col-12" v-if="certificadoscursoelected === 'Si'">
+                                                    <label class="text-dark" for="nombreCertificado">
+                                                        Ingrese el link donde se encuentra el certificado
+                                                    </label>
+                                                    <div class="input-group-icon">
+                                                        <input
+                                                        type="text"
+                                                        id="nombreCertificado" @input="validarURL23"
+                                                        class="form-control1 input-box form-voyage-control1"
+                                                        v-model="nuevoscurso_capacitacion.certificado_curso"
+                                                        />
+                                                        <span class="nav-link-icon text-800 fs--1 input-box-icon">
+                                                        <i class="fas fa-certificate"></i>
+                                                        </span>
+                                                    </div>
+                                            </div>
                                             <!-- Acciones de Agregar Editar -->
-                                            <div class="col-4">
-                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursosCapacitaciones">
+                                            <div class="col-12 col-md-6">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursosCapacitaciones" v-if="isValidURL">
                                                     {{ curso_capacitacionEditIndex !== null ? 'Editar Curso' : 'Agregar Curso' }}
                                                 </button>
+                                                 <h6 class="text-secondary" v-else>
+                                                    El botón aparecerá si el link/enlace del certificado es válido.
+                                                </h6>
                                             </div>
-                                           <!-- Cusos Capacitaciones Registradas -->
-                                           <div class="text-center rounded p-4">
+                                            <!-- Cusos Capacitaciones Registradas -->
+                                            <div class="text-center rounded p-4">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Cursos Registrados </h5>
                                                 </div>
@@ -2365,14 +3031,19 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <!-- Otros datos Relevantes -->
+                                    <!-- Logros -->
                                     <div class="tab-pane fade"
                                         :class="{ 'show active': this.activeTab === 'relevantes' }" id="nav-relevante"
                                         role="tabpanel" aria-labelledby="nav-relevante-tab"
                                         v-if="this.mostrardatosrelevantes">
                                         <form class="row g-4 mt-5">
                                             <h3>Logros Obtenidos</h3>
-                                            <h5 v-if="this.modoedition">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
+                                             <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionlogros">Aquí debes registrar tus logros y fracasos obtenidos, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Logros. No sobrepases las 250 palabras en las descripciones.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionlogros">Esta es tu información de logros y fracasos llenado anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Logros.</p>
+                                            <h5 v-if="this.modoeditionlogros">Modo edición activado: id: {{ this.otros_datos_personalesEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(54)">aquí</a> para ver la guia de este punto</p>
                                             <div class="col-sm-6 col-md-6 col-xl-5">
                                                 <label class="text-dark" for="">Tipo de logro obtenido</label>
                                                 <div class="input-group-icon">
@@ -2393,9 +3064,9 @@
                                             </div>
                                            
                                             <div class="col-12">
-                                                <label class="text-dark" for="">Descripción del logro</label>
+                                                <label class="text-dark" for="">Descripción del logro selecionado</label>
                                                 <div class="input-group-icon">
-                                                    <textarea class="form-control1 input-box form-voyage-control1"
+                                                    <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="descripcion_logros" v-model="nuevosotros_datos_personales.descripcion_logros"
                                                         type="text"
                                                         placeholder="Describa el logro obtenido que seleccionó" /><span
@@ -2405,21 +3076,22 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="input-group-icon">
-                                                    <textarea class="form-control1 input-box form-voyage-control1"
+                                                    <label class="text-dark" for="">Descripción del fracaso selecionado</label>
+                                                    <textarea class="form-control1 input-box form-voyage-control1" rows="6"
                                                         id="descripcion_fracasos" v-model="nuevosotros_datos_personales.descripcion_fracasos"
                                                         type="text"
-                                                        placeholder="Describa los fracasos que tuvo" /><span
+                                                        placeholder="Describa los fracasos que tuvo en base al logro selecionado" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-boxes"> </i></span>
                                                 </div>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-12 col-md-6">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarOtrosDatosRelevantes">
                                                     {{ otros_datos_personalesEditIndex !== null ? 'Editar Logro' : 'Agregar Logro' }}
                                                 </button>
                                             </div>
                                             <!-- Logros Obtenidos Registrados -->
-                                           <div class="text-center rounded p-4">
+                                            <div class="text-center rounded p-4">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
                                                     <h5 class="mb-0">Logros Obtenidos Registrados </h5>
                                                 </div>
@@ -2445,7 +3117,7 @@
                                                                 <td class="text-dark">{{ logrosfor.descripcion_fracasos }}</td>
                                                                 <td>
                                                                     <button class="btn1 btn-secondary1" type="button" @click="editarSeleccionOtrosDatosRelevantes(logrosfor.idotros_datos_personales)"><i class="fa-solid fa-edit"></i></button>
-                                                                    &nbsp;&nbsp;
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarSeleccionOtrosDatosRelevantes(logrosfor.idotros_datos_personales)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -2480,9 +3152,14 @@
                                         v-if="this.mostrarinformacioncontacto">
                                         <form class="row g-4 mt-5">
                                             <h3>Referencias Personales</h3>
-                                            <h5 v-if="this.modoedition">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia"v-if="!this.modoeditionreferencias">Aquí debes registrar tus referencias personales, luego de que llenes los campos correspondientes debes
+                                                dar clic en Agregar Referencia.</p>
+                                                <p class="text-dark text-justify descripcionmia" v-if="this.modoeditionreferencias">Esta es tu referencia personal llenada anteriormente, luego de que edites los campos correspondientes debes
+                                                dar clic en Editar Referencia.</p>
+                                            <h5 v-if="this.modoeditionreferencias">Modo Edición Activado: id: {{ this.informacion_contactoEditIndex }}</h5>
+                                            <p class="text-dark text-justify descripcionmia">Da clic <a class="text-secondary" @click="openPdfModal(57)">aquí</a> para ver la guia de este punto</p>
                                             <label for="" class="text-dark">Agregue Máximo 3 Referencias Personales</label>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Nombres</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -2493,7 +3170,7 @@
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Apellidos</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
@@ -2504,7 +3181,7 @@
                                                 </div>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Correo electrónico</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  @input="validateEmail"
@@ -2516,7 +3193,7 @@
                                                 <p v-if="correoErrornue" class="text-danger">Por favor, ingrese un correo válido</p>
                                                
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12 col-md-6">
                                                 <label for="" class="text-dark">Número de Teléfono</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"  inputmode="numeric" pattern="[0-9]{10}" maxlength="10"
@@ -2527,7 +3204,7 @@
                                                 </div>
                                                 
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-12 col-md-6" v-if="!correoErrornue">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarInformacionContacto">
                                                     {{ informacion_contactoEditIndex !== null ? 'Editar Referencia' : 'Agregar Referencia' }}
                                                 </button>
@@ -2598,1858 +3275,4821 @@
                 </div>
             </div>
         </section>
-  </div>
-  <div class="container-fluid py-5" v-if="this.registro">
-    <section class="hero-wrap js-fullheight">
-      <div class="overlay"></div>
-      <div class="container-fluid">
-        <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
-          <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
-            <div class="text text-center">
-              <span class="subheading">!Le damos la bienvenida!</span>
-              <h1>Ronaldo Fredrickson</h1>
-              <!--
-            <h2>I'm a
-              <span class="txt-rotate" data-period="2000"
-                data-rotate='[ "Web Designer.", "Developer.", "Photographer.", "Marketer.", "Blogger" ]'></span>
-            </h2>-->
+        
+        <!-- <section> close ============================-->
+        <div class="container-fluid py-5" v-if="this.registro">
+            <!-- ABOUT -->
+            <section class="about full-screen d-lg-flex justify-content-center align-items-center" id="about">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-lg-7 col-md-12 col-12 d-flex align-items-center">
+                            <div class="about-text">
+                                <small class="small-text">Le damos la bienvenida a su página de <span class="mobile-block">
+                                        portafolio</span></small>
+                                    <br><br>
+                                <h1 class="animated animated-text">
+                                    
+                                    <span class="mr-6">Mi nombre es </span>
+                                    <div class="animated-info col-lg-12">
+                                        <span class="animated-item">{{ this.ApellInfPer }} {{ this.ApellMatInfPer }} {{ this.NombInfPer }}</span>
+                                    </div>
+                                </h1>
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                
+                                <p class="descripcionmia py-4">{{ this.texto }}</p>
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                <div class="custom-btn-group mt-4" v-if="!this.descargando">
+
+                                    <a href="#" class="btn button custom-btn custom-btn-bg custom-btn-link" @click="downloadCV"><i
+                                            class='uil uil-file-alt'></i>Descargar CV
+                                    </a>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <!-- 
+                        <div class="col-lg-5 col-md-12 col-12">
+                            <div class="about-image svg">
+                                <img src="@/assets/images/superior.png" class="img-fluid anima2" alt="svg image">
+                            </div>
+                        </div>
+                       --> 
+                        <div class="col-lg-5 order-1 order-lg-2">
+                            <img src="@/assets/images/superior.png" class="img-fluid anima2" alt="">
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+             <!-- Services Section Begin--> 
+            <section class="services spad" id="sobremi">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="services__title">
+                                <div class="section-title">
+                                    <span class="text-dark"></span>
+                                </div>
+
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;
+                                <!-- Foto con marco decorativo 
+                                <div class="foto-marco">
+                                    <img
+                                        v-if="fotografia"
+                                        :src="'data:image/png;base64,' + fotografia"
+                                        id="fotoimg"
+                                        class="imagen-foto"
+                                        alt="Foto de perfil"
+                                    />
+                                    <img
+                                        v-else
+                                        src="@/assets/images/userlogo.png"
+                                        id="fotoimg"
+                                        class="imagen-foto"
+                                        alt="Imagen por defecto"
+                                    />
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="services__item">
+                                        <div class="services__item__icon">
+                                            <img src="@/assets/images/icons/si-1.png" alt="">
+                                        </div>
+                                        <h4>Mis Datos Personales</h4>
+                                        
+                                        <p>Número de Cédula: {{ this.CIInfPer }}</p>
+                                        <p>Nombres y Apellidos: {{ this.NombInfPer }} {{ this.ApellInfPer }} {{ this.ApellMatInfPer }} </p>
+                                        <p>Nacionalidad: {{ this.NacionalidadPer }} </p>
+                                        <p>Fecha de Nacimiento: {{ this.FechNacimPer }} -- Edad: {{ this.edad }}</p>
+                                        <p>Género: {{ this.GeneroPer }}</p>
+                                        <p>Ciudad: {{ this.CiudadPer }}</p>
+                                        <p>Dirección: {{ this.DirecDomicilioPer }}</p>
+                                        <p>Teléfono: {{ this.Telf1InfPer }}</p>
+                                        <p>Correo: {{ this.mailPer }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="services__item">
+                                        <div class="services__item__icon">
+                                            <img src="@/assets/images/icons/si-1.png" alt="">
+                                        </div>
+                                        <h4>Referencias Personales</h4>
+                                        <div v-if="informacion_contactoarray.length > 0">
+                                            <div v-for="(reffe, index) in informacion_contactoarray" :key="index">
+                                                <b class="text-dark aling-items-center">Referencia Nº {{ index+1 }} </b>
+                                                <p>Nombres y Apellidos: {{ reffe.referencia_nombres }} {{ reffe.referencia_apellidos }}</p>
+                                                <p>Correo Elecctrónico: {{ reffe.referencia_correo_electronico }}</p>
+                                                <p>Teléfono: {{ reffe.referencia_telefono }}</p><br>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <p>No hay Referencias Personales Almacenadas.</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="services__item">
+                                        <div class="services__item__icon">
+                                            <img src="@/assets/images/icons/si-4.png" alt="">
+                                        </div>
+                                        <h4>Logros Obtenidos</h4>
+                                        <div v-if="otros_datos_personalesarray.length > 0">
+                                            <div v-for="(logro, index) in otros_datos_personalesarray" :key="index">
+                                                <b class="text-dark">Logro Nº {{ index+1 }} </b>
+                                                <p>Tipo de Logro: {{ logro.tipo_logros }}</p>
+                                                <p class="descripcionmia">Decripción del Logro: {{ logro.descripcion_logros }}</p>
+                                                <p class="descripcionmia">Decripción de Fracasos: {{ logro.descripcion_fracasos }}</p><br>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <p>No hay Logros Almacenados.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Services Section End -->
+            <!-- PROJECTS -->
+            <section class="project py-5" id="experiencias">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-11 text-center mx-auto col-12">
+
+                            <div class="col-lg-8 mx-auto">
+                                <h2>Mis Experiencias Profesionales y Formación Académica</h2>
+                            </div>
+
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+            <!-- FEATURES--> 
+            <section class="resume py-5 d-lg-flex justify-content-center align-items-center" id="resume">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12">
+                            <h2 class="mb-4">Experiencias Profesionales - Empresa</h2>
+
+                            <div class="timeline" v-if="cargosEmpresas.length > 0">
+                                <div class="timeline-wrapper" v-for="(expe, index) in cargosEmpresas" :key="index">
+                                    <div class="timeline-yr">
+                                        <span>{{ new Date(expe.fecha_fin_empresa ).getFullYear()}}</span>
+                                    </div>
+                                    <div class="timeline-info">
+                                        <h3>
+                                            <span>Empresa: {{ expe.empresa_institucion }} </span>
+                                        </h3>
+                                        <h3>
+                                            <small>Cargo: {{ expe.cargo_desempenado_empresa }}</small>
+                                        </h3>
+                                        <p class="descripcionmia">Funciones: {{ expe.descripcion_funciones_empresa }}</p>
+                                    </div>
+                                </div>
+
+                                
+                                
+                            </div>
+                            <div v-else>
+                                <p>No hay Experienciasas En Empresas Almacenados.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <h2 class="mb-4 mobile-mt-2">Experiencias Profesionales - Pasantías</h2>
+
+                            <div class="timeline" v-if="cargosPasantias.length > 0">
+                               
+                                    <div class="timeline-wrapper" v-for="(pasan, index) in cargosPasantias" :key="index"> 
+                                        <div class="timeline-yr">
+                                            <span>{{ new Date(pasan.fecha_fin_practicas ).getFullYear()}}</span>
+                                        </div>
+                                        <div class="timeline-info">
+                                            <h3>
+                                                <span>Empresa: {{ pasan.empresa_institucion_practicas }} </span>
+                                            </h3>
+                                            <h3>
+                                                <small>Área: {{ pasan.area_trabajo_practicas }}</small>
+                                            </h3>
+                                            <p class="descripcionmia">Funciones: {{ pasan.descripcion_funciones_practicas }}</p>
+                                        </div>
+                                    </div>
+
+                                
+                                
+                            </div>
+                            <div v-else>
+                                <p>No hay Experienciasas En Pasantías Almacenados.</p>
+                            </div>
+                        </div>
+                        
+                        
+
+                    </div>
+                </div>
+            </section>
+            <section class="resume py-5 d-lg-flex justify-content-center align-items-center" id="resume">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12">
+                            <h2 class="mb-4">Formación Académica - Bachillerato</h2>
+
+                            <div class="timeline" v-if="titulosBachiller.length > 0">
+                                
+                                    <div class="timeline-wrapper" v-for="(bachi, index) in titulosBachiller" :key="index">
+                                        <div class="timeline-yr">
+                                            <span>{{ new Date(bachi.fecha_graduacion_bachiller ).getFullYear()}}</span>
+                                        </div>
+                                        <div class="timeline-info">
+                                            <h3>
+                                                <span>Título: {{ bachi.titulo_bachiller_obtenido }} </span>
+                                            </h3>
+                                            <h3>
+                                                <small>Institución: {{ bachi.institucion_bachiller }}</small>
+                                            </h3>
+                                            <p>Especialidad: {{ bachi.especialidad_bachiller }}</p>
+                                        </div>
+                                    </div>
+
+                                
+                                
+                            </div>
+                            <div v-else>
+                                <p>No hay Formación Académica de Bachillerato Almacenados.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <h2 class="mb-4 mobile-mt-2">Formación Académica - Universidad</h2>
+
+                            <div class="timeline" v-if="titulosUniversitarios.length > 0">
+                               
+                                    <div class="timeline-wrapper" v-for="(uni, index) in titulosUniversitarios" :key="index">
+                                        <div class="timeline-yr">
+                                            <span>{{ new Date(uni.fecha_graduacion ).getFullYear()}}</span>
+                                        </div>
+                                        <div class="timeline-info">
+                                            <h3>
+                                                <span>Título: {{ uni.titulo_universitario_obtenido }} </span>
+                                            </h3>
+                                            <h3>
+                                                <small>Institución: {{ uni.institucion_universitaria }}</small>
+                                            </h3>
+                                            <p>Especialidad: {{ uni.especialidad }}</p>
+                                        </div>
+                                    </div>
+
+                                
+                                
+                            </div>
+                            <div v-else>
+                                <p>No hay Formación Académica de Universidad Almacenados.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-12 text-center novato">
+                            <h2 class="mb-4 mobile-mt-2">Formación Académica - Posgrado</h2>
+
+                            <div class="timeline text-center" v-if="titulosPosgrado.length > 0">
+                                
+                                    <div class="timeline-wrapper text-center" v-for="(posgra, index) in titulosPosgrado" :key="index">
+                                        <div class="timeline-yr text-center">
+                                            <span>{{ new Date(posgra.fecha_graduacion_posgrado ).getFullYear()}}</span>
+                                        </div>
+                                        <div class="timeline-info text-center">
+                                            <h3>
+                                                <span>Título: {{ posgra.titulo_posgrado_obtenido }} </span>
+                                            </h3>
+                                            <h3>
+                                                <small>Institución: {{ posgra.institucion_posgrado }}</small>
+                                            </h3>
+                                            <p>Especialidad: {{ posgra.especialidad_posgrado }}</p>
+                                        </div>
+                                    </div>
+
+                               
+                                
+                            </div>
+                            <div v-else>
+                                <p>No hay Formación Académica De Posgrado Almacenados.</p>
+                            </div>
+                        </div>
+                        
+                        
+
+                    </div>
+                </div>
+            </section>
+            <!-- Habilidades Start -->
+            <div class="habili container-fluid py-6" id="Habilidades">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="d-flex align-items-center mb-5">
+                                <div class="years flex-shrink-0 text-center me-4">
+                                    <h1 class="display-1 mb-0">Mis</h1>
+                                    <h5 class="mb-0">Habilidades</h5>
+                                </div>
+                                
+                            </div>
+                            <p class="mb-4">Aquí están todas mis habilidades tales como: </p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Comunicativas</p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Creativas</p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Liderazgo</p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Informáticas</p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Oficios/Subactividades</p>
+                            <p class="mb-3"><i class="far fa-check-circle text-primary me-3"></i>Otras Habilidades</p>
+                        </div>
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="row g-3 mb-4">
+                                <div class="col-sm-6">
+                                    <img class="img-fluid rounded anima2" src="@/assets/images/habilidadesoiad.jpg" alt="">
+                                </div>
+                                <div class="col-sm-6">
+                                    <img class="img-fluid rounded anima2" src="@/assets/images/habilidadimg.jpg" alt="">
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills rounded border border-2 border-primary mb-5">
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5 active" data-bs-toggle="pill" href="#tab1-1">Habilidades Comunicativas</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab1-2">Habilidades Creativas</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab1-3">Habilidades de Liderazgo</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab1-4">Habilidades Informáticas</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab1-5">Oficios/Subactividades</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab1-6">Otras Habilidades</button>
+                                </li>
+                                
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab1-1" class="tab-pane fade show p-0 active" v-if="habilidades_comunicativas_array.length > 0">
+                                    <div class="row gy-5 gx-4" >
+                                        <div class="col-sm-6" v-for="(habi1, index) in habilidades_comunicativas_array" :key="index">
+                                            
+                                            <h5>{{ habi1.habilidades_comunicativas }}</h5>
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi1.descripcion_habilidades_comunicativas }}</h6>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div id="tab1-2" class="tab-pane fade show p-0" v-if="habilidades_creativas_array.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(habi2, index) in habilidades_creativas_array" :key="index">
+                                            
+                                            <h5>{{ habi2.habilidades_creativas }}</h5>
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi2.descripcion_habilidades_creativas }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                <div id="tab1-3" class="tab-pane fade show p-0" v-if="habilidades_liderazgo_array.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(habi3, index) in habilidades_liderazgo_array" :key="index">
+                                           
+                                            <h5>{{ habi3.habilidades_liderazgo }}</h5>
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi3.descripcion_habilidades_liderazgo }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                               
+                                <div id="tab1-4" class="tab-pane fade show p-0" v-if="habilidades_informaticas_array.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(habi4, index) in habilidades_informaticas_array" :key="index">
+                                            
+                                            <h5>{{ habi4.habilidades_informaticas_cv }}</h5>
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi4.descripcion_habilidades_informaticas_cv }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                <div id="tab1-5" class="tab-pane fade show p-0" v-if="oficios_subactividades_array.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(habi5, index) in oficios_subactividades_array" :key="index">
+                                            
+                                            <h5>{{ habi5.oficios_subactividades }}</h5>
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi5.descripcion_oficios_subactividades }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                <div id="tab1-6" class="tab-pane fade show p-0" v-if="otro_habilidades_array.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(habi6, index) in otro_habilidades_array" :key="index">
+                                            
+                                            <hr class="text-primary my-2">
+                                            
+                                            <h6 class="mb-0 descripcionmia">Descripción: {{ habi6.otro_habilidades }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <!-- About End -->
+            <!-- Idiomas Y Cursos -->
+            <div class="idomm container-fluid py-6 pb-5" id="Idiomas">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <h1 class="display-5 mb-5">Idiomas, Cursos y Publicacciones</h1>
+                            <p class="mb-4">Información sobre los idiomas que domino incluyendo su comprensión y expresión del mismo. También se encuentra información sobre los cursos que he realizado
+                            .También información sobre mis publicaciones.
+                            </p>
+                            
+                           
+                        </div>
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                            <ul class="nav nav-pills rounded border border-2 border-primary mb-5">
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5 active" data-bs-toggle="pill" href="#tab-1">Idiomas</button>
+                                </li>
+                                <li class="nav-item w-50">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab-2">Cursos</button>
+                                </li>
+                                <li class="nav-item w-100">
+                                    <button class="nav-link w-100 py-3 fs-5" data-bs-toggle="pill" href="#tab-3">Publicacciones</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane fade show p-0 active" v-if="idiomasarray.length > 0">
+                                    <div class="row gy-5 gx-4" >
+                                        <div class="col-sm-6" v-for="(idio, index) in idiomasarray" :key="index">
+                                            <h5>{{ idio.idioma }}</h5>
+                                            <hr class="text-primary my-2">
+                                            <p class="text-primary mb-1">Niveles del Idioma</p>
+                                            <h6 class="mb-0">Comprensión Aduitiva: {{ idio.comprension_auditiva }}</h6>
+                                            <h6 class="mb-0">Comprensión Lectura: {{ idio.comprension_lectura }}</h6>
+                                            <h6 class="mb-0">Interacción Oral: {{ idio.interaccion_oral }}</h6>
+                                            <h6 class="mb-0">Expresión Oral: {{ idio.expresion_oral }}</h6>
+                                            <h6 class="mb-0">Expresión Escrita: {{ idio.expresion_escrita }}</h6>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div id="tab-2" class="tab-pane fade show p-0" v-if="curso_capacitacionarray.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(capa, index) in curso_capacitacionarray" :key="index">
+                                            <h5>{{ capa.nombre_evento }}</h5>
+                                            <hr class="text-primary my-2">
+                                            <p class="text-primary mb-1">Desde: {{ capa.fecha_inicio_curso }} - Hasta: {{ capa.fecha_fin_curso }}</p>
+                                            <h6 class="mb-0">Institución: {{ capa.intitucion_curso }}</h6>
+                                            <h6 class="mb-0">Tipo de Evento: {{ capa.tipo_evento }}</h6>
+                                            <h6 class="mb-0">Área de Estudios: {{ capa.area_estudios }}</h6>
+                                            <h6 class="mb-0">Nº Días: {{ capa.dias_curso }}</h6>
+                                            <h6 class="mb-0">Nº Horas: {{ capa.horas_curso }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                
+                                <div id="tab-3" class="tab-pane fade show p-0" v-if="publicacionesarray.length > 0">
+                                    <div class="row gy-5 gx-4">
+                                        <div class="col-sm-6" v-for="(publi, index) in publicacionesarray" :key="index">
+                                            <h5>{{ publi.publicacion_titulo }}</h5>
+                                            <hr class="text-primary my-2">
+                                            <p class="text-primary mb-1">Más Información sobre la Publicación</p>
+                                            <h6 class="mb-0">Tipo de Publicación: {{ publi.publicacion_tipo }}</h6>
+                                            <h6 class="mb-0">Ha estado en Congreso o Eventos: {{ publi.congreso_evento }}</h6>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Descargas -->
+            <section class="project py-5">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-11 text-center mx-auto">
+
+                            <div class="col-lg-8 mx-auto">
+                                <h2>Historial de Descargas de CVN</h2>
+                                <p class="text-muted">Aquí encontrarás tus descargas de CVN realizadas</p>
+                            </div>
+                            <!-- Tabla de Descargas -->
+                            <div class="table-responsive">
+                                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                    <thead>
+                                        <tr class="text-dark">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Código de Descarga</th>
+                                            <th scope="col">Fecha de Descarga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="contenido">
+                                        <!-- Usamos la propiedad computada que contiene solo los 10 más recientes -->
+                                        <tr v-if="cargando">
+                                            <td colspan="3">
+                                                <div class="spinner-border text-primary d-flex justify-content-center" role="status">
+                                                    <span class="visually-hidden">Cargando...</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr v-else-if="top10Historial.length === 0">
+                                            <td colspan="3" class="text-center text-secondary">
+                                                No hay registros de descargas recientes para mostrar.
+                                            </td>
+                                        </tr>
+                                        <tr v-else v-for="us in top10Historial" :key="us.id">
+                                            <td class="text-dark" v-text="us.id"></td>
+                                            <td class="text-dark" v-text="us.codigo_unico"></td>
+                                            <td class="text-dark" v-text="us.fecha_generacion"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Indicador de total de registros si hay más de 10 -->
+                            <p v-if="historialdescargas.length > 10" class="text-muted mt-3">
+                                Mostrando los {{ top10Historial.length }} registros más recientes de un total de {{ historialdescargas.length }}.
+                            </p>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Ofertas de Empleo -->
+            <div class="p-4 rounded" v-if="this.opciongraduado">
+                <p>Al ser estudiante graduado, conocerás las ofertas de empleo que la Bolsa de empleos de la UTLVTE ofrece</p>
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas Más Recientes</h4>
+                        <p class="text-dark">Aquí encontrarás las ofertas más recientes con las empresas que la UTLVTE tiene
+                        convenios</p><br>
+                        <form class="row g-5 mt-5">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-xl-12">
+                                        <div class="input-group-icon">
+                                            <select v-model="categoriaSeleccionada" class="form-select form-voyage-select input-box text-dark"
+                                                id="inputPersonOne">
+                                                <option value="" selected>
+                                                Categorías / Área
+                                                </option>
+                                                <option value="Administración y RRHH">Administración y RRHH</option>
+                                                <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                                <option value="Comercial">Comercial</option>
+                                                <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                                público
+                                                </option>
+                                                <option value="Educación y Docencia">Educación y Docencia</option>
+                                                <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                                <option value="Ingenierías">Ingenierías</option>
+                                                <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                                <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                                Comunicación y Diseño
+                                                </option>
+                                                <option value="Oficios">Oficios</option>
+                                                <option value="Producción y Operarios">Producción y Operarios</option>
+                                                <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                                Bioquímica</option>
+                                                <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                                <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                                <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                                <option value="Textil">Textil</option>
+                                                <option value="Ventas">Ventas</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="row justify-content-center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div v-for="ofe in ofertasFiltradas.slice(0, 10)" :key="ofe.id"
+                                class="border border-primary rounded position-relative mx-4 my-3">
+
+                                <div>
+                                    <div v-if="new Date(ofe.fechaFinOferta) <= new Date()"
+                                    class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                                    Ofertas Caducada</div>
+                                    <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                    style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="p-4 rounded-bottom">
+                                    <div class="row">
+                                    <div class="col-md-12 col-lg-4">
+                                        <div class="text-center">
+
+                                        <img v-if="ofe.imagen" :src="'data:image/jpeg;base64,' + ofe.imagen" width="100%" height="300"
+                                            style="border-radius: 5px; object-fit: cover;" />
+                                        <img v-else src="https://emprendedores.biz/wp-content/uploads/2023/08/QEE-2.png" width="100%"
+                                            height="300" style="border-radius: 10px; object-fit: cover;" />
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-12 col-md-8">
+                                        <h4>{{ ofe.titulo }}</h4>
+                                        <h6>Fecha de publicación: {{ new Date(ofe.created_at).toLocaleDateString('es-ES') }}</h6>
+                                        <div v-if="new Date(ofe.fechaFinOferta) > new Date() && tiemposRestantes[ofe.id]">
+                                            <h6 class="text-success">
+                                                {{ calcularDiasRestantes(ofe.fechaFinOferta) }} - Tiempo restante:
+                                                <span :class="{
+                                                    'text-success': !tiemposRestantes[ofe.id].includes('Caducada'),
+                                                    'text-danger': tiemposRestantes[ofe.id].includes('Caducada')
+                                                    }">
+                                                    {{ tiemposRestantes[ofe.id] }}
+                                                </span>
+                                            </h6>
+                                        </div>
+                                        <div v-else>
+                                            <h6 class="text-danger">La oferta ya caducó</h6>
+                                        </div>
+                                        <h6>Categoría / Área: {{ ofe.categoria }}</h6>
+                                        <p class="text-dark descripcionmia">{{ ofe.descripcion }}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">Nombre de la Empresa: {{ ofe.Empresa }}</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <br><br><br>
+                                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank"
+                                                class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </form>
+                        <div v-if="ofertas.length === 0" class="text-center">
+                            <h3>No hay Ofertas publicadas</h3>
+                        </div>
+                        <div v-else class="d-flex justify-content-center">
+                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank" class="btn btn-primary text-white"><i
+                                class="fa-solid fa-eye me-2 text-white"></i> Ver todas las ofertas en la Bolsa de Empleo de la UTLVTE</a>
+                        </div>
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="bg-white p-4 rounded" v-if="this.opciongraduado">
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas en sitios webs</h4>
+                        <p class="text-dark">Aquí encontrarás ofertas en sitios webs, si deseas verlos puedes dar clic y te
+                        lllevará al sitio donde se encuentra publicado</p><br>
+                        <h3>Aun no se pueden ver ofertas de sitios web</h3>
+                        <!--<form class="container-fluid row g-1 mt-1">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <div class="input-group-icon">
+                                        <select v-model="categoriaSeleccionada"
+                                            class="form-select form-voyage-select input-box text-dark" id="inputPersonOne">
+                                            <option value="" selected>
+                                            Categorías / Área
+                                            </option>
+                                            <option value="Administración y RRHH">Administración y RRHH</option>
+                                            <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                            <option value="Comercial">Comercial</option>
+                                            <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                            público
+                                            </option>
+                                            <option value="Educación y Docencia">Educación y Docencia</option>
+                                            <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                            <option value="Ingenierías">Ingenierías</option>
+                                            <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                            <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                            Comunicación y Diseño
+                                            </option>
+                                            <option value="Oficios">Oficios</option>
+                                            <option value="Producción y Operarios">Producción y Operarios</option>
+                                            <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                            Bioquímica</option>
+                                            <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                            <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                            <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                            <option value="Textil">Textil</option>
+                                            <option value="Ventas">Ventas</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="owl-carousel vegetable-carousel justify-content-center">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h3>Aun no se pueden ver ofertas de sitios web</h3>
+                                    
+                                    <div v-for="ofe in ofertasFiltradas.slice(0, 10)" :key="ofe.id"
+                                    class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+
+                                    <div>
+                                        <div v-if="new Date(ofe.fechaFinOferta) <= new Date()"
+                                        class="text-white bg-danger px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Caducada</div>
+                                        <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                    </div>
+                                    <div class="p-4 rounded-bottom">
+                                        <h4>{{ ofe.titulo }}</h4>
+                                        <h6>Fecha de publicación: {{ new Date(ofe.created_at).toLocaleDateString('es-ES') }}</h6>
+                                        <div v-if="new Date(ofe.fechaFinOferta) > new Date() && tiemposRestantes[ofe.id]">
+                                        <h6 class="text-success">
+                                            {{ calcularDiasRestantes(ofe.fechaFinOferta) }} - Tiempo restante:
+                                            <span :class="{
+                                            'text-success': !tiemposRestantes[ofe.id].includes('Caducada'),
+                                            'text-danger': tiemposRestantes[ofe.id].includes('Caducada')
+                                            }">
+                                            {{ tiemposRestantes[ofe.id] }}
+                                            </span>
+                                        </h6>
+                                        </div>
+                                        <div v-else>
+                                        <h6 class="text-danger">La oferta ya caducó</h6>
+                                        </div>
+                                        <h6>Categoría / Área: {{ ofe.categoria }}</h6>
+                                        <p class="text-dark">Descripcion: {{ ofe.descripcion }}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <p class="text-dark fs-5 fw-bold mb-0">Nombre de la Empresa: {{ ofe.Empresa }}</p>
+                                        <router-link :to="{ path: '/postularse/' + idus + '/' + ofe.id }"
+                                            class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                            class="fa-solid fa-eye me-2 text-primary"></i> Ver Detalle</router-link>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                </form>
+                                <div v-if="ofertas.length === 0" class="text-center">
+                                <h3>No hay Ofertas publicadas</h3>
+                                </div>-->
+
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="bg-white p-4 rounded"v-if="this.opciongraduado"> 
+                <div class="news-2">
+                    <h3 class="mb-4"></h3>
+                </div>
+                <div class="container-fluid py-5" id="ofertasrecientes">
+
+                    <div class="container-fluid py-5">
+                        <h4 class="mb-0 display-4">Ofertas de emprendimientos</h4>
+                        <p class="text-dark">Aquí encontrarás ofertas de estudiantes que tienen emprendimientos y desean que
+                        postules a ellas.</p><br>
+                        <form class="container-fluid row g-1 mt-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <label class="text-dark" for="">Filtrar Ofertas Por:</label><br>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-xl-5">
+                                        <div class="input-group-icon">
+                                            <select v-model="categoriaSeleccionada2" class="form-select form-voyage-select input-box text-dark"
+                                                id="inputPersonOne">
+                                                <option value="" selected>
+                                                    Categorías / Área
+                                                </option>
+                                                <option value="Administración y RRHH">Administración y RRHH</option>
+                                                <option value="Arquitectura y Producción">Arquitectura y Producción</option>
+                                                <option value="Comercial">Comercial</option>
+                                                <option value="Comercial, Negocios y Atención al público">Comercial, Negocios y Atención al
+                                                público
+                                                </option>
+                                                <option value="Educación y Docencia">Educación y Docencia</option>
+                                                <option value="Hotelería, Gastronomía y Turismo">Hotelería, Gastronomía y Turismo</option>
+                                                <option value="Ingenierías">Ingenierías</option>
+                                                <option value="Logística y Abastecimiento">Logística y Abastecimiento</option>
+                                                <option value="Marketing, Publicidad, Comunicación y Diseño">Marketing, Publicidad,
+                                                Comunicación y Diseño
+                                                </option>
+                                                <option value="Oficios">Oficios</option>
+                                                <option value="Producción y Operarios">Producción y Operarios</option>
+                                                <option value="Salud, Medicina, Farmacia y Bioquímica">Salud, Medicina, Farmacia y
+                                                Bioquímica</option>
+                                                <option value="Secretaría y Recepción">Secretaría y Recepción</option>
+                                                <option value="Seguridad y Vigilancia">Seguridad y Vigilancia</option>
+                                                <option value="Tecnología y Sistemas">Tecnología y Sistemas</option>
+                                                <option value="Textil">Textil</option>
+                                                <option value="Ventas">Ventas</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="justify-content-center">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div v-for="ofe2 in ofertasemprendFiltradas.slice(0, 10)" :key="ofe2.id"
+                                class="border border-primary rounded position-relative vesitable-item mx-2 my-3">
+
+                                    <div>
+                                        <div v-if="new Date(ofe2.fechaFinOferta) <= new Date()"
+                                        class="text-white bg-danger px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">
+                                        Ofertas Caducada</div>
+                                        <div v-else class="text-white bg-primary px-3 py-1 rounded position-absolute"
+                                        style="top: 10px; right: 10px;">Ofertas Recientes</div>
+
+                                    </div>
+                                    <div class="p-4 rounded-bottom">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-3">
+                                                <div class="text-center">
+
+                                                    <img v-if="ofe2.logo" :src="'data:image/jpeg;base64,' + ofe2.logo" width="100%" height="300"
+                                                        style="border-radius: 10px; object-fit: cover;" />
+                                                    <img v-else src="https://emprendedores.biz/wp-content/uploads/2023/08/QEE-2.png" width="100%"
+                                                        height="300" style="border-radius: 10px; object-fit: cover;" />
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-12 col-lg-8">
+                                                <h4>{{ ofe2.titulo }}</h4>
+                                                <h6>Fecha de publicación: {{ new Date(ofe2.created_at).toLocaleDateString('es-ES') }}</h6>
+                                                <div v-if="new Date(ofe2.fechaFinOferta) > new Date() && tiemposRestantes2[ofe2.id]">
+                                                    <h6 class="text-success">
+                                                        {{ calcularDiasRestantes(ofe2.fechaFinOferta) }} - Tiempo restante:
+                                                        <span :class="{
+                                                        'text-success': !tiemposRestantes2[ofe2.id].includes('Caducada'),
+                                                        'text-danger': tiemposRestantes2[ofe2.id].includes('Caducada')
+                                                        }">
+                                                        {{ tiemposRestantes2[ofe2.id] }}
+                                                        </span>
+                                                    </h6>
+                                                </div>
+                                                <div v-else>
+                                                    <h6 class="text-danger">La oferta ya caducó</h6>
+                                                </div>
+                                                <h6>Categoría / Área: {{ ofe2.categoria }}</h6>
+                                                <p class="text-dark">Descripcion: {{ ofe2.descripcion }}</p>
+                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">Nombre del Emprendimiento: {{ ofe2.Empresa }}</p>
+                                                </div>
+                                                <div class="text-center">
+                                                    <br><br><br>
+                                                    <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank"
+                                                        class="btn border border-secondary rounded-pill px-3 text-primary"><i
+                                                        class="fa-solid fa-eye me-2 icom"></i> Ver Detalle Completo</a>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </form>
+                        <div v-if="ofertas_emprendi.length === 0" class="text-center">
+                            <h3>No hay Ofertas publicadas</h3>
+                        </div>
+                        <div v-else class="d-flex justify-content-center">
+                            <a href="http://vinculacionconlasociedad.utelvt.edu.ec/b_e/" target="_blank" class="btn btn-primary text-white"><i
+                                class="fa-solid fa-eye me-2 text-white"></i> Ver Todas las ofertas de
+                                emprendimientos en la Bolsa de Empleo de la UTLVTE</a>
+                        </div>
+                        <br><br>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
 
-      <div class="mouse">
-        <a href="#" class="mouse-icon">
-          <div class="mouse-wheel"><span class="fas fa-angle-double-down"></span></div>
-        </a>
-      </div>
-
-    </section>
-    <br>
-    <br>
-    <br>
-    <br>
-    <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb py-5" id="about-section">
-      <div class="container">
-        <div class="row d-flex no-gutters">
-          <div class="col-md-6 col-lg-6 d-flex">
-            <div class="img-about img d-flex align-items-stretch">
-              <div class="overlay"></div>
-              <div class="img1 d-flex align-self-stretch align-items-center"
-                :style="{ backgroundImage: `url(${aboutImage})` }">
-              </div>
+    </div>
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true"
+        ref="pdfModal">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfModalLabel">Manual de Usuario de la Plataforma CVN</h5>
+                    <button type="button" class="btn-close" @click="closePdfModal()"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <!-- Iframe con el PDF -->
+                    <object :key="pdfKey" :data="`${pdfUrl}#page=${pdfPage}`" type="application/pdf" width="100%" height="600">
+                        <p>
+                            Tu navegador no soporta PDFs embebidos.
+                            <a :href="`${pdfUrl}#page=${pdfPage}`" target="_blank" rel="noopener">
+                                Ábrelo aquí
+                            </a>.
+                        </p>
+                    </object>
+                </div>
             </div>
-          </div>
-          <div class="col-md-6 col-lg-6 pl-md-5 py-5 px-4">
-            <div class="row justify-content-start pb-3">
-              <div class="col-md-12 heading-section ftco-animate">
-                <h2 class="mb-4">Sobre Mi</h2>
-                <p>A small river named Duden flows by their place and supplies it with the necessary
-                  regelialia.</p>
-                <ul class="about-info mt-4 px-md-0 px-2">
-                  <li class="d-flex"><span>Nombres:</span> <span class="text-dark">Ronaldo Fredrickson</span></li>
-                  <li class="d-flex"><span>Apellidos:</span> <span class="text-dark">Ronaldo Fredrickson</span></li>
-                  <li class="d-flex"><span>Fecha de Nacimiento:</span> <span class="text-dark">November 28, 1989</span>
-                  </li>
-                  <li class="d-flex"><span>Edad:</span> <span class="text-dark">November 28, 1989</span></li>
-                  <li class="d-flex"><span>Direccion:</span> <span class="text-dark">San Francisco CA 97987 USA</span>
-                  </li>
-                  <li class="d-flex"><span>Email:</span> <span class="text-dark">ronaldo@gmail.com</span></li>
-                  <li class="d-flex"><span>Teléfono: </span> <span class="text-dark">+1-2234-5678-9-0</span></li>
-                </ul>
-              </div>
-            </div>
-            <div class="counter-wrap ftco-animate d-flex mt-md-3">
-              <div class="text">
-                <p class="mb-4">
-                  <span class="number" data-number="120">0</span>
-                  <span>Artículos Publicados</span>
-                </p>
-                <p><a href="#" class="btn btn-primary py-3 px-3">Descargar CV</a></p>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <nav id="navi">
-              <ul>
-                <li><a href="#page-1">Education</a></li>
-                <li><a href="#page-2">Experience</a></li>
-                <li><a href="#page-3">Awards</a></li>
-                <!-- <li><a href="#page-4">Awards</a></li>-->
-              </ul>
-            </nav>
-          </div>
-          <div class="col-md-9">
-            <div id="page-1" class="page one">
-              <h2 class="heading">Education</h2>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-graduation-cap"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Bachelor of Science in Computer Science</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-graduation-cap"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Computer Processing Systems/Computer Software</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-graduation-cap"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Diploma in Computer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-graduation-cap"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Art &amp; Creative Director</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-            </div>
-
-            <div id="page-2" class="page two">
-              <h2 class="heading">Experience</h2>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Software Developer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Web Designer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Web Marketing</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas	fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Art &amp; Creative Director</h2>
-                  <span class="position">Side Tech</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas	fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Wordpress Developer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas	fas fa-building"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2017-2018</span>
-                  <h2 class="titulobach">UI/UX Designer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-            </div>
-            <!--  
-          <div id="page-3" class="page three">
-            <h2 class="heading">Skills</h2>
-            <div class="row progress-circle mb-5">
-              <div class="col-lg-4 mb-4">
-                <div class="bg-white rounded-lg shadow p-4">
-                  <h2 class="h5 font-weight-bold text-center mb-4">CSS</h2>
-
-                  <!-- Progress bar 1 
-                  <div class="progress mx-auto" data-value='90'>
-                    <span class="progress-left">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <div
-                      class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                      <div class="h2 font-weight-bold">90<sup class="small">%</sup></div>
-                    </div>
-                  </div>
-                  END -->
-
-            <!-- Demo info 
-                  <div class="row text-center mt-4">
-                    <div class="col-6 border-right">
-                      <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
-                    </div>
-                    <div class="col-6">
-                      <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
-                    </div>
-                  </div>
-                   END 
-                </div>
-              </div>
-
-              <div class="col-lg-4 mb-4">
-                <div class="bg-white rounded-lg shadow p-4">
-                  <h2 class="h5 font-weight-bold text-center mb-4">HTML</h2>
-
-                  <!-- Progress bar 1 
-                  <div class="progress mx-auto" data-value='80'>
-                    <span class="progress-left">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <div
-                      class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                      <div class="h2 font-weight-bold">80<sup class="small">%</sup></div>
-                    </div>
-                  </div>
-                   END -->
-
-            <!-- Demo info 
-                  <div class="row text-center mt-4">
-                    <div class="col-6 border-right">
-                      <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
-                    </div>
-                    <div class="col-6">
-                      <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
-                    </div>
-                  </div>
-                   END 
-                </div>
-              </div>
-
-              <div class="col-lg-4 mb-4">
-                <div class="bg-white rounded-lg shadow p-4">
-                  <h2 class="h5 font-weight-bold text-center mb-4">jQuery</h2>
-
-                  <!-- Progress bar 1 
-                  <div class="progress mx-auto" data-value='75'>
-                    <span class="progress-left">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <span class="progress-right">
-                      <span class="progress-bar border-primary"></span>
-                    </span>
-                    <div
-                      class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                      <div class="h2 font-weight-bold">75<sup class="small">%</sup></div>
-                    </div>
-                  </div>
-                  <!-- END -->
-
-            <!-- Demo info 
-                  <div class="row text-center mt-4">
-                    <div class="col-6 border-right">
-                      <div class="h4 font-weight-bold mb-0">28%</div><span class="small text-gray">Last week</span>
-                    </div>
-                    <div class="col-6">
-                      <div class="h4 font-weight-bold mb-0">60%</div><span class="small text-gray">Last month</span>
-                    </div>
-                  </div>
-                  END 
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>Photoshop</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-1" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                      aria-valuemax="100" style="width:90%">
-                      <span>90%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>jQuery</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-2" role="progressbar" aria-valuenow="85" aria-valuemin="0"
-                      aria-valuemax="100" style="width:85%">
-                      <span>85%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>HTML5</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-3" role="progressbar" aria-valuenow="95" aria-valuemin="0"
-                      aria-valuemax="100" style="width:95%">
-                      <span>95%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>CSS3</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-4" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                      aria-valuemax="100" style="width:90%">
-                      <span>90%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>WordPress</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-5" role="progressbar" aria-valuenow="70" aria-valuemin="0"
-                      aria-valuemax="100" style="width:70%">
-                      <span>70%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 animate-box">
-                <div class="progress-wrap ftco-animate">
-                  <h3>SEO</h3>
-                  <div class="progress">
-                    <div class="progress-bar color-6" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                      aria-valuemax="100" style="width:80%">
-                      <span>80%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>-->
-            <div id="page-3" class="page three">
-              <h2 class="heading">Awards</h2>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-award"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Top 10 Web Developer</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-award"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Top 5 LeaderShip Exellence Winner</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-award"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Top 4 Web Tester</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-              <div class="resume-wrap d-flex ftco-animate">
-                <div class="icon d-flex align-items-center justify-content-center">
-                  <span class="flaticon-ideas fas fa-award"></span>
-                </div>
-                <div class="text pl-3">
-                  <span class="date">2014-2015</span>
-                  <h2 class="titulobach">Art &amp; Creative Director</h2>
-                  <span class="position">Cambridge University</span>
-                  <p>A small river named Duden flows by their place and supplies it with the necessary
-                    regelialia. It is a paradisematic country, in which roasted parts of sentences fly
-                    into your mouth.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Botón para Subir Start -->
-  <a href="#" class="btn btn-primary btn-md-square back-to-top">
-    <i class="fa fa-arrow-up"></i>
-  </a>
-  <!-- Botón para Subir End -->
-
+    </div>
+    <!-- Botón para Subir Start -->
+    <a href="#" class="btn btn-primary btn-md-square back-to-top">
+        <i class="fa fa-arrow-up"></i>
+    </a>   
+     <!-- Botón para Subir End -->
 </template>
 <style scoped>
 @import url("@/assets/styles/tooplate-style.css");
-@import url("@/assets/styles/docentestyles.css");
+
+@import url("@/assets/styles/unicons.css");
 </style>
 <script>
-//Importar Librerías y Archivos Js
 import script2 from "@/store/custom.js";
-import axios from "axios";
+import API from '@/store/axios';
+import axios from 'axios';
 import { useRoute } from "vue-router";
 import store from "@/store";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/es';
+import QRCode from "qrcode";
+import { v4 as uuidv4 } from "uuid";
 import jsPDF from 'jspdf';
-import { mostraralertas2, enviarsolig, enviarsoliedit, confimar } from '@/store/funciones';
+import html2canvas from 'html2canvas';
+import { getMe } from '@/store/auth'; 
+import { mostraralertas2, enviarsolig, enviarsoliedit, confimar, enviarsoligqr, enviarsoligfoot } from '@/store/funciones';
+
+
+dayjs.extend(relativeTime);
+dayjs.extend(localizedFormat);
+dayjs.locale('es');
+
 export default {
-  data() {
-    return {
-      idus: 0,
-      editingIndex: null,
-      editingIndex2: null,
-      //DAtos 
-      fecha_inicio_empresa2: '',
-      fecha_graduacion2: '',
-      fecha_inicio_practicas2: '',
-      fecha_graduacion_posgrado2: '',
-      fecha_finalizacion_curso2: '',
-
-      usuarios: null,
-      editus: false,
-      registro: false,
-      us: true,
-      //Datos Personales
-      url1: "http://cvubackendv2.test/api/cvn/v1/informacionpersonald",
-      iddatos_personales: 0,
-      datos_personales: null,
-      mostrardatospersonales: true,
-      CIInfPer: "",
-      ApellInfPer: "",
-      ApellMatInfPer: "",
-      NombInfPer: "",
-      NacionalidadPer: "",
-      LugarNacimientoPer: "",
-      FechNacimPer: "",
-      GeneroPer: "",
-      CiudadPer: "",
-      DirecDomicilioPer: "",
-      Telf1InfPer: "",
-      mailPer: "",
-      imagen: "",
-      edad: "",
-
-      //Formacion Academica
-      url2: "http://cvubackendv2.test/api/cvn/v1/formacion_academica",
-      url11: "http://cvubackendv2.test/api/cvn/v1/fichasocioeconomica",
-      idformacion_academica: 0,
-      idfichasocioeconomica: 0,
-      formacion_academica: null,
-      mostrarformacionacademica: true,
-      univer: false,
-      posgrado: false,
-      modoedition: false,
-      bachiler: false,
-      sidatos: true,
-      mostraridformacion_academica: false,
-      registrosbachiller: false,
-      titulosUniversitarios: [],
-      titulosPosgrado: [],
-      titulosBachiller: [],
-      //  título universitario
-      nuevoTituloUniversitario: {
-        titulo_universitario_obtenido: "",
-        institucion_universitaria: "",
-        fecha_graduacion: "",
-        especialidad: ""
-      },
-      tituloUniversitarioEditIndex: null,
-      // nuevo título de posgrado
-      nuevoTituloPosgrado: {
-        titulo_posgrado_obtenido: "",
-        institucion_posgrado: "",
-        fecha_graduacion_posgrado: "",
-        especialidad_posgrado: ""
-      },
-      tituloPosgradoEditIndex: null,
-      // nuevo título de Bachiller
-      nuevoTituloBachiller: {
-        titulo_bachiller_obtenido: "",
-        institucion_bachiller: "",
-        fecha_graduacion_bachiller: "",
-        especialidad_bachiller: ""
-      },
-      tituloBachillerEditIndex: null,
-
-      estudios_universitarios_culminados: "",
-      estudios_posgrado_culminados: "",
-      estudios_bachiller_culminados: "",
-      currentDate: this.obtenerfechaactual(),
-
-
-      regresar2: false,
-
-      //Experiencias Profesionales
-      url3: "http://cvubackendv2.test/api/cvn/v1/experiencia_profesionale",
-      idexperiencias_profesionales: 0,
-      experiencias_profesionales: null,
-      mostrarexperienciasprofesionales: true,
-      cargos: false,
-      practica: false,
-      //Estructura para las tablas
-      cargosEmpresas: [],
-      cargosPasantias: [],
-      //  Empresas
-      nuevocargosEmpresas: {
-        empresa_institucion: "",
-        fecha_inicio_empresa: "",
-        fecha_fin_empresa: "",
-        cargo_desempenado_empresa: "",
-        descripcion_funciones_empresa: "",
-        logros_resultados_empresa: "",
-      },
-      cargosEmpresasEditIndex: null,
-      // Practicas
-      nuevocargosPasantias: {
-        empresa_institucion_practicas: "",
-        fecha_inicio_practicas: "",
-        fecha_fin_practicas: "",
-        area_trabajo_practicas: "",
-        descripcion_funciones_practicas: "",
-      },
-      cargosPasantiasEditIndex: null,
-      cargos_desempenados: "",
-      practicas_profesionales: "",
-      fechacargos: "",
-      fechaFinLabel: "",
-      fechaFinDisabled: false,
-      trabajo: false,
-      trabajonuevo: false,
-      regresar3: false,
-
-      //fechas del curso
-      fechacursos: "",
-      fechaFinLabelCursos: "",
-      fechaFincursoDisabled: false,
-      trabajocursos: false,
-      fechacursofinactual: false,
-
-
-
-      //Investigacion y publicaciones
-      url4: "http://cvubackendv2.test/api/cvn/v1/investigacion_publicacione",
-      idinvestigacion_publicaciones: 0,
-      investigacion_publicaciones: null,
-      mostrarinvestigacionpublicaciones: true,
-      investiga: false,
-
-      publicaciones: "",
-      publicacionesarray: [],
-      //  Publicaciones
-      nuevaspublicaciones: {
-        publicacion_tipo: "",
-        publicacion_titulo: "",
-        link_publicación: "",
-        congreso_evento: "",
-      },
-      publicacionesEditIndex: null,
-
-      regresar4: false,
-      //Idioma
-      url5: "http://cvubackendv2.test/api/cvn/v1/idioma",
-      idlenguaje: 0,
-      lenguaje: null,
-      mostraridiomas: true,
-
-      idiomasarray: [],
-      //  Idiomas
-      nuevosidiomas: {
-        idioma: "",
-        comprension_auditiva: "",
-        comprension_lectura: "",
-        interaccion_oral: "",
-        expresion_oral: "",
-        expresion_escrita: "",
-        certificado: "",
-      },
-      idiomasEditIndex: null,
-
-
-      regresar5: false,
-      archivoCertificado: null,
-      //SW
-      url6: "http://cvubackendv2.test/api/cvn/v1/habilidades_informatica",
-      idhabilidades_informaticas: 0,
-      habilidades_informaticas: null,
-      mostrarsw: true,
-
-      comunicativas: false,
-      creativas: false,
-      liderazgo: false,
-      informaticas_cv: false,
-      oficios: false,
-      otro_habili: false,
-
-      habilidades_comunicativas_array: [],
-      habilidades_creativas_array: [],
-      habilidades_liderazgo_array: [],
-      habilidades_informaticas_array: [],
-      oficios_subactividades_array: [],
-      otro_habilidades_array: [],
-
-      //  Habilidades Comunicativas
-      nuevashabilidades_comunicativas: {
-        habilidades_comunicativas: "",
-        descripcion_habilidades_comunicativas: "",
-      },
-      habilidades_comunicativas_EditIndex: null,
-      //  Habilidades Creativas
-      nuevashabilidades_creativas: {
-        habilidades_creativas: "",
-        descripcion_habilidades_creativas: "",
-      },
-      habilidades_creativas_EditIndex: null,
-      //  Habilidades Liderazgo
-      nuevashabilidades_liderazgo: {
-        habilidades_liderazgo: "",
-        descripcion_habilidades_liderazgo: "",
-      },
-      habilidades_liderazgo_EditIndex: null,
-      //  Habilidades Infotm
-      nuevashabilidades_informaticas_cv: {
-        habilidades_informaticas_cv: "",
-        descripcion_habilidades_informaticas_cv: "",
-      },
-      habilidades_informaticas_cv_EditIndex: null,
-      //  Habilidades Oficios
-      nuevasoficios_subactividades: {
-        oficios_subactividades: "",
-        descripcion_oficios_subactividades: "",
-      },
-      oficios_subactividades_EditIndex: null,
-      //  Habilidades Oficios
-      nuevasotro_habilidades: {
-        otro_habilidades: "",
-      },
-      otro_habilidades_EditIndex: null,
-      habi_comunicacion: "",
-      habi_creacion: "",
-      habi_liderazgo: "",
-      habi_informaticos_cv: "",
-      habi_oficios: "",
-      habi_otros_habi: "",
-
-
-      regresar6: false,
-
-      //Cursos Capacitaciones
-      mostrarcapacitaciones: true,
-      url10: "http://cvubackendv2.test/api/cvn/v1/cursoscapacitacion",
-      idcursoscapacitaciones: 0,
-      curso_capacitacion: null,
-      curso_capacitacionarray: [],
-      //  curso_capacitacion
-      nuevoscurso_capacitacion: {
-        intitucion_curso: "",
-        tipo_evento: "",
-        area_estudios: "",
-        nombre_evento: "",
-        facilitador_curso: "",
-        tipo_certificado: "",
-        fecha_inicio_curso: "",
-        fecha_fin_curso: "",
-        dias_curso: "",
-        horas_curso: "",
-      },
-      curso_capacitacionEditIndex: null,
-      regresar9: false,
-
-
-      //Datos Relevantes
-      url7: "http://cvubackendv2.test/api/cvn/v1/otros_datos_relevante",
-      idotros_datos_personales: 0,
-      otros_datos_personales: null,
-      mostrardatosrelevantes: true,
-
-      otros_datos_personalesarray: [],
-      //  otros_datos_personales
-      nuevosotros_datos_personales: {
-        tipo_logros: "",
-        descripcion_logros: "",
-        descripcion_fracasos: "",
-      },
-      otros_datos_personalesEditIndex: null,
-
-      regresar7: false,
-      //Informacion de Contacto
-      url8: "http://cvubackendv2.test/api/cvn/v1/informacion_contacto",
-      idinformacion_contacto: 0,
-      informacion_contacto: null,
-      mostrarinformacioncontacto: true,
-
-      informacion_contactoarray: [],
-      //  informacion_contacto
-      nuevosinformacion_contacto: {
-        referencia_nombres: "",
-        referencia_apellidos: "",
-        referencia_correo_electronico: "",
-        referencia_telefono: "",
-      },
-      informacion_contactoEditIndex: null,
-
-      regresar8: false,
-      //Declaracion Personal
-      url9: "http://cvubackendv2.test/api/cvn/v1/declaracion_personal",
-      iddeclaracion_personal: 0,
-      declaracion_personal: null,
-      mostrardelaracionpersonal: true,
-      regresar1: false,
-      texto: "",
-      //Activar taps
-      activeTab: "datos",
-      activeTab1: "datos",
-      isEditing: false,
-      modoedit: true,
-
-      isEditing1: false,
-      modoedit1: true,
-
-      isEditing2: false,
-      modoedit2: true,
-
-      isEditing3: false,
-      modoedit3: true,
-
-      isEditing4: false,
-      modoedit4: true,
-
-      isEditing5: false,
-      modoedit5: true,
-
-      isEditing6: false,
-      modoedit6: true,
-
-      isEditing7: false,
-      modoedit7: true,
-
-      isEditing8: false,
-      modoedit8: true,
-
-      isEditing9: false,
-      modoedit9: true,
-
-      eseditar: false,
-      esguardar: true,
-
-      //Validación de Campos Datos personales
-      nombresApellidosTouched: false,
-      nombresApellidosError: '',
-      numIdentificacionTouched: false,
-      numIdentificacionError: '',
-      telefonotouch: false,
-      telefonotouchError: '',
-      correoElectronicoTouched: false,
-      correoElectronicoError: '',
-      boton1: true,
-
-      telefonotouch2: false,
-      telefonotouchError2: '',
-      correoElectronicoTouched2: false,
-      correoElectronicoError2: '',
-      boton2: true,
-
-      //validaciones extras
-      isValidURL: false,
-      correoErrornue: false,
-      telfErrornue: false,
-      aboutImage: require('@/assets/images/about.jpg')
-    }
-  },
-  mounted() {
-    this.NaviMetodo();
-    this.textorotativo();
-    this.ProgresoRotacion();
-    const ruta = useRoute();
-    this.idus = ruta.params.id;
-    this.url1 += '/' + this.idus;
-    this.url2 += '/' + this.idus;
-    this.url3 += '/' + this.idus;
-    this.url4 += '/' + this.idus;
-    this.url5 += '/' + this.idus;
-    this.url6 += '/' + this.idus;
-    this.url7 += '/' + this.idus;
-    this.url8 += '/' + this.idus;
-    this.url9 += '/' + this.idus;
-    this.url10 += '/' + this.idus;
-    this.url11 += '/' + this.idus;
-    Promise.all([
-      this.getDatosPersonales(),
-      this.getDeclaracionPersonal(),
-      this.getFormacionAcademica(),
-      this.getExperienciasProfesionales(),
-      this.getInvestigacionPublicaciones(),
-      this.getIdiomas(),
-      this.getHabilidadesInformaticas(),
-      this.getCursosCapacitaciones(),
-      this.getDatosRelevantes(),
-      this.getInformacionContacto()
-
-    ])
-
-  },
-  computed: {
-    contarpalabra() {
-      return this.texto.split(/\s+/).filter(palabr => palabr.length > 0).length;
-    },
-    calcularDiasCurso() {
-      if (this.nuevoscurso_capacitacion.fecha_inicio_curso && this.nuevoscurso_capacitacion.fecha_fin_curso) {
-        const fechaInicio = new Date(this.nuevoscurso_capacitacion.fecha_inicio_curso);
-        const fechaFin = new Date(this.nuevoscurso_capacitacion.fecha_fin_curso);
-
-        if (fechaFin < fechaInicio) {
-          return 0;
-        }
-
-        let count = 0;
-        let currentDate = new Date(fechaInicio);
-
-        while (currentDate <= fechaFin) {
-          const dayOfWeek = currentDate.getDay();
-          if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Ignorar sábados y domingos
-            count++;
-          }
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-
-        return count;
-      }
-      return '';
-    }
-  },
-  watch: {
-    calcularDiasCurso(newVal) {
-      this.nuevoscurso_capacitacion.dias_curso = newVal;
-    },
-
-  },
-  methods: {
-    cerrarsesion() {
-      console.clear();
-      var rol = '';
-      var email = '';
-      var id = '';
-      var name = '';
-
-      store.commit('setRol', this.rol);
-      store.commit('setemail', this.email);
-      store.commit('setid', this.id);
-      store.commit('setname', this.name);
-      this.$router.replace('/');
-    },
-    perfil() {
-      this.editus = false;
-      this.registro = false;
-      this.esguardar = false;
-      this.us = true;
-      this.mostrardatospersonales = true;
-      this.mostrardatosrelevantes = true;
-      this.mostrardelaracionpersonal = true;
-      this.mostrarexperienciasprofesionales = true;
-      this.mostrarformacionacademica = true;
-      this.mostraridiomas = true;
-      this.mostrarinformacioncontacto = true;
-      this.mostrarinvestigacionpublicaciones = true;
-      this.mostrarsw = true;
-      this.activeTab = "datos";
-      this.eseditar = true;
-      this.isEditing = true;
-      this.modoedit = false;
-
-      this.isEditing1 = true;
-      this.modoedit1 = false;
-
-      this.isEditing2 = true;
-      this.modoedit2 = false;
-
-      this.isEditing3 = true;
-      this.modoedit3 = false;
-
-      this.isEditing4 = true;
-      this.modoedit4 = false;
-
-      this.isEditing5 = true;
-      this.modoedit5 = false;
-
-      this.isEditing6 = true;
-      this.modoedit6 = false;
-
-      this.isEditing7 = true;
-      this.modoedit7 = false;
-
-      this.isEditing8 = true;
-      this.modoedit8 = false;
-    },
-    salir() {
-      this.editus = false;
-      this.eseditar = false;
-      this.registro = true;
-      this.us = false;
-    },
-    activarTab(tab) {
-      this.activeTab = tab;
-    },
-    activarTab1(tab) {
-      this.activeTab1 = tab;
-    },
-    //Mejoras de contenido
-    limitepalabras() {
-      const palabr = this.texto.split(/\s+/);
-      if (palabr.length > 250) {
-        this.texto = palabr.slice(0, 250).join(' ');
-      }
-    },
-    validarURL() {
-      const urlPattern = new RegExp(
-        '^(https?:\\/\\/)?' +
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' +
-        '((\\d{1,3}\\.){3}\\d{1,3}))' +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' +
-        '(\\#[-a-z\\d_]*)?$', 'i'
-      );
-
-      this.isValidURL = urlPattern.test(this.nuevaspublicaciones.link_publicación);
-
-    },
-    validarNumero(event) {
-
-      const value = event.target.value.replace(/[^0-9]/g, '');
-      this.nuevoscurso_capacitacion.horas_curso = value;
-    },
-    validateEmail() {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(this.nuevosinformacion_contacto.referencia_correo_electronico)) {
-        this.correoErrornue = true;
-      } else {
-        this.correoErrornue = false;
-      }
-    },
-    validatePhoneNumber() {
-
-      this.nuevosinformacion_contacto.referencia_telefono = this.nuevosinformacion_contacto.referencia_telefono.replace(/\D/g, '').slice(0, 10);
-    },
-    obtenerfechaactual() {
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      let mm = today.getMonth() + 1;
-      let dd = today.getDate();
-
-      if (dd < 10) dd = '0' + dd;
-      if (mm < 10) mm = '0' + mm;
-
-      return `${yyyy}-${mm}-${dd}`;
-    },
-
-    NaviMetodo() {
-      var sections = [];
-      var id = false;
-      var $navbara = $('#navi a');
-      var self = this;
-
-      $navbara.click(function (e) {
-        e.preventDefault();
-        $('html, body').animate({
-          scrollTop: $($(this).attr('href')).offset().top - 180
-        }, 500);
-        self.hash($(this).attr('href'));
-      });
-
-      $navbara.each(function () {
-        sections.push($($(this).attr('href')));
-
-      })
-      $(window).scroll(function (e) {
-        var scrollTop = $(this).scrollTop() + ($(window).height() / 2);
-        for (var i in sections) {
-          var section = sections[i];
-          if (scrollTop > section.offset().top) {
-            var scrolled_id = section.attr('id');
-          }
-        }
-        if (scrolled_id !== id) {
-          id = scrolled_id;
-          $($navbara).removeClass('current');
-          $('#navi a[href="#' + id + '"]').addClass('current');
-        }
-      })
-    },
-    textorotativo() {
-
-      var TxtRotate = function (el, toRotate, period) {
-        this.toRotate = toRotate;
-        this.el = el;
-        this.loopNum = 0;
-        this.period = parseInt(period, 10) || 2000;
-        this.txt = '';
-        this.tick();
-        this.isDeleting = false;
-      };
-
-      TxtRotate.prototype.tick = function () {
-        var i = this.loopNum % this.toRotate.length;
-        var fullTxt = this.toRotate[i];
-
-        if (this.isDeleting) {
-          this.txt = fullTxt.substring(0, this.txt.length - 1);
-        } else {
-          this.txt = fullTxt.substring(0, this.txt.length + 1);
-        }
-
-        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
-
-        var that = this;
-        var delta = 300 - Math.random() * 100;
-
-        if (this.isDeleting) { delta /= 2; }
-
-        if (!this.isDeleting && this.txt === fullTxt) {
-          delta = this.period;
-          this.isDeleting = true;
-        } else if (this.isDeleting && this.txt === '') {
-          this.isDeleting = false;
-          this.loopNum++;
-          delta = 500;
-        }
-
-        setTimeout(function () {
-          that.tick();
-        }, delta);
-      };
-
-      window.onload = function () {
-        var elements = document.getElementsByClassName('txt-rotate');
-        for (var i = 0; i < elements.length; i++) {
-          var toRotate = elements[i].getAttribute('data-rotate');
-          var period = elements[i].getAttribute('data-period');
-          if (toRotate) {
-            new TxtRotate(elements[i], JSON.parse(toRotate), period);
-          }
-        }
-        // INJECT CSS
-        var css = document.createElement("style");
-        css.type = "text/css";
-        css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
-        document.body.appendChild(css);
-      };
-    },
-    ProgresoRotacion() {
-      $(".progress").each(function () {
-
-        var value = $(this).attr('data-value');
-        var left = $(this).find('.progress-left .progress-bar');
-        var right = $(this).find('.progress-right .progress-bar');
-
-        if (value > 0) {
-          if (value <= 50) {
-            right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
-          } else {
-            right.css('transform', 'rotate(180deg)')
-            left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
-          }
-        }
-
-      })
-
-      function percentageToDegrees(percentage) {
-
-        return percentage / 100 * 360
-
-      }
-    },
-    hash(h) {
-      if (history.pushState) {
-        history.pushState(null, null, h);
-      } else {
-        location.hash = h;
-      }
-    },
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    },
-    
-
-    //Cargar Informacion
-    //Datos Personales
-    async getDatosPersonales() {
-      try {
-
-        const response = await axios.get(this.url1);
-        if (response.data && response.data.length > 0) {
-          const data = response.data[0];
-          this.CIInfPer = data.CIInfPer;
-          this.ApellInfPer = data.ApellInfPer;
-          this.ApellMatInfPer = data.ApellMatInfPer;
-          this.NombInfPer = data.NombInfPer;
-          this.NacionalidadPer = data.NacionalidadPer;
-          // this.LugarNacimientoPer = data.LugarNacimientoPer;
-          this.FechNacimPer = data.FechNacimPer;
-          this.GeneroPer = data.GeneroPer;
-          this.CiudadPer = data.CiudadPer;
-          this.DirecDomicilioPer = data.DirecDomicilioPer;
-          this.Telf1InfPer = data.Telf1InfPer;
-          this.mailPer = data.mailPer;
-          this.imagen = data.fotografia;
-          const añoActual = new Date().getFullYear();
-          const añoNacimiento = new Date(data.FechNacimPer).getFullYear();
-          this.edad = añoActual - añoNacimiento;
-          this.registro = true;
-          this.isEditing = true;
-          this.modoedit = false;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.isEditing = false;
-          this.modoedit = true;
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-
-
-      }
-    },
-    //Formacion Academica
-    async getFormacionAcademica() {
-      try {
-        const response = await axios.get(this.url2);
-
-
-
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-
-          // Limpiamos los arreglos existentes
-          this.titulosBachiller = [];
-          this.titulosUniversitarios = [];
-          this.titulosPosgrado = [];
-
-          // Recorremos los datos obtenidos para separar títulos universitarios y de posgrado
-          data.forEach(item => {
-            if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
-              this.titulosBachiller.push({
-
-                idformacion_academica: item.id,
-                titulo_bachiller_obtenido: item.titulo_bachiller_obtenido || '',
-                institucion_bachiller: item.institucion_bachiller || '',
-                fecha_graduacion_bachiller: item.fecha_graduacion_bachiller || '',
-                especialidad_bachiller: item.especialidad_bachiller || ''
-              });
-              if (this.titulosBachiller.length > 0) {
-                this.sidatos = false;
-              } else {
-                this.sidatos = true;
-              }
-            }
-            if (item.estudios_universitarios_culminados === 'Si' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
-              this.titulosUniversitarios.push({
-
-                idformacion_academica: item.id,
-                titulo_universitario_obtenido: item.titulo_universitario_obtenido || '',
-                institucion_universitaria: item.institucion_universitaria || '',
-                fecha_graduacion: item.fecha_graduacion || '',
-                especialidad: item.especialidad || ''
-              });
-            }
-
-            if (item.estudios_posgrado_culminados === 'Si' && item.titulo_posgrado_obtenido && item.institucion_posgrado) {
-              this.titulosPosgrado.push({
-
-                idformacion_academica: item.id,
-                titulo_posgrado_obtenido: item.titulo_posgrado_obtenido || '',
-                institucion_posgrado: item.institucion_posgrado || '',
-                fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
-                especialidad_posgrado: item.especialidad_posgrado || ''
-              });
-            }
-          });
-
-          this.isEditing8 = true;
-          this.modoedit8 = false;
-          this.Titulouni();
-          this.Posgra();
-          this.Titulobachi();
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-
-          if (this.titulosBachiller.length > 0) {
-            this.sidatos = false;
-          } else {
-            const response2 = await axios.get(this.url11);
-            const data2 = response2.data[0];
-            this.sidatos = true;
-            this.estudios_bachiller_culminados = 'Si';
-            this.Titulobachi();
-            this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
-            this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
-            this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
-            this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
-          }
-
-          this.isEditing8 = false;
-          this.modoedit8 = true;
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Experiencias Profesionales
-    async getExperienciasProfesionales() {
-      try {
-        const response = await axios.get(this.url3);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.cargosEmpresas = [];
-          this.cargosPasantias = [];
-
-          data.forEach(item => {
-            if (item.cargos_desempenados === 'Si' && item.empresa_institucion && item.cargo_desempenado_empresa) {
-              this.cargosEmpresas.push({
-
-                idexperiencias_profesionales: item.id,
-                empresa_institucion: item.empresa_institucion || '',
-                fecha_inicio_empresa: item.fecha_inicio_empresa || '',
-                fecha_fin_empresa: item.fecha_fin_empresa || '',
-                cargo_desempenado_empresa: item.cargo_desempenado_empresa || '',
-                descripcion_funciones_empresa: item.descripcion_funciones_empresa || '',
-                logros_resultados_empresa: item.logros_resultados_empresa || ''
-              });
-              if (item.fecha_inicio_empresa) {
-                const añoInicio = new Date(item.fecha_inicio_empresa).getFullYear();
-                this.fecha_inicio_empresa2 = añoInicio;
-              }
-            }
-
-            if (item.practicas_profesionales === 'Si' && item.empresa_institucion_practicas && item.area_trabajo_practicas) {
-              this.cargosPasantias.push({
-
-                idexperiencias_profesionales: item.id,
-                empresa_institucion_practicas: item.empresa_institucion_practicas || '',
-                fecha_inicio_practicas: item.fecha_inicio_practicas || '',
-                fecha_fin_practicas: item.fecha_fin_practicas || '',
-                area_trabajo_practicas: item.area_trabajo_practicas || '',
-                descripcion_funciones_practicas: item.descripcion_funciones_practicas || ''
-              });
-              if (item.fecha_inicio_practicas) {
-                const añoInicio2 = new Date(item.fecha_inicio_practicas).getFullYear();
-                this.fecha_inicio_practicas2 = añoInicio2;
-              }
-            }
-
-
-          });
-
-          this.fechacargos = "";
-          this.fechaFinLabel = "";
-          this.trabajo = false;
-          this.Cargos();
-          this.Practicas();
-          this.FechaCarg();
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Investigacion y Publicaciones
-    async getInvestigacionPublicaciones() {
-      try {
-        const response = await axios.get(this.url4);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.publicacionesarray = [];
-
-          data.forEach(item => {
-            if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
-              this.publicacionesarray.push({
-
-                idinvestigacion_publicaciones: item.id,
-                publicacion_tipo: item.publicacion_tipo || '',
-                publicacion_titulo: item.publicacion_titulo || '',
-                link_publicación: item.link_publicación || '',
-                congreso_evento: item.congreso_evento || ''
-              });
-            }
-
-
-          });
-          this.Investigaciones();
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Idiomas
-    async getIdiomas() {
-      try {
-        const response = await axios.get(this.url5);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.idiomasarray = [];
-
-          data.forEach(item => {
-
-            this.idiomasarray.push({
-
-              idlenguaje: item.id,
-              idioma: item.idioma || '',
-              comprension_auditiva: item.comprension_auditiva || '',
-              comprension_lectura: item.comprension_lectura || '',
-              interaccion_oral: item.interaccion_oral || '',
-              expresion_oral: item.expresion_oral || '',
-              expresion_escrita: item.expresion_escrita || '',
-              certificado: item.certificado || '',
-            });
-
-
-          });
-
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Habilidades Informaticas
-    async getHabilidadesInformaticas() {
-      try {
-        const response = await axios.get(this.url6);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.habilidades_comunicativas_array = [];
-          this.habilidades_creativas_array = [];
-          this.habilidades_informaticas_array = [];
-          this.habilidades_liderazgo_array = [];
-          this.oficios_subactividades_array = [];
-          this.otro_habilidades_array = [];
-
-          data.forEach(item => {
-            if (item.habilidades_comunicativas || item.descripcion_habilidades_comunicativas) {
-              this.habilidades_comunicativas_array.push({
-
-                idhabilidades_informaticas: item.id,
-                habilidades_comunicativas: item.habilidades_comunicativas || '',
-                descripcion_habilidades_comunicativas: item.descripcion_habilidades_comunicativas || '',
-              });
-            }
-            if (item.habilidades_creativas || item.descripcion_habilidades_creativas) {
-              this.habilidades_creativas_array.push({
-
-                idhabilidades_informaticas: item.id,
-                habilidades_creativas: item.habilidades_creativas || '',
-                descripcion_habilidades_creativas: item.descripcion_habilidades_creativas || '',
-              });
-            }
-
-            if (item.habilidades_informaticas_cv || item.descripcion_habilidades_informaticas_cv) {
-              this.habilidades_informaticas_array.push({
-
-                idhabilidades_informaticas: item.id,
-                habilidades_informaticas_cv: item.habilidades_informaticas_cv || '',
-                descripcion_habilidades_informaticas_cv: item.descripcion_habilidades_informaticas_cv || '',
-              });
-            }
-            if (item.habilidades_liderazgo || item.descripcion_habilidades_liderazgo) {
-              this.habilidades_liderazgo_array.push({
-
-                idhabilidades_informaticas: item.id,
-                habilidades_liderazgo: item.habilidades_liderazgo || '',
-                descripcion_habilidades_liderazgo: item.descripcion_habilidades_liderazgo || '',
-              });
-            }
-            if (item.oficios_subactividades || item.descripcion_oficios_subactividades) {
-              this.oficios_subactividades_array.push({
-
-                idhabilidades_informaticas: item.id,
-                oficios_subactividades: item.oficios_subactividades || '',
-                descripcion_oficios_subactividades: item.descripcion_oficios_subactividades || '',
-              });
-            }
-            if (item.otro_habilidades) {
-              this.otro_habilidades_array.push({
-
-                idhabilidades_informaticas: item.id,
-                otro_habilidades: item.otro_habilidades || '',
-              });
-            }
-          });
-
-          this.registro = true;
-          this.ComunHabi();
-          this.CreaHabi();
-          this.LideHabi();
-          this.InfoHabi();
-          this.OfiHabi();
-          this.OtrosHabi();
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.registro = false;
-          this.ComunHabi();
-          this.CreaHabi();
-          this.LideHabi();
-          this.InfoHabi();
-          this.OfiHabi();
-          this.OtrosHabi();
-          this.us = true;
-        }
-        return response;
-
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Cursos Capacitaciones
-    async getCursosCapacitaciones() {
-      try {
-        const response = await axios.get(this.url10);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.curso_capacitacionarray = [];
-
-          data.forEach(item => {
-
-            this.curso_capacitacionarray.push({
-
-              idcursoscapacitaciones: item.id,
-              intitucion_curso: item.intitucion_curso || '',
-              tipo_evento: item.tipo_evento || '',
-              area_estudios: item.area_estudios || '',
-              nombre_evento: item.nombre_evento || '',
-              facilitador_curso: item.facilitador_curso || '',
-              tipo_certificado: item.tipo_certificado || '',
-              fecha_inicio_curso: item.fecha_inicio_curso || '',
-              fecha_fin_curso: item.fecha_fin_curso || '',
-              dias_curso: item.dias_curso || '',
-              horas_curso: item.horas_curso || '',
-
-            });
-
-
-
-          });
-
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Otros Datos Relevantes
-    async getDatosRelevantes() {
-      try {
-        const response = await axios.get(this.url7);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.otros_datos_personalesarray = [];
-
-          data.forEach(item => {
-
-            this.otros_datos_personalesarray.push({
-
-              idotros_datos_personales: item.id,
-              tipo_logros: item.tipo_logros || '',
-              descripcion_logros: item.descripcion_logros || '',
-              descripcion_fracasos: item.descripcion_fracasos || '',
-
-            });
-
-
-
-          });
-
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Informacion de Contacto
-    async getInformacionContacto() {
-      try {
-        const response = await axios.get(this.url8);
-        if (response.data && response.data.length > 0) {
-          const data = response.data;
-          this.informacion_contactoarray = [];
-
-          data.forEach(item => {
-
-            this.informacion_contactoarray.push({
-
-              idinformacion_contacto: item.id,
-              referencia_nombres: item.referencia_nombres || '',
-              referencia_apellidos: item.referencia_apellidos || '',
-              referencia_correo_electronico: item.referencia_correo_electronico || '',
-              referencia_telefono: item.referencia_telefono || '',
-
-            });
-
-
-
-          });
-
-
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-    //Declaracion Personal
-    async getDeclaracionPersonal() {
-      try {
-        const response = await axios.get(this.url9);
-        if (response.data && response.data.length > 0) {
-          const data = response.data[0];
-          this.iddeclaracion_personal = data.id;
-          this.texto = data.texto;
-
-          this.isEditing7 = true;
-          this.modoedit7 = false;
-          this.registro = true;
-          this.us = false;
-          this.scrollToTop();
-        } else {
-          this.isEditing7 = false;
-          this.modoedit7 = true;
-          this.registro = false;
-          this.us = true;
-        }
-        return response;
-      } catch (error) {
-        this.registro = false;
-        this.us = true;
-      }
-    },
-
-    //Guardar Informacion
-    //Guardar Datos Personales
-    guardarDatosPersonales(event) {
-
-      event.preventDefault();
-      var mifoto = document.getElementById('fotoimg');
-      this.imagen = mifoto.src;
-
-      this.activeTab = "personal";
-      this.mostrardatospersonales = false;
-      this.regresar1 = true;
-
-    },
-    async regresarADatosPersonales() {
-      // Lógica para regresar a datos personales
-      const response = await axios.get(this.url1);
-          if (response.data && response.data.length > 0) {
-              const data = response.data[0];
-              this.CIInfPer = data.CIInfPer;
-              this.ApellInfPer = data.ApellInfPer;
-              this.ApellMatInfPer = data.ApellMatInfPer;
-              this.NombInfPer = data.NombInfPer;
-              this.NacionalidadPer = data.NacionalidadPer;
-              //this.LugarNacimientoPer = data.LugarNacimientoPer;
-              this.FechNacimPer = data.FechNacimPer;
-              this.GeneroPer = data.GeneroPer;
-              this.CiudadPer = data.CiudadPer;
-              this.DirecDomicilioPer = data.DirecDomicilioPer;
-              this.Telf1InfPer = data.Telf1InfPer;
-              this.mailPer = data.mailPer;
-              this.imagen= data.fotografia;
+    data() {
+        return {
+            // ruta base de tu PDF
+            url2553: `http://vinculacionconlasociedad.utelvt.edu.ec/backendbolsaempleo/api/b_e/vin/consultanopostofertp`,
+            url2552: `http://vinculacionconlasociedad.utelvt.edu.ec/backendbolsaempleo/api/b_e/vin/consultanopostemprep`,
+            ofertas: [],
+            opciongraduado: false,
+            ofertas_emprendi: [],
+            categoriaSeleccionada: '',
+            categoriaSeleccionada2: '',
+            currentPage: 1,
+            lastPage: 1,
+            tiemposRestantes: {},
+            tiemposRestantes2: {},
+            pdfUrl: `${process.env.BASE_URL}Docs/Manual_CVN__V1.pdf`,
+            // página inicial (se reemplaza al llamar al modal)
+            pdfPage: 1,
+            pdfKey: 0,
+            idus: 0,
+            titulosEncontrados: [],
+            historialdescargas: [],
+
+            mostrarFormularioTitulos: true,
+            mostrarFormularioTitulosBachiller: true,
+            mostrarnormal: false,
+            tituloActualIndex: 0,
+            titulosBloqueados: false, // control para inputs bloqueado
+            titulosEncontradosPosgrado: [],
+            mostrarFormularioTitulosPosgrado: true,
+            tituloActualIndexPosgrado: 0,
+            titulosBloqueadosPosgrado: false, // control para inputs bloqueado
+            editingIndex: null,
+            logueado:null,
+            editingIndex2: null,
+            descargando: false,
+            cargando: false,
+            sigueestudiandouniversidad: false,
+            mensajenuevo: false,
+            estudioactualtitulosUniversitarios: [],
+            //  título universitario
+            estudionuevoTituloUniversitario: {
+                facultades_universidad: "",
+                titulo_carrera_universidad: "",
+                carrera_universidad: "",
+                fechaestudioactual: ""
+            },
             
-              this.isEditing = true;
-              this.modoedit = false;
-              this.activeTab = "datos";
-              this.mostrardatospersonales = true;
-              this.regresar1 = false;
-          } else {
-              this.isEditing = false;
-              this.modoedit = true;
-              this.activeTab = "datos";
-              this.regresar1 = false;
-              this.mostrardatospersonales = true;
-          }
-          return response;
-      },
-      //Guardar Declaracion Personal
-      guardaDeclaracionPersonal(event) {
-      event.preventDefault();
-      if(this.texto.trim()!==''){
-          
-          var parametros = {
-              CIInfPer: this.idus,
-              texto: this.texto.trim()
+           //DAtos 
+           fecha_inicio_empresa2:'',
+           fecha_graduacion2:'',
+           fecha_inicio_practicas2:'',
+           fecha_graduacion_posgrado2:'',
+           fecha_finalizacion_curso2:'',
+
+            usuarios: null,
+            editus: false,
+            registro: false,
+            us: true,
+            //Datos Personales
+            url1: "/cvn/v1/informacionpersonald",
+            iddatos_personales:0,
+            datos_personales: null,
+            mostrardatospersonales: true,
+            CIInfPer: "",
+            ApellInfPer: "",
+            ApellMatInfPer: "",
+            NombInfPer: "",
+            NacionalidadPer: "",
+            LugarNacimientoPer: "",
+            FechNacimPer: "",
+            GeneroPer: "",
+            CiudadPer: "",
+            DirecDomicilioPer: "",
+            Telf1InfPer: "",
+            mailPer: "",
+            fotografia: '',
+            previewFoto: '',
+            edad: "",
+            areainfdoc:"",
+            cargoinfdoc:"",
+
+            //Formacion Academica
+            url2: "/cvn/v1/formacion_academica",
+            url11: "/cvn/v1/fichasocioeconomica",
+            urlti: "/cvn/v1/titulog",
+            idformacion_academica:0,
+            idfichasocioeconomica:0,
+            formacion_academica: null,
+            mostrarformacionacademica: true,
+            univer: false,
+            posgrado: false,
+            
+            bachiler: false,
+            sidatos: true,
+            mostraridformacion_academica: false,
+            registrosbachiller: false,
+            titulosUniversitarios: [],
+            titulosPosgrado: [],
+            titulosBachiller: [],
+            //  título universitario
+            nuevoTituloUniversitario: {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: "",
+            },
+            nuevoTituloUniversitarioUTLVTE: {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: "",
+            },
+            tituloUniversitarioEditIndex: null, 
+            // nuevo título de posgrado
+            nuevoTituloPosgrado: {
+                titulo_posgrado_obtenido: "",
+                institucion_posgrado: "",
+                fecha_graduacion_posgrado: "",
+                especialidad_posgrado: ""
+            },
+            nuevoTituloPosgradoUTLVTE: {
+                titulo_posgrado_obtenido: "",
+                institucion_posgrado: "",
+                fecha_graduacion_posgrado: "",
+                especialidad_posgrado: ""
+            },
+            tituloPosgradoEditIndex: null, 
+            // nuevo título de Bachiller
+            nuevoTituloBachiller: {
+                titulo_bachiller_obtenido: "",
+                institucion_bachiller: "",
+                fecha_graduacion_bachiller: "",
+                especialidad_bachiller: ""
+            },
+            tituloBachillerEditIndex: null, 
+
+            estudios_universitarios_culminados: "",
+            estudios_posgrado_culminados: "",
+            estudios_bachiller_culminados: "",
+            currentDate: this.obtenerfechaactual(),
+
+           
+            regresar2: false,
+            
+            //Experiencias Profesionales
+            url3: "/cvn/v1/experiencia_profesionale",
+            idexperiencias_profesionales: 0,
+            experiencias_profesionales: null,
+            mostrarexperienciasprofesionales: true,
+            cargos: false,
+            practica: false,
+            //Estructura para las tablas
+            cargosEmpresas: [],
+            cargosPasantias: [],
+             //  Empresas
+             nuevocargosEmpresas: {
+                empresa_institucion: "",
+                fecha_inicio_empresa: "",
+                fecha_fin_empresa: "",
+                cargo_desempenado_empresa: "",
+                descripcion_funciones_empresa: "",
+                logros_resultados_empresa: "",
+            },
+            cargosEmpresasEditIndex: null, 
+            // Practicas
+            nuevocargosPasantias: {
+                empresa_institucion_practicas: "",
+                fecha_inicio_practicas: "",
+                fecha_fin_practicas: "",
+                area_trabajo_practicas: "",
+                descripcion_funciones_practicas: "",
+            },
+            cargosPasantiasEditIndex: null, 
+            cargos_desempenados: "",
+            practicas_profesionales: "",
+            fechacargos: "",
+            fechaFinLabel: "",
+            fechaFinDisabled: false,
+            trabajo: false,
+            trabajonuevo: false,
+            fechacargospractica: "",
+            fechaFinLabelpracticas: "",
+            fechaFinDisabledpracticas: false,
+            trabajopractica: false,
+            trabajonuevoprecticas: false,
+            regresar3: false,
+
+            //fechas del curso
+            fechacursos: "",
+            fechaFinLabelCursos: "",
+            fechaFincursoDisabled: false,
+            trabajocursos: false,
+            fechacursofinactual: false,
 
 
-          }
 
-          enviarsolig('POST', parametros, 'http://cvubackendv2.test/api/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
-          this.activeTab = "formacion";
-          this.mostrardelaracionpersonal = false;
-          this.regresar2 = true;
-      }else{
-          mostraralertas2('No deje campos en blanco','warning');
-      }
+            //Investigacion y publicaciones
+            url4: "/cvn/v1/investigacion_publicacione",
+            idinvestigacion_publicaciones: 0,
+            investigacion_publicaciones: null,
+            mostrarinvestigacionpublicaciones: true,
+            investiga: false,
+
+            publicaciones: "",
+            publicacionesarray: [],
+            //  Publicaciones
+            nuevaspublicaciones: {
+                publicacion_tipo: "",
+                publicacion_titulo: "",
+                link_publicacion: "",
+                grupo_investigacion: "",
+                congreso_evento: "",
+            },
+            publicacionesEditIndex: null, 
+            
+            regresar4: false,
+            //Idioma
+            url5: "/cvn/v1/idioma",
+            idlenguaje: 0,
+            lenguaje: null,
+            mostraridiomas: true,
+            certificadoselected: "",
+            grupoinvestigaselected: "",
+            certificadoscursoelected: "",
+
+            idiomasarray: [],
+            //  Idiomas
+            nuevosidiomas: {
+                idioma: "",
+                comprension_auditiva: "",
+                comprension_lectura: "",
+                interaccion_oral: "",
+                expresion_oral: "",
+                expresion_escrita: "",
+                certificado: "",
+            },
+            idiomasEditIndex: null,
+            
+            
+            regresar5: false,
+            archivoCertificado: null,
+            //SW
+            url6: "/cvn/v1/habilidades_informatica",
+            idhabilidades_informaticas: 0,
+            habilidades_informaticas: null,
+            mostrarsw: true,
+
+            comunicativas: false,
+            creativas: false,
+            liderazgo: false,
+            informaticas_cv: false,
+            oficios: false,
+            otro_habili: false,
+
+            habilidades_comunicativas_array: [],
+            habilidades_creativas_array: [],
+            habilidades_liderazgo_array: [],
+            habilidades_informaticas_array: [],
+            oficios_subactividades_array: [],
+            otro_habilidades_array: [],
+            
+            //  Habilidades Comunicativas
+            nuevashabilidades_comunicativas: {
+                habilidades_comunicativas: "",
+                descripcion_habilidades_comunicativas: "",
+            },
+            habilidades_comunicativas_EditIndex: null,
+            //  Habilidades Creativas
+            nuevashabilidades_creativas: {
+                habilidades_creativas: "",
+                descripcion_habilidades_creativas: "",
+            },
+            habilidades_creativas_EditIndex: null,
+            //  Habilidades Liderazgo
+            nuevashabilidades_liderazgo: {
+                habilidades_liderazgo: "",
+                descripcion_habilidades_liderazgo: "",
+            },
+            habilidades_liderazgo_EditIndex: null,
+            //  Habilidades Infotm
+            nuevashabilidades_informaticas_cv: {
+                habilidades_informaticas_cv: "",
+                descripcion_habilidades_informaticas_cv: "",
+            },
+            habilidades_informaticas_cv_EditIndex: null,
+            //  Habilidades Oficios
+            nuevasoficios_subactividades: {
+                oficios_subactividades: "",
+                descripcion_oficios_subactividades: "",
+            },
+            oficios_subactividades_EditIndex: null,
+            //  Habilidades Oficios
+            nuevasotro_habilidades: {
+                otro_habilidades: "",
+            },
+            otro_habilidades_EditIndex: null,
+            habi_comunicacion: "",
+            habi_creacion: "",
+            habi_liderazgo: "",
+            habi_informaticos_cv: "",
+            habi_oficios: "",
+            habi_otros_habi: "",
+           
+            
+            regresar6: false,
+
+            //Cursos Capacitaciones
+            mostrarcapacitaciones:true,
+            url10: "/cvn/v1/cursoscapacitacion",
+            idcursoscapacitaciones: 0,
+            curso_capacitacion: null,
+            curso_capacitacionarray: [],
+            //  curso_capacitacion
+            nuevoscurso_capacitacion: {
+                intitucion_curso: "",
+                tipo_evento: "",
+                area_estudios: "",
+                nombre_evento: "",
+                facilitador_curso: "",
+                tipo_certificado: "",
+                fecha_inicio_curso: "",
+                fecha_fin_curso: "",
+                dias_curso: "",
+                horas_curso: "",
+                certificado_curso: "",
+            },
+            curso_capacitacionEditIndex: null,
+            regresar9: false,
 
 
+            //Datos Relevantes
+            url7: "/cvn/v1/otros_datos_relevante",
+            idotros_datos_personales: 0,
+            otros_datos_personales: null,
+            mostrardatosrelevantes: true,
+
+            otros_datos_personalesarray: [],
+            //  otros_datos_personales
+            nuevosotros_datos_personales: {
+                tipo_logros: "",
+                descripcion_logros: "",
+                descripcion_fracasos: "",
+            },
+            otros_datos_personalesEditIndex: null,
+            
+            regresar7: false,
+            //Informacion de Contacto
+            url8: "/cvn/v1/informacion_contacto",
+            idinformacion_contacto: 0,
+            informacion_contacto: null,
+            mostrarinformacioncontacto: true,
+
+            informacion_contactoarray: [],
+            //  informacion_contacto
+            nuevosinformacion_contacto: {
+                referencia_nombres: "",
+                referencia_apellidos: "",
+                referencia_correo_electronico: "",
+                referencia_telefono: "",
+            },
+            informacion_contactoEditIndex: null,
+
+            regresar8: false,
+            //Declaracion Personal
+            url9: "/cvn/v1/declaracion_personalD",
+            urlqr: "/cvn/v1/validar",
+            iddeclaracion_personal: 0,
+            declaracion_personal: null,
+            mostrardelaracionpersonal: true,
+            regresar1: false,
+            texto: "",
+            //Activar taps
+            activeTab: "datos",
+            activeTab1: "datos",
+            isEditing: false,
+            modoedit: true,
+
+            isEditing1: false,
+            modoedit1: true,
+
+            isEditing2: false,
+            modoedit2: true,
+
+            isEditing3: false,
+            modoedit3: true,
+
+            isEditing4: false,
+            modoedit4: true,
+
+            isEditing5: false,
+            modoedit5: true,
+
+            isEditing6: false,
+            modoedit6: true,
+
+            isEditing7: false,
+            modoedit7: true,
+
+            isEditing8: false,
+            modoedit8: true,
+
+            isEditing9: false,
+            modoedit9: true,
+
+            eseditar: false,
+            esguardar: true,
+
+            //Validación de Campos Datos personales
+            nombresApellidosTouched: false,
+            nombresApellidosError: '',
+            numIdentificacionTouched: false,
+            numIdentificacionError: '',
+            telefonotouch: false,
+            telefonotouchError: '',
+            correoElectronicoTouched: false,
+            correoElectronicoError: '',
+            boton1: true,
+            
+            telefonotouch2: false,
+            telefonotouchError2: '',
+            correoElectronicoTouched2: false,
+            correoElectronicoError2: '',
+            boton2: true,
+
+            //validaciones extras
+            isValidURL: false,
+            correoErrornue: false,
+            telfErrornue: false,
+            facultadcarreraselected_faci: false,
+            facultadcarreraselected_facae: false,
+            facultadcarreraselected_facsos: false,
+            facultadcarreraselected_facped: false,
+            facultadcarreraselected_facap: false,
+            facultadcarreraselected_sede: false,
+            //modo edicion:
+            modoeditionformacionuniversidad: false,
+            modoeditionformacionposgrado: false,
+            modoeditionexperienciasempresa: false,
+            modoeditionexperienciaspracticas: false,
+            modoeditioncursos: false,
+            modoeditionpublicaciones: false,
+            modoeditionidiomas: false,
+            modoeditionhabilidadescomuni: false,
+            modoeditionhabilidadescreative: false,
+            modoeditionhabilidadeslidel: false,
+            modoeditionhabilidadesinformaticas: false,
+            modoeditionhabilidadesoficio: false,
+            modoeditionhabilidadesotro: false,
+            modoeditioncursos: false,
+            modoeditionlogros: false,
+            modoeditionreferencias: false,
+            cvnactualizado: false,
+            cvnacturequerido: false,
+            urlcheck: "/cvn/v1/checkUpdateStatus",
+            datacheckcvn: [],
 
 
-      },
-      async regresarADeclaracionPersonal() {
-      // Lógica para regresar a datos personales
+        };
+    },
+    mounted() {
         
+        
+        this.Logueados();
+        
+       
+    },
+    computed: {
+        // Obtiene solo los 10 primeros registros del historial ordenado
+        top10Historial() {
+            // .slice(0, 10) toma del índice 0 (inclusive) hasta el 10 (exclusive), es decir, los primeros 10 elementos.
+            return this.historialdescargas.slice(0, 10);
+        },
+        contarpalabra() {
+            return this.texto.split(/\s+/).filter(palabr => palabr.length > 0).length;
+        },
+        calcularDiasCurso() {
+            if (this.nuevoscurso_capacitacion.fecha_inicio_curso && this.nuevoscurso_capacitacion.fecha_fin_curso) {
+                const fechaInicio = new Date(this.nuevoscurso_capacitacion.fecha_inicio_curso);
+                const fechaFin = new Date(this.nuevoscurso_capacitacion.fecha_fin_curso);
 
-          const response = await axios.get(this.url9);
-          if (response.data && response.data.length > 0) {
-              const data = response.data[0];
-              this.iddeclaracion_personal = data.id;
-              this.texto = data.texto;
+                if (fechaFin < fechaInicio) {
+                    return 0;
+                }
 
+                let count = 0;
+                let currentDate = new Date(fechaInicio);
 
-              this.isEditing7 = true;
-              this.modoedit7 = false;
-              this.activeTab = "personal";
-              this.regresar2 = false;
-              this.mostrardelaracionpersonal = true;
-          } else {
-              this.isEditing7 = false;
-              this.modoedit7 = true;
-              this.regresar2 = false;
-              this.activeTab = "personal";
-              this.mostrardelaracionpersonal = true;
-          }
-          return response;
-      },
-      //Guardar Fomacion Academica
-      guardarFormacionAcademica(event) {
-      event.preventDefault();
+                while (currentDate <= fechaFin) {
+                    const dayOfWeek = currentDate.getDay();
+                    if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Ignorar sábados y domingos
+                        count++;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
 
-      //mostraralertas2('Formación Académica Guardada','success');
+                return count;
+            }
+            return '';
+        },
+        pdfSrc() {
+            return `${this.pdfUrl}#page=${this.pdfPage}`;
+        },
+        ofertasFiltradas() {
+            let ofertasFiltradas = this.ofertas;
 
+            // Filtro por categoría si se ha seleccionado alguna
+            if (this.categoriaSeleccionada !== '') {
+                ofertasFiltradas = ofertasFiltradas.filter(
+                oferta => oferta.categoria === this.categoriaSeleccionada
+                );
+            }
 
-      this.activeTab = "experiencia";
-      this.mostrarformacionacademica = false;
-      this.regresar3 = true;
+            // Separar vigentes y caducadas
+            const ahora = new Date();
 
+            const vigentes = ofertasFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) > ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-      },
-      async regresarAFormacionAcademica() {
+            const caducadas = ofertasFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) <= ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+            // Unirlas: primero vigentes, luego caducadas
+            return [...vigentes, ...caducadas];
+        },
+    //
+        ofertasemprendFiltradas() {
+            let ofertasempFiltradas = this.ofertas_emprendi;
 
-        try {
-            const response = await axios.get(this.url2);
+            // Filtro por categoría si se ha seleccionado alguna
+            if (this.categoriaSeleccionada2 !== '') {
+                ofertasempFiltradas = ofertasempFiltradas.filter(
+                oferta => oferta.categoria === this.categoriaSeleccionada2
+                );
+            }
+
+            // Separar vigentes y caducadas
+            const ahora = new Date();
+
+            const vigentes = ofertasempFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) > ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            const caducadas = ofertasempFiltradas
+                .filter(oferta => new Date(oferta.fechaFinOferta) <= ahora)
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            // Unirlas: primero vigentes, luego caducadas
+            return [...vigentes, ...caducadas];
+        },
+    },
+    watch: {
+        calcularDiasCurso(newVal) {
+            this.nuevoscurso_capacitacion.dias_curso = newVal;
+        },
+       
+    },
+    methods: {
+        /*
+        validateNombresApellidos(value) {
+            const words = value.trim().split(/\s+/);
+            if (words.length < 4) {
+                this.nombresApellidosError = 'Debe ingresar al menos dos nombres y dos apellidos.';
+                this.boton1 = false;
+            } else {
+                this.nombresApellidosError = '';
+                this.boton1 = true;
+                
+                this.ApellInfPer = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+            }
+        },*/
+        /*
+        onNombresApellidosInput() {
+            this.nombresApellidosTouched = true;
+            this.validateNombresApellidos(this.ApellInfPer);
+        },*/
+        /*
+        validateNumIdentificacion(value) {
+           
+            let sanitizedValue = value.replace(/\D/g, '');
+            if (sanitizedValue.length > 10) {
+                sanitizedValue = sanitizedValue.slice(0, 10);
+            }
+            this.CIInfPer = sanitizedValue;
+            if (sanitizedValue.length !== 10) {
+                this.numIdentificacionError = 'El número de identificación debe tener exactamente 10 dígitos.';
+                this.boton1 = false;
+            } else {
+                this.numIdentificacionError = '';
+                this.boton1 = true;
+            }
+        },*/
+        /*
+        onNumIdentificacionInput() {
+            this.numIdentificacionTouched = true;
+            this.validateNumIdentificacion(this.CIInfPer);
+        },*/
+        /*
+        validatetelefonotouch(value) {
+           
+            let sanitizedValue = value.replace(/\D/g, '');
+            if (sanitizedValue.length > 10) {
+                sanitizedValue = sanitizedValue.slice(0, 10);
+            }
+            this.telefono = sanitizedValue;
+            if (sanitizedValue.length !== 10) {
+                this.telefonotouchError = 'El número de teléfono debe tener exactamente 10 dígitos.';
+                this.boton1 = false;
+            } else {
+                this.telefonotouchError = '';
+                this.boton1 = true;
+            }
+        },*/
+        /*
+        ontelefonotouchInput() {
+            this.telefonotouch = true;
+            this.validatetelefonotouch(this.telefono);
+        },*/
+        /*
+        validatetelefonotouch2(value) {
+           
+           let sanitizedValue = value.replace(/\D/g, '');
+           if (sanitizedValue.length > 10) {
+               sanitizedValue = sanitizedValue.slice(0, 10);
+           }
+           this.telefonoinf = sanitizedValue;
+           if (sanitizedValue.length !== 10) {
+               this.telefonotouchError2 = 'El número de teléfono debe tener exactamente 10 dígitos.';
+               this.boton2 = false;
+           } else {
+               this.telefonotouchError2 = '';
+               this.boton2 = true;
+           }
+        },
+       
+        ontelefonotouchInput2() {
+            this.telefonotouch2 = true;
+            this.validatetelefonotouch2(this.telefonoinf);
+        },
+       /*
+        validateCorreoElectronico(correo) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(correo)) {
+                this.correoElectronicoError = 'El correo electrónico debe ser válido, incluyendo "@" y un dominio (por ejemplo, @example.com.ec).';
+                this.boton1 = false;
+            } else {
+                this.correoElectronicoError = '';
+                this.boton1 = true;
+            }
+        },*/
+        /*
+        onCorreoElectronicoInput() {
+            this.correoElectronicoTouched = true;
+            this.validateCorreoElectronico(this.correo_electronico);
+        },*/
+        /*
+        validateCorreoElectronico2(correo) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(correo)) {
+                this.correoElectronicoError2 = 'El correo electrónico debe ser válido, incluyendo "@" y un dominio (por ejemplo, @example.com.ec).';
+                this.boton2 = false;
+            } else {
+                this.correoElectronicoError2 = '';
+                this.boton2 = true;
+            }
+        },
+        
+        onCorreoElectronicoInput2() {
+            this.correoElectronicoTouched2 = true;
+            this.validateCorreoElectronico2(this.nuevosinformacion_contacto.referencia_correo_electronico);
+        },*/
+        async cerrarsesion() {
+            try {
+                const token = localStorage.getItem("token_cvn");
+
+                if (!token) {
+                console.warn("⚠️ No hay token, cerrando sesión localmente...");
+                localStorage.clear();
+                window.location.href = "/cvn/home";
+                return;
+                }
+
+                const response = await API.get(
+                "/cvn/logout",
+                {},
+                {
+                    headers: {
+                    Authorization: `Bearer ${token}`,
+                    },
+                }
+                );
+
+                console.log("✅ Sesión cerrada:", response.data);
+
+                // Limpia todo lo del localStorage
+                localStorage.clear();
+
+                // Redirige al login
+                window.location.href = "/cvn/home";
+            } catch (error) {
+                console.error("❌ Error al cerrar sesión:", error.response?.data || error);
+                // Si el token no es válido o expiró, limpiar igual
+                localStorage.clear();
+                window.location.href = "/cvn/home";
+            }
+        },
+        toggleNavbarCollapse() {
+            const navbarCollapse = document.getElementById('navbarCollapse');
+            const toggler = this.$refs.navbarToggler; // Usaremos una referencia ref
+
+            if (navbarCollapse.classList.contains('show')) {
+                // Si está abierto, lo cierra (añade 'collapse' y quita 'show')
+                navbarCollapse.classList.remove('show');
+                toggler.setAttribute('aria-expanded', 'false');
+                // Opcional: añade 'collapsing' para la animación, luego 'collapse'
+                // Por simplicidad, solo manejamos show/collapse
+                navbarCollapse.classList.add('collapse');
+            } else {
+                // Si está cerrado, lo abre (quita 'collapse' y añade 'show')
+                navbarCollapse.classList.add('show');
+                navbarCollapse.classList.remove('collapse');
+                toggler.setAttribute('aria-expanded', 'true');
+            }
+        },
+        openPdfModal(page) {
+            this.pdfPage = page;
+            this.pdfKey++;
+            const modalEl = this.$refs.pdfModal;
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        },
+        closePdfModal() {
+            const modalEl = this.$refs.pdfModal;
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+        },
+        async CheckCVN(){
+            const response = await API.get(`${this.urlcheck}/${this.idus}`);
+            //console.log(response);
+            this.datacheckcvn = response.data;
+            if(response.data.status === 'update_required'){
+                mostraralertas2(response.data.message,'warning');
+                this.us = true;
+                this.cvnacturequerido = true;
+                this.registro = false;
+                this.esguardar = false;
+                this.eseditar = true;
+            }else{
+                this.us = false;
+                this.cvnacturequerido = false;
+                this.registro = true;
+                this.eseditar = false;
+            }
+        },
+        async Logueados() {
+           //this.loadStylesBasedOnRole();
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            this.url1 += '/' + this.idus;
+            this.url2 += '/' + this.idus;
+            this.url3 += '/' + this.idus;
+            this.url4 += '/' + this.idus;
+            this.url5 += '/' + this.idus;
+            this.url6 += '/' + this.idus;
+            this.url7 += '/' + this.idus;
+            this.url8 += '/' + this.idus;
+            this.url9 += '/' + this.idus;
+            this.url10 += '/' + this.idus;
+            this.url11 += '/' + this.idus;
+            await Promise.all([     
+                this.getDatosPersonales(),
+                this.getDeclaracionPersonal(),
+                this.getFormacionAcademica(),
+                this.getTitulosRegistrados(),
+                this.getTitulosRegistradosPosgrado(),
+                
+            ])
+           
+        },
+        async getOFertas() {
+            //this.cargando = true;
+            const usuario = await getMe()
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            return axios.get(`${this.url2553}?all=true`, {
+                params: { user_id: this.idus }
+            }).then(res => {
+                this.ofertas = res.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }).finally(() => {
+                this.cargando = false;
+            });
+        },
+        async getOFertasEmpr() {
+            //this.cargando = true;
+            const usuario = await getMe()
+            this.idus = usuario.CIInfPer;
+            return axios.get(`${this.url2552}?all=true`, {
+                params: { CIInfPer: this.idus }
+            }).then(res => {
+                this.ofertas_emprendi = res.data.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }).finally(() => {
+                this.cargando = false;
+            });
+        },
+        calcularDiasRestantes(fechaFin) {
+            const hoy = new Date();
+            const fin = new Date(fechaFin);
+
+            // Limpiar hora para comparar solo fechas
+            hoy.setHours(0, 0, 0, 0);
+            fin.setHours(0, 0, 0, 0);
+
+            const diferenciaMs = fin - hoy;
+            const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+            if (diasRestantes === 0) return 'La oferta Caduca hoy';
+            if (diasRestantes < 0) return 'Caducada';
+            return `Faltan ${diasRestantes} día(s) para que la oferta caduque`;
+        },
+        actualizarTiemposRestantes() {
+        const ahora = new Date();
+
+            this.ofertas.forEach(ofe => {
+                const fin = new Date(ofe.fechaFinOferta);
+                const diferenciaMs = fin - ahora;
+
+                if (diferenciaMs <= 0) {
+                // Oferta caducada
+                    this.tiemposRestantes[ofe.id] = 'Caducada';
+                } else {
+                    const dias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+                    const horas = Math.floor((diferenciaMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+                    const segundos = Math.floor((diferenciaMs % (1000 * 60)) / 1000);
+
+                    this.tiemposRestantes[ofe.id] =
+                        `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+                    }
+            });
+        },
+        actualizarTiemposRestantes2() {
+            const ahora = new Date();
+
+            this.ofertas_emprendi.forEach(ofe2 => {
+                const fin = new Date(ofe2.fechaFinOferta);
+                const diferenciaMs = fin - ahora;
+
+                if (diferenciaMs <= 0) {
+                // Oferta caducada
+                this.tiemposRestantes2[ofe2.id] = 'Caducada';
+                } else {
+                const dias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferenciaMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((diferenciaMs % (1000 * 60)) / 1000);
+
+                this.tiemposRestantes2[ofe2.id] =
+                    `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+                }
+            });
+        },
+        perfil() {
+            this.editus= false;
+            this.registro= false;
+            this.esguardar= false;
+            this.us= true;
+            this.mostrardatospersonales =true;
+            this.mostrardatosrelevantes =true;
+            this.mostrardelaracionpersonal =true;
+            this.mostrarexperienciasprofesionales =true;
+            this.mostrarformacionacademica =true;
+            this.mostraridiomas =true;
+            this.mostrarinformacioncontacto =true;
+            this.mostrarinvestigacionpublicaciones =true;
+            this.mostrarsw =true;
+            this.activeTab = "datos";
+            this.eseditar= true;
+            this.isEditing= true;
+            this.modoedit= false;
+
+            this.isEditing1= true;
+            this.modoedit1= false;
+
+            this.isEditing2= true;
+            this.modoedit2= false;
+
+            this.isEditing3= true;
+            this.modoedit3= false;
+
+            this.isEditing4= true;
+            this.modoedit4= false;
+
+            this.isEditing5= true;
+            this.modoedit5= false;
+
+            this.isEditing6= true;
+            this.modoedit6= false;
+
+            this.isEditing7= true;
+            this.modoedit7= false;
+
+            this.isEditing8= true;
+            this.modoedit8= false;
+        },
+        salir() {
+            if(this.cvnacturequerido == false){
+
+                this.editus= false;
+                this.eseditar=false;
+                this.registro= true;
+                this.us= false;
+            }else{
+                mostraralertas2('No puedes salir de la página actualmente hasta que actualice sus datos','warning');
+            }
+        },
+        activarTab(tab) {
+            this.activeTab = tab;
+        },
+        activarTab1(tab) {
+            this.activeTab1 = tab;
+        },
+        //Mejoras de contenido
+        limitepalabras() {
+            const palabr = this.texto.split(/\s+/);
+            if (palabr.length > 250) {
+                this.texto = palabr.slice(0, 250).join(' ');
+            }
+        },
+        validarURL() {
+            const link = this.nuevaspublicaciones.link_publicacion;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
+            const urlPattern = new RegExp(
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
+            );
+
+            this.isValidURL = urlPattern.test(link.trim());
             
-                
+        },
+        validarURL2() {
+            const link = this.nuevosidiomas.certificado;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
+            const urlPattern = new RegExp(
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
+            );
+
+            this.isValidURL = urlPattern.test(link.trim());
             
-            if (response.data && response.data.length > 0) {
-                const data = response.data;
+        },
+        validarURL23() {
+            const link = this.nuevoscurso_capacitacion.certificado_curso;
+
+            // Si el campo está vacío, lo consideramos "válido" para no bloquear el botón.
+            if (!link || link.trim() === '') {
+                this.isValidURL = true;
+                return;
+            }
+
+            // Expresión regular que requiere HTTP(S) al inicio.
+            // ^(https?:\/\/) : Requerir 'http://' o 'https://'
+            const urlPattern = new RegExp(
+                '^(https?:\\/\\/)' + // Protocolo obligatorio
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Dominio (ej. google.com)
+                '((\\d{1,3}\\.){3}\\d{1,3}))' + // o IP
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Puerto y path (opcionales)
+                '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query params (opcionales)
+                '(\\#[-a-z\\d_]*)?$', 'i' // Hash (opcional)
+            );
+
+            this.isValidURL = urlPattern.test(link.trim());
+            
+        },
+        validarNumero(event) {
+            
+            const value = event.target.value.replace(/[^0-9]/g, '');
+            this.nuevoscurso_capacitacion.horas_curso = value;
+        },
+        validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.nuevosinformacion_contacto.referencia_correo_electronico)) {
+                this.correoErrornue = true;
+            } else {
+                this.correoErrornue = false;
+            }
+        },
+        validatePhoneNumber() {
+            
+            this.nuevosinformacion_contacto.referencia_telefono = this.nuevosinformacion_contacto.referencia_telefono.replace(/\D/g, '').slice(0, 10);
+        },
+        obtenerfechaactual() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; 
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            return `${yyyy}-${mm}-${dd}`;
+        },
+        //Datos Personales
+        cambiarImagen() {
+            let imgUrl = '';
+            if (this.imagen instanceof Blob || this.imagen instanceof File) {
+                // Si this.imagen es un objeto Blob o File
+                // Asigna la URL del objeto de imagen al valor del input
+                imgUrl = URL.createObjectURL(this.imagen);
+            } else {
+                // Si this.imagen no es un objeto Blob ni File
+                // Vuelve a la imagen predeterminada si se selecciona "Otro" o ningún género
+                if (this.GeneroPer === "Masculino") {
+                    this.imagen = require("@/assets/images/usuariohombre.png"); // Reemplaza con la URL de la imagen masculina
+                } else if (this.GeneroPer === "Femenino") {
+                    this.imagen = require("@/assets/images/usuario.png"); // Reemplaza con la URL de la imagen femenina
+                } else {
+                    this.imagen = ''; // Volver a la imagen predeterminada si se selecciona "Otro" o ningún género
+                }
+                // Si hay una imagen seleccionada, crear una URL del objeto de imagen y asignarla al valor del input
+                if (this.imagen instanceof Blob || this.imagen instanceof File) {
+                    imgUrl = URL.createObjectURL(this.imagen);
+                }
+            }
+
+            // Obtener el input de tipo file
+            const input = document.getElementById('inputFoto');
+
+            // Asignar la URL de la imagen al valor del input
+            input.value = imgUrl;
+        },
+
+        //Formacion Academica
+        Titulouni() {
+            if (this.estudios_universitarios_culminados === "Si") {
+                this.univer = true;
+                this.posgrado = false;
+                this.bachiler = false;
+                this.sigueestudiandouniversidad=false;
+                this.mensajenuevo= false;
+                this.estudios_posgrado_culminados = "";
+                this.estudios_bachiller_culminados = "";
+            } else if(this.estudios_universitarios_culminados === "No"){
+                if(this.estudioactualtitulosUniversitarios.length > 0){
+                    this.mensajenuevo= true;
+                    this.univer = false;
+                    this.sigueestudiandouniversidad=false;
+                }else{
+                    this.mensajenuevo= false;
+                    this.univer = false;
+                    this.sigueestudiandouniversidad=true;
+                }
                 
-                this.titulosBachiller = [];
-                this.titulosUniversitarios = [];
-                this.titulosPosgrado = [];
+            }else{
+                this.univer = false;
+                this.mensajenuevo= false;
+            }
+           
+
+        },
+        Posgra() {
+            if (this.estudios_posgrado_culminados === "Si") {
+                this.posgrado = true;
+                this.bachiler = false;
+                this.univer = false;
+                this.estudios_bachiller_culminados = "";
+                this.estudios_universitarios_culminados = "";
+            } else {
+                this.posgrado = false;
+            }
+        },
+        Titulobachi() {
+            if (this.estudios_bachiller_culminados === "Si") {
+                this.bachiler = true;
+                this.posgrado = false;
+                this.univer = false;
+                this.estudios_universitarios_culminados = "";
+                this.estudios_posgrado_culminados = "";
+            } else {
+                this.bachiler = false;
+            }
+        },
+        //Scroll to top tabla TItulos Universitarios
+        scrollToTopTituloUniversitarios() {
+            const target = document.getElementById("formacionacademicagaurd");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Universitarios
+        scrollToTopRegresarTituloUniversitarios() {
+            const target = document.getElementById("registrouniversitario");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla TItulos Bachiller
+        scrollToTopTituloBechiller() {
+            const target = document.getElementById("formacionacademicagaurdbachiller");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Bachiller
+        scrollToTopRegresarTituloBechiller() {
+            const target = document.getElementById("regresarestudiosbachiller");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+         //Scroll to top tabla TItulos Posgrado
+        scrollToTopTituloPosgrado() {
+            const target = document.getElementById("formacionacademiposgrado");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Títulos Posgrado
+        scrollToTopRegresarTituloPosgrado() {
+            const target = document.getElementById("registrouniversitarioposgrado");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+
+        // Métodos para añadir/editar títulos
+        async agregarEditarTituloBachiller() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloBachiller.titulo_bachiller_obtenido !=='' &&  this.nuevoTituloBachiller.fecha_graduacion_bachiller !=='' && this.nuevoTituloBachiller.fecha_graduacion !=='' && this.nuevoTituloBachiller.especialidad_bachiller !==''){
+                if (this.tituloBachillerEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        estudios_bachiller_culminados: this.estudios_bachiller_culminados.trim(),
+                        titulo_bachiller_obtenido: this.nuevoTituloBachiller.titulo_bachiller_obtenido.trim(),
+                        institucion_bachiller: this.nuevoTituloBachiller.institucion_bachiller.trim(),
+                        fecha_graduacion_bachiller: this.nuevoTituloBachiller.fecha_graduacion_bachiller.trim(),
+                        especialidad_bachiller: this.nuevoTituloBachiller.especialidad_bachiller.trim(),
+                    };
+
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/formacion_academica/' + this.tituloBachillerEditIndex, 'Título de Bachiller Actualizado con éxito');
+
+                    if (response && response.data) {
+                        const index = this.titulosBachiller.findIndex(titulo => titulo.idformacion_academica === this.tituloBachillerEditIndex);
+                        if (index !== -1) {
+                            this.titulosBachiller.splice(index, 1, { ...this.nuevoTituloBachiller });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.tituloBachillerEditIndex = null;
+                    //this.modoedition=false;
+                    this.resetNuevoTituloBachiller();
+                    this.scrollToTopTituloBechiller();
+                } else {
                 
-                data.forEach(item => {
-                    if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
-                        this.titulosBachiller.push({
+                    try {
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                estudios_bachiller_culminados: this.estudios_bachiller_culminados.trim(),
+                                titulo_bachiller_obtenido: this.nuevoTituloBachiller.titulo_bachiller_obtenido.trim(),
+                                institucion_bachiller: this.nuevoTituloBachiller.institucion_bachiller.trim(),
+                                fecha_graduacion_bachiller: this.nuevoTituloBachiller.fecha_graduacion_bachiller.trim(),
+                                especialidad_bachiller: this.nuevoTituloBachiller.especialidad_bachiller.trim(),
+                            };
                             
-                            idformacion_academica: item.id,
-                            titulo_bachiller_obtenido: item.titulo_bachiller_obtenido || '',
-                            institucion_bachiller: item.institucion_bachiller || '',
-                            fecha_graduacion_bachiller: item.fecha_graduacion_bachiller || '',
-                            especialidad_bachiller: item.especialidad_bachiller || ''
-                        });
+                        
+                        //console.log(parametros);
+                        
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/formacion_academica', 'Título de Bachiller Agregado con éxito');
+                    
+                        this.titulosBachiller.push({ idformacion_academica: response.data.data.id, 
+                            titulo_bachiller_obtenido: this.nuevoTituloBachiller.titulo_bachiller_obtenido.trim(),
+                            institucion_bachiller: this.nuevoTituloBachiller.institucion_bachiller.trim(),
+                            fecha_graduacion_bachiller: this.nuevoTituloBachiller.fecha_graduacion_bachiller.trim(),
+                            especialidad_bachiller: this.nuevoTituloBachiller.especialidad_bachiller.trim()});
+                        this.resetNuevoTituloBachiller();
+                        this.scrollToTopTituloBechiller();
                         if(this.titulosBachiller.length > 0){
                             this.sidatos=false;
                         }else{
                             this.sidatos=true;
                         }
+                        
+                        
+                        
+
+                    } catch (error) {
+                        console.log(error)
                     }
-                    if (item.estudios_universitarios_culminados === 'Si' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
-                        this.titulosUniversitarios.push({
-                            
-                            idformacion_academica: item.id,
-                            titulo_universitario_obtenido: item.titulo_universitario_obtenido || '',
-                            institucion_universitaria: item.institucion_universitaria || '',
-                            fecha_graduacion: item.fecha_graduacion || '',
-                            especialidad: item.especialidad || ''
-                        });
-                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+            
+        },
+        EstudioacctualCarg(){
+            if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACI'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing."
+                this.facultadcarreraselected_faci = true;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACAP'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing.";
+                this.facultadcarreraselected_facap = true;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACPED'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic.";
+                this.facultadcarreraselected_facped = true;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACAE'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic."
+                this.facultadcarreraselected_facae = true;
+                this.facultadcarreraselected_facsos = false;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+
+
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='FACSOS'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Lic."
+                this.facultadcarreraselected_facsos = true;
+                this.facultadcarreraselected_sede = false;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+            }else if(this.estudionuevoTituloUniversitario.facultades_universidad=='SEDE'){
+                this.estudionuevoTituloUniversitario.titulo_carrera_universidad = "Ing."
+                this.facultadcarreraselected_sede = true;
+                this.facultadcarreraselected_faci = false;
+                this.facultadcarreraselected_facap = false;
+                this.facultadcarreraselected_facped = false;
+                this.facultadcarreraselected_facae = false;
+                this.facultadcarreraselected_facsos = false;
+            }
+            this.estudionuevoTituloUniversitario.fechaestudioactual = new Date().toISOString().split('T')[0];
+        },
+        async agregarEditarTituloUniversitario2() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.estudionuevoTituloUniversitario.facultades_universidad!=='' && this.estudionuevoTituloUniversitario.titulo_carrera_universidad!=='' && this.estudionuevoTituloUniversitario.fechaestudioactual !=='' && this.estudionuevoTituloUniversitario.carrera_universidad !==''){
+                
                     
-                    if (item.estudios_posgrado_culminados === 'Si' && item.titulo_posgrado_obtenido && item.institucion_posgrado) {
-                        this.titulosPosgrado.push({
+                    try {
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                                titulo_universitario_obtenido: this.estudionuevoTituloUniversitario.facultades_universidad.trim(),
+                                institucion_universitaria: 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas',
+                                fecha_graduacion: this.estudionuevoTituloUniversitario.fechaestudioactual.trim(),
+                                especialidad: this.estudionuevoTituloUniversitario.carrera_universidad.trim(),
+                            };
                             
-                            idformacion_academica: item.id,
-                            titulo_posgrado_obtenido: item.titulo_posgrado_obtenido || '',
-                            institucion_posgrado: item.institucion_posgrado || '',
-                            fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
-                            especialidad_posgrado: item.especialidad_posgrado || ''
-                        });
+                        
+                        //console.log(parametros);
+                        
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/formacion_academica', 'Estado de estudio universitario actual almacenado');
+                    
+                        this.estudioactualtitulosUniversitarios.push({ idformacion_academica: response.data.data.id,
+                            facultades_universidad: this.estudionuevoTituloUniversitario.facultades_universidad.trim(),
+                            titulo_carrera_universidad: 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas',
+                            fechaestudioactual: this.estudionuevoTituloUniversitario.fechaestudioactual.trim(),
+                            carrera_universidad: this.estudionuevoTituloUniversitario.carrera_universidad.trim()});
+                        this.resetNuevoTituloUniversitario22();
+                        this.scrollToTop();
+                        
+                        
+                        
+
+                    } catch (error) {
+                        console.log(error)
                     }
-                });
                 
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+           
+        },
+        //Titulo Universitario
+        async agregarEditarTituloUniversitarioUTLVTE() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido!=='' && this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria!=='' && this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion !=='' && this.nuevoTituloUniversitarioUTLVTE.especialidad !==''){
                 
-                this.isEditing8 = true;
-                this.modoedit8 = false;
-                this.regresar3 = false;
-                this.Titulouni();
-                this.Titulobachi();
-                this.Posgra();
-                this.activeTab = "formacion";
-                this.mostrarformacionacademica = true;
+                    // 🟢 Si no está editando — Agregar nuevos títulos
+                let nuevosGuardados = 0;
+
+                // Si hay títulos encontrados en la base (UTLVTE o similares)
+                if (this.titulosEncontrados.length > 0) {
+                    for (const titulo of this.titulosEncontrados) {
+                        // Si ya fue guardado, saltar
+                        if (titulo.idformacion_academica) continue;
+
+                        // Tomar valores del título actual
+                        const parametros = {
+                            CIInfPer: this.idus,
+                            estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                            titulo_universitario_obtenido:
+                                (this.GeneroPer === 'MUJER' ? titulo.titulom : titulo.tituloh) ||
+                                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido.trim(),
+                            institucion_universitaria:
+                                titulo.inst_cod === 'UTELVT'
+                                    ? 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas'
+                                    : this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria.trim(),
+                            fecha_graduacion: titulo.fechaincorporacion || this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion.trim(),
+                            especialidad: titulo.NombCarr || this.nuevoTituloUniversitarioUTLVTE.especialidad.trim(),
+                            
+                        };
+
+                        const response = await enviarsolig(
+                            'POST',
+                            parametros,
+                            '/cvn/v1/formacion_academica',
+                            'Título Universitario Agregado con éxito'
+                        );
+
+                        if (response && response.data && response.data.data.id) {
+                            titulo.idformacion_academica = response.data.data.id;
+
+                            this.titulosUniversitarios.push({
+                                idformacion_academica: response.data.data.id,
+                                titulo_universitario_obtenido: parametros.titulo_universitario_obtenido,
+                                institucion_universitaria: parametros.institucion_universitaria,
+                                fecha_graduacion: parametros.fecha_graduacion,
+                                especialidad: parametros.especialidad,
+                                esDetectado: true,
+                            });
+
+                            nuevosGuardados++;
+                        }
+                    }
+
+                    // Si guardó todos los títulos, bloquea inputs
+                    if (nuevosGuardados > 0) {
+                        mostraralertas2(`Se guardaron ${nuevosGuardados} títulos exitosamente.`, 'success');
+                        this.titulosBloqueados = true;
+                        this.mostrarFormularioTitulos = false; // 👈 oculta inputs
+                    } else {
+                        mostraralertas2('No hay títulos nuevos para guardar.', 'info');
+                    }
+
+                    this.scrollToTopTituloUniversitarios();
+                    this.resetNuevoTituloUniversitarioUTLVTE();
+                    this.titulosEncontrados = [];
+                    this.titulosBloqueados = true;
+                    this.mostrarFormularioTitulos = false;
+                    return;
+                }
+
+                
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+           
+        },
+        async agregarEditarTituloUniversitario() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloUniversitario.titulo_universitario_obtenido!=='' && this.nuevoTituloUniversitario.institucion_universitaria!=='' && this.nuevoTituloUniversitario.fecha_graduacion !=='' && this.nuevoTituloUniversitario.especialidad !==''){
+                if (this.tituloUniversitarioEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                        titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
+                        institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
+                        fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
+                        especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
+                    };
+
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/formacion_academica/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
+
+                    if (response && response.data) {
+                        const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === this.tituloUniversitarioEditIndex);
+                        if (index !== -1) {
+                            this.titulosUniversitarios.splice(index, 1, { ...this.nuevoTituloUniversitario });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.tituloUniversitarioEditIndex = null;
+                    this.modoeditionformacionuniversidad=false;
+                    this.resetNuevoTituloUniversitario();
+                    this.scrollToTopTituloUniversitarios();
+                } else {
+                    // 🟢 Si no está editando — Agregar nuevos títulos
+                
+
+                    // 🟢 Si no hay títulos encontrados (el usuario los ingresa manualmente)
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
+                        titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
+                        institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
+                        fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
+                        especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
+                    };
+
+                    const response = await enviarsolig(
+                        'POST',
+                        parametros,
+                        '/cvn/v1/formacion_academica',
+                        'Título Universitario Agregado con éxito'
+                    );
+
+                    this.titulosUniversitarios.push({
+                        idformacion_academica: response.data.data.id,
+                        ...this.nuevoTituloUniversitario,
+                        esDetectado: false
+                    });
+
+                    this.resetNuevoTituloUniversitario();
+                    this.scrollToTopTituloUniversitarios();
+                    this.titulosBloqueados = true;
+                    this.mostrarFormularioTitulos = false;
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+           
+        },
+        
+        async agregarEditarTituloPosgradoUTLVTE() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido!=='' && this.nuevoTituloPosgradoUTLVTE.institucion_posgrado!=='' && this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado !=='' && this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado !==''){
+               
+                let nuevosGuardados = 0;
+
+                // Si hay títulos encontrados en la base (UTLVTE o similares)
+                if (this.titulosEncontradosPosgrado.length > 0) {
+                    for (const titulo of this.titulosEncontradosPosgrado) {
+                        // Si ya fue guardado, saltar
+                        if (titulo.idformacion_academica) continue;
+
+                        // Tomar valores del título actual
+                        const parametros = {
+                            CIInfPer: this.idus,
+                            estudios_posgrado_culminados: this.estudios_posgrado_culminados.trim(),
+                            titulo_posgrado_obtenido:
+                                (this.GeneroPer === 'MUJER' ? titulo.titulom : titulo.tituloh) ||
+                                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido.trim(),
+                            institucion_posgrado:
+                                titulo.inst_cod === 'UTELVT'
+                                    ? 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas'
+                                    : this.nuevoTituloPosgradoUTLVTE.institucion_posgrado.trim(),
+                            fecha_graduacion_posgrado: titulo.fechaincorporacion || this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado.trim(),
+                            especialidad_posgrado: titulo.NombCarr || this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado.trim(),
+                            
+                        };
+
+                        const response = await enviarsolig(
+                            'POST',
+                            parametros,
+                            '/cvn/v1/formacion_academica',
+                            'Título de Posgrado Agregado con éxito'
+                        );
+
+                        if (response && response.data && response.data.data.id) {
+                            titulo.idformacion_academica = response.data.data.id;
+
+                            this.titulosPosgrado.push({
+                                idformacion_academica: response.data.data.id,
+                                titulo_posgrado_obtenido: parametros.titulo_posgrado_obtenido,
+                                institucion_posgrado: parametros.institucion_posgrado,
+                                fecha_graduacion_posgrado: parametros.fecha_graduacion_posgrado,
+                                especialidad_posgrado: parametros.especialidad_posgrado,
+                                
+                            });
+
+                            nuevosGuardados++;
+                        }
+                    }
+
+                    // Si guardó todos los títulos, bloquea inputs
+                    if (nuevosGuardados > 0) {
+                        mostraralertas2(`Se guardaron ${nuevosGuardados} títulos exitosamente.`, 'success');
+                        this.titulosBloqueadosPosgrado = true;
+                        this.mostrarFormularioTitulosPosgrado = false; // 👈 oculta inputs
+                    } else {
+                        mostraralertas2('No hay títulos nuevos para guardar.', 'info');
+                    }
+
+                    this.resetNuevoTituloPosgrado();
+                        this.scrollToTopTituloPosgrado();
+                    this.titulosEncontradosPosgrado = [];
+                    this.titulosBloqueadosPosgrado = true;
+                    this.mostrarFormularioTitulosPosgrado = false;
+                    this.mostrarnormal = true;
+                    return;
+                }
+
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+        },
+        async agregarEditarTituloPosgrado() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoTituloPosgrado.titulo_posgrado_obtenido!=='' && this.nuevoTituloPosgrado.institucion_posgrado!=='' && this.nuevoTituloPosgrado.fecha_graduacion_posgrado !=='' && this.nuevoTituloPosgrado.especialidad_posgrado !==''){
+                if (this.tituloPosgradoEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        estudios_posgrado_culminados: this.estudios_posgrado_culminados.trim(),
+                        titulo_posgrado_obtenido: this.nuevoTituloPosgrado.titulo_posgrado_obtenido.trim(),
+                        institucion_posgrado: this.nuevoTituloPosgrado.institucion_posgrado.trim(),
+                        fecha_graduacion_posgrado: this.nuevoTituloPosgrado.fecha_graduacion_posgrado.trim(),
+                        especialidad_posgrado: this.nuevoTituloPosgrado.especialidad_posgrado.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/formacion_academica/' + this.tituloPosgradoEditIndex, 'Título de Posgrado Actualizado con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === this.tituloPosgradoEditIndex);
+                        if (index !== -1) {
+                            this.titulosPosgrado.splice(index, 1, { ...this.nuevoTituloPosgrado });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.tituloPosgradoEditIndex = null;
+                    this.modoeditionformacionposgrado=false;
+                    this.resetNuevoTituloPosgrado();
+                    this.scrollToTopTituloPosgrado();
+                } else {
+                   
+                    try {
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                estudios_posgrado_culminados: this.estudios_posgrado_culminados.trim(),
+                                titulo_posgrado_obtenido: this.nuevoTituloPosgrado.titulo_posgrado_obtenido.trim(),
+                                institucion_posgrado: this.nuevoTituloPosgrado.institucion_posgrado.trim(),
+                                fecha_graduacion_posgrado: this.nuevoTituloPosgrado.fecha_graduacion_posgrado.trim(),
+                                especialidad_posgrado: this.nuevoTituloPosgrado.especialidad_posgrado.trim(),
+                            };
+                            
+                        
+                        //console.log(parametros);
+                        
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/formacion_academica', 'Título de Posgrado Agregado con éxito');
+                       
+                        this.titulosPosgrado.push({ idformacion_academica: response.data.data.id, 
+                                titulo_posgrado_obtenido: this.nuevoTituloPosgrado.titulo_posgrado_obtenido.trim(),
+                                institucion_posgrado: this.nuevoTituloPosgrado.institucion_posgrado.trim(),
+                                fecha_graduacion_posgrado: this.nuevoTituloPosgrado.fecha_graduacion_posgrado.trim(),
+                                especialidad_posgrado: this.nuevoTituloPosgrado.especialidad_posgrado.trim()});
+                        this.resetNuevoTituloPosgrado();
+                        this.scrollToTopTituloPosgrado();
+    
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+        },
+        // Métodos para editar títulos
+        editarTituloBachiller(idformacion_academica) {
+            this.estudios_bachiller_culminados ="Si";
+            this.Titulobachi();
+            const index = this.titulosBachiller.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            if (index !== -1) {
+                this.nuevoTituloBachiller = { ...this.titulosBachiller[index] };
+                this.tituloBachillerEditIndex = idformacion_academica;
+                //this.modoedition=true;
+                this.scrollToTopRegresarTituloBechiller();
+            }
+        },
+        editarTituloUniversitario(idformacion_academica) {
+            this.estudios_universitarios_culminados ="Si";
+            this.Titulouni();
+            const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            
+            if (index !== -1) {
+                this.nuevoTituloUniversitario = { ...this.titulosUniversitarios[index] };
+                this.tituloUniversitarioEditIndex = idformacion_academica;
+                this.modoeditionformacionuniversidad=true;
+                this.scrollToTopRegresarTituloUniversitarios();
+            }
+        },
+        editarTituloPosgrado(idformacion_academica) {
+            this.estudios_posgrado_culminados ="Si";
+            this.Posgra();
+            const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            console.log(index);
+            if (index !== -1) {
+                this.nuevoTituloPosgrado = { ...this.titulosPosgrado[index] };
+                this.tituloPosgradoEditIndex = idformacion_academica;
+                this.modoeditionformacionposgrado=true;
+                this.scrollToTopRegresarTituloPosgrado();
+            }
+        },
+        // Métodos para eliminar títulos
+        async eliminarTituloBachiller(idformacion_academica) {
+            const index = this.titulosBachiller.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Bachiller','¿Realmente desea eliminar el Título de Bachiller?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.titulosBachiller.splice(index, 1);
+                    if(this.titulosBachiller.length > 0){
+                        this.sidatos=false;
+                    }else{
+                        this.sidatos=true;
+                    }
+                }
             } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloBachiller();
+            this.scrollToTop();
+            //this.modoedition=false;
+        },
+        async eliminarTituloUniversitario32(idformacion_academica) {
+            const index = this.estudioactualtitulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el estado actual de estudio universitario?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.estudioactualtitulosUniversitarios.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloUniversitario22();
+            this.scrollToTop();
+            this.modoeditionformacionuniversidad=false;
+            this.mensajenuevo= false;
+        },
+        async eliminarTituloUniversitario(idformacion_academica) {
+            const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el Título Universitario?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.titulosUniversitarios.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloUniversitario();
+            this.scrollToTop();
+            this.modoeditionformacionuniversidad=false;
+        },
+        async eliminarTituloUniversitarioUTLVTE(idformacion_academica) {
+            const index = this.titulosEncontrados.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título Universitario','¿Realmente desea eliminar el Título Universitario?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.titulosEncontrados.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloUniversitarioUTLVTE();
+            this.scrollToTop();
+           // this.modoeditionformacionuniversidad=false;
+        },
+        
+        async eliminarTituloPosgrado(idformacion_academica) {
+            const index = this.titulosPosgrado.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
+            const response = await confimar('/cvn/v1/formacion_academica/',idformacion_academica,'Eliminar Título de Posgrado','¿Realmente desea eliminar el Título de Posgrado?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.titulosPosgrado.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloPosgrado();
+            this.scrollToTop();
+            this.modoeditionformacionposgrado=false;
+        },
+        // Restablecer objetos de nuevos títulos
+        resetNuevoTituloBachiller() {
+            this.estudios_bachiller_culminados = "";
+            this.Titulobachi();
+           
+            this.nuevoTituloBachiller = {
+                titulo_bachiller_obtenido: "",
+                institucion_bachiller: "",
+                fecha_graduacion_bachiller: "",
+                especialidad_bachiller: ""
+            };
+        },
+        resetNuevoTituloUniversitario22() {
+            
+            this.estudios_universitarios_culminados = "";
+            this.sigueestudiandouniversidad=false;
+            this.facultadcarreraselected_sede = false;
+            this.facultadcarreraselected_faci = false;
+            this.facultadcarreraselected_facap = false;
+            this.facultadcarreraselected_facped = false;
+            this.facultadcarreraselected_facae = false;
+            this.facultadcarreraselected_facsos = false;
+            this.Titulouni();
+           
+            this.estudionuevoTituloUniversitario = {
+                facultades_universidad: "",
+                titulo_carrera_universidad: "",
+                fechaestudioactual: "",
+                carrera_universidad: ""
+            };
+        },
+        resetNuevoTituloUniversitario() {
+            
+            this.estudios_universitarios_culminados = "";
+            this.Titulouni();
+           
+            this.nuevoTituloUniversitario = {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: ""
+            };
+        },
+        resetNuevoTituloUniversitarioUTLVTE() {
+            
+            this.estudios_universitarios_culminados = "";
+            this.Titulouni();
+           
+            this.nuevoTituloUniversitarioUTLVTE = {
+                titulo_universitario_obtenido: "",
+                institucion_universitaria: "",
+                fecha_graduacion: "",
+                especialidad: ""
+            };
+        },
+        resetNuevoTituloPosgrado() {
+            this.estudios_posgrado_culminados = "";
+            this.Posgra();
+            this.nuevoTituloPosgrado = {
+                titulo_posgrado_obtenido: "",
+                institucion_posgrado: "",
+                fecha_graduacion_posgrado: "",
+                especialidad_posgrado: ""
+            };
+        },
+        //Experiencias Profesionales
+        Cargos() {
+            if (this.cargos_desempenados === "Si") {
+                this.cargos = true;
+                this.practica = false;
+                this.practicas_profesionales = "";
+            } else {
+                this.cargos = false;
+                //this.trabajonuevo = false;
+            }
+        },
+
+        Practicas() {
+            if (this.practicas_profesionales === "Si") {
+                this.practica = true;
+                this.cargos = false;
+                this.cargos_desempenados = "";
+            } else {
+                this.practica = false;
+            }
+        },
+        FechaCarg() {
+            if(this.fechacargos === ""){
+                this.fechaFinLabel = "";
+                //this.trabajonuevo = false;
+            }
+            if (this.fechacargos === "Si") {
+                this.fechaFinLabel = "Fecha actual de trabajo";
+                this.nuevocargosEmpresas.fecha_fin_empresa = new Date().toISOString().split('T')[0]; 
+                this.fechaFinDisabled = true;
+                this.trabajonuevo = true;
+            }if (this.fechacargos === "No"){
+                this.fechaFinLabel = "Fecha de finalización de labores en la Empresa/Institución";
+                this.nuevocargosEmpresas.fecha_fin_empresa = ''; 
+                this.fechaFinDisabled = false;
+                this.trabajonuevo = true;
+            }
+        },
+        FechaCargpractica() {
+            if(this.fechacargospractica === ""){
+                this.fechaFinLabelpracticas = "";
+                //this.trabajonuevo = false;
+            }
+            if (this.fechacargospractica === "Si") {
+                this.fechaFinLabelpracticas = "Fecha actual de realización de prácticas";
+                this.nuevocargosPasantias.fecha_fin_practicas = new Date().toISOString().split('T')[0]; 
+                this.fechaFinDisabledpracticas = true;
+                this.trabajonuevoprecticas = true;
+            }if (this.fechacargospractica === "No"){
+                this.fechaFinLabelpracticas = "Fecha de finalización de prácticas en la Empresa/Institución";
+                this.nuevocargosPasantias.fecha_fin_practicas = ''; 
+                this.fechaFinDisabledpracticas = false;
+                this.trabajonuevoprecticas = true;
+            }
+        },
+        FechaCursos2() {
+            if(this.fechacursos === ""){
+                this.fechaFinLabelCursos = "";
+                //this.trabajonuevo = false;
+            }
+            if (this.fechacursos === "Si") {
+                this.fechaFinLabelCursos = "Fecha actual del Curso";
+                this.nuevoscurso_capacitacion.fecha_fin_curso = new Date().toISOString().split('T')[0]; 
+                this.fechaFincursoDisabled = true;
+                this.fechacursofinactual = true;
+            }if (this.fechacursos  === "No"){
+                this.fechaFinLabelCursos = "Fecha de Finalización del Curso y/o Capacitación";
+                this.nuevoscurso_capacitacion.fecha_fin_curso = ''; 
+                this.fechaFincursoDisabled = false;
+                this.fechacursofinactual = true;
+            }
+        },
+
+        // Métodos para añadir/editar experiencias
+        //Scroll to top tabla Experiencias Empresas
+        scrollToTopExperienciasEmpresas() {
+            const target = document.getElementById("experienciasprofesionalesempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Experiencias Practicas
+        scrollToTopRegresarExperienciasEmpresas() {
+            const target = document.getElementById("regresarexperienciaempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        scrollToTopExperienciasPracticas() {
+            const target = document.getElementById("experienciasprofesionalesempresa");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Experiencias Practicas
+        scrollToTopRegresarExperienciasPracticas() {
+            const target = document.getElementById("experienciasprofesionalespracticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        async agregarEditarEmpresa() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevocargosEmpresas.empresa_institucion.trim()!=='' && this.nuevocargosEmpresas.fecha_inicio_empresa.trim()!=='' && this.nuevocargosEmpresas.fecha_fin_empresa.trim() !=='' && this.nuevocargosEmpresas.cargo_desempenado_empresa.trim() !=='' && this.nuevocargosEmpresas.descripcion_funciones_empresa.trim() !=='' && this.nuevocargosEmpresas.logros_resultados_empresa.trim() !==''){
                 
+                if (this.cargosEmpresasEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        cargos_desempenados: this.cargos_desempenados.trim(),
+                        empresa_institucion: this.nuevocargosEmpresas.empresa_institucion.trim(),
+                        fecha_inicio_empresa: this.nuevocargosEmpresas.fecha_inicio_empresa.trim(),
+                        fecha_fin_empresa: this.nuevocargosEmpresas.fecha_fin_empresa.trim(),
+                        cargo_desempenado_empresa: this.nuevocargosEmpresas.cargo_desempenado_empresa.trim(),
+                        descripcion_funciones_empresa: this.nuevocargosEmpresas.descripcion_funciones_empresa.trim(),
+                        logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/experiencia_profesionale/' + this.cargosEmpresasEditIndex, 'Experiencia en Empresas Actualizado con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.cargosEmpresas.findIndex(titulo => titulo.idexperiencias_profesionales === this.cargosEmpresasEditIndex);
+                        if (index !== -1) {
+                            this.cargosEmpresas.splice(index, 1, { ...this.nuevocargosEmpresas });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.cargosEmpresasEditIndex = null;
+                    this.modoeditionexperienciasempresa=false;
+                    this.resetNuevoEmpresa();
+                    this.scrollToTopExperienciasEmpresas();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                cargos_desempenados: this.cargos_desempenados.trim(),
+                                empresa_institucion: this.nuevocargosEmpresas.empresa_institucion.trim(),
+                                fecha_inicio_empresa: this.nuevocargosEmpresas.fecha_inicio_empresa.trim(),
+                                fecha_fin_empresa: this.nuevocargosEmpresas.fecha_fin_empresa.trim(),
+                                cargo_desempenado_empresa: this.nuevocargosEmpresas.cargo_desempenado_empresa.trim(),
+                                descripcion_funciones_empresa: this.nuevocargosEmpresas.descripcion_funciones_empresa.trim(),
+                                logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/experiencia_profesionale', 'Experiencia en Empresas Agregado con éxito');
+                       
+                        this.cargosEmpresas.push({ idexperiencias_profesionales: response.data.data.id, 
+                            empresa_institucion: this.nuevocargosEmpresas.empresa_institucion.trim(),
+                            fecha_inicio_empresa: this.nuevocargosEmpresas.fecha_inicio_empresa.trim(),
+                            fecha_fin_empresa: this.nuevocargosEmpresas.fecha_fin_empresa.trim(),
+                            cargo_desempenado_empresa: this.nuevocargosEmpresas.cargo_desempenado_empresa.trim(),
+                            descripcion_funciones_empresa: this.nuevocargosEmpresas.descripcion_funciones_empresa.trim(),
+                            logros_resultados_empresa: this.nuevocargosEmpresas.logros_resultados_empresa.trim()});
+                        this.resetNuevoEmpresa();
+                        this.scrollToTopExperienciasEmpresas();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        async agregarEditarPracticas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevocargosPasantias.empresa_institucion_practicas.trim()!=='' && this.nuevocargosPasantias.fecha_inicio_practicas.trim()!=='' && this.nuevocargosPasantias.fecha_fin_practicas.trim() !=='' && this.nuevocargosPasantias.area_trabajo_practicas.trim() !=='' && this.nuevocargosPasantias.descripcion_funciones_practicas.trim() !==''){
+
+                if (this.cargosPasantiasEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        practicas_profesionales: this.practicas_profesionales.trim(),
+                        empresa_institucion_practicas: this.nuevocargosPasantias.empresa_institucion_practicas.trim(),
+                        fecha_inicio_practicas: this.nuevocargosPasantias.fecha_inicio_practicas.trim(),
+                        fecha_fin_practicas: this.nuevocargosPasantias.fecha_fin_practicas.trim(),
+                        area_trabajo_practicas: this.nuevocargosPasantias.area_trabajo_practicas.trim(),
+                        descripcion_funciones_practicas: this.nuevocargosPasantias.descripcion_funciones_practicas.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/experiencia_profesionale/' + this.cargosPasantiasEditIndex, 'Experiencias en Pasantías Actualizado con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === this.cargosPasantiasEditIndex);
+                        if (index !== -1) {
+                            this.cargosPasantias.splice(index, 1, { ...this.nuevocargosPasantias });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.cargosPasantiasEditIndex = null;
+                    this.modoeditionexperienciaspracticas=false;
+                    this.resetNuevoPracticas();
+                    this.scrollToTopExperienciasPracticas();
+                } else {
+                   
+                    try {
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                practicas_profesionales: this.practicas_profesionales.trim(),
+                                empresa_institucion_practicas: this.nuevocargosPasantias.empresa_institucion_practicas.trim(),
+                                fecha_inicio_practicas: this.nuevocargosPasantias.fecha_inicio_practicas.trim(),
+                                fecha_fin_practicas: this.nuevocargosPasantias.fecha_fin_practicas.trim(),
+                                area_trabajo_practicas: this.nuevocargosPasantias.area_trabajo_practicas.trim(),
+                                descripcion_funciones_practicas: this.nuevocargosPasantias.descripcion_funciones_practicas.trim(),
+                            };
+                            
+                        
+                        //console.log(parametros);
+                        
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/experiencia_profesionale', 'Experiencias en Pasantías Agregado con éxito');
+                       
+                        this.cargosPasantias.push({ idexperiencias_profesionales: response.data.data.id,  
+                                empresa_institucion_practicas: this.nuevocargosPasantias.empresa_institucion_practicas.trim(),
+                                fecha_inicio_practicas: this.nuevocargosPasantias.fecha_inicio_practicas.trim(),
+                                fecha_fin_practicas: this.nuevocargosPasantias.fecha_fin_practicas.trim(),
+                                area_trabajo_practicas: this.nuevocargosPasantias.area_trabajo_practicas.trim(),
+                                descripcion_funciones_practicas: this.nuevocargosPasantias.descripcion_funciones_practicas.trim()});
+                        this.resetNuevoPracticas();
+                        this.scrollToTopExperienciasPracticas();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+        },
+        // Métodos para editar cargos
+        editarSeleccionEmpresa(idexperiencias_profesionales) {
+            this.cargos_desempenados ="Si";
+            this.Cargos();
+            const index = this.cargosEmpresas.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
+            if (index !== -1) {
+                this.nuevocargosEmpresas = { ...this.cargosEmpresas[index] };
+                this.cargosEmpresasEditIndex = idexperiencias_profesionales;
+                this.modoeditionexperienciasempresa=true;
+                this.scrollToTopRegresarExperienciasEmpresas();
+            }
+        },
+        editarSeleccionPracticas(idexperiencias_profesionales) {
+            this.practicas_profesionales ="Si";
+            this.Practicas();
+            const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
+            if (index !== -1) {
+                this.nuevocargosPasantias = { ...this.cargosPasantias[index] };
+                this.cargosPasantiasEditIndex = idexperiencias_profesionales;
+                this.modoeditionexperienciaspracticas=true;
+                this.scrollToTopRegresarExperienciasPracticas();
+            }
+        },
+        // Métodos para eliminar cargos
+        async eliminarSeleccionEmpresa(idexperiencias_profesionales) {
+            const index = this.cargosEmpresas.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
+            const response = await confimar('/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Empresa','¿Realmente desea eliminar la Experiencia Empresa?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.cargosEmpresas.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoEmpresa();
+            this.scrollToTop();
+            this.modoeditionexperienciasempresa=false;
+        },
+        async eliminarSeleccionPracticas(idexperiencias_profesionales) {
+            const index = this.cargosPasantias.findIndex(titulo => titulo.idexperiencias_profesionales === idexperiencias_profesionales);
+            const response = await confimar('/cvn/v1/experiencia_profesionale/',idexperiencias_profesionales,'Eliminar Experiencia Pasantías','¿Realmente desea eliminar la Experiencia Pasantías?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.cargosPasantias.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoPracticas();
+            this.scrollToTop();
+            this.modoeditionexperienciaspracticas=false;
+        },
+        // Restablecer objetos de nuevos cargos
+        resetNuevoEmpresa() {
+            this.cargos_desempenados = "";
+            this.fechacargos="";
+            this.fechaFinLabel="";
+            this.trabajo = false;
+            this.Cargos();
+            this.FechaCarg();
+           
+            this.nuevocargosEmpresas = {
+                empresa_institucion: "",
+                fecha_inicio_empresa: "",
+                fecha_fin_empresa: "",
+                cargo_desempenado_empresa: "",
+                descripcion_funciones_empresa: "",
+                logros_resultados_empresa: ""
+            };
+        },
+        resetNuevoPracticas() {
+            
+            this.practicas_profesionales = "";
+            this.Practicas();
+            this.FechaCarg();
+            this.cargos=false;
+            this.nuevocargosPasantias = {
+                empresa_institucion_practicas: "",
+                fecha_inicio_practicas: "",
+                fecha_fin_practicas: "",
+                area_trabajo_practicas: "",
+                descripcion_funciones_practicas: ""
+            };
+        },
+
+        //Investigaciones y publicacionies
+        Investigaciones() {
+            if (this.publicaciones === "Si") {
+                this.investiga = true;
+            } else {
+                this.investiga = false;
+            }
+        },
+        // Métodos para añadir/editar investigaciones
+        async agregarEditarPublicaciones() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevaspublicaciones.publicacion_tipo.trim()!=='' && this.nuevaspublicaciones.publicacion_titulo.trim()!=='' && this.nuevaspublicaciones.link_publicacion.trim() !=='' && this.nuevaspublicaciones.congreso_evento.trim() !=='' && this.nuevaspublicaciones.grupo_investigacion.trim() !==''){
+
+                if (this.grupoinvestigaselected === 'No') {
+                    this.nuevaspublicaciones.grupo_investigacion = 'No';
+                }
+                if (this.publicacionesEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        publicaciones: this.publicaciones.trim(),
+                        publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
+                        publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
+                        link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                        grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
+                        congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/investigacion_publicacione/' + this.publicacionesEditIndex, 'Publicaciones Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.publicacionesarray.findIndex(titulo => titulo.idinvestigacion_publicaciones === this.publicacionesEditIndex);
+                        if (index !== -1) {
+                            this.publicacionesarray.splice(index, 1, { ...this.nuevaspublicaciones });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.publicacionesEditIndex = null;
+                    this.modoeditionpublicaciones=false;
+                    this.resetNuevoPubliciones();
+                    this.grupoinvestigaselected = '';
+                    this.scrollToTop();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                publicaciones: this.publicaciones.trim(),
+                                publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
+                                publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
+                                link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                                grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
+                                congreso_evento: this.nuevaspublicaciones.congreso_evento.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/investigacion_publicacione', 'Publicaciones Agregada con éxito');
+                       
+                        this.publicacionesarray.push({ idinvestigacion_publicaciones: response.data.data.id, 
+                                publicacion_tipo: this.nuevaspublicaciones.publicacion_tipo.trim(),
+                                publicacion_titulo: this.nuevaspublicaciones.publicacion_titulo.trim(),
+                                link_publicacion: this.nuevaspublicaciones.link_publicacion.trim(),
+                                grupo_investigacion: this.nuevaspublicaciones.grupo_investigacion.trim(),
+                                congreso_evento: this.nuevaspublicaciones.congreso_evento.trim()});
+                        this.resetNuevoPubliciones();
+                        this.certificadoselected = '';
+                        this.scrollToTop();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar publicacionies
+        editarSeleccionPublicaciones(idinvestigacion_publicaciones) {
+            this.publicaciones ="Si";
+
+            this.Investigaciones();
+            const index = this.publicacionesarray.findIndex(titulo => titulo.idinvestigacion_publicaciones === idinvestigacion_publicaciones);
+            if (index !== -1) {
+                this.nuevaspublicaciones = { ...this.publicacionesarray[index] };
+                this.publicacionesEditIndex = idinvestigacion_publicaciones;
+                this.modoeditionpublicaciones=true;
+                this.scrollToTop();
+            }
+        },
+        // Métodos para eliminar cargos
+        async eliminarSeleccionPublicaciones(idinvestigacion_publicaciones) {
+            const index = this.publicacionesarray.findIndex(titulo => titulo.idinvestigacion_publicaciones === idinvestigacion_publicaciones);
+            const response = await confimar('/cvn/v1/investigacion_publicacione/',idinvestigacion_publicaciones,'Eliminar Publicación','¿Realmente desea eliminar la Publicación?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.publicacionesarray.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoPubliciones();
+            this.scrollToTop();
+            this.modoeditionpublicaciones=false;
+        },
+        // Restablecer objetos de nuevos publicacionies
+        resetNuevoPubliciones() {
+            this.publicaciones = "";
+            this.Investigaciones();
+           
+            this.nuevaspublicaciones = {
+                publicacion_tipo: "",
+                publicacion_tipo: "",
+                link_publicacion: "",
+                grupo_investigacion: "",
+                congreso_evento: "",
+            };
+        },
+
+        actualizarCertificado() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.certificadoselected === 'No') {
+                this.nuevosidiomas.certificado = 'No';
+                this.isValidURL = true;
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.certificadoselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
+                this.nuevosidiomas.certificado = '';
+                this.isValidURL = false;
+            }
+        },
+        actualizargrupoinvestiga() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.grupoinvestigaselected === 'No') {
+                this.nuevaspublicaciones.grupo_investigacion = 'No';
+                
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.grupoinvestigaselected === 'Si' && this.nuevosidiomas.certificado === 'No') {
+                this.nuevaspublicaciones.grupo_investigaciono = '';
+                
+            }
+        },
+        actualizarCertificadocurso() {
+            // Si el usuario elige "No", el campo certificado se limpia y guarda como "No"
+            if (this.certificadoscursoelected === 'No') {
+                this.nuevoscurso_capacitacion.certificado_curso = 'No';
+                this.isValidURL = true;
+            } 
+            // Si elige "Si", se deja el campo editable
+            else if (this.certificadoscursoelected === 'Si' && this.nuevoscurso_capacitacion.certificado_curso === 'No') {
+                this.nuevoscurso_capacitacion.certificado_curso = '';
+                this.isValidURL = false;
+            }
+        },
+
+        //Idioma
+        // Métodos para añadir/editar idiomas
+        async agregarEditarIdiomas() {
+            const usuario = await getMe();
+            this.idus = usuario.CIInfPer;
+
+            // Validar que no haya campos vacíos (excepto certificado si es "No")
+            if (this.nuevosidiomas.comprension_auditiva.trim() !== '' &&
+                this.nuevosidiomas.comprension_lectura.trim() !== '' &&
+                this.nuevosidiomas.interaccion_oral.trim() !== '' &&
+                this.nuevosidiomas.expresion_oral.trim() !== '' &&
+                this.nuevosidiomas.expresion_escrita.trim() !== '' && 
+                this.nuevosidiomas.certificado.trim() !== '')
+            {
+                // Forzar coherencia de certificado
+                if (this.certificadoselected === 'No') {
+                    this.nuevosidiomas.certificado = 'No';
+                }
+
+                const parametros = {
+                    CIInfPer: this.idus,
+                    idioma: this.nuevosidiomas.idioma.trim(),
+                    comprension_auditiva: this.nuevosidiomas.comprension_auditiva.trim(),
+                    comprension_lectura: this.nuevosidiomas.comprension_lectura.trim(),
+                    interaccion_oral: this.nuevosidiomas.interaccion_oral.trim(),
+                    expresion_oral: this.nuevosidiomas.expresion_oral.trim(),
+                    expresion_escrita: this.nuevosidiomas.expresion_escrita.trim(),
+                    certificado: this.nuevosidiomas.certificado.trim(),
+                };
+
+                if (this.idiomasEditIndex !== null) {
+                    // EDITAR
+                    const response = await enviarsolig(
+                        'PUT',
+                        parametros,
+                        '/cvn/v1/idioma/' + this.idiomasEditIndex,
+                        'Idioma Actualizado con éxito'
+                    );
+
+                    if (response && response.data) {
+                        const index = this.idiomasarray.findIndex(
+                            titulo => titulo.idlenguaje === this.idiomasEditIndex
+                        );
+                        if (index !== -1) {
+                            this.idiomasarray.splice(index, 1, {
+                                idlenguaje: this.idiomasEditIndex,
+                                ...this.nuevosidiomas,
+                            });
+                        }
+                    }
+                    this.idiomasEditIndex = null;
+                    this.modoeditionidiomas = false;
+                    this.resetNuevoIdiomas();
+                    this.certificadoselected = '';
+                    this.scrollToTop();
+                } else {
+                    // AGREGAR
+                    const response = await enviarsolig(
+                        'POST',
+                        parametros,
+                        '/cvn/v1/idioma',
+                        'Idioma Agregado con éxito'
+                    );
+
+                    this.idiomasarray.push({
+                        idlenguaje: response.data.data.id,
+                        ...this.nuevosidiomas,
+                    });
+                    this.resetNuevoIdiomas();
+                    this.certificadoselected = '';
+                    this.scrollToTop();
+                }
+            } else {
+                mostraralertas2('No deje campos en blanco', 'warning');
+            }
+        },
+        // Métodos para editar idiomas
+        editarSeleccionIdiomas(idlenguaje) {
+            const index = this.idiomasarray.findIndex(titulo => titulo.idlenguaje === idlenguaje);
+            if (index !== -1) {
+                this.nuevosidiomas = { ...this.idiomasarray[index] };
+                this.idiomasEditIndex = idlenguaje;
+                this.modoeditionidiomas=true;
+                // Ajusta el select según el valor del certificado guardado
+                if (this.nuevosidiomas.certificado === 'No') {
+                    this.certificadoselected = 'No';
+                } else {
+                    this.certificadoselected = 'Si';
+                }
+
+                this.scrollToTop();
+            }
+        },
+        // Métodos para eliminar idiomas
+        async eliminarSeleccionIdiomas(idlenguaje) {
+            const index = this.idiomasarray.findIndex(titulo => titulo.idlenguaje === idlenguaje);
+            const response = await confimar('/cvn/v1/idioma/',idlenguaje,'Eliminar Idioma','¿Realmente desea eliminar el Idioma?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.idiomasarray.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoIdiomas();
+            this.scrollToTop();
+            this.modoeditionidiomas=false;
+        },
+        // Restablecer objetos de nuevos idiomas
+        resetNuevoIdiomas() {
+           
+           
+            this.nuevosidiomas = {
+                idioma: "",
+                comprension_auditiva: "",
+                comprension_lectura: "",
+                interaccion_oral: "",
+                expresion_oral: "",
+                expresion_escrita: "",
+                certificado: ""
+            };
+        },
+        //SW
+        //Habilidades
+        ComunHabi() {
+            if (this.habi_comunicacion === "Si") {
+                this.comunicativas = true;
+                this.creativas = false;
+                this.liderazgo = false;
+                this.informaticas_cv = false;
+                this.oficios = false;
+                this.otro_habili = false;
+                this.habi_creacion = "";
+                this.habi_liderazgo = "";
+                this.habi_informaticos_cv = "";
+                this.habi_oficios = "";
+                this.habi_otros_habi = "";
+            } else {
+                this.comunicativas = false;
+            }
+        },
+        CreaHabi() {
+            if (this.habi_creacion === "Si") {
+                this.creativas = true;
+                this.comunicativas = false;
+                this.liderazgo = false;
+                this.informaticas_cv = false;
+                this.oficios = false;
+                this.otro_habili = false;
+                this.habi_comunicacion = "";
+                this.habi_liderazgo = "";
+                this.habi_informaticos_cv = "";
+                this.habi_oficios = "";
+                this.habi_otros_habi = "";
+            } else {
+                this.creativas = false;
+            }
+        },
+        LideHabi() {
+            if (this.habi_liderazgo === "Si") {
+                this.liderazgo = true;
+                this.creativas = false;
+                this.comunicativas = false;
+                this.informaticas_cv = false;
+                this.oficios = false;
+                this.otro_habili = false;
+                this.habi_creacion = "";
+                this.habi_comunicacion = "";
+                this.habi_informaticos_cv = "";
+                this.habi_oficios = "";
+                this.habi_otros_habi = "";
+            } else {
+                this.liderazgo = false;
+            }
+        },
+        InfoHabi() {
+            if (this.habi_informaticos_cv === "Si") {
+                this.informaticas_cv = true;
+                this.creativas = false;
+                this.liderazgo = false;
+                this.comunicativas = false;
+                this.oficios = false;
+                this.otro_habili = false;
+                this.habi_creacion = "";
+                this.habi_liderazgo = "";
+                this.habi_comunicacion = "";
+                this.habi_oficios = "";
+                this.habi_otros_habi = "";
+                
+            } else {
+                this.informaticas_cv = false;
+            }
+        },
+        OfiHabi() {
+            if (this.habi_oficios === "Si") {
+                this.oficios = true;
+                this.creativas = false;
+                this.liderazgo = false;
+                this.informaticas_cv = false;
+                this.comunicativas = false;
+                this.otro_habili = false;
+                this.habi_creacion = "";
+                this.habi_liderazgo = "";
+                this.habi_informaticos_cv = "";
+                this.habi_comunicacion = "";
+                this.habi_otros_habi = "";
+            } else {
+                this.oficios = false;
+            }
+        },
+        OtrosHabi() {
+            if (this.habi_otros_habi === "Si") {
+                this.otro_habili = true;
+                this.creativas = false;
+                this.liderazgo = false;
+                this.informaticas_cv = false;
+                this.oficios = false;
+                this.comunicativas = false;
+                this.habi_creacion = "";
+                this.habi_liderazgo = "";
+                this.habi_informaticos_cv = "";
+                this.habi_oficios = "";
+                this.habi_comunicacion = "";
+            } else {
+                this.otro_habili = false;
+            }
+        },
+        //Scroll to top tabla Habilidades Comunicativas
+        scrollToTopHabilidadesComunicativas() {
+            const target = document.getElementById("tablahabilidadescomunicativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Comunicativas
+        scrollToTopRegresarHabilidadesComunicativas() {
+            const target = document.getElementById("regresarhabilidadescomunicativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Creativas
+        scrollToTopHabilidadesCreativas() {
+            const target = document.getElementById("tablahabilidadescreativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Creativas
+        scrollToTopRegresarHabilidadesCreativas() {
+            const target = document.getElementById("regresarhabilidadescreativas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Liderazgo
+        scrollToTopHabilidadesLiderazgo() {
+            const target = document.getElementById("tablahabilidadesliderazgo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Liderazgo
+        scrollToTopRegresarHabilidadesLiderazgo() {
+            const target = document.getElementById("regresarhabilidadesliderazgo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Informaticas
+        scrollToTopHabilidadesInformaticas() {
+            const target = document.getElementById("tablahabilidadesinformaticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Informaticas
+        scrollToTopRegresarHabilidadesInformaticas() {
+            const target = document.getElementById("regresarhabilidadesinformaticas");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Oficio
+        scrollToTopHabilidadesOficio() {
+            const target = document.getElementById("tablahabilidadesoficios");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Oficio
+        scrollToTopRegresarHabilidadesOficio() {
+            const target = document.getElementById("regresarhabilidadesoficoo");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Scroll to top tabla Habilidades Otro
+        scrollToTopHabilidadesOtro() {
+            const target = document.getElementById("tablahabilidadesotros");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        //Regresar al Regitro de Habilidades Otro
+        scrollToTopRegresarHabilidadesOtro() {
+            const target = document.getElementById("regresarhabilidadesotros");
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        // Métodos para añadir/editar habilidades Comunicativas
+        async agregarEditarHabilidadesComunicativas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim()!=='' && this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim()!==''){
+
+                if (this.habilidades_comunicativas_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        habilidades_comunicativas: this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim(),
+                        descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.habilidades_comunicativas_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.habilidades_comunicativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_comunicativas_EditIndex);
+                        if (index !== -1) {
+                            this.habilidades_comunicativas_array.splice(index, 1, { ...this.nuevashabilidades_comunicativas });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.habilidades_comunicativas_EditIndex = null;
+                    this.modoeditionhabilidadescomuni=false;
+                    this.resetNuevasHabilidadesComunicativas();
+                    this.scrollToTopHabilidadesComunicativas();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                habilidades_comunicativas: this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim(),
+                                descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.habilidades_comunicativas_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            habilidades_comunicativas: this.nuevashabilidades_comunicativas.habilidades_comunicativas.trim(),
+                            descripcion_habilidades_comunicativas: this.nuevashabilidades_comunicativas.descripcion_habilidades_comunicativas.trim()});
+                        this.resetNuevasHabilidadesComunicativas();
+                        this.scrollToTopHabilidadesComunicativas();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Comunicativas
+        editarSeleccionHabilidadesComunicativas(idhabilidades_informaticas) {
+            this.habi_comunicacion ="Si";
+            this.ComunHabi();
+            
+            const index = this.habilidades_comunicativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevashabilidades_comunicativas = { ...this.habilidades_comunicativas_array[index] };
+                this.habilidades_comunicativas_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadescomuni=true;
+                this.scrollToTopRegresarHabilidadesComunicativas();
+            }
+            
+        },
+        // Métodos para eliminar habilidades Comunicativas
+        async eliminarSeleccionHabilidadesComunicativas(idhabilidades_informaticas) {
+            const index = this.habilidades_comunicativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.habilidades_comunicativas_array.splice(index, 1);
+                    
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesComunicativas();
+            this.scrollToTop();
+            this.modoeditionhabilidadescomuni=false;
+        },
+        // Restablecer objetos de nuevas habilidades Comunicativas
+        resetNuevasHabilidadesComunicativas() {
+            this.habi_comunicacion ="";
+            this.ComunHabi();
+            this.nuevashabilidades_comunicativas= {
+                habilidades_comunicativas: "",
+                descripcion_habilidades_comunicativas: ""
+            };
+        },
+
+        // Métodos para añadir/editar habilidades Creativas
+        async agregarEditarHabilidadesCreativas() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevashabilidades_creativas.habilidades_creativas.trim()!=='' && this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim()!==''){
+
+                if (this.habilidades_creativas_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        habilidades_creativas: this.nuevashabilidades_creativas.habilidades_creativas.trim(),
+                        descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.habilidades_creativas_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.habilidades_creativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_creativas_EditIndex);
+                        if (index !== -1) {
+                            this.habilidades_creativas_array.splice(index, 1, { ...this.nuevashabilidades_creativas });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.habilidades_creativas_EditIndex = null;
+                    this.modoeditionhabilidadescreative=false;
+                    this.resetNuevasHabilidadesCreativas();
+                    this.scrollToTopHabilidadesCreativas();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                habilidades_creativas: this.nuevashabilidades_creativas.habilidades_creativas.trim(),
+                                descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.habilidades_creativas_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            habilidades_creativas: this.nuevashabilidades_creativas.habilidades_creativas.trim(),
+                            descripcion_habilidades_creativas: this.nuevashabilidades_creativas.descripcion_habilidades_creativas.trim()});
+                        this.resetNuevasHabilidadesCreativas();
+                        this.scrollToTopHabilidadesCreativas();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Creativas
+        editarSeleccionHabilidadesCreativas(idhabilidades_informaticas) {
+            this.habi_creacion ="Si";
+            this.CreaHabi();
+            const index = this.habilidades_creativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevashabilidades_creativas = { ...this.habilidades_creativas_array[index] };
+                this.habilidades_creativas_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadescreative=true;
+                this.scrollToTopRegresarHabilidadesCreativas();
+            }
+        },
+        // Métodos para eliminar habilidades Creativas
+        async eliminarSeleccionHabilidadesCreativas(idhabilidades_informaticas) {
+            const index = this.habilidades_creativas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.habilidades_creativas_array.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesCreativas();
+            this.scrollToTop();
+            this.modoeditionhabilidadescreative=false;
+        },
+        // Restablecer objetos de nuevas habilidades Creativas
+        resetNuevasHabilidadesCreativas() {
+            this.habi_creacion ="";
+            this.CreaHabi();
+            this.nuevashabilidades_creativas= {
+                habilidades_creativas: "",
+                descripcion_habilidades_creativas: ""
+            };
+        },
+        
+
+        // Métodos para añadir/editar habilidades Liderazgo
+        async agregarEditarHabilidadesLiderazgo() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim()!=='' && this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim()!==''){
+
+                if (this.habilidades_liderazgo_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        habilidades_liderazgo: this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim(),
+                        descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.habilidades_liderazgo_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.habilidades_liderazgo_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_liderazgo_EditIndex);
+                        if (index !== -1) {
+                            this.habilidades_liderazgo_array.splice(index, 1, { ...this.nuevashabilidades_liderazgo });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.habilidades_liderazgo_EditIndex = null;
+                    this.modoeditionhabilidadeslidel=false;
+                    this.resetNuevasHabilidadesLiderazgo();
+                    this.scrollToTopHabilidadesLiderazgo();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                habilidades_liderazgo: this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim(),
+                                descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.habilidades_liderazgo_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            habilidades_liderazgo: this.nuevashabilidades_liderazgo.habilidades_liderazgo.trim(),
+                            descripcion_habilidades_liderazgo: this.nuevashabilidades_liderazgo.descripcion_habilidades_liderazgo.trim()});
+                        this.resetNuevasHabilidadesLiderazgo();
+                        this.scrollToTopHabilidadesLiderazgo();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Liderazgo
+        editarSeleccionHabilidadesLiderazgo(idhabilidades_informaticas) {
+            this.habi_liderazgo ="Si";
+            this.LideHabi();
+            const index = this.habilidades_liderazgo_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevashabilidades_liderazgo = { ...this.habilidades_liderazgo_array[index] };
+                this.habilidades_liderazgo_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadeslidel=true;
+                this.scrollToTopRegresarHabilidadesLiderazgo();
+            }
+        },
+        // Métodos para eliminar habilidades Liderazgo
+        async eliminarSeleccionHabilidadesLiderazgo(idhabilidades_informaticas) {
+            const index = this.habilidades_liderazgo_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.habilidades_liderazgo_array.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesLiderazgo();
+            this.scrollToTop();
+            this.modoeditionhabilidadeslidel=false;
+        },
+        // Restablecer objetos de nuevas habilidades Liderazgo
+        resetNuevasHabilidadesLiderazgo() {
+            this.habi_liderazgo ="";
+            this.LideHabi();
+            this.nuevashabilidades_liderazgo= {
+                habilidades_liderazgo: "",
+                descripcion_habilidades_liderazgo: ""
+            };
+        },
+
+
+        // Métodos para añadir/editar habilidades Infor_cv
+        async agregarEditarHabilidadesInfor_cv() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim()!=='' && this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim()!==''){
+
+                if (this.habilidades_informaticas_cv_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim(),
+                        descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.habilidades_informaticas_cv_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.habilidades_informaticas_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.habilidades_informaticas_cv_EditIndex);
+                        if (index !== -1) {
+                            this.habilidades_informaticas_array.splice(index, 1, { ...this.nuevashabilidades_informaticas_cv });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.habilidades_informaticas_cv_EditIndex = null;
+                    this.modoeditionhabilidadesinformaticas=false;
+                    this.resetNuevasHabilidadesInfor_cv();
+                    this.scrollToTopHabilidadesInformaticas();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim(),
+                                descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.habilidades_informaticas_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.habilidades_informaticas_cv.trim(),
+                            descripcion_habilidades_informaticas_cv: this.nuevashabilidades_informaticas_cv.descripcion_habilidades_informaticas_cv.trim()});
+                        this.resetNuevasHabilidadesInfor_cv();
+                        this.scrollToTopHabilidadesInformaticas();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Infor_cv
+        editarSeleccionHabilidadesInfor_cv(idhabilidades_informaticas) {
+            this.habi_informaticos_cv ="Si";
+            this.InfoHabi();
+            const index = this.habilidades_informaticas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevashabilidades_informaticas_cv = { ...this.habilidades_informaticas_array[index] };
+                this.habilidades_informaticas_cv_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadesinformaticas=true;
+                this.scrollToTopRegresarHabilidadesInformaticas();
+            }
+        },
+        // Métodos para eliminar habilidades Infor_cv
+        async eliminarSeleccionHabilidadesInfor_cv(idhabilidades_informaticas) {
+            const index = this.habilidades_informaticas_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.habilidades_informaticas_array.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesInfor_cv();
+            this.scrollToTop();
+            this.modoeditionhabilidadesinformaticas=false;
+        },
+        // Restablecer objetos de nuevas habilidades Infor_cv
+        resetNuevasHabilidadesInfor_cv() {
+            this.habi_informaticos_cv ="";
+            this.InfoHabi();
+            this.nuevashabilidades_informaticas_cv= {
+                habilidades_informaticas_cv: "",
+                descripcion_habilidades_informaticas_cv: ""
+            };
+        },
+
+
+        // Métodos para añadir/editar habilidades Oficios
+        async agregarEditarHabilidadesOficios() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevasoficios_subactividades.oficios_subactividades.trim()!=='' && this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim()!==''){
+
+                if (this.oficios_subactividades_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        oficios_subactividades: this.nuevasoficios_subactividades.oficios_subactividades.trim(),
+                        descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.oficios_subactividades_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.oficios_subactividades_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.oficios_subactividades_EditIndex);
+                        if (index !== -1) {
+                            this.oficios_subactividades_array.splice(index, 1, { ...this.nuevasoficios_subactividades });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.oficios_subactividades_EditIndex = null;
+                    this.modoeditionhabilidadesoficio=false;
+                    this.resetNuevasHabilidadesOficios();
+                    this.scrollToTopHabilidadesOficio();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                oficios_subactividades: this.nuevasoficios_subactividades.oficios_subactividades.trim(),
+                                descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.oficios_subactividades_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            oficios_subactividades: this.nuevasoficios_subactividades.oficios_subactividades.trim(),
+                            descripcion_oficios_subactividades: this.nuevasoficios_subactividades.descripcion_oficios_subactividades.trim()});
+                        this.resetNuevasHabilidadesOficios();
+                        this.scrollToTopHabilidadesOficio();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Oficios
+        editarSeleccionHabilidadesOficios(idhabilidades_informaticas) {
+            this.habi_oficios ="Si";
+            this.OfiHabi();
+            const index = this.oficios_subactividades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevasoficios_subactividades = { ...this.oficios_subactividades_array[index] };
+                this.oficios_subactividades_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadesoficio=true;
+                this.scrollToTopRegresarHabilidadesOficio();
+            }
+        },
+        // Métodos para eliminar habilidades Oficios
+        async eliminarSeleccionHabilidadesOficios(idhabilidades_informaticas) {
+            const index = this.oficios_subactividades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.oficios_subactividades_array.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesOficios();
+            this.modoeditionhabilidadesoficio=false;
+        },
+        // Restablecer objetos de nuevas habilidades Oficios
+        resetNuevasHabilidadesOficios() {
+            this.habi_oficios ="";
+            this.OfiHabi();
+            this.nuevasoficios_subactividades= {
+                oficios_subactividades: "",
+                descripcion_oficios_subactividades: ""
+            };
+        },
+
+        
+        // Métodos para añadir/editar habilidades Otros_Oficios
+        async agregarEditarHabilidadesOtros_Oficios() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevasotro_habilidades.otro_habilidades.trim()!==''){
+
+                if (this.otro_habilidades_EditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/habilidades_informatica/' + this.otro_habilidades_EditIndex, 'Habilidad Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.otro_habilidades_array.findIndex(titulo => titulo.idhabilidades_informaticas === this.otro_habilidades_EditIndex);
+                        if (index !== -1) {
+                            this.otro_habilidades_array.splice(index, 1, { ...this.nuevasotro_habilidades });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.otro_habilidades_EditIndex = null;
+                    this.modoeditionhabilidadesotro=false;
+                    this.resetNuevasHabilidadesOtros_Oficios();
+                    this.scrollToTopHabilidadesOtro();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/habilidades_informatica', 'Habilidad Agregada con éxito');
+                       
+                        this.otro_habilidades_array.push({ idhabilidades_informaticas: response.data.data.id, 
+                            otro_habilidades: this.nuevasotro_habilidades.otro_habilidades.trim()});
+                        this.resetNuevasHabilidadesOtros_Oficios();
+                        this.scrollToTopHabilidadesOtro();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar habilidades Otros_Oficios
+        editarSeleccionHabilidadesOtros_Oficios(idhabilidades_informaticas) {
+            this.habi_otros_habi ="Si";
+            this.OtrosHabi();
+            const index = this.otro_habilidades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            if (index !== -1) {
+                this.nuevasotro_habilidades = { ...this.otro_habilidades_array[index] };
+                this.otro_habilidades_EditIndex = idhabilidades_informaticas;
+                this.modoeditionhabilidadesotro=true;
+                this.scrollToTopRegresarHabilidadesOtro();
+            }
+        },
+        // Métodos para eliminar habilidades Otros_Oficios
+        async eliminarSeleccionHabilidadesOtros_Oficios(idhabilidades_informaticas) {
+            const index = this.otro_habilidades_array.findIndex(titulo => titulo.idhabilidades_informaticas === idhabilidades_informaticas);
+            const response = await confimar('/cvn/v1/habilidades_informatica/',idhabilidades_informaticas,'Eliminar Habilidad','¿Realmente desea eliminar la Habilidad?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.otro_habilidades_array.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasHabilidadesOtros_Oficios();
+            this.scrollToTop();
+            this.modoeditionhabilidadesotro=false;
+        },
+        // Restablecer objetos de nuevas habilidades Otros_Oficios
+        resetNuevasHabilidadesOtros_Oficios() {
+            this.habi_otros_habi ="";
+            this.OtrosHabi();
+            this.nuevasotro_habilidades= {
+                otro_habilidades: ""
+            };
+        },
+
+        //Cursos Capacitaciones
+        // Métodos para añadir/editar Cursos Capacitaciones
+        async agregarEditarCursosCapacitaciones() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevoscurso_capacitacion.intitucion_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_evento.trim()!=='' && this.nuevoscurso_capacitacion.area_estudios.trim()!=='' && this.nuevoscurso_capacitacion.nombre_evento.trim()!=='' && this.nuevoscurso_capacitacion.facilitador_curso.trim()!=='' && this.nuevoscurso_capacitacion.tipo_certificado.trim()!=='' && this.nuevoscurso_capacitacion.fecha_inicio_curso.trim()!=='' && this.nuevoscurso_capacitacion.fecha_fin_curso.trim()!=='' && this.nuevoscurso_capacitacion.dias_curso!=='' && this.nuevoscurso_capacitacion.horas_curso.trim()!=='' && this.nuevoscurso_capacitacion.certificado_curso.trim()!==''){
+                if (this.certificadoscursoelected === 'No') {
+                    this.nuevoscurso_capacitacion.certificado_curso = 'No';
+                }
+                if (this.curso_capacitacionEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        intitucion_curso: this.nuevoscurso_capacitacion.intitucion_curso.trim(),
+                        tipo_evento: this.nuevoscurso_capacitacion.tipo_evento.trim(),
+                        area_estudios: this.nuevoscurso_capacitacion.area_estudios.trim(),
+                        nombre_evento: this.nuevoscurso_capacitacion.nombre_evento.trim(),
+                        facilitador_curso: this.nuevoscurso_capacitacion.facilitador_curso.trim(),
+                        tipo_certificado: this.nuevoscurso_capacitacion.tipo_certificado.trim(),
+                        fecha_inicio_curso: this.nuevoscurso_capacitacion.fecha_inicio_curso.trim(),
+                        fecha_fin_curso: this.nuevoscurso_capacitacion.fecha_fin_curso.trim(),
+                        dias_curso: this.nuevoscurso_capacitacion.dias_curso,
+                        horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
+                        certificado_curso: this.nuevoscurso_capacitacion.certificado_curso.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/cursoscapacitacion/' + this.curso_capacitacionEditIndex, 'Curso y/o Capactitación Actualizado con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.curso_capacitacionarray.findIndex(titulo => titulo.idcursoscapacitaciones === this.curso_capacitacionEditIndex);
+                        if (index !== -1) {
+                            this.curso_capacitacionarray.splice(index, 1, { ...this.nuevoscurso_capacitacion });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.curso_capacitacionEditIndex = null;
+                    this.modoeditioncursos=false;
+                    this.resetNuevasCursosCapacitaciones();
+                    this.scrollToTop();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                intitucion_curso: this.nuevoscurso_capacitacion.intitucion_curso.trim(),
+                                tipo_evento: this.nuevoscurso_capacitacion.tipo_evento.trim(),
+                                area_estudios: this.nuevoscurso_capacitacion.area_estudios.trim(),
+                                nombre_evento: this.nuevoscurso_capacitacion.nombre_evento.trim(),
+                                facilitador_curso: this.nuevoscurso_capacitacion.facilitador_curso.trim(),
+                                tipo_certificado: this.nuevoscurso_capacitacion.tipo_certificado.trim(),
+                                fecha_inicio_curso: this.nuevoscurso_capacitacion.fecha_inicio_curso.trim(),
+                                fecha_fin_curso: this.nuevoscurso_capacitacion.fecha_fin_curso.trim(),
+                                dias_curso: this.nuevoscurso_capacitacion.dias_curso,
+                                horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim(),
+                                certificado_curso: this.nuevoscurso_capacitacion.certificado_curso.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/cursoscapacitacion', 'Curso y/o Capactitación Agregado con éxito');
+                       
+                        this.curso_capacitacionarray.push({ idcursoscapacitaciones: response.data.data.id, 
+                                intitucion_curso: this.nuevoscurso_capacitacion.intitucion_curso.trim(),
+                                tipo_evento: this.nuevoscurso_capacitacion.tipo_evento.trim(),
+                                area_estudios: this.nuevoscurso_capacitacion.area_estudios.trim(),
+                                nombre_evento: this.nuevoscurso_capacitacion.nombre_evento.trim(),
+                                facilitador_curso: this.nuevoscurso_capacitacion.facilitador_curso.trim(),
+                                tipo_certificado: this.nuevoscurso_capacitacion.tipo_certificado.trim(),
+                                fecha_inicio_curso: this.nuevoscurso_capacitacion.fecha_inicio_curso.trim(),
+                                fecha_fin_curso: this.nuevoscurso_capacitacion.fecha_fin_curso.trim(),
+                                dias_curso: this.nuevoscurso_capacitacion.dias_curso,
+                                horas_curso: this.nuevoscurso_capacitacion.horas_curso.trim()});
+                        this.resetNuevasCursosCapacitaciones();
+                        this.scrollToTop();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar Cursos Capcitaciones
+        editarSeleccionCursosCapacitaciones(idcursoscapacitaciones) {
+            const index = this.curso_capacitacionarray.findIndex(titulo => titulo.idcursoscapacitaciones === idcursoscapacitaciones);
+            if (index !== -1) {
+                this.nuevoscurso_capacitacion = { ...this.curso_capacitacionarray[index] };
+                this.curso_capacitacionEditIndex = idcursoscapacitaciones;
+                this.modoeditioncursos=true;
+                this.scrollToTop();
+            }
+        },
+        // Métodos para eliminar Cursos Capcitaciones
+        async eliminarSeleccionCursosCapacitaciones(idcursoscapacitaciones) {
+            const index = this.curso_capacitacionarray.findIndex(titulo => titulo.idcursoscapacitaciones === idcursoscapacitaciones);
+            const response = await confimar('/cvn/v1/cursoscapacitacion/',idcursoscapacitaciones,'Eliminar Curso y/o Capacitacion','¿Realmente desea eliminar el Curso y/o Capacitacion?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.curso_capacitacionarray.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasCursosCapacitaciones();
+            this.scrollToTop();
+            this.modoeditioncursos=false;
+        },
+        // Restablecer objetos de nuevos Cursos Capcitaciones
+        resetNuevasCursosCapacitaciones() {
+            this.certificadoscursoelected = '';
+            this.nuevoscurso_capacitacion= {
+                intitucion_curso: "",
+                tipo_evento: "",
+                area_estudios: "",
+                nombre_evento: "",
+                facilitador_curso: "",
+                tipo_certificado: "",
+                fecha_inicio_curso: "",
+                fecha_fin_curso: "",
+                dias_curso: "",
+                horas_curso: ""
+            };
+        },
+        //Otros Datos Relevantes
+        // Métodos para añadir/editar Otros Datos Relevantes
+        async agregarEditarOtrosDatosRelevantes() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevosotros_datos_personales.tipo_logros.trim()!=='' && this.nuevosotros_datos_personales.descripcion_logros.trim()!=='' && this.nuevosotros_datos_personales.descripcion_fracasos.trim()!==''){
+
+                if (this.otros_datos_personalesEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        tipo_logros: this.nuevosotros_datos_personales.tipo_logros.trim(),
+                        descripcion_logros: this.nuevosotros_datos_personales.descripcion_logros.trim(),
+                        descripcion_fracasos: this.nuevosotros_datos_personales.descripcion_fracasos.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/otros_datos_relevante/' + this.otros_datos_personalesEditIndex, 'Logro Actualizado con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.otros_datos_personalesarray.findIndex(titulo => titulo.idotros_datos_personales === this.otros_datos_personalesEditIndex);
+                        if (index !== -1) {
+                            this.otros_datos_personalesarray.splice(index, 1, { ...this.nuevosotros_datos_personales });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.otros_datos_personalesEditIndex = null;
+                    this.modoeditionlogros=false;
+                    this.resetNuevosOtrosDatosRelevantes();
+                    this.scrollToTop();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                tipo_logros: this.nuevosotros_datos_personales.tipo_logros.trim(),
+                                descripcion_logros: this.nuevosotros_datos_personales.descripcion_logros.trim(),
+                                descripcion_fracasos: this.nuevosotros_datos_personales.descripcion_fracasos.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/otros_datos_relevante', 'Logro Agregado con éxito');
+                       
+                        this.otros_datos_personalesarray.push({ idotros_datos_personales: response.data.data.id, 
+                                tipo_logros: this.nuevosotros_datos_personales.tipo_logros.trim(),
+                                descripcion_logros: this.nuevosotros_datos_personales.descripcion_logros.trim(),
+                                descripcion_fracasos: this.nuevosotros_datos_personales.descripcion_fracasos.trim(),});
+                        this.resetNuevosOtrosDatosRelevantes();
+                        this.scrollToTop();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar Otros Datos Relevantes
+        editarSeleccionOtrosDatosRelevantes(idotros_datos_personales) {
+            const index = this.otros_datos_personalesarray.findIndex(titulo => titulo.idotros_datos_personales === idotros_datos_personales);
+            if (index !== -1) {
+                this.nuevosotros_datos_personales = { ...this.otros_datos_personalesarray[index] };
+                this.otros_datos_personalesEditIndex = idotros_datos_personales;
+                this.modoeditionlogros=true;
+                this.scrollToTop();
+            }
+        },
+        // Métodos para eliminar Otros Datos Relevantes
+        async eliminarSeleccionOtrosDatosRelevantes(idotros_datos_personales) {
+            const index = this.otros_datos_personalesarray.findIndex(titulo => titulo.idotros_datos_personales === idotros_datos_personales);
+            const response = await confimar('/cvn/v1/otros_datos_relevante/',idotros_datos_personales,'Eliminar Logro','¿Realmente desea eliminar el Logro?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.otros_datos_personalesarray.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevosOtrosDatosRelevantes();
+            this.scrollToTop();
+            this.modoeditionlogros=false;
+        },
+        // Restablecer objetos de nuevos Otros Datos Relevantes
+        resetNuevosOtrosDatosRelevantes() {
+            this.nuevosotros_datos_personales= {
+                tipo_logros: "",
+                descripcion_logros: "",
+                descripcion_fracasos: ""
+            };
+        },
+
+        //Informacion de Contacto
+        // Métodos para añadir/editar Informacion de Contacto
+        async agregarEditarInformacionContacto() {
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            if(this.nuevosinformacion_contacto.referencia_nombres.trim()!=='' && this.nuevosinformacion_contacto.referencia_apellidos.trim()!=='' && this.nuevosinformacion_contacto.referencia_correo_electronico.trim()!=='' && this.nuevosinformacion_contacto.referencia_telefono.trim()!==''){
+
+                if (this.informacion_contactoEditIndex !== null) {
+                    const parametros = {
+                        CIInfPer: this.idus,
+                        referencia_nombres: this.nuevosinformacion_contacto.referencia_nombres.trim(),
+                        referencia_apellidos: this.nuevosinformacion_contacto.referencia_apellidos.trim(),
+                        referencia_correo_electronico: this.nuevosinformacion_contacto.referencia_correo_electronico.trim(),
+                        referencia_telefono: this.nuevosinformacion_contacto.referencia_telefono.trim(),
+                    };
+    
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/informacion_contacto/' + this.informacion_contactoEditIndex, 'Referencia Personal Actualizada con éxito');
+    
+                    if (response && response.data) {
+                        const index = this.informacion_contactoarray.findIndex(titulo => titulo.idinformacion_contacto === this.informacion_contactoEditIndex);
+                        if (index !== -1) {
+                            this.informacion_contactoarray.splice(index, 1, { ...this.nuevosinformacion_contacto });
+                        }
+                    } else {
+                        console.error('La respuesta no contiene los datos esperados:', response);
+                    }
+                    this.informacion_contactoEditIndex = null;
+                    this.modoeditionreferencias=false;
+                    this.resetNuevasInformacionContacto();
+                    this.scrollToTop();
+                } else {
+                    try {
+    
+                        const parametros = {
+                                CIInfPer: this.idus,
+                                referencia_nombres: this.nuevosinformacion_contacto.referencia_nombres.trim(),
+                                referencia_apellidos: this.nuevosinformacion_contacto.referencia_apellidos.trim(),
+                                referencia_correo_electronico: this.nuevosinformacion_contacto.referencia_correo_electronico.trim(),
+                                referencia_telefono: this.nuevosinformacion_contacto.referencia_telefono.trim(),
+                            };
+                        
+                        //console.log(parametros);
+                       
+                        const response = await enviarsolig('POST', parametros, '/cvn/v1/informacion_contacto', 'Referencia Personal Agregada con éxito');
+                       
+                        this.informacion_contactoarray.push({ idinformacion_contacto: response.data.data.id, 
+                                referencia_nombres: this.nuevosinformacion_contacto.referencia_nombres.trim(),
+                                referencia_apellidos: this.nuevosinformacion_contacto.referencia_apellidos.trim(),
+                                referencia_correo_electronico: this.nuevosinformacion_contacto.referencia_correo_electronico.trim(),
+                                referencia_telefono: this.nuevosinformacion_contacto.referencia_telefono.trim()});
+                        this.resetNuevasInformacionContacto();
+                        this.scrollToTop();
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }else{
+                mostraralertas2('No deje campos en blanco','warning');
+            }
+            
+        },
+        // Métodos para editar Informacion de Contacto
+        editarSeleccionInformacionContacto(idinformacion_contacto) {
+            const index = this.informacion_contactoarray.findIndex(titulo => titulo.idinformacion_contacto === idinformacion_contacto);
+            if (index !== -1) {
+                this.nuevosinformacion_contacto = { ...this.informacion_contactoarray[index] };
+                this.informacion_contactoEditIndex = idinformacion_contacto;
+                this.modoeditionreferencias=true;
+                this.scrollToTop();
+            }
+        },
+        // Métodos para eliminar Informacion de Contacto
+        async eliminarSeleccionInformacionContacto(idinformacion_contacto) {
+            const index = this.informacion_contactoarray.findIndex(titulo => titulo.idinformacion_contacto === idinformacion_contacto);
+            const response = await confimar('/cvn/v1/informacion_contacto/',idinformacion_contacto,'Eliminar Referencias Personales','¿Realmente desea eliminar la Referencia Personal?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.informacion_contactoarray.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevasInformacionContacto();
+            this.scrollToTop();
+            this.modoeditionreferencias=false;
+        },
+        // Restablecer objetos de nuevos Informacion de Contacto
+        resetNuevasInformacionContacto() {
+            this.nuevosinformacion_contacto= {
+                referencia_nombres: "",
+                referencia_apellidos: "",
+                referencia_correo_electronico: "",
+                referencia_telefono: ""
+            };
+        },
+
+
+        //Guardar Datos Personales
+        guardarDatosPersonales(event) {
+
+            event.preventDefault();
+            /*var mifoto = document.getElementById('fotoimg');
+            this.imagen = mifoto.src;/*
+
+           /* var parametros = {
+                CIInfPer: this.CIInfPer.trim(),
+                ApellInfPer: this.ApellInfPer.trim(),
+                ApellMatInfPer: this.ApellMatInfPer.trim(),
+                NombInfPer: this.NombInfPer.trim(),
+                NacionalidadPer: this.NacionalidadPer.trim(),
+                LugarNacimientoPer: this.LugarNacimientoPer.trim(),
+                FechNacimPer: this.FechNacimPer.trim(),
+                GeneroPer: this.GeneroPer.trim(),
+                CiudadPer: this.CiudadPer.trim(),
+                DirecDomicilioPer: this.DirecDomicilioPer.trim(),
+                Telf1InfPer: this.Telf1InfPer.trim(),
+                mailPer: this.mailPer.trim(),
+                foto: this.imagen.trim()
+
+
+            }*/
+
+            //enviarsolig('POST', parametros, '/cvn/v1/informacionpersonal', 'Datos Personales Guardados');
+
+            this.activeTab = "personal";
+            this.mostrardatospersonales = false;
+            this.regresar1 = true;
+
+
+        },
+        async regresarADatosPersonales() {
+            // Lógica para regresar a datos personales
+            const genhom2 = "HOMBRE";
+            const genMuj2 = "MUJER";
+            const response = await API.get(this.url1);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data[0];
+                    this.CIInfPer = data.CIInfPer;
+                    this.ApellInfPer = data.ApellInfPer;
+                    this.ApellMatInfPer = data.ApellMatInfPer;
+                    this.NombInfPer = data.NombInfPer;
+                    //this.NacionalidadPer = data.NacionalidadPer;
+                    if(data.NacionalidadPer="EC"){
+                        this.NacionalidadPer = "ECUADOR";
+                    }else {
+                        this.NacionalidadPer = data.NacionalidadPer;
+                    }
+                    //this.LugarNacimientoPer = data.LugarNacimientoPer;
+                    this.FechNacimPer = data.FechNacimPer;
+                    //this.GeneroPer = data.GeneroPer;
+
+                    if(data.GeneroPer == "M"){
+                        this.GeneroPer = genMuj2;
+                    }else{
+                        this.GeneroPer = genhom2;
+                    }
+                    this.CiudadPer = data.CiudadPer.toUpperCase();
+                    this.DirecDomicilioPer = data.DirecDomicilioPer;
+                    this.Telf1InfPer = data.CelularInfPer;
+                    this.mailPer = data.mailPer;
+                    this.fotografia = data.fotografia;
+                    this.previewFoto = 'data:image/jpeg;base64,' + data.fotografia;
+                    this.areainfdoc= data.area;
+                    this.cargoinfdoc= data.cargo;
+                    //this.imagen= data.fotografia;
+                   
+                    this.isEditing = true;
+                    this.modoedit = false;
+                    this.activeTab = "datos";
+                    this.mostrardatospersonales = true;
+                    this.regresar1 = false;
+                } else {
+                    this.isEditing = false;
+                    this.modoedit = true;
+                    this.activeTab = "datos";
+                    this.regresar1 = false;
+                    this.mostrardatospersonales = true;
+                }
+                return response;
+        },
+         //Guardar Declaracion Personal
+         async guardaDeclaracionPersonal(event) {
+            event.preventDefault();
+            const usuario = await getMe();
+            //console.log(usuario);
+            this.idus = usuario.CIInfPer;
+            //console.log(this.idus);
+            
+            // --- Lógica para contar palabras y validar ---
+            const textoLimpio = this.texto.trim();
+            
+            if (textoLimpio !== '') {
+                // Expresión regular para contar palabras (separa por espacios, saltos de línea, etc.)
+                const wordCount = textoLimpio.split(/\s+/).filter(word => word.length > 0).length;
+                
+                if (wordCount < 100) {
+                    // Reemplaza mostraralertas2 con tu función de alerta real
+                    mostraralertas2('La descripción del curriculum debe tener un mínimo de 100 palabras.', 'warning');
+                    return; // Detiene la ejecución si el recuento es menor a 100
+                }
+                
+                // Si tiene 100 o más palabras, procede a guardar
+                var parametros = {
+                    CIInfPer: this.idus,
+                    texto: textoLimpio
+                }
+
+                enviarsolig('POST', parametros, '/cvn/v1/declaracion_personal', 'Resumen del Curriculum Guardadas');
+                this.activeTab = "formacion";
+                this.mostrardelaracionpersonal = false;
+                this.regresar2 = true;
+            } else {
+                mostraralertas2('No deje campos en blanco', 'warning');
+            }
+
+            
+
+
+        },
+        async regresarADeclaracionPersonal() {
+            // Lógica para regresar a datos personales
+               
+           
+                const response = await API.get(this.url9);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data[0];
+                    this.iddeclaracion_personal = data.id;
+                    this.texto = data.texto;
+
+
+                    this.isEditing7 = true;
+                    this.modoedit7 = false;
+                    this.activeTab = "personal";
+                    this.regresar2 = false;
+                    this.mostrardelaracionpersonal = true;
+                } else {
+                    //console.log("No hay datos");
+                    this.isEditing7 = false;
+                    this.modoedit7 = true;
+                    this.regresar2 = false;
+                    this.activeTab = "personal";
+                    this.mostrardelaracionpersonal = true;
+                }
+                return response;
+        },
+        //Guardar Fomacion Academica
+        async guardarFormacionAcademica(event) {
+            event.preventDefault();
+           
+            //mostraralertas2('Formación Académica Guardada','success');
+            
+           
+            this.activeTab = "experiencia";
+            this.mostrarformacionacademica = false;
+            this.regresar3 = true;
+
+
+        },
+        async regresarAFormacionAcademica() {
+           
+           
+            try {
+                const response = await API.get(this.url2);
+                //console.log(this.estudioactualmentefacultadcarreras);
+                //console.log(response);
+                    
+                
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    
+                    this.titulosBachiller = [];
+                    this.titulosUniversitarios = [];
+                    this.titulosPosgrado = [];
+                    this.estudioactualtitulosUniversitarios = [];
+                    
+                    data.forEach(item => {
+                        if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
+                            this.titulosBachiller.push({
+                                
+                                idformacion_academica: item.id,
+                                titulo_bachiller_obtenido: item.titulo_bachiller_obtenido || '',
+                                institucion_bachiller: item.institucion_bachiller || '',
+                                fecha_graduacion_bachiller: item.fecha_graduacion_bachiller || '',
+                                especialidad_bachiller: item.especialidad_bachiller || ''
+                            });
+                            if(this.titulosBachiller.length > 0){
+                                this.sidatos=false;
+                            }else{
+                                this.sidatos=true;
+                            }
+                        }
+                        if (item.estudios_universitarios_culminados === 'Si' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
+                            this.titulosUniversitarios.push({
+                                
+                                idformacion_academica: item.id,
+                                titulo_universitario_obtenido: item.titulo_universitario_obtenido || '',
+                                institucion_universitaria: item.institucion_universitaria || '',
+                                fecha_graduacion: item.fecha_graduacion || '',
+                                especialidad: item.especialidad || ''
+                            });
+                            this.mostrarFormularioTitulos = false;
+                        }
+                        if (item.estudios_universitarios_culminados === 'No' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
+                            this.estudioactualtitulosUniversitarios.push({
+                                
+                                idformacion_academica: item.id,
+                                facultades_universidad: item.titulo_universitario_obtenido || '',
+                                titulo_carrera_universidad: item.institucion_universitaria || '',
+                                fechaestudioactual: item.fecha_graduacion || '',
+                                carrera_universidad: item.especialidad || ''
+                            });
+                        }
+                        
+                        if (item.estudios_posgrado_culminados === 'Si' && item.titulo_posgrado_obtenido && item.institucion_posgrado) {
+                            this.titulosPosgrado.push({
+                                
+                                idformacion_academica: item.id,
+                                titulo_posgrado_obtenido: item.titulo_posgrado_obtenido || '',
+                                institucion_posgrado: item.institucion_posgrado || '',
+                                fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
+                                especialidad_posgrado: item.especialidad_posgrado || ''
+                            });
+                            this.mostrarFormularioTitulosPosgrado = false;
+                            this.mostrarnormal = true;
+                        }
+                    });
+                    
+                    
+                    this.isEditing8 = true;
+                    this.modoedit8 = false;
+                    this.regresar3 = false;
+                    this.Titulouni();
+                    this.Titulobachi();
+                    this.Posgra();
+                    this.activeTab = "formacion";
+                    this.mostrarformacionacademica = true;
+                } else {
+                    
+                    if(this.titulosBachiller.length > 0){
+                        this.sidatos=false;
+                    }else{
+                        const response2 = await axios.get(this.url11);
+                        if(response2.data.data){
+                            
+                            const data2 = response2.data.data;
+                            this.sidatos=true;
+                            this.estudios_bachiller_culminados = 'Si';
+                            this.mostrarFormularioTitulosBachiller=true;
+                            this.Titulobachi();
+                            this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
+                            this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
+                            this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
+                            this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
+                        }else{
+                           this.mostrarFormularioTitulosBachiller=false;
+                        }
+                    }
+                    this.isEditing8 = false;
+                    this.modoedit8 = true;
+                    this.regresar3 = false;
+                    this.Titulouni();
+                    this.Posgra();
+                    this.Titulobachi();
+                    this.activeTab = "formacion";
+                    this.mostrarformacionacademica = true;
+                    this.mostrarnormal = true;
+
+                }
+                
+                return response;
+            } catch (error) {
+                console.error('Error al obtener formación académica:', error);
                 if(this.titulosBachiller.length > 0){
-                    this.sidatos=false;
+                        this.sidatos=false;
                 }else{
                     const response2 = await axios.get(this.url11);
-                    const data2 = response2.data[0];
-                    this.sidatos=true;
-                    this.estudios_bachiller_culminados = 'Si';
-                    this.Titulobachi();
-                    this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
-                    this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
-                    this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
-                    this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
+                    const data2 = response2.data.data;
+                    if(response2.data.data){
+                        const data2 = response2.data.data;
+                        this.sidatos=true;
+                        this.estudios_bachiller_culminados = 'Si';
+                        this.mostrarFormularioTitulosBachiller=true;
+                        this.Titulobachi();
+                        this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
+                        this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
+                        this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
+                        this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
+                    }else{
+                        this.mostrarFormularioTitulosBachiller=false;
+                    }
                 }
+                    
                 this.isEditing8 = false;
+                    
                 this.modoedit8 = true;
                 this.regresar3 = false;
                 this.Titulouni();
@@ -4457,417 +8097,2299 @@ export default {
                 this.Titulobachi();
                 this.activeTab = "formacion";
                 this.mostrarformacionacademica = true;
+                this.mostrarnormal = true;
+            }
+        },
+        //Guardar Experiencia
+        async guardaExperiencia(event) {
+            event.preventDefault();
+
+            //mostraralertas2('Experiencia Profesional Guardada','success');
+            this.activeTab = "investigacion";
+            this.mostrarexperienciasprofesionales = false;
+            this.regresar4 = true;
+
+
+        },
+        async regresarAExperiencia() {
+            try {
+                const response = await API.get(this.url3);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.cargosEmpresas = [];
+                    this.cargosPasantias = [];
+    
+                    data.forEach(item => {
+                        if (item.cargos_desempenados === 'Si' && item.empresa_institucion && item.cargo_desempenado_empresa) {
+                            this.cargosEmpresas.push({
+    
+                                idexperiencias_profesionales: item.id,
+                                empresa_institucion: item.empresa_institucion || '',
+                                fecha_inicio_empresa: item.fecha_inicio_empresa || '',
+                                fecha_fin_empresa: item.fecha_fin_empresa || '',
+                                cargo_desempenado_empresa: item.cargo_desempenado_empresa || '',
+                                descripcion_funciones_empresa: item.descripcion_funciones_empresa || '',
+                                logros_resultados_empresa: item.logros_resultados_empresa || ''
+                            });
+                        }
+                        if (item.practicas_profesionales === 'Si' && item.empresa_institucion_practicas && item.area_trabajo_practicas) {
+                            this.cargosPasantias.push({
+    
+                                idexperiencias_profesionales: item.id,
+                                empresa_institucion_practicas: item.empresa_institucion_practicas || '',
+                                fecha_inicio_practicas: item.fecha_inicio_practicas || '',
+                                fecha_fin_practicas: item.fecha_fin_practicas || '',
+                                area_trabajo_practicas: item.area_trabajo_practicas || '',
+                                descripcion_funciones_practicas: item.descripcion_funciones_practicas || ''
+                            });
+                        }
+    
+    
+                    });
+                    this.fechacargos="";
+                    this.fechaFinLabel="";
+                    this.trabajo = false;
+                    this.isEditing1 = true;
+                    this.modoedit1 = false;
+                    this.regresar4 = false;
+                    this.activeTab = "experiencia";
+                    this.mostrarexperienciasprofesionales = true;
+                    this.Cargos();
+                    this.Practicas();
+                    this.FechaCarg();
+                } else {
+                    this.fechacargos="";
+                    this.fechaFinLabel="";
+                    this.trabajo = false;
+                    this.isEditing1 = false;
+                    this.modoedit1 = true;
+                    this.regresar4 = false;
+                    this.activeTab = "experiencia";
+                    this.Cargos();
+                    this.Practicas();
+                    this.FechaCarg();
+                    this.mostrarexperienciasprofesionales = true;
+                }
+                return response;
+                
+            } catch (error) {
+                console.error('Error al obtener Expreciencas Profesionales:', error);
+                this.fechacargos="";
+                this.fechaFinLabel="";
+                this.trabajo = false;
+                this.isEditing1 = false;
+                this.modoedit1 = true;
+                this.regresar4 = false;
+                this.activeTab = "experiencia";
+                this.Cargos();
+                this.Practicas();
+                this.FechaCarg();
+                this.mostrarexperienciasprofesionales = true;
+                //throw error; 
+            }
+        },
+        //Guardar Investigacion
+        async guardaInvestigacion(event) {
+            event.preventDefault();
+
+            //mostraralertas2('Investigaciones y Publicaciones Guardada','success');
+
+            
+            this.activeTab = "idioma";
+            this.mostrarinvestigacionpublicaciones = false;
+            this.regresar5 = true;
+
+
+        },
+        async regresarAInvestigacion() {
+            try {
+                const response = await API.get(this.url4);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.publicacionesarray = [];
+                    data.forEach(item => {
+                        if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
+                                
+                            this.publicacionesarray.push({
+                                idinvestigacion_publicaciones: item.id,
+                                publicacion_tipo: item.publicacion_tipo || '',
+                                publicacion_titulo: item.publicacion_titulo || '',
+                                link_publicacion: item.link_publicacion || '',
+                                grupo_investigacion: item.grupo_investigacion || '',
+                                congreso_evento: item.congreso_evento || '',
+                            });
+                        }
+                            
+                    });
+                    this.isEditing2 = true;
+                    this.modoedit2 = false;
+                    this.regresar5 = false;
+                    this.activeTab = "investigacion";
+                    this.mostrarinvestigacionpublicaciones = true;
+                    this.Investigaciones();
+                } else {
+                    this.isEditing2 = false;
+                    this.modoedit2 = true;
+                    this.regresar5 = false;
+                    this.activeTab = "investigacion";
+                    this.mostrarinvestigacionpublicaciones = true;
+                    this.Investigaciones();
+                }
+                return response;
+            } catch (error) {
+                console.error('Error al obtener Investigaciones:', error);
+                this.isEditing2 = false;
+                this.modoedit2 = true;
+                this.regresar5 = false;
+                this.activeTab = "investigacion";
+                this.mostrarinvestigacionpublicaciones = true;
+                this.Investigaciones();
+                
             }
             
-            return response;
-        } catch (error) {
-            console.error('Error al obtener formación académica:', error);
-            throw error; 
-        }
-      },
-      //Guardar Experiencia
-      guardaExperiencia(event) {
-      event.preventDefault();
-
-      //mostraralertas2('Experiencia Profesional Guardada','success');
-      this.activeTab = "investigacion";
-      this.mostrarexperienciasprofesionales = false;
-      this.regresar4 = true;
+            
+        },
+        //Guardar Idiomas
+        async guardaIdiomas(event) {
+            event.preventDefault();
+            //mostraralertas2('Idiomas Guardados','success');
+            
+            this.activeTab = "habilidades";
+            this.mostraridiomas = false;
+            this.regresar6 = true;
 
 
-      },
-      async regresarAExperiencia() {
-      try {
-          const response = await axios.get(this.url3);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.cargosEmpresas = [];
-              this.cargosPasantias = [];
-
-              data.forEach(item => {
-                  if (item.cargos_desempenados === 'Si' && item.empresa_institucion && item.cargo_desempenado_empresa) {
-                      this.cargosEmpresas.push({
-
-                          idexperiencias_profesionales: item.id,
-                          empresa_institucion: item.empresa_institucion || '',
-                          fecha_inicio_empresa: item.fecha_inicio_empresa || '',
-                          fecha_fin_empresa: item.fecha_fin_empresa || '',
-                          cargo_desempenado_empresa: item.cargo_desempenado_empresa || '',
-                          descripcion_funciones_empresa: item.descripcion_funciones_empresa || '',
-                          logros_resultados_empresa: item.logros_resultados_empresa || ''
-                      });
-                  }
-                  if (item.practicas_profesionales === 'Si' && item.empresa_institucion_practicas && item.area_trabajo_practicas) {
-                      this.cargosPasantias.push({
-
-                          idexperiencias_profesionales: item.id,
-                          empresa_institucion_practicas: item.empresa_institucion_practicas || '',
-                          fecha_inicio_practicas: item.fecha_inicio_practicas || '',
-                          fecha_fin_practicas: item.fecha_fin_practicas || '',
-                          area_trabajo_practicas: item.area_trabajo_practicas || '',
-                          descripcion_funciones_practicas: item.descripcion_funciones_practicas || ''
-                      });
-                  }
-
-
-              });
-              this.fechacargos="";
-              this.fechaFinLabel="";
-              this.trabajo = false;
-              this.isEditing1 = true;
-              this.modoedit1 = false;
-              this.regresar4 = false;
-              this.activeTab = "experiencia";
-              this.mostrarexperienciasprofesionales = true;
-              this.Cargos();
-              this.Practicas();
-              this.FechaCarg();
-          } else {
-              this.fechacargos="";
-              this.fechaFinLabel="";
-              this.trabajo = false;
-              this.isEditing1 = false;
-              this.modoedit1 = true;
-              this.regresar4 = false;
-              this.activeTab = "experiencia";
-              this.Cargos();
-              this.Practicas();
-              this.FechaCarg();
-              this.mostrarexperienciasprofesionales = true;
-          }
-          return response;
-          
-      } catch (error) {
-          console.error('Error al obtener Expreciencas Profesionales:', error);
-          throw error; 
-      }
-      },
-      //Guardar Investigacion
-      guardaInvestigacion(event) {
-        event.preventDefault();
-
-        //mostraralertas2('Investigaciones y Publicaciones Guardada','success');
-
-
-        this.activeTab = "idioma";
-        this.mostrarinvestigacionpublicaciones = false;
-        this.regresar5 = true;
-
-
-      },
-      async regresarAInvestigacion() {
-
-
-
-              const response = await axios.get(this.url4);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.publicacionesarray = [];
-
-              data.forEach(item => {
-                  if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
-                      this.publicacionesarray.push({
-
-                          idinvestigacion_publicaciones: item.id,
-                          publicacion_tipo: item.publicacion_tipo || '',
-                          publicacion_titulo: item.publicacion_titulo || '',
-                          link_publicación: item.link_publicación || '',
-                          congreso_evento: item.congreso_evento || ''
-                      });
-                  }
-                  
-
-              });
-
-              this.isEditing2 = true;
-              this.modoedit2 = false;
-              this.regresar5 = false;
-              this.activeTab = "investigacion";
-              this.mostrarinvestigacionpublicaciones = true;
-              this.Investigaciones();
-          } else {
-              this.isEditing2 = false;
-              this.modoedit2 = true;
-              this.regresar5 = false;
-              this.activeTab = "investigacion";
-              this.mostrarinvestigacionpublicaciones = true;
-              this.Investigaciones();
-          }
-          return response;
-      },
-      //Guardar Idiomas
-      guardaIdiomas(event) {
-      event.preventDefault();
-      //mostraralertas2('Idiomas Guardados','success');
-
-      this.activeTab = "habilidades";
-      this.mostraridiomas = false;
-      this.regresar6 = true;
-
-
-      },
-      async regresarAIdiomas() {
-
-
-              
-              const response = await axios.get(this.url5);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.idiomasarray = [];
-
-              data.forEach(item => {
-                  
-                      this.idiomasarray.push({
-
-                          idlenguaje: item.id,
-                          idioma: item.idioma || '',
-                          comprension_auditiva: item.comprension_auditiva || '',
-                          comprension_lectura: item.comprension_lectura || '',
-                          interaccion_oral: item.interaccion_oral || '',
-                          expresion_oral: item.expresion_oral || '',
-                          expresion_escrita: item.expresion_escrita || '',
-                          certificado: item.certificado || '',
-                      });
-                  
-                  
-
-              });
-              
-              this.isEditing3 = true;
-              this.modoedit3 = false;
-              this.regresar6 = false;
-              this.activeTab = "idioma";
-              this.mostraridiomas = true;
-          } else {
-              this.isEditing3 = false;
-              this.modoedit3 = true;
-              this.regresar6 = false;
-              this.activeTab = "idioma";
-              this.mostraridiomas = true;
-          }
-          return response;
-      },
-      //Guardar Habilidades
-      guardaHabilidades(event) {
-        event.preventDefault();
-        //mostraralertas2('Habilidades Guardadas','success');
-
-        this.activeTab = "capacitaciones";
-        this.mostrarsw = false;
-        this.regresar9 = true;
-      },
-      async regresarAHabilidades() {
-   
-              const response = await axios.get(this.url6);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.habilidades_comunicativas_array = [];
-              this.habilidades_creativas_array = [];
-              this.habilidades_informaticas_array = [];
-              this.habilidades_liderazgo_array = [];
-              this.oficios_subactividades_array = [];
-              this.otro_habilidades_array = [];
-              
-              data.forEach(item => {
-                  if (item.habilidades_comunicativas || item.descripcion_habilidades_comunicativas) {
-                      this.habilidades_comunicativas_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          habilidades_comunicativas: item.habilidades_comunicativas || '',
-                          descripcion_habilidades_comunicativas: item.descripcion_habilidades_comunicativas || '',
-                      });
-                  }
-                  if (item.habilidades_creativas || item.descripcion_habilidades_creativas) {
-                      this.habilidades_creativas_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          habilidades_creativas: item.habilidades_creativas || '',
-                          descripcion_habilidades_creativas: item.descripcion_habilidades_creativas || '',
-                      });
-                  }
-                  
-                  if (item.habilidades_informaticas_cv || item.descripcion_habilidades_informaticas_cv) {
-                      this.habilidades_informaticas_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          habilidades_informaticas_cv: item.habilidades_informaticas_cv || '',
-                          descripcion_habilidades_informaticas_cv: item.descripcion_habilidades_informaticas_cv || '',
-                      });
-                  }
-                  if (item.habilidades_liderazgo || item.descripcion_habilidades_liderazgo) {
-                      this.habilidades_liderazgo_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          habilidades_liderazgo: item.habilidades_liderazgo || '',
-                          descripcion_habilidades_liderazgo: item.descripcion_habilidades_liderazgo || '',
-                      });
-                  }
-                  if (item.oficios_subactividades || item.descripcion_oficios_subactividades) {
-                      this.oficios_subactividades_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          oficios_subactividades: item.oficios_subactividades || '',
-                          descripcion_oficios_subactividades: item.descripcion_oficios_subactividades || '',
-                      });
-                  }
-                  if (item.otro_habilidades) {
-                      this.otro_habilidades_array.push({
-                          
-                          idhabilidades_informaticas: item.id,
-                          otro_habilidades: item.otro_habilidades || '',
-                      });
-                  }
-              });
-              
-              this.isEditing4 = true;
-              this.modoedit4 = false;
-              this.regresar9 = false;
-              this.ComunHabi();
-              this.CreaHabi();
-              this.LideHabi();
-              this.InfoHabi();
-              this.OfiHabi();
-              this.OtrosHabi();
-              this.activeTab = "habilidades";
-              this.mostrarsw = true;
-          } else {
-              this.isEditing4 = false;
-              this.modoedit4 = true;
-              this.regresar9 = false;
-              this.ComunHabi();
-              this.CreaHabi();
-              this.LideHabi();
-              this.InfoHabi();
-              this.OfiHabi();
-              this.OtrosHabi();
-              this.activeTab = "habilidades";
-              this.mostrarsw = true;
-          }
-          return response;
-      },
-      //Guardar Cursos Capacitacines
-      guardaCursosCapacitaciones(event) {
-        event.preventDefault();
-        // mostraralertas2('Cursos y/o Capacitaciones Guardadas','success');
-
-        this.activeTab = "relevantes";
-        this.mostrarcapacitaciones = false;
-        this.regresar7 = true;
-      },
-      async regresarACursosCapacitaciones() {
-      // Lógica para regresar a datos personales
-
-
-              const response = await axios.get(this.url10);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.curso_capacitacionarray = [];
-
-              data.forEach(item => {
-                  
-                      this.curso_capacitacionarray.push({
-
-                          idcursoscapacitaciones: item.id,
-                          intitucion_curso: item.intitucion_curso || '',
-                          tipo_evento: item.tipo_evento || '',
-                          area_estudios: item.area_estudios || '',
-                          nombre_evento: item.nombre_evento || '',
-                          facilitador_curso: item.facilitador_curso || '',
-                          tipo_certificado: item.tipo_certificado || '',
-                          fecha_inicio_curso: item.fecha_inicio_curso || '',
-                          fecha_fin_curso: item.fecha_fin_curso || '',
-                          dias_curso: item.dias_curso || '',
-                          horas_curso: item.horas_curso || '',
-                        
-                      });
-                  
-                  
-
-              });
-              
-              this.isEditing9 = true;
-              this.modoedit9 = false;
-              this.regresar7 = false;
-              this.activeTab = "capacitaciones";
-              this.mostrarcapacitaciones = true;
-          } else {
-              this.isEditing9 = false;
-              this.modoedit9 = true;
-              this.regresar7 = false;
-              this.activeTab = "capacitaciones";
-              this.mostrarcapacitaciones = true;
-          }
-          return response;
-      },
-      //Guardar Relevantes
-      guardaRelevantes(event) {
-        event.preventDefault();
-
-        //mostraralertas2('Logros Guardados','success');
-
-
-        this.activeTab = "contacto";
-        this.mostrardatosrelevantes = false;
-        this.regresar8 = true;
-
-
-      },
-      async regresarARelevantes() {
-      // Lógica para regresar a datos personales
+        },
+        async regresarAIdiomas() {
+            try {
+                const response = await API.get(this.url5);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.idiomasarray = [];
+                    data.forEach(item => {
+                        this.idiomasarray.push({
+                            idlenguaje: item.id,
+                            idioma: item.idioma || '',
+                            comprension_auditiva: item.comprension_auditiva || '',
+                            comprension_lectura: item.comprension_lectura || '',
+                            interaccion_oral: item.interaccion_oral || '',
+                            expresion_oral: item.expresion_oral || '',
+                            expresion_escrita: item.expresion_escrita || '',
+                            certificado: item.certificado || '',
+                        });
+                            
+                            
+                    });
+                    this.isEditing3 = true;
+                    this.modoedit3 = false;
+                    this.regresar6 = false;
+                    this.activeTab = "idioma";
+                    this.mostraridiomas = true;
+                } else {
+                    this.isEditing3 = false;
+                    this.modoedit3 = true;
+                    this.regresar6 = false;
+                    this.activeTab = "idioma";
+                    this.mostraridiomas = true;
+                }
+                return response;
+                
+            } catch (error) {
+                console.error('Error al obtener Idiomas:', error);
+                this.isEditing3 = false;
+                this.modoedit3 = true;
+                this.regresar6 = false;
+                this.activeTab = "idioma";
+                this.mostraridiomas = true;
+            }
+            
+        },
+        //Guardar Habilidades
+        async guardaHabilidades(event) {
+            event.preventDefault();
+            //mostraralertas2('Habilidades Guardadas','success');
+           
+            this.activeTab = "capacitaciones";
+            this.mostrarsw = false;
+            this.regresar9 = true;
+        },
+        async regresarAHabilidades() {
+            try {
+                const response = await API.get(this.url6);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.habilidades_comunicativas_array = [];
+                    this.habilidades_creativas_array = [];
+                    this.habilidades_informaticas_array = [];
+                    this.habilidades_liderazgo_array = [];
+                    this.oficios_subactividades_array = [];
+                    this.otro_habilidades_array = [];
+                    data.forEach(item => {
+                        if (item.habilidades_comunicativas || item.descripcion_habilidades_comunicativas) {
+                            this.habilidades_comunicativas_array.push({
+                                idhabilidades_informaticas: item.id,
+                                habilidades_comunicativas: item.habilidades_comunicativas || '',
+                                descripcion_habilidades_comunicativas: item.descripcion_habilidades_comunicativas || '',
+                            });
+                        }
+                        if (item.habilidades_creativas || item.descripcion_habilidades_creativas) {
+                            this.habilidades_creativas_array.push({
+                                idhabilidades_informaticas: item.id,
+                                habilidades_creativas: item.habilidades_creativas || '',
+                                descripcion_habilidades_creativas: item.descripcion_habilidades_creativas || '',
+                            });
+                        }
+                        if (item.habilidades_informaticas_cv || item.descripcion_habilidades_informaticas_cv) {
+                            this.habilidades_informaticas_array.push({
+                                idhabilidades_informaticas: item.id,
+                                habilidades_informaticas_cv: item.habilidades_informaticas_cv || '',
+                                descripcion_habilidades_informaticas_cv: item.descripcion_habilidades_informaticas_cv || '',
+                            });
+                        }
+                        if (item.habilidades_liderazgo || item.descripcion_habilidades_liderazgo) {
+                            this.habilidades_liderazgo_array.push({
+                                idhabilidades_informaticas: item.id,
+                                habilidades_liderazgo: item.habilidades_liderazgo || '',
+                                descripcion_habilidades_liderazgo: item.descripcion_habilidades_liderazgo || '',
+                            });
+                        }
+                        if (item.oficios_subactividades || item.descripcion_oficios_subactividades) {
+                            this.oficios_subactividades_array.push({
+                                idhabilidades_informaticas: item.id,
+                                oficios_subactividades: item.oficios_subactividades || '',
+                                descripcion_oficios_subactividades: item.descripcion_oficios_subactividades || '',
+                            });
+                        }
+                        if (item.otro_habilidades) {
+                            this.otro_habilidades_array.push({
+                                idhabilidades_informaticas: item.id,
+                                otro_habilidades: item.otro_habilidades || '',
+                            });
+                        }
+                    });
+                    this.isEditing4 = true;
+                    this.modoedit4 = false;
+                    this.regresar9 = false;
+                    this.ComunHabi();
+                    this.CreaHabi();
+                    this.LideHabi();
+                    this.InfoHabi();
+                    this.OfiHabi();
+                    this.OtrosHabi();
+                    this.activeTab = "habilidades";
+                    this.mostrarsw = true;
+                } else {
+                    this.isEditing4 = false;
+                    this.modoedit4 = true;
+                    this.regresar9 = false;
+                    this.ComunHabi();
+                    this.CreaHabi();
+                    this.LideHabi();
+                    this.InfoHabi();
+                    this.OfiHabi();
+                    this.OtrosHabi();
+                    this.activeTab = "habilidades";
+                    this.mostrarsw = true;
+                }
+                return response;
+            } catch (error) {
+                console.error('Error al obtener Habilidades:', error);
+                this.isEditing4 = false;
+                this.modoedit4 = true;
+                this.regresar9 = false;
+                this.ComunHabi();
+                this.CreaHabi();
+                this.LideHabi();
+                this.InfoHabi();
+                this.OfiHabi();
+                this.OtrosHabi();
+                this.activeTab = "habilidades";
+                this.mostrarsw = true;
+            }
+            
+        },
+        //Guardar Cursos Capacitacines
+        async guardaCursosCapacitaciones(event) {
+            event.preventDefault();
+           // mostraralertas2('Cursos y/o Capacitaciones Guardadas','success');
+           
+            this.activeTab = "relevantes";
+            this.mostrarcapacitaciones = false;
+            this.regresar7 = true;
+        },
+        async regresarACursosCapacitaciones() {
+            try {
+                const response = await API.get(this.url10);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.curso_capacitacionarray = [];
         
+                    data.forEach(item => {
+                        this.curso_capacitacionarray.push({
+                            idcursoscapacitaciones: item.id,
+                            intitucion_curso: item.intitucion_curso || '',
+                            tipo_evento: item.tipo_evento || '',
+                            area_estudios: item.area_estudios || '',
+                            nombre_evento: item.nombre_evento || '',
+                            facilitador_curso: item.facilitador_curso || '',
+                            tipo_certificado: item.tipo_certificado || '',
+                            fecha_inicio_curso: item.fecha_inicio_curso || '',
+                            fecha_fin_curso: item.fecha_fin_curso || '',
+                            dias_curso: item.dias_curso || '',
+                            horas_curso: item.horas_curso || '',
+                            certificado_curso: item.certificado_curso || '',
+                                
+                        });
+                            
+                            
+                    });
+                    this.isEditing9 = true;
+                    this.modoedit9 = false;
+                    this.regresar7 = false;
+                    this.activeTab = "capacitaciones";
+                    this.mostrarcapacitaciones = true;
+                } else {
+                    this.isEditing9 = false;
+                    this.modoedit9 = true;
+                    this.regresar7 = false;
+                    this.activeTab = "capacitaciones";
+                    this.mostrarcapacitaciones = true;
+                }
+                return response;
+                
+            } catch (error) {
+                console.error('Error al obtener Cursos y Capacitaciones:', error);
+                this.isEditing9 = false;
+                this.modoedit9 = true;
+                this.regresar7 = false;
+                this.activeTab = "capacitaciones";
+                this.mostrarcapacitaciones = true;
+                
+            }
+            
+        },
+        //Guardar Relevantes
+        async guardaRelevantes(event) {
+            event.preventDefault();
 
-              const response = await axios.get(this.url7);
-          if (response.data && response.data.length > 0) {
-              const data = response.data;
-              this.otros_datos_personalesarray = [];
+            //mostraralertas2('Logros Guardados','success');
 
-              data.forEach(item => {
-                  
-                      this.otros_datos_personalesarray.push({
+           
+            this.activeTab = "contacto";
+            this.mostrardatosrelevantes = false;
+            this.regresar8 = true;
 
-                          idotros_datos_personales: item.id,
-                          tipo_logros: item.tipo_logros || '',
-                          descripcion_logros: item.descripcion_logros || '',
-                          descripcion_fracasos: item.descripcion_fracasos || '',
+
+        },
+        async regresarARelevantes() {
+            try {
+                const response = await API.get(this.url7);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.otros_datos_personalesarray = [];
+        
+                    data.forEach(item => {
+                            
+                        this.otros_datos_personalesarray.push({
+                            idotros_datos_personales: item.id,
+                            tipo_logros: item.tipo_logros || '',
+                            descripcion_logros: item.descripcion_logros || '',
+                            descripcion_fracasos: item.descripcion_fracasos || '',
+                        });
+                            
+                            
+                    });
+                    this.isEditing5 = true;
+                    this.modoedit5 = false;
+                    this.activeTab = "relevantes";
+                    this.regresar8 = false;
+                    this.mostrardatosrelevantes = true;
+                } else {
+                    this.isEditing5 = false;
+                    this.modoedit5 = true;
+                    this.regresar8 = false;
+                    this.activeTab = "relevantes";
+                    this.mostrardatosrelevantes = true;
+                }
+                return response;
+                
+            } catch (error) {
+                console.error('Error al regresar a Relevantes:', error);
+                this.isEditing5 = false;
+                this.modoedit5 = true;
+                this.regresar8 = false;
+                this.activeTab = "relevantes";
+                this.mostrardatosrelevantes = true;
+            }
+            
+        },
+        //Guardar Contacto
+        async guardaContacto(event) {
+            event.preventDefault();
+
+            //mostraralertas2('Referencias Personales Guardadas','success');
+
+            if(this.texto !="" && this.titulosBachiller.length > 0 && this.informacion_contactoarray.length > 0 && this.estudioactualtitulosUniversitarios.length > 0 || this.titulosUniversitarios.length > 0 ){
+
+                mostraralertas2('Sus Perfil se ha completado Con Exito', 'success');
+                this.us = false;
+                this.registro = true;
+            }else{
+                mostraralertas2('Para finalizar debe por lo menos haber llenado la Declaracion libre del curriculum, Formacion Académica y agregar una Referencia Personal', 'warning');
+            }
+            
+
+
+        },
+        
+       
+       
+        cargarfoto(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Tipos permitidos
+            const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+            if (!allowedTypes.includes(file.type)) {
+                mostraralertas('Solo se permiten imágenes JPG o PNG.', 'warning', '');
+                this.$refs.fileFoto.value = "";
+                this.previewFoto = '';
+                this.fotografia = '';
+                this.Errorfoto = true;
+                return;
+            }
+
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+
+                // Tamaño base razonable (reduce fotos grandes)
+                const maxWidth = 320;
+                const maxHeight = 240;
+                let width = img.width;
+                let height = img.height;
+
+                // Mantener proporción
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round(height * (maxWidth / width));
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round(width * (maxHeight / height));
+                        height = maxHeight;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                let quality = 0.9;
+                let dataUrl = canvas.toDataURL("image/jpeg", quality);
+                let base64Size = Math.ceil((dataUrl.length * 3) / 4); // tamaño en bytes
+
+                // Reducir calidad si excede 64KB
+                const MAX_BYTES = 64 * 1024;
+                while (base64Size > MAX_BYTES && quality > 0.2) {
+                    quality -= 0.1;
+                    dataUrl = canvas.toDataURL("image/jpeg", quality);
+                    base64Size = Math.ceil((dataUrl.length * 3) / 4);
+                }
+
+                // Mostrar previsualización
+                this.previewFoto = dataUrl;
+
+                // Enviar solo Base64 sin encabezado
+                this.fotografia = dataUrl.replace(/^data:image\/jpeg;base64,/, "");
+                this.Errorfoto = false;
+            };
+
+            img.onerror = () => {
+                mostraralertas('Error al cargar la imagen.', 'error', '');
+                this.$refs.fileFoto.value = "";
+            };
+        },
+
+        async downloadCV() {
+            const doc = new jsPDF('p', 'mm', 'a4');
+
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const headerHeight = 30;
+            const footerHeight = 20;
+            const marginTop = headerHeight + 10;
+            const marginBottom = footerHeight + 10;
+            const contentHeight = pageHeight - marginTop - marginBottom;
+            const leftMargin = 75;
+            const headerImageUrl = require('@/assets/images/portada.png');
+            const footerImageUrl = require('@/assets/images/imagenfondo.png');
+            
+            const headerImg = await this.toDataURL(headerImageUrl);
+            const footerImg = await this.toDataURL(footerImageUrl);
+             // === Generar código único + fecha + QR ===
+            const timestamp = new Date();
+            const fechaFormateada = timestamp.toLocaleString('es-EC', { timeZone: 'America/Guayaquil' });
+            const codigoUnico = uuidv4().split('-')[0].toUpperCase();
+
+
+            // 🔗 URL de validación
+            const urlVerificacion = `http://vinculacionconlasociedad.utelvt.edu.ec/cvn/validacion_cvn`;
+             // === Preparar formato de nombre completo ===
+            const nombreCompleto = `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}`.trim();
+           
+            // Texto embebido dentro del QR
+            const textoQR = `CVN generado por: ${nombreCompleto}\nFecha: ${fechaFormateada}\nCódigo: ${codigoUnico}\nVerificar en: ${urlVerificacion}`;
+
+            // Generar QR
+            const qrDataURL = await QRCode.toDataURL(textoQR, {
+                width: 100,
+                margin: 1,
+                color: { dark: "#126E1B", light: "#FFFFFF" }
+            });
+
+            // Enviar registro de validación al backend
+            try {
+                
+                await enviarsoligqr('POST', {
+                    CIInfPer: this.CIInfPer,
+                    nombres: this.NombInfPer,
+                    apellidos: `${this.ApellInfPer} ${this.ApellMatInfPer}`,
+                    codigo_unico: codigoUnico,
+                }, this.urlqr);
+            } catch (error) {
+                console.error("Error guardando validación del CVN:", error);
+            }
+            
+           
+            const addHeaderAndFooter = (doc, isFirstPage = false) => {
+                if (isFirstPage) {
+                    doc.addImage(headerImg, 'JPEG', 0, 0, pageWidth, pageHeight);
+                } else {
+                    doc.addImage(footerImg, 'JPEG', 0, 0, pageWidth, pageHeight);
+                }
+            };
+
+            const addVerticalLine = (doc, yStart, yEnd) => {
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.5);
+                doc.line(55, yStart, 55, yEnd);
+            };
+
+            const addSectionHeader = (text, x, y) => {
+                doc.setFontSize(14);
+                doc.setFont('Arial', 'bold');
+                doc.text(text, x, y);
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.5);
+                doc.line(x, y + 2, pageWidth - 10, y + 2);
+                doc.setFont('Arial', 'normal');
+                return y + 14;
+            };
+
+            const addText = (text, x, y, justify = false) => {
+                doc.setFontSize(11);
+                const maxWidth = pageWidth - x - 10;
+                const lines = doc.splitTextToSize(text, maxWidth);
+
+                lines.forEach((line, i) => {
+                    if (y > pageHeight - marginBottom) {
+                        doc.addPage();
+                        addHeaderAndFooter(doc);
+                        addVerticalLine(doc, marginTop, pageHeight - marginBottom);
+                        y = marginTop;
+                    }
+
+                    if (justify && i !== lines.length - 1) {
+                        // 🔹 Justificar todas las líneas menos la última
+                        const textWidth = doc.getTextWidth(line);
+                        const spaces = line.split(" ").length - 1;
+                        const extraSpace = (maxWidth - textWidth) / spaces;
+
+                        let cursor = x;
+                        line.split(" ").forEach(word => {
+                            doc.text(word, cursor, y);
+                            cursor += doc.getTextWidth(word + " ") + extraSpace;
+                        });
+                    } else {
+                        doc.text(line, x, y);
+                    }
+
+                    y += 5;
+                });
+                return y;
+            };
+
+            const addBoldText = (text, x, y) => {
+                doc.setFontSize(12);
+                doc.setFont('Arial', 'bold');
+                doc.text(text, x, y);
+                doc.setFont('Arial', 'normal');
+                return y + 5;
+            };
+
+            const addBoldText3 = (text, x, y) => {
+                doc.setFontSize(12);
+                doc.setFont('Arial', 'bold');
+                doc.text(text, x, y);
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.5);
+                doc.line(x, y + 2, pageWidth - 10, y + 2);
+                doc.setFont('Arial', 'normal');
+                return y + 5;
+            };
+
+            const addBoldText2 = (text, x, y) => {
+                doc.setFontSize(11);
+                doc.setFont('Arial', 'bold'); 
+                const lines = doc.splitTextToSize(text, pageWidth - x - 10);
+                
+                lines.forEach(line => {
+                    if (y > pageHeight - marginBottom) {
+                        doc.addPage();
+                        addHeaderAndFooter(doc);
+                        addVerticalLine(doc, marginTop, pageHeight - marginBottom);
+                        y = marginTop;
+                        doc.setFont('Arial', 'bold'); 
+                    }
+                    doc.text(line, x, y);
+                });
+
+                doc.setFont('Arial', 'normal'); 
+                return y;
+            };
+
+            // Portada
+            addHeaderAndFooter(doc, true);
+
+            const currentFontSize = doc.internal.getFontSize();
+            const currentFont = doc.internal.getFont();
+            const currentTextColor = doc.getTextColor();
+
+            // Agregar texto en la portada
+            const date = new Date();
+            const options = { month: 'numeric', day: 'numeric', year: 'numeric' };
+             
+            doc.setFontSize(15);
+            doc.setTextColor(2, 107, 41);
+            doc.setFont('Arial', 'bold');
+            let nuevanacionalidad;
+            let carrera;
+            let titulacioncarr;
+            if(this.NacionalidadPer = 'EC'){
+                nuevanacionalidad = 'ECUADOR'
+            }else{
+                nuevanacionalidad = this.NacionalidadPer
+            }
+
+            
+           
+            
+
+            // === Función para abreviar títulos universitarios ===
+            const abreviarTitulo = (titulo, genero = "M") => {
+                if (!titulo) return "";
+
+                const t = titulo.toLowerCase();
+
+                // Títulos de grado
+                if (t.includes("ingeniero")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("ingeniera")) return genero === "F" ? "Ing." : "Ing.";
+                if (t.includes("licenciado")) return genero === "F" ? "Lic." : "Lic.";
+                if (t.includes("licenciada")) return genero === "F" ? "Lcda." : "Lcda.";
+                if (t.includes("arquitecto")) return genero === "F" ? "Arq" : "Arq.";
+                if (t.includes("doctor") || t.includes("medicina")) return "Dr.";
+                if (t.includes("abogado")) return genero === "F" ? "Abg.a" : "Abg.";
+                if (t.includes("tecnólogo")) return genero === "F" ? "Tnlg.a" : "Tnlg.";
+                if (t.includes("bachiller")) return genero === "F" ? "Bch.a" : "Bch.";
+                
+                // Títulos de posgrado
+                if (t.includes("magister") || t.includes("maestría") || t.includes("maestria")) return "MSc.";
+                if (t.includes("doctorado") || t.includes("phd")) return "PhD.";
+                if (t.includes("especialista")) return "Esp.";
+                if (t.includes("postgrado") || t.includes("posgrado")) return "Pg.";
+                if (t.includes("master")) return "MSc.";
+
+                return titulo; // Si no se detecta abreviación, dejar original
+            };
+
+            // === Detectar género ===
+            let genero = "M"; // por defecto Hombre
+            if (this.GeneroPer && this.GeneroPer.toUpperCase().startsWith("M")) {
+                genero = "F";
+            }
+
+            // === Tomar los títulos más recientes ===
+            let tituloUniv = "";
+            let tituloPos = "";
+
+            if (this.titulosUniversitarios.length > 0) {
+                const masRecienteU = this.titulosUniversitarios.reduce((a, b) =>
+                    new Date(b.fecha_graduacion) > new Date(a.fecha_graduacion) ? b : a
+                );
+                tituloUniv = abreviarTitulo(masRecienteU.titulo_universitario_obtenido, genero);
+            }
+
+            if (this.titulosPosgrado.length > 0) {
+                const masRecienteP = this.titulosPosgrado.reduce((a, b) =>
+                    new Date(b.fecha_graduacion_posgrado) > new Date(a.fecha_graduacion_posgrado) ? b : a
+                );
+                tituloPos = abreviarTitulo(masRecienteP.titulo_posgrado_obtenido, genero);
+            }
+
+            // === Si aún estudia, usar el título en curso ===
+            /*if (!tituloUniv && this.estudioactualtitulosUniversitarios.length > 0) {
+                const actual = this.estudioactualtitulosUniversitarios[0];
+                tituloUniv = abreviarTitulo(actual.titulo_carrera_universidad, genero);
+            }*/
+
+            // === Armar la cadena final ===
+            let lineaTitulo = "";
+
+            if (tituloUniv && tituloPos) {
+                lineaTitulo = `${tituloUniv} ${nombreCompleto}, ${tituloPos}`;
+            } else if (tituloUniv) {
+                lineaTitulo = `${tituloUniv} ${nombreCompleto}`;
+            } else {
+                lineaTitulo = `${nombreCompleto}`;
+            }
+
+            // === Mostrar texto más pequeño ===
+            doc.setFontSize(13);
+            doc.setTextColor(2, 107, 41);
+            doc.setFont('Arial', 'bold');
+
+            const text = `${lineaTitulo}\n${this.CiudadPer}-${nuevanacionalidad}\n${this.mailPer}`;
+            const textWidth = doc.getStringUnitWidth(text) * 5 / doc.internal.scaleFactor;
+            const x1 = pageWidth - textWidth - 85;
+            const y1 = pageHeight - 70; 
+
+            doc.text(text, x1, y1);
+            // === Añadir QR solo en portada ===
+            const qrSize = 25;
+            const qrX = pageWidth / 2 - qrSize / 2;
+            const qrY = pageHeight - 45;
+            doc.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
+
+            doc.setFontSize(9);
+            doc.setTextColor(60, 60, 60);
+            doc.setFont('Arial', 'bold');
+            doc.text(`Código de validación del CVN: ${codigoUnico}\nValida tu CVN aquí: ${urlVerificacion}`, qrX + qrSize / 2, qrY + qrSize + 5, { align: 'center' });
+           // doc.text(`Valida tu CVN aquí: ${urlVerificacion}`);
+
+            doc.setFontSize(currentFontSize);
+            doc.setFont(currentFont.fontName, currentFont.fontStyle);
+            doc.setTextColor(currentTextColor);
+            // Nueva página con encabezado, pie de página y línea vertical
+            doc.addPage();
+            addHeaderAndFooter(doc);
+            addVerticalLine(doc, marginTop, pageHeight - marginBottom);
+
+            let y = marginTop;
+            
+            // === Cuadro + Foto tamaño carnet ===
+            const fotoX = 10;
+            const fotoY = y;
+            const fotoAncho = 40;
+            const fotoAlto = 50;
+
+            doc.setDrawColor(0, 0, 0);
+            doc.setLineWidth(0.5);
+            doc.rect(fotoX, fotoY, fotoAncho, fotoAlto); // recuadro
+
+            // 🔹 Si hay foto, añadir dentro del recuadro
+            if (this.fotografia) {
+                try {
+                    const fotoData = await this.toDataURL(`data:image/png;base64,${this.fotografia}`);
+                    doc.addImage(fotoData, 'PNG', fotoX, fotoY, fotoAncho, fotoAlto);
+                } catch (error) {
+                    console.error("Error al cargar la foto:", error);
+                }
+            }
+            
+            y += 5;
+
+            // Declaración Personal
+            let x = 60;
+            y = addSectionHeader('Descripción libre del curriculum', x, y);
+            y = addText(`${this.texto}`, x, y, true);
+            y = addBoldText('', x, y);
+
+            // Datos personales
+            y = addSectionHeader('1. Datos Personales', x, y);
+
+            const personalData = [
+                { label: 'Nombres y Apellidos:', value: `${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}` },
+                { label: 'Número de Identificación:', value: `${this.CIInfPer}` },
+                { label: 'Nacionalidad:', value: `${nuevanacionalidad}` },
+                { label: 'Fecha de Nacimiento:', value: `${this.FechNacimPer}` },
+                //{ label: 'Lugar de Nacimiento:', value: `${this.LugarNacimientoPer}` },
+                { label: 'Género:', value: `${this.GeneroPer}` },
+                { label: 'Edad:', value: `${this.edad}` },
+                { label: 'Dirección de Residencia:', value: `${this.DirecDomicilioPer}` },
+                { label: 'Ciudad:', value: `${this.CiudadPer}` },
+                { label: 'Teléfono:', value: `${this.Telf1InfPer}` },
+                { label: 'Correo Electrónico:', value: `${this.mailPer}` }
+            ];
+
+            personalData.forEach(item => {
+                y = addBoldText2(item.label, x, y);
+                y = addText(item.value, x + 60, y); 
+            });
+            y = addBoldText('', x, y);
+
+            // Formación académica
+            if(this.titulosBachiller.length > 0 || this.titulosUniversitarios.length > 0 || this.titulosPosgrado.length > 0 ){
+                y = addSectionHeader('1.1 Formación Académica', x, y);
+            }
+            if (this.titulosBachiller.length > 0) {
+                
+               
+                
+                y = addBoldText3('1.1.1 Formación Académica - Bachiller', x, y);
+
+                this.titulosBachiller.forEach((bachiller, index) => {
+                    y = addBoldText(``, x, y); 
+                    const formacionAcademicaData = [
+                        { label: 'Título de Bachiller:', key: 'titulo_bachiller_obtenido' },
+                        { label: 'Institución Educativa:', key: 'institucion_bachiller' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion_bachiller' },
+                        { label: 'Especialidad:', key: 'especialidad_bachiller' }
+                    ];
+
+                    formacionAcademicaData.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${bachiller[item.key]}`, x + 60, y); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+
+            if (this.titulosUniversitarios.length > 0) {
+                
+                
+                y = addBoldText3('1.1.2 Formación Académica - Universitarios', x, y);
+
+                this.titulosUniversitarios.forEach((universitario, index) => {
+                    y = addBoldText(``, x, y); 
+                    const formacionAcademicaData2 = [
+                        { label: 'Título Universitario:', key: 'titulo_universitario_obtenido' },
+                        { label: 'Institución Educativa:', key: 'institucion_universitaria' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion' },
+                        { label: 'Especialidad:', key: 'especialidad' }
+                    ];
+
+                    formacionAcademicaData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${universitario[item.key]}`, x + 60, y); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if(this.estudioactualtitulosUniversitarios.length > 0){
+               //console.log(this.estudioactualtitulosUniversitarios);
+                y = addBoldText3('Formación Académica - Estudios Universitarios Actuales UTLVTE', x, y);
+                this.estudioactualtitulosUniversitarios.forEach((estudioactual, index) => {
+                    y = addBoldText(``, x, y); 
+                    const formacionAcademicaData4 = [
+                        { label: 'Facultad:', key: 'facultades_universidad' },
+                        { label: 'Especialidad:', key: 'carrera_universidad' }
+                    ];
+                    formacionAcademicaData4.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${estudioactual[item.key]}`, x + 60, y); 
+                    });
+                    y = addBoldText('', x, y); 
+                });
+            }
+
+            if (this.titulosPosgrado.length > 0) {
+               
+                
+                y = addBoldText3('1.1.3 Formación Académica - Posgrados', x, y);
+
+                this.titulosPosgrado.forEach((posgrado, index) => {
+                    y = addBoldText(``, x, y); 
+                    const formacionAcademicaData3 = [
+                        { label: 'Título Posgrado:', key: 'titulo_posgrado_obtenido' },
+                        { label: 'Institución Educativa:', key: 'institucion_posgrado' },
+                        { label: 'Fecha de Graduación:', key: 'fecha_graduacion_posgrado' },
+                        { label: 'Especialidad:', key: 'especialidad_posgrado' }
+                    ];
+
+                    formacionAcademicaData3.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${posgrado[item.key]}`, x + 60, y); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+
+            // Experiencias Profesionales
+            if(this.cargosEmpresas.length > 0 || this.cargosPasantias.length > 0 ){
+                y = addSectionHeader('2. Experiencias Profesionales', x, y);
+            }
+            if (this.cargosEmpresas.length > 0) {
+               
+                y = addBoldText3('2.1 Experiencias Profesionales - Empresa', x, y);
+
+                this.cargosEmpresas.forEach((empresa, index) => {
+                    y = addBoldText(``, x, y); 
+                    const experienciaData = [
+                        { label: 'Empresa / Institución:', key: 'empresa_institucion' },
+                        { label: 'Cargos Desempeñados:', key: 'cargo_desempenado_empresa' },
+                        { label: 'Descripción de Funciones:', key: 'descripcion_funciones_empresa' },
+                        { label: 'Logros:', key: 'logros_resultados_empresa' }
+                    ];
+
+                    experienciaData.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${empresa[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+
+                y = addBoldText('', x, y); 
+            }
+
+            if (this.cargosPasantias.length > 0) {
+                
+                
+                y = addBoldText3('2.2 Experiencias Profesionales - Prácticas', x, y);
+
+                this.cargosPasantias.forEach((pasn, index) => {
+                    y = addBoldText(``, x, y); 
+                    const experienciaData = [
+                        { label: 'Empresa / Institución:', key: 'empresa_institucion_practicas' },
+                        { label: 'Cargos Desempeñados:', key: 'area_trabajo_practicas' },
+                        { label: 'Descripción de Funciones:', key: 'descripcion_funciones_practicas' }
+                    ];
+
+                    experienciaData.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${pasn[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+
+                y = addBoldText('', x, y);
+            }
+            // Publicaciones
+            if (this.publicacionesarray.length > 0) {
+                y = addSectionHeader('3. Publicaciones', x, y);
+                
+
+                this.publicacionesarray.forEach((publi, index) => {
+                    y = addBoldText3(`Publicación #${index+1}`, x, y);
+                    y = addBoldText(``, x, y); 
+                    const publicacionData2 = [
+                        { label: 'Tipo de Publicación:', key: 'publicacion_tipo' },
+                        { label: 'Título de la Publicación:', key: 'publicacion_titulo' },
+                        { label: 'Likn de la Publicación:', key: 'link_publicacion' }
+                    ];
+
+                    publicacionData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${publi[item.key]}`, x + 60, y); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            // Idiomas
+            if (this.idiomasarray.length > 0) {
+                y = addSectionHeader('4. Idiomas', x, y);
+                
+                this.idiomasarray.forEach((idio, index) => {
+                    y = addBoldText3(`Idioma #${index+1}`, x, y);
+                    y = addBoldText(``, x, y); 
+                    const idiomasData2 = [
+                        { label: 'Idioma:', key: 'idioma' },
+                        { label: 'Comprensión Auditiva:', key: 'comprension_auditiva' },
+                        { label: 'Comprensión de Lectura:', key: 'comprension_lectura' },
+                        { label: 'Interacción Oral:', key: 'interaccion_oral' },
+                        { label: 'Expresión Oral:', key: 'expresion_oral' },
+                        { label: 'Expresión Escrita:', key: 'expresion_escrita' },
+                        { label: 'Certificado:', key: 'certificado' }
+                    ];
+
+                    idiomasData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${idio[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            // Habilidades
+            if(this.habilidades_comunicativas_array.length > 0 || this.habilidades_creativas_array.length > 0 || this.habilidades_liderazgo_array.length > 0 || this.habilidades_informaticas_array.length > 0 || this.oficios_subactividades_array.length > 0 || this.otro_habilidades_array.length > 0){
+                y = addSectionHeader('5. Habilidades', x, y);
+            }
+            
+            if (this.habilidades_comunicativas_array.length > 0) {
+                
+                y = addBoldText3('Habilidades Comunicativas', x, y);
+                this.habilidades_comunicativas_array.forEach((habi, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData2 = [
+                        { label: 'Habilidad:', key: 'habilidades_comunicativas' },
+                        { label: 'Descripción:', key: 'descripcion_habilidades_comunicativas' }
+                    ];
+
+                    habilidadData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habi[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if (this.habilidades_creativas_array.length > 0) {
+                y = addBoldText3('Habilidades Creativas', x, y);
+                this.habilidades_creativas_array.forEach((habic, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData3 = [
+                        { label: 'Habilidad:', key: 'habilidades_creativas' },
+                        { label: 'Descripción:', key: 'descripcion_habilidades_creativas' }
+                    ];
+
+                    habilidadData3.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habic[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if (this.habilidades_liderazgo_array.length > 0) {
+                y = addBoldText3('Habilidades de Liderazgo', x, y);
+                this.habilidades_liderazgo_array.forEach((habic4, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData4 = [
+                        { label: 'Habilidad:', key: 'habilidades_liderazgo' },
+                        { label: 'Descripción:', key: 'descripcion_habilidades_liderazgo' }
+                    ];
+
+                    habilidadData4.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habic4[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if (this.habilidades_informaticas_array.length > 0) {
+                y = addBoldText3('Habilidades Informáticas', x, y);
+                this.habilidades_informaticas_array.forEach((habic5, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData5 = [
+                        { label: 'Habilidad:', key: 'habilidades_informaticas_cv' },
+                        { label: 'Descripción:', key: 'descripcion_habilidades_informaticas_cv' }
+                    ];
+
+                    habilidadData5.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habic5[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if (this.oficios_subactividades_array.length > 0) {
+                y = addBoldText3('Oficios/Subactividades', x, y);
+                this.oficios_subactividades_array.forEach((habic6, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData6 = [
+                        { label: 'Oficio/Subactividad:', key: 'oficios_subactividades' },
+                        { label: 'Descripción:', key: 'descripcion_oficios_subactividades' }
+                    ];
+
+                    habilidadData6.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habic6[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            if (this.otro_habilidades_array.length > 0) {
+                y = addBoldText3('Otras Habilidades', x, y);
+                this.otro_habilidades_array.forEach((habic7, index) => {
+                   
+                    y = addBoldText(``, x, y); 
+                    const habilidadData7 = [
+                        { label: 'Descripción:', key: 'otro_habilidades' }
+                    ];
+
+                    habilidadData7.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${habic7[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            // Cursos
+            if (this.curso_capacitacionarray.length > 0) {
+                y = addSectionHeader('6. Cursos', x, y);
+                
+                this.curso_capacitacionarray.forEach((cur, index) => {
+                    y = addBoldText3(`Curso #${index+1}`, x, y);
+                    y = addBoldText(``, x, y); 
+                    const cursosData2 = [
+                        { label: 'Nombre Evento:', key: 'nombre_evento' },
+                        { label: 'Nombre del Facilitador:', key: 'facilitador_curso' },
+                        { label: 'Institución:', key: 'intitucion_curso' },
+                        { label: 'Tipo de Evento:', key: 'tipo_evento' },
+                        { label: 'Area de Estudios:', key: 'area_estudios' },
+                        { label: 'Tipó de Certificado:', key: 'tipo_certificado' },
+                        { label: 'Dias:', key: 'dias_curso' },
+                        { label: 'Horas:', key: 'horas_curso' },
+                        { label: 'Cerificado:', key: 'certificado_curso' },
+                    ];
+
+                    cursosData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${cur[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            // Logros
+            if (this.otros_datos_personalesarray.length > 0) {
+                y = addSectionHeader('7. Logros y Fracasos', x, y);
+               
+                this.otros_datos_personalesarray.forEach((logr, index) => {
+                    y = addBoldText3(`Logro #${index+1}`, x, y);
+                    y = addBoldText(``, x, y); 
+                    const logrosData2 = [
+                        { label: 'Tipo de Logro:', key: 'tipo_logros' },
+                        { label: 'Descripción:', key: 'descripcion_logros' },
+                        { label: 'Descripción de Fracasos:', key: 'descripcion_fracasos' }
+                    ];
+
+                    logrosData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${logr[item.key]}`, x + 60, y, true); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+                y = addBoldText('', x, y);
+            }
+            // Referencias
+            if (this.informacion_contactoarray.length > 0) {
+                y = addSectionHeader('8. Referencias Personales', x, y);
+                
+                this.informacion_contactoarray.forEach((info, index) => {
+                    y = addBoldText3(`Referencia #${index+1}`, x, y);
+                    y = addBoldText(``, x, y); 
+                    const inforData2 = [
+                        { label: 'Nombres:', key: 'referencia_nombres' },
+                        { label: 'Apellidos:', key: 'referencia_apellidos' },
+                        { label: 'Correo Electrónico:', key: 'referencia_correo_electronico' },
+                        { label: 'Teléfono:', key: 'referencia_telefono' }
+                    ];
+
+                    inforData2.forEach(item => {
+                        y = addBoldText2(item.label, x, y);
+                        y = addText(`${info[item.key]}`, x + 60, y); 
+                    });
+
+                    y = addBoldText('', x, y); 
+                });
+            }
+
+            doc.save(`CVN-${this.CIInfPer}-${this.NombInfPer} ${this.ApellInfPer} ${this.ApellMatInfPer}.pdf`);
+            console.clear();
+            this.getValidar();
+        },
+
+
+        toDataURL(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const dataURL = canvas.toDataURL('image/jpeg');
+                    resolve(dataURL);
+                };
+                img.onerror = () => {
+                    reject(new Error('Error al cargar la imagen.'));
+                };
+                img.src = url;
+            });
+        },
+        
+        loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const dataURL = canvas.toDataURL('image/jpeg');
+                    resolve({ dataURL, width: img.width, height: img.height });
+                };
+                img.onerror = () => {
+                    reject(new Error('Error al cargar la imagen.'));
+                };
+                img.src = url;
+            });
+        },
+        //Scroll to top Todo
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        },
+       
+       
+        //Datos Personales
+        async getDatosPersonales() { 
+            try {
+                const genhom = "HOMBRE";
+                const genMuj = "MUJER";
+                const response = await API.get(this.url1);
+                //console.log(response);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data[0];
+                    this.CIInfPer = data.CIInfPer;
+                    this.ApellInfPer = data.ApellInfPer;
+                    this.ApellMatInfPer = data.ApellMatInfPer;
+                    this.NombInfPer = data.NombInfPer;
+                    //this.NacionalidadPer = data.NacionalidadPer;
+                    if(data.NacionalidadPer == "EC"){
+                        this.NacionalidadPer = "ECUADOR";
+                    }else {
+                        this.NacionalidadPer = data.NacionalidadPer;
+                    }
+                   // this.LugarNacimientoPer = data.LugarNacimientoPer;
+                    this.FechNacimPer = data.FechNacimPer;
+                    //this.GeneroPer = data.GeneroPer;
+                    if(data.GeneroPer == "F"){
+                        this.GeneroPer = genMuj;
+                    }else{
+                        this.GeneroPer = genhom;
+                    }
+                    //console.log(data.GeneroPer);
+                    //console.log(this.GeneroPer);
+                    this.CiudadPer = data.CiudadPer.toUpperCase();
+                    this.DirecDomicilioPer = data.DirecDomicilioPer;
+                    this.Telf1InfPer = data.CelularInfPer;
+                    this.mailPer = data.mailPer;
+                    this.fotografia = data.fotografia;
+                    this.previewFoto ='data:image/jpeg;base64,' + data.fotografia;
+                    const añoActual = new Date().getFullYear();
+                    const añoNacimiento = new Date(data.FechNacimPer).getFullYear();
+                    this.edad = añoActual - añoNacimiento;
+                    this.areainfdoc= data.area;
+                    this.cargoinfdoc= data.cargo;
+                    this.registro = true;
+                    this.isEditing = true;
+                    this.modoedit = false;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.isEditing = false;
+                    this.modoedit = true;
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no poseee información personal.");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la información personal:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+
+
+            }
+        },
+        //Formacion Academica
+        async getFormacionAcademica() {
+            try {
+                const response = await API.get(this.url2);
+                //console.log(this.estudioactualmentefacultadcarreras);
+                //console.log(response);
+                //console.log(this.url11);
+                 
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    
+                    // Limpiamos los arreglos existentes
+                    this.titulosBachiller = [];
+                    this.titulosUniversitarios = [];
+                    this.titulosPosgrado = [];
+                    this.estudioactualtitulosUniversitarios = [];
+                    this.titulosEncontrados = [];
+                    
+                    //console.log(data);
+                    data.forEach(item => {
+                        if (item.estudios_bachiller_culminados === 'Si' && item.titulo_bachiller_obtenido && item.institucion_bachiller) {
+                            this.titulosBachiller.push({
+                               
+                                idformacion_academica: item.id,
+                                titulo_bachiller_obtenido: item.titulo_bachiller_obtenido || '',
+                                institucion_bachiller: item.institucion_bachiller || '',
+                                fecha_graduacion_bachiller: item.fecha_graduacion_bachiller || '',
+                                especialidad_bachiller: item.especialidad_bachiller || ''
+                            });
+                            if(this.titulosBachiller.length > 0){
+                                this.sidatos=false;
+                            }else{
+                                this.sidatos=true;
+                            }
+                        }
+                        if (item.estudios_universitarios_culminados === 'Si' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
+                            this.titulosUniversitarios.push({
+                                
+                                idformacion_academica: item.id,
+                                titulo_universitario_obtenido: item.titulo_universitario_obtenido || '',
+                                institucion_universitaria: item.institucion_universitaria || '',
+                                fecha_graduacion: item.fecha_graduacion || '',
+                                especialidad: item.especialidad || ''
+                            });
+                            this.mostrarFormularioTitulos = false;
+                        }
+                        if (item.estudios_universitarios_culminados === 'No' && item.titulo_universitario_obtenido && item.institucion_universitaria) {
+                            this.estudioactualtitulosUniversitarios.push({
+                                
+                                idformacion_academica: item.id,
+                                facultades_universidad: item.titulo_universitario_obtenido || '',
+                                titulo_carrera_universidad: item.institucion_universitaria || '',
+                                fechaestudioactual: item.fecha_graduacion || '',
+                                carrera_universidad: item.especialidad || ''
+                            });
+                           // console.log(this.estudioactualtitulosUniversitarios);
+                        }
                         
-                      });
-                  
-                  
+                        if (item.estudios_posgrado_culminados === 'Si' && item.titulo_posgrado_obtenido && item.institucion_posgrado) {
+                            this.titulosPosgrado.push({
+                                
+                                idformacion_academica: item.id,
+                                titulo_posgrado_obtenido: item.titulo_posgrado_obtenido || '',
+                                institucion_posgrado: item.institucion_posgrado || '',
+                                fecha_graduacion_posgrado: item.fecha_graduacion_posgrado || '',
+                                especialidad_posgrado: item.especialidad_posgrado || ''
+                            });
+                            this.mostrarFormularioTitulosPosgrado = false;
+                        }
+                    });
+                    
+                    this.isEditing8 = true;
+                    this.modoedit8 = false;
+                    this.Titulouni();
+                    this.Posgra();
+                    this.Titulobachi();
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    
+                    if(this.titulosBachiller.length > 0){
+                        this.sidatos=false;
+                    }else{
+                        const response2 = await API.get(this.url11);
+                        if(response2.data.length > 0){
+                            const data2 = response2.data[0];
+                            //console.log(data2);
+                            this.sidatos=true;
+                            this.estudios_bachiller_culminados = 'Si';
+                            this.mostrarFormularioTitulosBachiller = true;
+                            this.Titulobachi();
+                            this.nuevoTituloBachiller.titulo_bachiller_obtenido = data2.Bachillerato;
+                            this.nuevoTituloBachiller.institucion_bachiller = data2.NombColegio;
+                            this.nuevoTituloBachiller.fecha_graduacion_bachiller = data2.FechGrado;
+                            this.nuevoTituloBachiller.especialidad_bachiller = data2.Especialidad;
+                        }else{
+                            this.mostrarFormularioTitulosBachiller = false;
+                        }
+                        
+                    }
+                    
+                    this.isEditing8 = false;
+                    this.modoedit8 = true;
+                    this.registro = false;
+                    this.us = true;
+                    this.mostrarnormal = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la formación académica y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la formación académica:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                 this.mostrarnormal = true;
+                return null;
+            }
+        },
+        async getTitulosRegistrados() {
+            const usuario = await getMe();
+            const id = usuario.CIInfPer;
 
-              });
+            try {
+                const response = await API.get(`/cvn/v1/titulog/${id}`);
 
-              this.isEditing5 = true;
-              this.modoedit5 = false;
-              this.activeTab = "relevantes";
-              this.regresar8 = false;
-              this.mostrardatosrelevantes = true;
-          } else {
-              this.isEditing5 = false;
-              this.modoedit5 = true;
-              this.regresar8 = false;
-              this.activeTab = "relevantes";
-              this.mostrardatosrelevantes = true;
-          }
-          return response;
-      },
-      //Guardar Contacto
-      guardaContacto(event) {
-        event.preventDefault();
+                if (response.data.multiple) {
+                    this.titulosEncontrados = response.data.titulos;
+                    this.tituloActualIndex = 0;
+                    this.mostrarTituloEncontrado(this.titulosEncontrados[0]);
+                    this.titulosBloqueados = true;
+                    this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm = this.titulosEncontrados.length;
 
-        //mostraralertas2('Referencias Personales Guardadas','success');
+                   
+                } else {
+                    //this.estudios_universitarios_culminados = 'Si';
+                    //this.Titulouni();
+                    this.titulosEncontrados = [response.data.titulo];
+                    this.mostrarTituloEncontrado(response.data.titulo);
+                    this.titulosBloqueados = true;
+                    this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm2 = this.titulosEncontrados.length;
+                    
+                   
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    // No tiene títulos registrados
+                    this.titulosEncontrados = [];
+                    this.titulosBloqueados = false;
+                    this.sigueestudiandouniversidad = false;
+                    this.mostrarFormularioTitulos = false; // 👈 no tiene → mostrar formulario
+                } else {
+                    //console.error("Error al obtener los títulos:", error);
+                }
+            }
+        },
+        async getTitulosRegistradosPosgrado() {
+            const usuario = await getMe();
+            const id = usuario.CIInfPer;
+
+            try {
+                const response = await API.get(`/cvn/v1/titulogPosgrados/${id}`);
+                //console.log(response);
+                if (response.data.multiple) {
+                    this.titulosEncontradosPosgrado = response.data.titulos;
+                    this.tituloActualIndexPosgrado = 0;
+                    this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[0]);
+                    this.titulosBloqueadosPosgrado = true;
+                    //this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm = this.titulosEncontradosPosgrado.length;
+
+                   
+                } else {
+                    //this.estudios_universitarios_culminados = 'Si';
+                    //this.Titulouni();
+                    this.titulosEncontradosPosgrado = [response.data.titulo];
+                    this.mostrarTituloEncontradoPosgrado(response.data.titulo);
+                    this.titulosBloqueadosPosgrado = true;
+                    //this.sigueestudiandouniversidad = false;
+                    const cantidadtitulosm2 = this.titulosEncontradosPosgrado.length;
+                    
+                   
+                }
+                //this.mostrarFormularioTitulosPosgrado = false;
+                 //this.mostrarnormal = true;
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    // No tiene títulos registrados
+                    this.titulosEncontradosPosgrado = [];
+                    this.titulosBloqueadosPosgrado = false;
+                    //this.sigueestudiandouniversidad = false;
+                    this.mostrarFormularioTitulosPosgrado = false;
+                    this.mostrarnormal = true;
+                     // 👈 no tiene → mostrar formulario
+                } else {
+                    //console.error("Error al obtener los títulos:", error);
+                }
+            }
+        },
+
+        mostrarTituloEncontrado(titulo) {
+            if(this.GeneroPer === 'MUJER'){
+                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido = titulo.titulom || '';
+            }else{
+                this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido = titulo.tituloh || '';
+            }
+            if(titulo.inst_cod ==='UTELVT'){
+
+                this.nuevoTituloUniversitarioUTLVTE.institucion_universitaria = 'UNIVERSIDAD TECNICA LUIS VARGAS TORRES DE ESMERALDAS';
+            }
+            
+            this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion = titulo.fechaincorporacion || '';
+            this.nuevoTituloUniversitarioUTLVTE.especialidad = titulo.NombCarr || '';
+        },
+        mostrarTituloEncontradoPosgrado(titulo) {
+            if(this.GeneroPer === 'MUJER'){
+                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido = titulo.titulom || '';
+            }else{
+                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido = titulo.tituloh || '';
+            }
+            if(titulo.inst_cod ==='UTELVT'){
+
+                this.nuevoTituloPosgradoUTLVTE.institucion_posgrado = 'UNIVERSIDAD TECNICA LUIS VARGAS TORRES DE ESMERALDAS';
+            }
+            
+            this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado = titulo.fechaincorporacion || '';
+            this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado = titulo.NombCarr || '';
+        },
+
+        mostrarSiguienteTitulo() {
+            if (this.tituloActualIndex + 1 < this.titulosEncontrados.length) {
+                this.tituloActualIndex++;
+                this.mostrarTituloEncontrado(this.titulosEncontrados[this.tituloActualIndex]);
+            } else {
+                // Ya mostró todos → habilita "sigue estudiando"
+                this.titulosBloqueados = false;
+                this.sigueestudiandouniversidad = true;
+            }
+        },
+        mostrarSiguienteTituloPosgrado() {
+            if (this.tituloActualIndexPosgrado + 1 < this.titulosEncontradosPosgrado.length) {
+                this.tituloActualIndexPosgrado++;
+                this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]);
+            } else {
+                // Ya mostró todos → habilita "sigue estudiando"
+                this.titulosBloqueadosPosgrado = false;
+                this.sigueestudiandouniversidad = true;
+            }
+        },
+        mostrarTituloAnteriorPosgrado() {
+            if (this.tituloActualIndexPosgrado > 0) {
+                this.tituloActualIndexPosgrado--;
+                this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]);
+            } else {
+                mostraralertas2('Ya estás en el primer título.', 'info');
+            }
+        },
+        
+        mostrarTituloAnterior() {
+            if (this.tituloActualIndex > 0) {
+                this.tituloActualIndex--;
+                this.mostrarTituloEncontrado(this.titulosEncontrados[this.tituloActualIndex]);
+            } else {
+                mostraralertas2('Ya estás en el primer título.', 'info');
+            }
+        },
+        //Experiencias Profesionales
+        async getExperienciasProfesionales() {
+            try {
+                const response = await API.get(this.url3);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.cargosEmpresas = [];
+                    this.cargosPasantias = [];
+    
+                    data.forEach(item => {
+                        if (item.cargos_desempenados === 'Si' && item.empresa_institucion && item.cargo_desempenado_empresa) {
+                            this.cargosEmpresas.push({
+    
+                                idexperiencias_profesionales: item.id,
+                                empresa_institucion: item.empresa_institucion || '',
+                                fecha_inicio_empresa: item.fecha_inicio_empresa || '',
+                                fecha_fin_empresa: item.fecha_fin_empresa || '',
+                                cargo_desempenado_empresa: item.cargo_desempenado_empresa || '',
+                                descripcion_funciones_empresa: item.descripcion_funciones_empresa || '',
+                                logros_resultados_empresa: item.logros_resultados_empresa || ''
+                            });
+                            if (item.fecha_inicio_empresa) {
+                                const añoInicio = new Date(item.fecha_inicio_empresa).getFullYear();
+                                this.fecha_inicio_empresa2 = añoInicio;
+                            }
+                        }
+
+                        if (item.practicas_profesionales === 'Si' && item.empresa_institucion_practicas && item.area_trabajo_practicas) {
+                            this.cargosPasantias.push({
+    
+                                idexperiencias_profesionales: item.id,
+                                empresa_institucion_practicas: item.empresa_institucion_practicas || '',
+                                fecha_inicio_practicas: item.fecha_inicio_practicas || '',
+                                fecha_fin_practicas: item.fecha_fin_practicas || '',
+                                area_trabajo_practicas: item.area_trabajo_practicas || '',
+                                descripcion_funciones_practicas: item.descripcion_funciones_practicas || ''
+                            });
+                            if (item.fecha_inicio_practicas) {
+                                const añoInicio2 = new Date(item.fecha_inicio_practicas).getFullYear();
+                                this.fecha_inicio_practicas2 = añoInicio2;
+                            }
+                        }
+    
+    
+                    });
+                    
+                    this.fechacargos="";
+                    this.fechaFinLabel="";
+                    this.trabajo = false;
+                    this.Cargos();
+                    this.Practicas();
+                    this.FechaCarg();
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                    
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la experiencia profesional y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la experiencia profesional:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Investigacion y Publicaciones
+        async getInvestigacionPublicaciones() {
+            try {
+                const response = await API.get(this.url4);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.publicacionesarray = [];
+                    //console.log(data);
+                    data.forEach(item => {
+                        if (item.publicaciones === 'Si' && item.publicacion_tipo && item.publicacion_titulo) {
+                            this.publicacionesarray.push({
+    
+                                idinvestigacion_publicaciones: item.id,
+                                publicacion_tipo: item.publicacion_tipo || '',
+                                publicacion_titulo: item.publicacion_titulo || '',
+                                link_publicacion: item.link_publicacion || '',
+                                grupo_investigacion: item.grupo_investigacion || '',
+                                congreso_evento: item.congreso_evento || ''
+                            });
+                        }
+                        
+    
+                    });
+                    this.Investigaciones();
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                    
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado investigaciones/Publicaciones y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener investigaciones/Publicaciones:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Idiomas
+        async getIdiomas() {
+            try {
+                const response = await API.get(this.url5);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.idiomasarray = [];
+    
+                    data.forEach(item => {
+                        
+                            this.idiomasarray.push({
+    
+                                idlenguaje: item.id,
+                                idioma: item.idioma || '',
+                                comprension_auditiva: item.comprension_auditiva || '',
+                                comprension_lectura: item.comprension_lectura || '',
+                                interaccion_oral: item.interaccion_oral || '',
+                                expresion_oral: item.expresion_oral || '',
+                                expresion_escrita: item.expresion_escrita || '',
+                                certificado: item.certificado || '',
+                            });
+                        
+    
+                    });
+                    
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Idiomas y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Idiomas:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Habilidades Informaticas
+        async getHabilidadesInformaticas() {
+            try {
+                const response = await API.get(this.url6);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.habilidades_comunicativas_array = [];
+                    this.habilidades_creativas_array = [];
+                    this.habilidades_informaticas_array = [];
+                    this.habilidades_liderazgo_array = [];
+                    this.oficios_subactividades_array = [];
+                    this.otro_habilidades_array = [];
+                    
+                    data.forEach(item => {
+                        if (item.habilidades_comunicativas || item.descripcion_habilidades_comunicativas) {
+                            this.habilidades_comunicativas_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                habilidades_comunicativas: item.habilidades_comunicativas || '',
+                                descripcion_habilidades_comunicativas: item.descripcion_habilidades_comunicativas || '',
+                            });
+                        }
+                        if (item.habilidades_creativas || item.descripcion_habilidades_creativas) {
+                            this.habilidades_creativas_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                habilidades_creativas: item.habilidades_creativas || '',
+                                descripcion_habilidades_creativas: item.descripcion_habilidades_creativas || '',
+                            });
+                        }
+                        
+                        if (item.habilidades_informaticas_cv || item.descripcion_habilidades_informaticas_cv) {
+                            this.habilidades_informaticas_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                habilidades_informaticas_cv: item.habilidades_informaticas_cv || '',
+                                descripcion_habilidades_informaticas_cv: item.descripcion_habilidades_informaticas_cv || '',
+                            });
+                        }
+                        if (item.habilidades_liderazgo || item.descripcion_habilidades_liderazgo) {
+                            this.habilidades_liderazgo_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                habilidades_liderazgo: item.habilidades_liderazgo || '',
+                                descripcion_habilidades_liderazgo: item.descripcion_habilidades_liderazgo || '',
+                            });
+                        }
+                        if (item.oficios_subactividades || item.descripcion_oficios_subactividades) {
+                            this.oficios_subactividades_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                oficios_subactividades: item.oficios_subactividades || '',
+                                descripcion_oficios_subactividades: item.descripcion_oficios_subactividades || '',
+                            });
+                        }
+                        if (item.otro_habilidades) {
+                            this.otro_habilidades_array.push({
+                                
+                                idhabilidades_informaticas: item.id,
+                                otro_habilidades: item.otro_habilidades || '',
+                            });
+                        }
+                    });
+                    
+                    this.registro = true;
+                    this.ComunHabi();
+                    this.CreaHabi();
+                    this.LideHabi();
+                    this.InfoHabi();
+                    this.OfiHabi();
+                    this.OtrosHabi();
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.registro = false;
+                    this.ComunHabi();
+                    this.CreaHabi();
+                    this.LideHabi();
+                    this.InfoHabi();
+                    this.OfiHabi();
+                    this.OtrosHabi();
+                    this.us = true;
+                }
+                return response;
+
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Habilidades y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Habilidades:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Cursos Capacitaciones
+        async getCursosCapacitaciones() {
+            try {
+                const response = await API.get(this.url10);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.curso_capacitacionarray = [];
+    
+                    data.forEach(item => {
+                        
+                            this.curso_capacitacionarray.push({
+
+                                idcursoscapacitaciones: item.id,
+                                intitucion_curso: item.intitucion_curso || '',
+                                tipo_evento: item.tipo_evento || '',
+                                area_estudios: item.area_estudios || '',
+                                nombre_evento: item.nombre_evento || '',
+                                facilitador_curso: item.facilitador_curso || '',
+                                tipo_certificado: item.tipo_certificado || '',
+                                fecha_inicio_curso: item.fecha_inicio_curso || '',
+                                fecha_fin_curso: item.fecha_fin_curso || '',
+                                dias_curso: item.dias_curso || '',
+                                horas_curso: item.horas_curso || '',
+                                certificado_curso: item.certificado_curso || '',
+                              
+                            });
+                        
+                        
+
+                    });
+                    
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Cursos y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Cursos:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Otros Datos Relevantes
+        async getDatosRelevantes() {
+            try {
+                const response = await API.get(this.url7);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.otros_datos_personalesarray = [];
+    
+                    data.forEach(item => {
+                        
+                            this.otros_datos_personalesarray.push({
+
+                                idotros_datos_personales: item.id,
+                                tipo_logros: item.tipo_logros || '',
+                                descripcion_logros: item.descripcion_logros || '',
+                                descripcion_fracasos: item.descripcion_fracasos || '',
+                              
+                            });
+                        
+                        
+
+                    });
+
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Datos Relevantes y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Datos Relevantes :", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Informacion de Contacto
+        async getInformacionContacto() {
+            try {
+                const response = await API.get(this.url8);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    this.informacion_contactoarray = [];
+    
+                    data.forEach(item => {
+                        
+                            this.informacion_contactoarray.push({
+
+                                idinformacion_contacto: item.id,
+                                referencia_nombres: item.referencia_nombres || '',
+                                referencia_apellidos: item.referencia_apellidos || '',
+                                referencia_correo_electronico: item.referencia_correo_electronico || '',
+                                referencia_telefono: item.referencia_telefono || '',
+                              
+                            });
+                        
+                        
+
+                    });
 
 
-        mostraralertas2('Sus Perfil se ha completado Con Exito', 'success');
-        this.us = false;
-        this.registro = true;
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado Información de Contacto y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener Información de Contacto:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        //Declaracion Personal
+        async getDeclaracionPersonal() {
+            try {
+                const response = await API.get(this.url9);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data[0];
+                    this.iddeclaracion_personal = data.id;
+                    this.texto = data.texto;
+
+                    this.isEditing7 = true;
+                    this.modoedit7 = false;
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    //console.log("No hay datos");
+                    this.isEditing7 = false;
+                    this.modoedit7 = true;
+                    this.registro = false;
+                    this.us = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la declaración personal y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la declaración personal:", error.message);
+                }
+
+                //console.log("El estudiante no ha llenado la declaración personal y es su primera vez.");
+                this.registro = false;
+                this.us = true;
+                return null;
+            }
+        },
+        async getValidar() {
+            try {
+
+                const response = await API.get(`/cvn/v1/historialDe/${this.idus}`);
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                    //console.log(data);
+                    data.sort((a, b) => {
+                        // Convertimos las cadenas de fecha a objetos Date para compararlas.
+                        // Usamos 'fecha_generacion' o el campo de fecha que estés usando.
+                        const fechaA = new Date(a.fecha_generacion || a.created_at); 
+                        const fechaB = new Date(b.fecha_generacion || b.created_at);
+                        
+                        // b - a da el orden descendente (más reciente primero)
+                        return fechaB - fechaA; 
+                    });
+                    this.historialdescargas = data;
+                    //console.log(this.historialdescargas);
+
+                    
+                } else {
+                    //console.log("No hay datos");
+                   
+                }
+                return response;
+            } catch (error) {
+               
+                return null;
+            }
+        },
+        eliminar(id, nombre) {
+            confimar(
+                "http://backendbolsaempleo.test/api/v1/empresas/",
+                id,
+                "Eliminar registro",
+                "¿Realmente desea eliminar a " + nombre + "?"
+            );
+            this.cargando = false;
+            this.$router.push("/principal/" + this.idus);
+        },
+        //Editar
+       
+        //Idioma
+        handleFileUpload(event) {
+            this.archivoCertificado = event.target.files[0];
+        },
+      
+        //editar Datos Personales
+        async editarDatosPersonales(event) {
+            event.preventDefault();
+            /*var mifoto = document.getElementById('fotoimg');
+            this.imagen = mifoto.src;*/
+            //console.log(this.previewFoto);
+            //console.log(this.fotografia);
+            try {
+                
+                const parametros = {
+                    fotografia: this.fotografia,
+    
+    
+                }
+                enviarsoligfoot('PUT', parametros, '/cvn/v1/informacionpersonald/' + this.idus, 'Foto de perfil actualizada');
+    
+                //mostraralertas2('Experiencias Profesionales Actualizada','success');
+                this.activeTab = "personal";
+                this.mostrardatospersonales = false;
+                this.regresar1 = true;
+                this.isEditing = false;
+            } catch (error) {
+                console.error('Error al actualizar foto:', error);
+                mostraralertas2('Error al actualizar la foto.', 'error', '');
+            }
 
 
+        },
 
-      },
+        //editar Fomacion Academica
+        async editarFormacionAcademica(event) {
+            event.preventDefault();
+            
+            //mostraralertas2('Formación Académica Actualizada','success');
+            
+            this.activeTab = "experiencia";
+            this.mostrarformacionacademica = false;
+            this.regresar3 = true;
 
-  },
-  name: 'register_doc',
-  //Creción de Métodos
 
+        },
+        //editar Experiencia
+        async editarExperiencia(event) {
+            event.preventDefault();
+
+            //mostraralertas2('Experiencias Profesionales Actualizada','success');
+
+            
+            this.activeTab = "investigacion";
+            this.mostrarexperienciasprofesionales = false;
+            this.regresar4 = true;
+
+
+        },
+        //editar Investigacion
+        async editarInvestigacion(event) {
+            event.preventDefault();
+
+           //mostraralertas2('Investigaciones y Publicaciones Actualizada','success');
+
+           
+            this.activeTab = "idioma";
+            this.mostrarinvestigacionpublicaciones = false;
+            this.regresar5 = true;
+
+
+        },
+        //editar Idiomas
+         editarIdiomas(event) {
+            event.preventDefault();
+            //mostraralertas2('Idiomas Actualizados','success');
+            
+            this.activeTab = "habilidades";
+            this.mostraridiomas = false;
+            this.regresar6 = true;
+
+
+        },
+        //editar Habilidades
+        async editarHabilidades(event) {
+            event.preventDefault();
+
+            //mostraralertas2('Habilidades Actualizados','success');
+            this.activeTab = "capacitaciones";
+            this.mostrarsw = false;
+            this.regresar9 = true;
+        },
+        async editarCursoCapacitaciones(event) {
+            event.preventDefault();
+
+           //mostraralertas2('Cursos y/o Capacitaciones Actualizados','success');
+            this.activeTab = "relevantes";
+            this.mostrarcapacitaciones = false;
+            this.regresar7 = true;
+        },
+        //editar Relevantes
+        async editarRelevantes(event) {
+            event.preventDefault();
+            //mostraralertas2('Logros Actualizados','success');
+
+            
+            this.activeTab = "contacto";
+            this.mostrardatosrelevantes = false;
+            this.regresar8 = true;
+
+
+        },
+        //editar Contacto
+        /*async editarContacto(event) {
+            event.preventDefault();
+            //mostraralertas2('Referencias Actualizadas','success');
+             
+            if(this.texto !="" && this.titulosBachiller.length > 0 && this.informacion_contactoarray.length > 0 || this.estudioactualtitulosUniversitarios.length > 0 || this.titulosUniversitarios.length > 0 ){
+                if(this.datacheckcvn.status === 'updated'){
+                    mostraralertas2('Sus Perfil se ha Actualizado Con Exito', 'success');
+                    this.us = false;
+                    this.registro = true;
+                    this.editus= false;
+                    this.eseditar= false;
+
+                }else{
+                    mostraralertas2('Tiene que actualizar los datos de su cvn', 'warning');
+                }
+            }else{
+                mostraralertas2('Para finalizar debe por lo menos haber llenado la Declaracion libre del curriculum, Formacion Académica y agregar una Referencia Personal', 'warning');
+            }
+
+
+        },*/
+        //editar Declaracion Personal
+        async editarDeclaracionPersonal(event) {
+            event.preventDefault();
+
+            const textoLimpio = this.texto.trim();
+
+            // 1. Validar que el campo no esté vacío
+            if (textoLimpio === '') {
+                mostraralertas2('No deje campos en blanco', 'warning');
+                return;
+            }
+            
+            // 2. Contar palabras y validar el mínimo de 100
+            // La expresión regular separa por cualquier espacio en blanco (espacios, saltos de línea, etc.)
+            const wordCount = textoLimpio.split(/\s+/).filter(word => word.length > 0).length;
+
+            if (wordCount < 100) {
+                mostraralertas2('La descripción del curriculum debe tener un mínimo de 100 palabras para ser actualizada.', 'warning');
+                return; // Detiene la ejecución si el recuento es menor a 100
+            }
+            
+            // Si pasa ambas validaciones, procede a la edición
+            var parametros = {
+                CIInfPer: this.CIInfPer,
+                texto: textoLimpio
+            }
+
+            var resp = await enviarsoliedit('PUT', parametros, '/cvn/v1/declaracion_personal/'+this.iddeclaracion_personal, 'Resumen Actualizado');
+           
+              this.activeTab = "formacion";
+            this.mostrardelaracionpersonal = false;
+           this.regresar2 = true;
+
+
+        },
+
+    },
+    mixins: [script2],
+    name:'register_doc',
 };
 </script>

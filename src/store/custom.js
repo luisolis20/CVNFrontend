@@ -148,7 +148,7 @@ export default {
       var rut;
       rut = this.$route.name;
 
-      return this.rolUsuario === "Docente";
+      return ((this.rolUsuario === "D") || (this.rolUsuario === "A") || (this.rolUsuario === "T"));
     },
     mostrarOpciones() {
       //console.log(this.rolUsuario);
