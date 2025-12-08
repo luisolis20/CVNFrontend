@@ -883,7 +883,7 @@
                                                     <div class="text-center">
                                                         <label class="text-dark" for="">Suba el archivo de su título universitario en formato PDF</label>
                                                         <input ref="fileFoto" @change="handleFileChange" type="file" accept=".pdf" class="form-control1 form-voyage-control" id="inputPersonOne">
-                                                        <small v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
+                                                        <small class="text-dark" v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1078,7 +1078,7 @@
                                                     <div class="text-center">
                                                         <label class="text-dark" for="">Suba el archivo de su título universitario en formato PDF</label>
                                                         <input ref="fileFoto" @change="handleFileChange" type="file" accept=".pdf" class="form-control1 form-voyage-control" id="inputPersonOne">
-                                                        <small v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
+                                                        <small class="text-dark" v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -6232,11 +6232,20 @@ export default {
                         sub_area_conocimiento: this.nuevoTituloUniversitario.subarea_conocimiento,
                         // ad_archivo se añadirá si el upload devolvió filename
                     };
+                     // Subir archivo si el usuario seleccionó uno
+                    let uploadResp = null;
+                    if (this.archivoSeleccionado) {
+                        uploadResp = await this.uploadTituloFile(this.idus);
+                        if (uploadResp && uploadResp.filename) {
+                            parametros.ad_archivo = uploadResp.filename;
+                        }
+                    }
+
 
                     const response = await enviarsolig(
                         'POST',
                         parametros,
-                        '/cvn/v1/formacion_academica',
+                        '/cvn/v1/academico_docente',
                         'Título Universitario Agregado con éxito'
                     );
 
