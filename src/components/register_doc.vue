@@ -929,11 +929,46 @@
                                             <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Institución</label>
                                                 <div class="input-group-icon">
-                                                    <input class="form-control1 input-box form-voyage-control1"
-                                                        v-model="nuevoTituloUniversitario.institucion_universitaria"
-                                                        type="text"
-                                                        placeholder="Ingrese la institución universitaria"/>
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="nuevoTituloUniversitario.institucion_universitaria">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la institución de su título
+                                                        </option>
+                                                        <template v-for="tituU in institucion_listU" :key="tituU.cod_ies">
+                                                            <option :value="tituU.cod_ies"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ tituU.nomb_ies }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
                                                     <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Nivel Universitaria -->
+                                            <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
+                                                <label class="text-dark" for="">Nivel</label>
+                                                <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="nuevoTituloUniversitario.nv_id">
+                                                        <option value="" disabled selected>
+                                                            Seleccione nivel de su título
+                                                        </option>
+                                                        <template v-for="nivelUni in nivel_listU" :key="nivelUni.nv_id">
+                                                            <option :value="nivelUni.nv_id"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ nivelUni.nv_formacion }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-sort-amount-up-alt"></i></span>
                                                 </div>
                                             </div>
                                              <!-- Pais -->
@@ -942,7 +977,7 @@
                                                 <div class="input-group-icon">
                                                     <select 
                                                         class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne" v-model="nuevoTituloUniversitario.pais_institucion">
+                                                        id="inputPersonOne" v-model="nuevoTituloUniversitario.ad_pais">
                                                         <option value="" disabled selected>
                                                             Seleccione Selecione el país de su título
                                                         </option>
@@ -957,7 +992,7 @@
                                                         </template>
                                                     </select><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
+                                                            class="fas fa-globe"> </i></span>
                                                 </div>
                                             </div>
                                             <!-- fecha de Graduacion -->
@@ -990,7 +1025,7 @@
                                                         v-model="nuevoTituloUniversitario.ad_regconesup"
                                                         inputmode="numeric" @input="validateNRegistro"
                                                         placeholder="Ingrese el número de registro que posee su título en la SENESCYT" />
-                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-shapes"></i></span>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-file-alt"></i></span>
                                                 </div>
                                             </div>
                                             <!-- Sub Area de conocimiento -->
@@ -1032,7 +1067,9 @@
                                                             </template>
 
                                                         </template>
-                                                    </select>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="	fas fa-gopuram"> </i></span>
                                                 </div>
                                             </div>
                                              <!-- Título pdf-->
@@ -4571,6 +4608,8 @@ export default {
             titulosPosgrado: [],
             titulosBachiller: [],
             paisList:[],
+            institucion_listU: [],
+            nivel_listU: [],
             //  título universitario
             nuevoTituloUniversitario: {
                 titulo_universitario_obtenido: "",
@@ -4581,7 +4620,7 @@ export default {
                 ad_pais: "",
                 ad_fecha_titulo: "",
                 nv_id:"",
-            },
+            }, 
             //Academico Docente
             urlacdocente: "/cvn/v1/academico_docente",
             iddocente_academico: 0,
@@ -4589,6 +4628,9 @@ export default {
             urlsubarea: "/cvn/v1/subarea_conocimiento",
             urlsubarea: "/cvn/v1/subarea_conocimiento",
             urlpais: "/cvn/v1/pais",
+            urlinstitu: "/cvn/v1/inst_educ_sup",
+            urlnivelu: "/cvn/v1/nivel",
+
             idper:0,
 
             nuevoTituloUniversitarioUTLVTE: {
@@ -5241,6 +5283,30 @@ export default {
                 const response = await API.get(`${this.urlpais}`);
                 const datos = response.data?.data || [];
                 this.paisList = datos;
+
+            } catch (error) {
+                console.error("❌ Error al obtener carreras:", error);
+                this.paisList = [];
+            }
+        },
+        async loadUniInstiList() {
+            try {
+                const response = await API.get(`${this.urlinstitu}`);
+                const datos = response.data?.data || [];
+                this.institucion_listU = datos;
+                
+
+            } catch (error) {
+                console.error("❌ Error al obtener carreras:", error);
+                this.paisList = [];
+            }
+        },
+        async loadNivelUnList() {
+            try {
+                const response = await API.get(`${this.urlnivelu}`);
+                const datos = response.data?.data || [];
+                this.nivel_listU = datos;
+                
 
             } catch (error) {
                 console.error("❌ Error al obtener carreras:", error);
@@ -6102,22 +6168,40 @@ export default {
             const usuario = await getMe();
             //console.log(usuario);
             this.idus = usuario.CIInfPer;
+             const fechaActualEcuador = dayjs().tz('America/Guayaquil').format('YYYY-MM-DD');
+
             //console.log(this.idus);
-            if(this.nuevoTituloUniversitario.titulo_universitario_obtenido!=='' && this.nuevoTituloUniversitario.institucion_universitaria!=='' && this.nuevoTituloUniversitario.fecha_graduacion !=='' && this.nuevoTituloUniversitario.especialidad !==''){
+            if(this.nuevoTituloUniversitario.titulo_universitario_obtenido!=='' 
+            && this.nuevoTituloUniversitario.institucion_universitaria!=='' 
+            && this.nuevoTituloUniversitario.fecha_graduacion !=='' 
+            && this.nuevoTituloUniversitario.especialidad !==''
+            && this.nuevoTituloUniversitario.subarea_conocimiento !==''
+            && this.nuevoTituloUniversitario.ad_regconesup !==''
+            && this.nuevoTituloUniversitario.ad_pais !==''
+            && this.nuevoTituloUniversitario.ad_fecha_titulo !==''
+            && this.nuevoTituloUniversitario.nv_id !==''){
                 if (this.tituloUniversitarioEditIndex !== null) {
-                    const parametros = {
-                        CIInfPer: this.idus,
-                        estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
-                        titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
-                        institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
-                        fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
-                        especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
+                     const parametros = {
+                        ciinfper: this.idus,
+                        idper: this.idper,
+                        ad_titulo: this.nuevoTituloUniversitario.titulo_universitario_obtenido,
+                        ad_institucion:this.nuevoTituloUniversitario.institucion_universitaria.trim(),
+                        ad_pais: this.nuevoTituloUniversitario.ad_pais,
+                        ad_fecha_titulo: fechaActualEcuador,
+                        fecha_reg_conesup: this.nuevoTituloUniversitario.fecha_graduacion || tituloDetectado.fechaincorporacion || dayjs().format('YYYY-MM-DD'),
+                        nv_id: this.nuevoTituloUniversitario.nv_id,
+                        cod_ies: 1,
+                        ad_estado:1,
+                        ad_regconesup: this.nuevoTituloUniversitario.ad_regconesup?.toString().trim() || null,
+                        sub_area_conocimiento: this.nuevoTituloUniversitario.subarea_conocimiento,
+                        // ad_archivo se añadirá si el upload devolvió filename
                     };
 
-                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/formacion_academica/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
+
+                    const response = await enviarsolig('PUT', parametros, '/cvn/v1/academico_docente/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
 
                     if (response && response.data) {
-                        const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === this.tituloUniversitarioEditIndex);
+                        const index = this.titulosUniversitarios.findIndex(titulo => titulo.iddocente_academico === this.tituloUniversitarioEditIndex);
                         if (index !== -1) {
                             this.titulosUniversitarios.splice(index, 1, { ...this.nuevoTituloUniversitario });
                         }
@@ -6134,12 +6218,19 @@ export default {
 
                     // 🟢 Si no hay títulos encontrados (el usuario los ingresa manualmente)
                     const parametros = {
-                        CIInfPer: this.idus,
-                        estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
-                        titulo_universitario_obtenido: this.nuevoTituloUniversitario.titulo_universitario_obtenido.trim(),
-                        institucion_universitaria: this.nuevoTituloUniversitario.institucion_universitaria.trim(),
-                        fecha_graduacion: this.nuevoTituloUniversitario.fecha_graduacion.trim(),
-                        especialidad: this.nuevoTituloUniversitario.especialidad.trim(),
+                        ciinfper: this.idus,
+                        idper: this.idper,
+                        ad_titulo: this.nuevoTituloUniversitario.titulo_universitario_obtenido,
+                        ad_institucion:this.nuevoTituloUniversitario.institucion_universitaria.trim(),
+                        ad_pais: this.nuevoTituloUniversitario.ad_pais,
+                        ad_fecha_titulo: fechaActualEcuador,
+                        fecha_reg_conesup: this.nuevoTituloUniversitario.fecha_graduacion || tituloDetectado.fechaincorporacion || dayjs().format('YYYY-MM-DD'),
+                        nv_id: this.nuevoTituloUniversitario.nv_id,
+                        cod_ies: 1,
+                        ad_estado:1,
+                        ad_regconesup: this.nuevoTituloUniversitario.ad_regconesup?.toString().trim() || null,
+                        sub_area_conocimiento: this.nuevoTituloUniversitario.subarea_conocimiento,
+                        // ad_archivo se añadirá si el upload devolvió filename
                     };
 
                     const response = await enviarsolig(
@@ -6150,7 +6241,7 @@ export default {
                     );
 
                     this.titulosUniversitarios.push({
-                        idformacion_academica: response.data.data.id,
+                        iddocente_academico: response.data.data.id,
                         ...this.nuevoTituloUniversitario,
                         esDetectado: false
                     });
@@ -9928,6 +10019,8 @@ export default {
                 const dataperiodo = responseperiodo.data.data[0];
                 this.idper = dataperiodo.idper;
                 await this.loadpaisList();
+                await this.loadUniInstiList();
+                await this.loadNivelUnList();
                 await this.loadSubAreaConocimiento();
                  
                 if (response.data.data && response.data.data.length > 0) {
