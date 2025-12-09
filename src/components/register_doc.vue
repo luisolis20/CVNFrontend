@@ -595,165 +595,166 @@
                                             </div>
                                             <!-- Facultad -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Facultad</label>
+                                                <label class="text-dark" for="">Título A  Obtener</label>
                                                 <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.facultades_universidad" v-on:change="EstudioacctualCarg"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la facultad a la que pertenece
-                                                        </option>
-                                                        <option value="FACI">FACI</option>
-                                                        <option value="FACAE">FACAE</option>
-                                                        <option value="FACPED">FACPED</option>
-                                                        <option value="FACSOS">FACSOS</option>
-                                                        <option value="FACAP">FACAP</option>
-                                                        <option value="SEDE">SEDE</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
+                                                     <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="estudionuevoTituloUniversitario.ec_titulo"
+                                                        type="text"
+                                                        placeholder="Ingrese el título universitario que obtnedrá" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+
                                                 </div>
                                             </div>
                                             <!-- Titulo Universitario -->
                                             <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Título que Obtendrá</label>
-                                                <div class="input-group-icon">
-                                                    
-                                                    <input class="form-control1 input-box form-voyage-control1"
-                                                        id="carrera_universidad"
-                                                        v-model="this.estudionuevoTituloUniversitario.titulo_carrera_universidad" type="text"
-                                                        placeholder="Su título saldrá dependiendo de la facultad" disabled/><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-user-graduate"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Carrera FACI -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_faci">
-                                                <label class="text-dark" for="">Carreras de FACI</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
+                                                <label class="text-dark" for="">Institución</label>
+                                               <div class="input-group-icon">
+                                                    <select 
                                                         class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
+                                                        id="inputPersonOne" v-model="estudionuevoTituloUniversitario.ec_institucion">
                                                         <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
+                                                            Seleccione la institución de su título
                                                         </option>
-                                                        <option value="Tecnologías de la Información">Tecnologías de la Información</option>
-                                                        <option value="Química">Química</option>
-                                                        <option value="Electricidad">Electricidad</option>
-                                                        <option value="Mecánica">Mecánica</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
+                                                        <template v-for="tituU in institucion_listU" :key="tituU.cod_ies">
+                                                            <option :value="tituU.cod_ies"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ tituU.nomb_ies }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
                                                 </div>
+
                                             </div>
-                                            <!-- Carrera FACAE -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facae">
-                                                <label class="text-dark" for="">Carreras de FACAE</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
-                                                        </option>
-                                                        <option value="Administración de Empresas">Administración de Empresas</option>
-                                                        <option value="Contabilidad y Auditoría">Contabilidad y Auditoría</option>
-                                                        <option value="Comercio">Comercio</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Carrera FACPED -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facped">
-                                                <label class="text-dark" for="">Carreras de FACPED</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
-                                                        </option>
-                                                        <option value="Educación Inicial">Educación Inicial</option>
-                                                        <option value="Educación Básica">Educación Básica</option>
-                                                        <option value="Pedagogía de la Actividad Física y del Deporte">Pedagogía de la Actividad Física y del Deporte</option>
-                                                        <option value="Pedagogía de la Lengua y Literatura">Pedagogía de la Lengua y Literatura</option>
-                                                        <option value="Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas">Pedagogía de las Ciencias Experimentales de las Matemáticas y Físicas</option>
-                                                        <option value="Pedagogía de las Ciencias Experimentales de la Química y Biología">Pedagogía de las Ciencias Experimentales de la Química y Biología</option>
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Carrera FACSOS -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facsos">
-                                                <label class="text-dark" for="">Carreras de FACSOS</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
-                                                        </option>
-                                                        <option value="Turismo">Turismo</option>
-                                                        <option value="Sociología">Sociología</option>
-                                                        <option value="Trabajo Social">Trabajo Social</option>
-                                                        
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Carrera FACAP -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_facap">
-                                                <label class="text-dark" for="">Carreras de FACAP</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
-                                                        </option>
-                                                        <option value="Zootecnia">Zootecnia</option>
-                                                        <option value="Agronomía">Agronomía</option>
-                                                        <option value="Forestal">Forestal</option>
-                                                        
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
-                                                </div>
-                                            </div>
-                                            <!-- Carrera SEDE -->
-                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.facultadcarreraselected_sede">
-                                                <label class="text-dark" for="">Carreras de SEDE</label>
-                                                <div class="input-group-icon">
-                                                    <select v-model="this.estudionuevoTituloUniversitario.carrera_universidad"
-                                                        class="form-select1 form-voyage-select input-box"
-                                                        id="inputPersonOne">
-                                                        <option value="" disabled selected>
-                                                            Seleccione la carrera a la que pertenece
-                                                        </option>
-                                                        <option value="Adm. de Empresas">Adm. de Empresas</option>
-                                                        <option value="Cont. y Auditoría">Cont. y Auditoría</option>
-                                                        <option value="TICS">TICS</option>
-                                                        
-                                                    </select><span
-                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
-                                                            class="fas fa-print"> </i></span>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- fecha de Graduacion -->
+                                            <!-- Nivel Universitaria -->
                                             <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Fecha</label>
+                                                <label class="text-dark" for="">Nivel</label>
+                                                <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="estudionuevoTituloUniversitario.nv_id">
+                                                        <option value="" disabled selected>
+                                                            Seleccione nivel de su título
+                                                        </option>
+                                                        <template v-for="nivelUni in nivel_listU" :key="nivelUni.nv_id">
+                                                            <option :value="nivelUni.nv_id"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ nivelUni.nv_formacion }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-sort-amount-up-alt"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Pais -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Selecione el país de su título</label>
+                                                <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="estudionuevoTituloUniversitario.ec_pais">
+                                                        <option value="" disabled selected>
+                                                            Seleccione el país de su título
+                                                        </option>
+                                                        <template v-for="pais in paisList" :key="pais.cod_pais">
+                                                            <option :value="pais.cod_pais"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ pais.nomb_pais }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-globe"> </i></span>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <!-- fecha de inicio -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Fecha de inicio de estudio</label>
                                                 <div class="input-group-icon">
                                                     <input class="form-control1 input-box form-voyage-control1"
-                                                        id="fecha_graduacion" v-model="this.estudionuevoTituloUniversitario.fechaestudioactual"
-                                                        type="date" :max="currentDate" disabled/><span
+                                                        id="ec_fecha_inicia" v-model="this.estudionuevoTituloUniversitario.ec_fecha_inicia"
+                                                        type="date" :max="currentDate" /><span
                                                         class="nav-link-icon text-800 fs--1 input-box-icon"><i
                                                             class="fas fa-calendar"></i></span>
                                                 </div>
                                             </div>
+                                            <!-- fecha de inicio -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Fecha de finalización de estudio</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="ec_fecha_termina" v-model="this.estudionuevoTituloUniversitario.ec_fecha_termina"
+                                                        type="date" :max="currentDate"/><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Sub Area de conocimiento -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Selecione el sub área de conocimiento de su título</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="estudionuevoTituloUniversitario.ec_sub_area_conocimiento"
+                                                            class="form-select1 form-voyage-select input-box">
+
+                                                        <option value="" disabled selected>
+                                                            Seleccione el área de conocimiento de su título
+                                                        </option>
+
+                                                        <!-- NIVEL 1: PADRE (NO seleccionable) -->
+                                                        <template v-for="padre in areaconocimientoList" :key="padre.sau_id">
+
+                                                            <option :value="padre.sau_id"
+                                                                    disabled
+                                                                    style="font-weight: bold;">
+                                                                {{ padre.sau_descripcion }}
+                                                            </option>
+
+                                                            <!-- NIVEL 2: HIJO (NO seleccionable) -->
+                                                            <template v-for="hijo in padre.hijos" :key="hijo.sau_id">
+                                                                <option :value="hijo.sau_id"
+                                                                        disabled
+                                                                        style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ hijo.sau_descripcion }}
+                                                                </option>
+
+                                                                <!-- NIVEL 3: NIETO (SÍ seleccionable) -->
+                                                                <option v-for="nieto in hijo.nietos"
+                                                                        :key="nieto.sau_id"
+                                                                        :value="nieto.sau_id"
+                                                                        style="padding-left: 25px;">
+                                                                    {{ nieto.sau_descripcion }}
+                                                                </option>
+
+                                                            </template>
+
+                                                        </template>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="	fas fa-gopuram"> </i></span>
+                                                </div>
+                                            </div>
+                                             <!-- Constancia-->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
+                                                <div class="input-group-icon">
+                                                    <div class="text-center">
+                                                        <label class="text-dark" for="">Suba el documento que evidencie que está estudiando</label>
+                                                        <input ref="fileFoto" @change="handleFileChange" type="file" accept=".pdf" class="form-control1 form-voyage-control" id="inputPersonOne">
+                                                        <small class="text-dark" v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                            <!-- Acciones Universitario -->
                                            <div class="col-12 text-center" v-if="this.sigueestudiandouniversidad">
                                                 <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarTituloUniversitario2">
@@ -971,7 +972,7 @@
                                                     <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-sort-amount-up-alt"></i></span>
                                                 </div>
                                             </div>
-                                             <!-- Pais -->
+                                            <!-- Pais -->
                                             <div class="col-12 col-md-6" v-if="this.univer && !this.mostrarFormularioTitulos">
                                                 <label class="text-dark" for="">Selecione el país de su título</label>
                                                 <div class="input-group-icon">
@@ -979,7 +980,7 @@
                                                         class="form-select1 form-voyage-select input-box"
                                                         id="inputPersonOne" v-model="nuevoTituloUniversitario.ad_pais">
                                                         <option value="" disabled selected>
-                                                            Seleccione Selecione el país de su título
+                                                            Seleccione el país de su título
                                                         </option>
                                                         <template v-for="pais in paisList" :key="pais.cod_pais">
                                                             <option :value="pais.cod_pais"
@@ -1358,7 +1359,7 @@
                                                                 <td class="text-dark">{{ titulo.iddocente_academico }}</td>
                                                                 <td class="text-dark">{{ titulo.titulo_universitario_obtenido }}</td>
                                                                 <td class="text-dark" v-if="titulo.institucion_universitaria==1012">UTLVTE</td>
-                                                                <td class="text-dark" v-else>{{ titulo.institucion_universitaria }}</td>
+                                                                <td class="text-dark" v-else>{{ titulo.nomb_ies }}</td>
                                                                 <td class="text-dark">{{ titulo.fecha_graduacion }}</td>
                                                                 <td>
                                                                     <div v-if="titulo.ad_archivo">
@@ -4549,10 +4550,13 @@ export default {
             estudioactualtitulosUniversitarios: [],
             //  título universitario
             estudionuevoTituloUniversitario: {
-                facultades_universidad: "",
-                titulo_carrera_universidad: "",
-                carrera_universidad: "",
-                fechaestudioactual: ""
+                ec_titulo: "",
+                ec_institucion: "",
+                ec_pais: "",
+                ec_fecha_inicia: "",
+                ec_fecha_termina: "",
+                ec_sub_area_conocimiento: "",
+                nv_id: "",
             },
             
            //DAtos 
@@ -6178,7 +6182,6 @@ export default {
             && this.nuevoTituloUniversitario.subarea_conocimiento !==''
             && this.nuevoTituloUniversitario.ad_regconesup !==''
             && this.nuevoTituloUniversitario.ad_pais !==''
-            && this.nuevoTituloUniversitario.ad_fecha_titulo !==''
             && this.nuevoTituloUniversitario.nv_id !==''){
                 if (this.tituloUniversitarioEditIndex !== null) {
                      const parametros = {
@@ -6197,13 +6200,34 @@ export default {
                         // ad_archivo se añadirá si el upload devolvió filename
                     };
 
-
+                    let uploadResp = null;
+                    if (this.archivoSeleccionado) {
+                        uploadResp = await this.uploadTituloFile(this.idus);
+                        if (uploadResp && uploadResp.filename) {
+                            parametros.ad_archivo = uploadResp.filename; // Guardar archivo nuevo
+                        }
+                    }
                     const response = await enviarsolig('PUT', parametros, '/cvn/v1/academico_docente/' + this.tituloUniversitarioEditIndex, 'Título Universitario Actualizado con éxito');
 
                     if (response && response.data) {
                         const index = this.titulosUniversitarios.findIndex(titulo => titulo.iddocente_academico === this.tituloUniversitarioEditIndex);
                         if (index !== -1) {
-                            this.titulosUniversitarios.splice(index, 1, { ...this.nuevoTituloUniversitario });
+                            this.titulosUniversitarios.splice(index, 1, {
+                                iddocente_academico: this.tituloUniversitarioEditIndex,
+                                titulo_universitario_obtenido: parametros.ad_titulo,
+                                institucion_universitaria: parametros.ad_institucion,
+                                fecha_graduacion: parametros.fecha_reg_conesup,
+
+                                // Archivo (si se cambió, tomar el nuevo; si no, mantener el anterior)
+                                ad_archivo: parametros.ad_archivo || this.titulosUniversitarios[index].ad_archivo,
+
+                                // URL del archivo
+                                ad_archivo_url: parametros.ad_archivo
+                                    ? `/titulos/${this.idus}/${parametros.ad_archivo}`
+                                    : this.titulosUniversitarios[index].ad_archivo_url,
+
+                                esDetectado: false
+                            });
                         }
                     } else {
                         console.error('La respuesta no contiene los datos esperados:', response);
@@ -6213,10 +6237,7 @@ export default {
                     this.resetNuevoTituloUniversitario();
                     this.scrollToTopTituloUniversitarios();
                 } else {
-                    // 🟢 Si no está editando — Agregar nuevos títulos
-                
-
-                    // 🟢 Si no hay títulos encontrados (el usuario los ingresa manualmente)
+                    
                     const parametros = {
                         ciinfper: this.idus,
                         idper: this.idper,
@@ -6248,17 +6269,26 @@ export default {
                         '/cvn/v1/academico_docente',
                         'Título Universitario Agregado con éxito'
                     );
+                    if (response && response.data && response.data.data && response.data.data.ad_id){
+                         const idGuardado = response.data.data.ad_id;
 
-                    this.titulosUniversitarios.push({
-                        iddocente_academico: response.data.data.id,
-                        ...this.nuevoTituloUniversitario,
-                        esDetectado: false
-                    });
-
-                    this.resetNuevoTituloUniversitario();
-                    this.scrollToTopTituloUniversitarios();
-                    this.titulosBloqueados = true;
-                    this.mostrarFormularioTitulos = false;
+                         this.titulosUniversitarios.push({
+                             iddocente_academico: idGuardado,
+                             titulo_universitario_obtenido: parametros.ad_titulo,
+                             institucion_universitaria: parametros.ad_institucion,
+                             fecha_graduacion: parametros.fecha_reg_conesup,
+                             ad_archivo: parametros.ad_archivo || null,
+                             ad_archivo_url: uploadResp?.url || null,
+     
+                             esDetectado: false
+                         });
+                         this.resetNuevoTituloUniversitario();
+                         this.scrollToTopTituloUniversitarios();
+                         this.titulosBloqueados = true;
+                         this.mostrarFormularioTitulos = false;
+                    }else{
+                        mostraralertas2('No se pudo agregar el título','warning');
+                    }
                 }
             }else{
                 mostraralertas2('No deje campos en blanco','warning');
@@ -6424,7 +6454,21 @@ export default {
             const index = this.titulosUniversitarios.findIndex(titulo => titulo.iddocente_academico === iddocente_academico);
             
             if (index !== -1) {
-                this.nuevoTituloUniversitario = { ...this.titulosUniversitarios[index] };
+                const t = this.titulosUniversitarios[index];
+
+                // 🔵 MAPEO CORRECTO DE LOS CAMPOS HACIA EL FORMULARIO
+                this.nuevoTituloUniversitario = {
+                    titulo_universitario_obtenido: t.titulo_universitario_obtenido || "",
+                    institucion_universitaria: t.institucion_universitaria || "",
+                    fecha_graduacion: t.fecha_graduacion || "",
+                    especialidad: t.especialidad || "",
+                    subarea_conocimiento: t.sub_area_conocimiento || t.subarea_conocimiento || "",
+                    ad_regconesup: t.ad_regconesup || "",
+                    ad_pais: t.ad_pais || "",
+                    nv_id: t.nv_id || "",
+                    ad_archivo: t.ad_archivo || null,
+                    ad_archivo_url: t.ad_archivo_url || null
+                };
                 this.tituloUniversitarioEditIndex = iddocente_academico;
                 this.modoeditionformacionuniversidad=true;
                 this.scrollToTopRegresarTituloUniversitarios();
@@ -9954,7 +9998,7 @@ export default {
                 const response = await API.get(this.urlacdocente);
                 
                 
-                 
+                console.log(response);
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                    // console.log(data);
@@ -9977,6 +10021,12 @@ export default {
                                 institucion_universitaria: item.ad_institucion,
                                 fecha_graduacion: item.fecha_reg_conesup,
                                 ad_archivo: item.ad_archivo || null,
+                                ad_pais: item.ad_pais,
+                                nomb_ies: item.nomb_ies,
+                                subarea_conocimiento: item.sub_area_conocimiento,
+                                nv_id: item.nv_id,
+                                cod_ies: item.cod_ies,
+                                ad_regconesup: item.ad_regconesup,
                                 ad_archivo_url: item.ad_archivo 
                                     ? `http://cvubackendv2.test/titulos_universitarios_CVN/${this.idus}/${item.ad_archivo}`
                                     : null
