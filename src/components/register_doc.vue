@@ -590,10 +590,10 @@
                                                 <label class="text-danger" for="">Usted ya ha especificado que estudia actualmente. Para volverlo a especificar diríjase a la tabla "Estado Actual de Estudio Universitario" que se encuentra más abajo y elimine lo que añadió con anterioridad.</label>
                                             </div>
                                             <div class="col-12 py-3" v-if="this.sigueestudiandouniversidad">
-                                                <label class="text-dark" for="">Si no ha terminado sus estudios universitarios significa que sigue estudiando, seleccione su facultad y el nombre de su carrera.
-                                                Luego de clic en Agregar Título.</label>
+                                                <label class="text-dark" for="">Si no ha terminado sus estudios universitarios significa que sigue estudiando, llene los campos y.
+                                                 de clic en Guardar.</label>
                                             </div>
-                                            <!-- Facultad -->
+                                            <!-- Titulo Universitario a obtener -->
                                             <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandouniversidad">
                                                 <label class="text-dark" for="">Título A  Obtener</label>
                                                 <div class="input-group-icon">
@@ -744,7 +744,32 @@
                                                             class="	fas fa-gopuram"> </i></span>
                                                 </div>
                                             </div>
-                                             <!-- Constancia-->
+                                            <!-- Tipo de Financiamiento del estudio -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandouniversidad">
+                                                <label class="text-dark" for="">Seleccione el tipo de financiamiento del estudio</label>
+                                                <div class="input-group-icon">
+                                                    <select class="form-select1 form-voyage-select input-box"  v-model="estudionuevoTituloUniversitario.ec_inst_financia">
+                                                        <option value="" disabled selected >Seleccione el tipo de financiamiento del estudio</option>
+                                                        <option value="UTLVTE">
+                                                            
+                                                            UTLVTE
+                                                        </option>
+                                                        <option value="Propio">
+                                                            
+                                                            Propio
+                                                        </option>
+                                                        <option value="Beca">
+                                                            
+                                                            Beca
+                                                        </option>
+                                                       
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Constancia-->
                                             <div class="col-12 col-md-6" v-if="this.sigueestudiandouniversidad">
                                                 <div class="input-group-icon">
                                                     <div class="text-center">
@@ -4547,6 +4572,9 @@ export default {
             cargando: false,
             sigueestudiandouniversidad: false,
             mensajenuevo: false,
+            //Cursa Estudios
+            urlcursaesutudios: "/cvn/v1/cursa_estudios",
+            idcursaestudios: 0,
             estudioactualtitulosUniversitarios: [],
             //  título universitario
             estudionuevoTituloUniversitario: {
@@ -4557,6 +4585,7 @@ export default {
                 ec_fecha_termina: "",
                 ec_sub_area_conocimiento: "",
                 nv_id: "",
+                ec_inst_financia:"",
             },
             
            //DAtos 
@@ -5317,6 +5346,40 @@ export default {
                 this.paisList = [];
             }
         },
+
+        async uploadCursaFile(ci) {
+            if (!this.archivoSeleccionado) return null; // nada que subir
+
+            try {
+                this.uploading = true;
+                const form = new FormData();
+                form.append('file', this.archivoSeleccionado);
+                form.append('ci', ci);
+
+                // Si tu backend exige otros campos (ej: tipo), añade aquí
+                const resp = await API.post('/cvn/v1/upload_cursa', form, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+                });
+
+                // espera { filename, url } del backend
+                if (resp && resp.data && resp.data.filename) {
+                // limpiar selección local
+                    this.archivoSeleccionado = null;
+                    this.archivoPreviewName = '';
+                    this.$refs.fileFoto.value = null;
+                    return resp.data; // { filename, url }
+                } else {
+                    mostraralertas2('Error subiendo archivo', 'danger');
+                return null;
+                }
+            } catch (error) {
+                console.error('Error upload:', error);
+                mostraralertas2('Error subiendo archivo', 'danger');
+                return null;
+            } finally {
+                this.uploading = false;
+            }
+        },
         async uploadTituloFile(ci) {
             if (!this.archivoSeleccionado) return null; // nada que subir
 
@@ -5379,6 +5442,7 @@ export default {
                 nv_id: 3,
                 cod_ies: 1,
                 ad_estado:1,
+                ultima_actualizacion: fechaActualEcuador,
                 ad_regconesup: this.nuevoTituloUniversitarioUTLVTE.ad_regconesup?.toString().trim() || null,
                 sub_area_conocimiento: this.nuevoTituloUniversitarioUTLVTE.subarea_conocimiento,
                 // ad_archivo se añadirá si el upload devolvió filename
@@ -6039,32 +6103,77 @@ export default {
             const usuario = await getMe();
             //console.log(usuario);
             this.idus = usuario.CIInfPer;
+            const fechaActualEcuador = dayjs().tz('America/Guayaquil').format('YYYY-MM-DD');
             //console.log(this.idus);
-            if(this.estudionuevoTituloUniversitario.facultades_universidad!=='' && this.estudionuevoTituloUniversitario.titulo_carrera_universidad!=='' && this.estudionuevoTituloUniversitario.fechaestudioactual !=='' && this.estudionuevoTituloUniversitario.carrera_universidad !==''){
+            if(this.estudionuevoTituloUniversitario.ec_titulo!=='' 
+                    && this.estudionuevoTituloUniversitario.ec_institucion!=='' 
+                    && this.estudionuevoTituloUniversitario.ec_pais !=='' 
+                    && this.estudionuevoTituloUniversitario.ec_fecha_inicia !==''
+                    && this.estudionuevoTituloUniversitario.ec_fecha_termina !==''
+                    && this.estudionuevoTituloUniversitario.ec_sub_area_conocimiento !==''
+                    && this.estudionuevoTituloUniversitario.ec_inst_financia!==''
+                ){
                 
                     
                     try {
                         const parametros = {
-                                CIInfPer: this.idus,
-                                estudios_universitarios_culminados: this.estudios_universitarios_culminados.trim(),
-                                titulo_universitario_obtenido: this.estudionuevoTituloUniversitario.facultades_universidad.trim(),
-                                institucion_universitaria: 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas',
-                                fecha_graduacion: this.estudionuevoTituloUniversitario.fechaestudioactual.trim(),
-                                especialidad: this.estudionuevoTituloUniversitario.carrera_universidad.trim(),
-                            };
-                            
+                            ciinfper: this.idus,
+                            idper: this.idper,
+                            ec_numdoc: 1,
+                            ec_titulo: this.estudionuevoTituloUniversitario.ec_titulo,
+                            ec_institucion:this.estudionuevoTituloUniversitario.ec_institucion.trim(),
+                            ec_pais: this.estudionuevoTituloUniversitario.ec_pais,
+                            ec_fecha_inicia: this.estudionuevoTituloUniversitario.ec_fecha_inicia,
+                            ec_fecha_termina: this.estudionuevoTituloUniversitario.ec_fecha_termina,
+                            ec_sub_area_conocimiento: this.estudionuevoTituloUniversitario.ec_sub_area_conocimiento,
+                            ec_estado: 2,
+                            ultima_actualizacion: fechaActualEcuador,
+                            nv_id: this.estudionuevoTituloUniversitario.nv_id,
+                            ec_inst_financia: this.estudionuevoTituloUniversitario.ec_inst_financia,
+                       
+                        // ad_archivo se añadirá si el upload devolvió filename
+                        };
+                        // Subir archivo si el usuario seleccionó uno
+                        let uploadResp = null;
+                        if (this.archivoSeleccionado) {
+                            uploadResp = await this.uploadTituloFile(this.idus);
+                            if (uploadResp && uploadResp.filename) {
+                                parametros.ad_archivo = uploadResp.filename;
+                            }
+                        }
+
+
+                        const response = await enviarsolig(
+                            'POST',
+                            parametros,
+                            '/cvn/v1/cursa_estudios',
+                            'Estudio actual agregado con éxito'
+                        );
+                        if (response && response.data && response.data.data && response.data.data.ec_id){
+                            const idGuardado = response.data.data.ec_id;
+                            this.estudioactualtitulosUniversitarios.push({
+                                idcursaestudios: idGuardado,
+                                ec_titulo: parametros.ec_titulo,
+                                ec_institucion: parametros.ec_institucion,
+                                ec_pais: parametros.ec_pais,
+                                ec_fecha_inicia: parametros.ec_fecha_inicia,
+                                ec_fecha_termina: parametros.ec_fecha_termina,
+                                ec_sub_area_conocimiento: parametros.ec_sub_area_conocimiento,
+                                ec_inst_financia: parametros.ec_inst_financia,
+                                ec_archivo: parametros.ec_archivo || null,
+                                ad_archivo_url: uploadResp?.url || null,
+                                
+                                
+                            });
+                            this.resetNuevoTituloUniversitario22();
+                            this.scrollToTop();
+
+                        }
+                        else{
+                            mostraralertas2('No se pudo agregar el estudio actual','warning');
+                        }
                         
-                        //console.log(parametros);
-                        
-                        const response = await enviarsolig('POST', parametros, '/cvn/v1/formacion_academica', 'Estado de estudio universitario actual almacenado');
-                    
-                        this.estudioactualtitulosUniversitarios.push({ idformacion_academica: response.data.data.id,
-                            facultades_universidad: this.estudionuevoTituloUniversitario.facultades_universidad.trim(),
-                            titulo_carrera_universidad: 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas',
-                            fechaestudioactual: this.estudionuevoTituloUniversitario.fechaestudioactual.trim(),
-                            carrera_universidad: this.estudionuevoTituloUniversitario.carrera_universidad.trim()});
-                        this.resetNuevoTituloUniversitario22();
-                        this.scrollToTop();
+                       
                         
                         
                         
@@ -6195,6 +6304,7 @@ export default {
                         nv_id: this.nuevoTituloUniversitario.nv_id,
                         cod_ies: 1,
                         ad_estado:1,
+                        ultima_actualizacion: fechaActualEcuador,
                         ad_regconesup: this.nuevoTituloUniversitario.ad_regconesup?.toString().trim() || null,
                         sub_area_conocimiento: this.nuevoTituloUniversitario.subarea_conocimiento,
                         // ad_archivo se añadirá si el upload devolvió filename
@@ -6223,7 +6333,7 @@ export default {
 
                                 // URL del archivo
                                 ad_archivo_url: parametros.ad_archivo
-                                    ? `/titulos/${this.idus}/${parametros.ad_archivo}`
+                                    ? `http://cvubackendv2.test/titulos_universitarios_CVN/${this.idus}/${parametros.ad_archivo}`
                                     : this.titulosUniversitarios[index].ad_archivo_url,
 
                                 esDetectado: false
@@ -9992,13 +10102,13 @@ export default {
 
             }
         },
-        //Formacion Academica
+        //Academico Docente
         async getFormacionAcademicaDC() {
             try {
                 const response = await API.get(this.urlacdocente);
                 
                 
-                console.log(response);
+                
                 if (response.data.data && response.data.data.length > 0) {
                     const data = response.data.data;
                    // console.log(data);
