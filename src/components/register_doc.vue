@@ -4784,6 +4784,7 @@ export default {
             }, 
             //Academico Docente
             urlacdocente: "/cvn/v1/academico_docente",
+            urlacdocenteposgrado: "/cvn/v1/titulospopsgradog",
             iddocente_academico: 0,
             urlperioodo: "/cvn/v1/periodos_activos",
             urlsubarea: "/cvn/v1/subarea_conocimiento",
@@ -5556,6 +5557,39 @@ export default {
                 this.uploading = false;
             }
         },
+        async uploadTituloPosgradoFile(ci) {
+            if (!this.archivoSeleccionado) return null; // nada que subir
+
+            try {
+                this.uploading = true;
+                const form = new FormData();
+                form.append('file', this.archivoSeleccionado);
+                form.append('ci', ci);
+
+                // Si tu backend exige otros campos (ej: tipo), añade aquí
+                const resp = await API.post('/cvn/v1/uploadTituloposgrado', form, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+                });
+
+                // espera { filename, url } del backend
+                if (resp && resp.data && resp.data.filename) {
+                // limpiar selección local
+                    this.archivoSeleccionado = null;
+                    this.archivoPreviewName = '';
+                    this.$refs.fileFoto.value = null;
+                    return resp.data; // { filename, url }
+                } else {
+                    mostraralertas2('Error subiendo archivo', 'danger');
+                return null;
+                }
+            } catch (error) {
+                console.error('Error upload:', error);
+                mostraralertas2('Error subiendo archivo', 'danger');
+                return null;
+            } finally {
+                this.uploading = false;
+            }
+        },
         async guardarTituloActualPosgrado() {
             const usuario = await getMe();
             const ci = usuario.CIInfPer;
@@ -5571,30 +5605,30 @@ export default {
             }
 
             // Preparar parámetros tomando datos detectados y los campos editables
-            const tituloDetectado = this.titulosEncontrados[this.tituloActualIndex] || {};
+            const tituloDetectado = this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado] || {};
 
             const parametros = {
                 ciinfper: ci,
                 idper: this.idper,
                 ad_titulo:
-                (this.GeneroPer === 'MUJER' ? (tituloDetectado.titulom || this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido) : (tituloDetectado.tituloh || this.nuevoTituloUniversitarioUTLVTE.titulo_universitario_obtenido)),
+                (this.GeneroPer === 'MUJER' ? (tituloDetectado.titulom || this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido) : (tituloDetectado.tituloh || this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido)),
                 ad_institucion:1012,
                 ad_pais: 'EC',
                 ad_fecha_titulo: fechaActualEcuador,
-                fecha_reg_conesup: this.nuevoTituloUniversitarioUTLVTE.fecha_graduacion || tituloDetectado.fechaincorporacion || dayjs().format('YYYY-MM-DD'),
-                nv_id: this.nuevoTituloUniversitarioUTLVTE.nv_id,
+                fecha_reg_conesup: this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado || tituloDetectado.fechaincorporacion || dayjs().format('YYYY-MM-DD'),
+                nv_id: this.nuevoTituloPosgradoUTLVTE.nv_id,
                 cod_ies: 1,
                 ad_estado:1,
                 ultima_actualizacion: fechaActualEcuador,
-                ad_regconesup: this.nuevoTituloUniversitarioUTLVTE.ad_regconesup?.toString().trim() || null,
-                sub_area_conocimiento: this.nuevoTituloUniversitarioUTLVTE.subarea_conocimiento,
+                ad_regconesup: this.nuevoTituloPosgradoUTLVTE.ad_regconesup?.toString().trim() || null,
+                sub_area_conocimiento: this.nuevoTituloPosgradoUTLVTE.subarea_conocimiento,
                 // ad_archivo se añadirá si el upload devolvió filename
             };
 
             // Subir archivo si el usuario seleccionó uno
             let uploadResp = null;
             if (this.archivoSeleccionado) {
-                uploadResp = await this.uploadTituloFile(ci);
+                uploadResp = await this.uploadTituloPosgradoFile(ci);
                 if (uploadResp && uploadResp.filename) {
                     parametros.ad_archivo = uploadResp.filename;
                 }
@@ -5611,27 +5645,27 @@ export default {
                 const idGuardado = response.data.data.ad_id;
 
                 // Añadir al arreglo visible de titulosUniversitarios
-                this.titulosUniversitarios.push({
+                this.titulosPosgrado.push({
                     iddocente_academico: idGuardado,
-                    titulo_universitario_obtenido: parametros.ad_titulo,
-                    institucion_universitaria: parametros.ad_institucion,
+                    titulo_posgrado_obtenido: parametros.ad_titulo,
+                    institucion_posgrado: parametros.ad_institucion,
                     nomb_ies: institucionname,
-                    fecha_graduacion: parametros.fecha_reg_conesup,
+                    fecha_graduacion_posgrado: parametros.fecha_reg_conesup,
                     ad_archivo: parametros.ad_archivo || null,
                     ad_archivo_url: uploadResp?.url || null
                 });
 
                 // Marcar como guardado en titulosEncontrados (para no re-enviarlo)
                 if (
-                    Array.isArray(this.titulosEncontrados) &&
-                    this.tituloActualIndex >= 0 &&
-                    this.tituloActualIndex < this.titulosEncontrados.length &&
-                    this.titulosEncontrados[this.tituloActualIndex]
+                    Array.isArray(this.titulosEncontradosPosgrado) &&
+                    this.tituloActualIndexPosgrado >= 0 &&
+                    this.tituloActualIndexPosgrado < this.titulosEncontradosPosgrado.length &&
+                    this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]
                 ) {
-                    this.titulosEncontrados[this.tituloActualIndex].iddocente_academico = idGuardado;
+                    this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado].iddocente_academico = idGuardado;
                 }
 
-                mostraralertas2('Título guardado con éxito', 'success');
+                mostraralertas2('Título de posgrado guardado con éxito', 'success');
                 return { success: true };
             } else {
                 mostraralertas2('Error guardando título', 'warning');
@@ -5814,6 +5848,7 @@ export default {
             this.url10 += '/' + this.idus;
             this.url11 += '/' + this.idus;
             this.urlacdocente += '/' + this.idus;
+            this.urlacdocenteposgrado += '/' + this.idus;
             this.urlcursaesutudios += '/' + this.idus;
             await Promise.all([     
                 this.getDatosPersonales(),
@@ -5821,7 +5856,6 @@ export default {
                 this.getTitulosRegistrados(),
                 this.getTitulosRegistradosPosgrado(),
                 this.getFormacionAcademica(),
-                this.getFormacionAcademicaDC(),
                 this.getCursaEstudios(),
                 
             ])
@@ -6648,79 +6682,90 @@ export default {
         },
         
         async agregarEditarTituloPosgradoUTLVTE() {
-            const usuario = await getMe();
-            //console.log(usuario);
-            this.idus = usuario.CIInfPer;
-            //console.log(this.idus);
-            if(this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido!=='' && this.nuevoTituloPosgradoUTLVTE.institucion_posgrado!=='' && this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado !=='' && this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado !==''){
-               
-                let nuevosGuardados = 0;
+             try {
+                const usuario = await getMe();
+                this.idus = usuario.CIInfPer;
 
-                // Si hay títulos encontrados en la base (UTLVTE o similares)
-                if (this.titulosEncontradosPosgrado.length > 0) {
-                    for (const titulo of this.titulosEncontradosPosgrado) {
-                        // Si ya fue guardado, saltar
-                        if (titulo.idformacion_academica) continue;
+                // ---- FLUJO CUANDO EXISTEN TITULOS DETECTADOS ----
+                if (this.titulosEncontradosPosgrado && this.titulosEncontradosPosgrado.length > 0) {
 
-                        // Tomar valores del título actual
-                        const parametros = {
-                            CIInfPer: this.idus,
-                            estudios_posgrado_culminados: this.estudios_posgrado_culminados.trim(),
-                            titulo_posgrado_obtenido:
-                                (this.GeneroPer === 'MUJER' ? titulo.titulom : titulo.tituloh) ||
-                                this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido.trim(),
-                            institucion_posgrado:
-                                titulo.inst_cod === 'UTELVT'
-                                    ? 'Universidad Técnica "Luis Vargas Torres" de Esmeraldas'
-                                    : this.nuevoTituloPosgradoUTLVTE.institucion_posgrado.trim(),
-                            fecha_graduacion_posgrado: titulo.fechaincorporacion || this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado.trim(),
-                            especialidad_posgrado: titulo.NombCarr || this.nuevoTituloPosgradoUTLVTE.especialidad_posgrado.trim(),
-                            
-                        };
+                    const registro = this.nuevoTituloPosgradoUTLVTE.ad_regconesup?.toString().trim();
+                    const subarea = this.nuevoTituloPosgradoUTLVTE.subarea_conocimiento;
 
-                        const response = await enviarsolig(
-                            'POST',
-                            parametros,
-                            '/cvn/v1/formacion_academica',
-                            'Título de Posgrado Agregado con éxito'
-                        );
-
-                        if (response && response.data && response.data.data.id) {
-                            titulo.idformacion_academica = response.data.data.id;
-
-                            this.titulosPosgrado.push({
-                                idformacion_academica: response.data.data.id,
-                                titulo_posgrado_obtenido: parametros.titulo_posgrado_obtenido,
-                                institucion_posgrado: parametros.institucion_posgrado,
-                                fecha_graduacion_posgrado: parametros.fecha_graduacion_posgrado,
-                                especialidad_posgrado: parametros.especialidad_posgrado,
-                                
-                            });
-
-                            nuevosGuardados++;
-                        }
+                    if (!registro || !subarea) {
+                        mostraralertas2('Complete N° Registro SENESCYT y Sub Área antes de guardar', 'warning');
+                        return;
                     }
 
-                    // Si guardó todos los títulos, bloquea inputs
-                    if (nuevosGuardados > 0) {
-                        mostraralertas2(`Se guardaron ${nuevosGuardados} títulos exitosamente.`, 'success');
-                        this.titulosBloqueadosPosgrado = true;
-                        this.mostrarFormularioTitulosPosgrado = false; // 👈 oculta inputs
-                    } else {
-                        mostraralertas2('No hay títulos nuevos para guardar.', 'info');
-                    }
+                    const guardado = await this.guardarTituloActualPosgrado();
+                    if (!guardado.success) return;
 
-                    this.resetNuevoTituloPosgrado();
-                        this.scrollToTopTituloPosgrado();
-                    this.titulosEncontradosPosgrado = [];
+                    // 👉 NO OCULTAR EL FORMULARIO AQUÍ
                     this.titulosBloqueadosPosgrado = true;
-                    this.mostrarFormularioTitulosPosgrado = false;
-                    this.mostrarnormal = true;
+
+                    // ¿Hay más títulos?
+                    if (this.tituloActualIndexPosgrado + 1 < this.titulosEncontradosPosgrado.length) {
+
+                        // Avanzar índice
+                        this.tituloActualIndexPosgrado++;
+
+                        // Mostrar siguiente título
+                        this.mostrarTituloEncontradoPosgrado(this.titulosEncontradosPosgrado[this.tituloActualIndexPosgrado]);
+
+                        // Limpiar campos editables
+                        this.nuevoTituloPosgradoUTLVTE.ad_regconesup = '';
+                        this.nuevoTituloPosgradoUTLVTE.subarea_conocimiento = '';
+                        this.archivoSeleccionado = null;
+                        this.archivoPreviewName = '';
+                        if (this.$refs.fileFoto) this.$refs.fileFoto.value = null;
+
+                        this.mostrarFormularioTitulosPosgrado = true;  // 🔥 Mantener visible
+                        mostraralertas2('Título guardado. Complete los datos del siguiente título.', 'warning');
+                    } else {
+
+                        // Ya no hay más títulos detectados
+                        this.titulosBloqueadosPosgrado = true;
+                        this.mostrarFormularioTitulosPosgrado = false; // 🔥 Aquí sí se oculta
+                        mostraralertas2('Todos los títulos guardados correctamente.', 'success');
+                    }
+
                     return;
                 }
 
-            }else{
-                mostraralertas2('No deje campos en blanco','warning');
+                // ---- FLUJO MANUAL (SIN TÍTULOS DETECTADOS) ----
+                if (
+                    this.nuevoTituloPosgradoUTLVTE.titulo_posgrado_obtenido !== '' &&
+                    this.nuevoTituloPosgradoUTLVTE.institucion_posgrado !== '' &&
+                    this.nuevoTituloPosgradoUTLVTE.fecha_graduacion_posgrado !== '' &&
+                    this.nuevoTituloPosgradoUTLVTE.subarea_conocimiento !== ''
+                ) {
+                    const guardadoManual = await this.guardarTituloActualPosgrado();
+                    if (guardadoManual.success) {
+
+                        this.titulosBloqueados = true;
+                        this.mostrarFormularioTitulos = false;
+
+                        this.nuevoTituloPosgradoUTLVTE = {
+                            titulo_posgrado_obtenido: "",
+                            institucion_posgrado: "",
+                            fecha_graduacion_posgrado: "",
+                            subarea_conocimiento: "",
+                            ad_regconesup: "",
+                            nv_id: "",
+                        };
+                        this.archivoSeleccionado = null;
+                        this.archivoPreviewName = '';
+                        if (this.$refs.fileFoto) this.$refs.fileFoto.value = null;
+
+                        mostraralertas2('Título guardado correctamente.', 'success');
+                    }
+                } else {
+                    mostraralertas2('No deje campos en blanco', 'warning');
+                }
+
+            } catch (err) {
+                console.error('Error en agregarEditarTituloUniversitarioUTLVTE:', err);
+                mostraralertas2('Ocurrió un error al intentar guardar el título', 'warning');
             }
         },
         async agregarEditarTituloPosgrado() {
@@ -10493,6 +10538,81 @@ export default {
                 return null;
             }
         },
+        async getFormacionAcademicaDCPosgrado() {
+            try {
+                const response = await API.get(this.urlacdocenteposgrado);
+                
+                
+                
+                if (response.data.data && response.data.data.length > 0) {
+                    const data = response.data.data;
+                   // console.log(data);
+                    this.titulosPosgrado = [];
+                    //this.estudios_universitarios_culminados = "Si"
+                    //console.log(data);
+                    data.forEach(async item => {
+                        if (
+                            item.ciinfper && item.idper && item.ad_titulo &&
+                            item.ad_institucion && item.ad_fecha_titulo &&
+                            item.fecha_reg_conesup && item.nv_id && item.cod_ies &&
+                            item.ad_regconesup && item.sub_area_conocimiento
+                        ) {
+                            // 🔵 IMPORTANTE: await
+                            //const uploadResp = await this.uploadTituloFile(item.ciinfper);
+
+                            this.titulosPosgrado.push({
+                                iddocente_academico: item.ad_id,
+                                titulo_posgrado_obtenido: item.ad_titulo,
+                                institucion_posgrado: item.ad_institucion,
+                                fecha_graduacion_posgrado: item.fecha_reg_conesup,
+                                ad_archivo: item.ad_archivo || null,
+                                ad_pais: item.ad_pais,
+                                nomb_ies: item.nomb_ies,
+                                subarea_conocimiento: item.sub_area_conocimiento,
+                                nv_id: item.nv_id,
+                                cod_ies: item.cod_ies,
+                                ad_regconesup: item.ad_regconesup,
+                                ad_archivo_url: item.ad_archivo 
+                                    ? `http://cvubackendv2.test/titulos_posgrado_CVN/${this.idus}/${item.ad_archivo}`
+                                    : null
+                            });
+                            this.mostrarFormularioTitulosPosgrado = false;
+                            //console.log(this.titulosUniversitarios);
+                        }
+                    });
+                    
+                    this.isEditing8 = true;
+                    this.modoedit8 = false;
+                    //this.Titulouni();
+                    this.registro = true;
+                    this.us = false;
+                    this.scrollToTop();
+                } else {
+                    
+                    
+                    
+                    this.isEditing8 = false;
+                    this.modoedit8 = true;
+                    this.registro = false;
+                    this.us = true;
+                    this.mostrarnormal = true;
+                }
+                return response;
+            } catch (error) {
+                if (error.response?.status === 404) {
+                    // ✅ Se controla el error y NO se imprime en consola como un error
+                    // ⚠️ Importante: No lanzamos el error ni usamos console.error
+                    console.warn("El estudiante no ha llenado la formación académica y es su primera vez (404).");
+                } else {
+                    // ⚠️ Solo mostramos otros errores reales
+                    console.error("Error inesperado al obtener la formación académica:", error.message);
+                }
+                this.registro = false;
+                this.us = true;
+                 this.mostrarnormal = true;
+                return null;
+            }
+        },
         async getFormacionAcademica() {
             try {
                 const response = await API.get(this.url2);
@@ -10506,6 +10626,8 @@ export default {
                 await this.loadUniInstiList();
                 await this.loadNivelUnList();
                 await this.loadNivelPosList();
+                await this.getFormacionAcademicaDC();
+                await this.getFormacionAcademicaDCPosgrado();
                 await this.loadSubAreaConocimiento();
                  
                 if (response.data.data && response.data.data.length > 0) {
