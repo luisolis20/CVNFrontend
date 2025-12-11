@@ -1158,6 +1158,208 @@
                                                             class="fas fa-book-open"> </i></span>
                                                 </div>
                                             </div>
+                                            <!-- Estudio Actual -->
+                                            <!-- Estudios Posgrado -->
+                                            <div class="col-12 py-3" v-if="this.mensajeposgradonuevo">
+                                                <label class="text-danger" for="">Usted ya ha especificado que estudia actualmente. Para volverlo a especificar diríjase a la tabla "Estudios Actuales Posgrado" que se encuentra más abajo y elimine lo que añadió con anterioridad.</label>
+                                            </div>
+                                            <div class="col-12 py-3" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Si no ha terminado sus estudios posgrado significa que sigue estudiando, llene los campos y.
+                                                 de clic en Guardar.</label>
+                                            </div>
+                                            <!-- Titulo Universitario a obtener -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Título A  Obtener</label>
+                                                <div class="input-group-icon">
+                                                     <input class="form-control1 input-box form-voyage-control1"
+                                                        v-model="estudionuevoTituloUniversitario.ec_titulo"
+                                                        type="text"
+                                                        placeholder="Ingrese el título universitario que obtnedrá" />
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+
+                                                </div>
+                                            </div>
+                                            <!-- Titulo Universitario -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Institución</label>
+                                               <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="estudionuevoTituloPosgrado.ec_institucion">
+                                                        <option value="" disabled selected>
+                                                            Seleccione la institución de su título
+                                                        </option>
+                                                        <template v-for="tituU in institucion_listU" :key="tituU.cod_ies">
+                                                            <option :value="tituU.cod_ies"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ tituU.nomb_ies }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-building"></i></span>
+                                                </div>
+
+                                            </div>
+                                            <!-- Nivel Universitaria -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Nivel</label>
+                                                <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="estudionuevoTituloPosgrado.nv_id">
+                                                        <option value="" disabled selected>
+                                                            Seleccione nivel de su título
+                                                        </option>
+                                                        <template v-for="nivelUni in nivel_listUposg" :key="nivelUni.nv_id">
+                                                            <option :value="nivelUni.nv_id"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ nivelUni.nv_formacion }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-sort-amount-up-alt"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Pais -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Selecione el país de su título</label>
+                                                <div class="input-group-icon">
+                                                    <select 
+                                                        class="form-select1 form-voyage-select input-box"
+                                                        id="inputPersonOne" v-model="estudionuevoTituloPosgrado.ec_pais">
+                                                        <option value="" disabled selected>
+                                                            Seleccione el país de su título
+                                                        </option>
+                                                        <template v-for="pais in paisList" :key="pais.cod_pais">
+                                                            <option :value="pais.cod_pais"
+                                                                    style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ pais.nomb_pais }}
+                                                            </option>
+
+                                                                
+
+                                                        </template>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-globe"> </i></span>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <!-- fecha de inicio -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Fecha de inicio de estudio</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="ec_fecha_inicia" v-model="this.estudionuevoTituloPosgrado.ec_fecha_inicia"
+                                                        type="date" :max="currentDate" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- fecha de inicio -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Fecha de finalización de estudio</label>
+                                                <div class="input-group-icon">
+                                                    <input class="form-control1 input-box form-voyage-control1"
+                                                        id="ec_fecha_termina" v-model="this.estudionuevoTituloPosgrado.ec_fecha_termina"
+                                                        type="date" /><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Sub Area de conocimiento -->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Selecione el sub área de conocimiento de su título</label>
+                                                <div class="input-group-icon">
+                                                    <select v-model="estudionuevoTituloPosgrado.ec_sub_area_conocimiento"
+                                                            class="form-select1 form-voyage-select input-box">
+
+                                                        <option value="" disabled selected>
+                                                            Seleccione el área de conocimiento de su título
+                                                        </option>
+
+                                                        <!-- NIVEL 1: PADRE (NO seleccionable) -->
+                                                        <template v-for="padre in areaconocimientoList" :key="padre.sau_id">
+
+                                                            <option :value="padre.sau_id"
+                                                                    disabled
+                                                                    style="font-weight: bold;">
+                                                                {{ padre.sau_descripcion }}
+                                                            </option>
+
+                                                            <!-- NIVEL 2: HIJO (NO seleccionable) -->
+                                                            <template v-for="hijo in padre.hijos" :key="hijo.sau_id">
+                                                                <option :value="hijo.sau_id"
+                                                                        disabled
+                                                                        style="font-weight: bold; padding-left: 10px;">
+                                                                    {{ hijo.sau_descripcion }}
+                                                                </option>
+
+                                                                <!-- NIVEL 3: NIETO (SÍ seleccionable) -->
+                                                                <option v-for="nieto in hijo.nietos"
+                                                                        :key="nieto.sau_id"
+                                                                        :value="nieto.sau_id"
+                                                                        style="padding-left: 25px;">
+                                                                    {{ nieto.sau_descripcion }}
+                                                                </option>
+
+                                                            </template>
+
+                                                        </template>
+                                                    </select><span
+                                                        class="nav-link-icon text-800 fs--1 input-box-icon"><i
+                                                            class="	fas fa-gopuram"> </i></span>
+                                                </div>
+                                            </div>
+                                            <!-- Tipo de Financiamiento del estudio -->
+                                            <div class="col-sm-6 col-md-6 col-xl-5" v-if="this.sigueestudiandoposgrado">
+                                                <label class="text-dark" for="">Seleccione el tipo de financiamiento del estudio</label>
+                                                <div class="input-group-icon">
+                                                    <select class="form-select1 form-voyage-select input-box"  v-model="estudionuevoTituloPosgrado.ec_inst_financia">
+                                                        <option value="" disabled selected >Seleccione el tipo de financiamiento del estudio</option>
+                                                        <option value="UTLVTE">
+                                                            
+                                                            UTLVTE
+                                                        </option>
+                                                        <option value="Propio">
+                                                            
+                                                            Propio
+                                                        </option>
+                                                        <option value="Beca">
+                                                            
+                                                            Beca
+                                                        </option>
+                                                       
+                                                    </select>
+                                                    <span class="nav-link-icon text-800 fs--1 input-box-icon"><i class="fas fa-user-graduate"></i></span>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Constancia-->
+                                            <div class="col-12 col-md-6" v-if="this.sigueestudiandoposgrado">
+                                                <div class="input-group-icon">
+                                                    <div class="text-center">
+                                                        <label class="text-dark" for="">Suba el documento que evidencie que está estudiando</label>
+                                                        <input ref="fileFoto" @change="handleFileChange" type="file" accept=".pdf" class="form-control1 form-voyage-control" id="inputPersonOne">
+                                                        <small class="text-dark" v-if="archivoPreviewName">{{ archivoPreviewName }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Acciones Universitario -->
+                                            <div class="col-12 text-center" v-if="this.sigueestudiandoposgrado">
+                                                <button class="btn1 btn-secondary1 mb-2" type="button" @click="agregarEditarCursaEstudiosPosgrado">
+                                                    Guardar
+                                                </button>
+                                            </div>
                                             <!-- Estudios de Posgrados -->
                                             <div class="col-12" v-if="this.posgrado">
                                                 <h5>Estudios Posgrados (<a href="#formacionacademiposgrado"> ver mis titulos de posgrado registrados )</a></h5>
@@ -1541,7 +1743,7 @@
                                             <!-- Estudio actualmente Registrados Tabla-->
                                             <div class="text-center rounded p-4">
                                                 <div class="col-8 d-flex align-items-center justify-content-between mb-4">
-                                                    <h5 class="mb-0">Estado Actual de Estudio Universitario</h5>
+                                                    <h5 class="mb-0">Estudios Actuales Universitario</h5>
                                                 </div>
                                                 
                                                 <div class="table-responsive">
@@ -1585,6 +1787,7 @@
                                                     </table>
                                                 </div>
                                             </div>
+                                            
                                             <!-- Titulos Universitarios UTLVTE Registrados Tabla-->
                                             
                                             <!-- Titulos Universitarios Registrados Tabla-->
@@ -1626,6 +1829,53 @@
                                                                     <button class="btn1 btn-secondary1" type="button"  v-if="titulo.institucion_universitaria !== '1012'" @click="editarTituloUniversitario(titulo.iddocente_academico)"><i class="fa-solid fa-edit"></i></button>
                                                                     &nbsp;&nbsp;
                                                                     <button class="btn1 btn-secondary1" type="button" @click="eliminarTituloUniversitario(titulo.iddocente_academico)"><i class="fa-solid fa-trash"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                            
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Estudio actualmente Posgrado Registrados Tabla-->
+                                            <div class="text-center rounded p-4">
+                                                <div class="col-8 d-flex align-items-center justify-content-between mb-4">
+                                                    <h5 class="mb-0">Estudios Actuales de Posgrado</h5>
+                                                </div>
+                                                
+                                                <div class="table-responsive">
+                                                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                                        <thead>
+                                                            <tr class="text-dark">
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Título a Obtener</th>
+                                                                <th scope="col">Institución</th>
+                                                                <th scope="col">Fecha Finalización</th>
+                                                                <th scope="col">Archivo</th>
+                                                                <th scope="col">Acciones</th>
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="contenido">
+                                                            
+                                                            <tr v-for="titulo in estudioactualtitulosposgrado" :key="titulo.idcursaestudios">
+                                                                <td class="text-dark">{{ titulo.idcursaestudios }}</td>
+                                                                <td class="text-dark">{{ titulo.ec_titulo }}</td>
+                                                                 <td class="text-dark" v-if="titulo.ec_institucion==1012">UTLVTE</td>
+                                                                <td class="text-dark" v-else>{{ titulo.nomb_ies }}</td>
+                                                                <td class="text-dark">{{ titulo.ec_fecha_termina }}</td>
+                                                                <td>
+                                                                    <div v-if="titulo.ec_archivo">
+                                                                        <a :href="titulo.ad_archivo_url" target="_blank" rel="noopener">
+                                                                            {{ titulo.ec_archivo }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <span v-else>No registrado</span>
+                                                                </td>
+                                                                <td>
+                                                                    <!--<button class="btn1 btn-secondary1" type="button" @click="editarTituloBachiller(titulo.idformacion_academica)"><i class="fa-solid fa-edit"></i></button>-->
+                                                                    &nbsp;&nbsp;
+                                                                    <button class="btn1 btn-secondary1" type="button" @click="eliminarEstudioActualPosgrado(titulo.idcursaestudios)"><i class="fa-solid fa-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                             
@@ -6022,7 +6272,9 @@ export default {
                 this.getFormacionAcademica(),
                 this.getFormacionAcademicaDC(),
                 this.getFormacionAcademicaDCPosgrado(),
-                this.getCursaEstudios()
+                this.getCursaEstudios(),
+                this.getCursaEstudiosPosgrado(),
+
                 
             ])
            
@@ -6317,11 +6569,14 @@ export default {
                 this.mensajenuevo= false;
                 this.estudios_posgrado_culminados = "";
                 this.estudios_bachiller_culminados = "";
+                  this.sigueestudiandoposgrado=false;
+                this.mensajeposgradonuevo= false;
             } else if(this.estudios_universitarios_culminados === "No"){
                 if(this.estudioactualtitulosUniversitarios.length > 0){
                     this.mensajenuevo= true;
                     this.univer = false;
                     this.sigueestudiandouniversidad=false;
+                    this.sigueestudiandoposgrado=false;
                 }else{
                     this.mensajenuevo= false;
                     this.univer = false;
@@ -6350,10 +6605,12 @@ export default {
                     this.mensajeposgradonuevo= true;
                     this.posgrado = false;
                     this.sigueestudiandoposgrado=false;
+                    this.sigueestudiandouniversidad=false;
                 }else{
                     this.mensajeposgradonuevo= false;
                     this.posgrado = false;
                     this.sigueestudiandoposgrado=true;
+
                 }
                 
             }else{
@@ -6552,13 +6809,13 @@ export default {
             this.idus = usuario.CIInfPer;
             const fechaActualEcuador = dayjs().tz('America/Guayaquil').format('YYYY-MM-DD');
             //console.log(this.idus);
-            if(this.estudionuevoTituloPosgrado.ec_titulo!=='' 
-                    && this.estudionuevoTituloPosgrado.ec_institucion!=='' 
+            if(this.estudionuevoTituloPosgrado.ec_titulo !=='' 
+                    && this.estudionuevoTituloPosgrado.ec_institucion !=='' 
                     && this.estudionuevoTituloPosgrado.ec_pais !=='' 
                     && this.estudionuevoTituloPosgrado.ec_fecha_inicia !==''
                     && this.estudionuevoTituloPosgrado.ec_fecha_termina !==''
                     && this.estudionuevoTituloPosgrado.ec_sub_area_conocimiento !==''
-                    && this.estudionuevoTituloPosgrado.ec_inst_financia!==''
+                    && this.estudionuevoTituloPosgrado.ec_inst_financia !==''
                 ){
                 
                     
@@ -7287,6 +7544,22 @@ export default {
             this.scrollToTop();
             this.modoeditionformacionuniversidad=false;
             this.mensajenuevo= false; //aquí quedaste
+        },
+        async eliminarEstudioActualPosgrado(idcursaestudios) {
+            const index = this.estudioactualtitulosposgrado.findIndex(titulo => titulo.idcursaestudios === idcursaestudios);
+            const response = await confimar('/cvn/v1/cursa_estudios/',idcursaestudios,'Eliminar Estudio Actual','¿Realmente desea eliminar el estado actual de estudio universitario?');
+
+            if (response && response.status === 200) {
+                if (index !== -1) {
+                    this.estudioactualtitulosposgrado.splice(index, 1);
+                }
+            } else {
+                console.error('La respuesta no contiene los datos esperados:', response);
+            }
+            this.resetNuevoTituloCursaEstudiosPosgrado();
+            this.scrollToTop();
+            this.modoeditionformacionposgrado=false;
+            this.mensajeposgradonuevo= false; //aquí quedaste
         },
         async eliminarTituloUniversitario(idformacion_academica) {
             const index = this.titulosUniversitarios.findIndex(titulo => titulo.idformacion_academica === idformacion_academica);
